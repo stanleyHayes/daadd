@@ -59,17 +59,20 @@ export function createCampaignLifecycleQueue(): Queue<CampaignLifecycleJob> {
       logger.info(`Campaign ${campaign.id} (${campaign.name}) marked as ${campaign.status} — ${reason}`);
 
       // Dispatch webhook if configured
-      const webhookService = container.resolve(require('../services/webhook.service').WebhookService);
-      await webhookService.dispatch(
-        job.data.reason === 'budget_exhausted' ? 'campaign.completed' : 'campaign.paused',
-        campaign.id,
-        {
+      try {
+        const { WebhookService } = require('../services/webhook.service');
+        const webhookService = container.resolve(WebhookService);
+        const event = job.data.reason === 'budget_exhausted' ? 'campaign.completed' : 'campaign.paused';
+        await webhookService.dispatchEvent(event, campaign.id, {
           campaign_id: campaign.id,
           campaign_name: campaign.name,
           reason,
           timestamp: new Date().toISOString(),
-        },
-      );
+        });
+      } catch (webhookError) {
+        logger.warn(`Webhook dispatch failed for campaign ${campaign.id}:`, webhookError);
+        // Non-fatal: continue even if webhook dispatch fails
+      }
     } catch (error) {
       logger.error(`Error processing campaign lifecycle job:`, error);
       throw error;
