@@ -575,6 +575,84 @@ This section tracks significant commits to help trace code evolution.
 
 ---
 
+## 13. Commit Change Log
+
+### Recent Changes (May 17, 2026 — Compliance Sprint)
+
+**c3b013c** — `feat(backend): implement email service and campaign lifecycle queue`
+- Added `EmailService` (Resend integration) with methods: sendOTP, sendAnomalyAlert, sendTeamInvite, sendBudgetAlert, sendPasswordReset
+- HTML email templates with consistent branding and responsive design
+- Implemented `CampaignLifecycleQueue` (Bull job) running every 5 minutes
+  * Auto-pauses campaigns on budget exhaustion or past end_date
+  * Dispatches webhooks for external system integration
+  * Retryable with exponential backoff
+- Registered environment config in DI container via `registerInstance('config', process.env)`
+- Relates to: SPECIFICATION.md §3.6 (Anomaly Detection), PROMPT_PLAYBOOK.md §2 (DI Pattern)
+
+**11b4275** — `feat(backend): add input validation middleware and conversion pixel tracking`
+- Created validation middleware: `validateBody(schema)`, `validateQuery(schema)`, `validateParams(schema)`
+- All throw `AppError` with `VALIDATION_ERROR` code; prevents invalid data reaching service layer
+- Added campaign DTOs with Zod schemas: `CreateCampaignDtoSchema`, `UpdateCampaignDtoSchema`, `CampaignQuerySchema`
+- Implemented conversion pixel endpoint: `POST /api/v1/pixel/:campaignId`
+  * Public (no auth), rate-limited (100 req/min per campaign)
+  * Accepts uid, ev, val, ref, ip as query parameters
+  * Returns 1x1 transparent GIF (standard pixel response)
+  * Non-blocking: returns pixel even on error
+  * Creates CONVERSION events with source=pixel metadata
+  * Enables affiliate networks to post back conversions
+- Extended `EventService.trackConversionPixel()` for pixel-sourced conversions
+- Relates to: SPECIFICATION.md §3.5 (Platform Integrations)
+
+**6f03a35** — `feat(backend): integrate email alerts into budget pacing and lifecycle queues`
+- Updated `BudgetPacingService` to send HTML emails with progress bar
+- Email parameters: campaign name, threshold %, spent, budget
+- Redis caching (24h TTL) prevents duplicate alerts per campaign/threshold
+- Alerts triggered at 75%, 90%, 100% budget thresholds
+- Fixed `CampaignLifecycleQueue` webhook integration:
+  * Uses correct method: `dispatchEvent()` (not `dispatch()`)
+  * Dispatches `campaign.completed` for budget exhaustion
+  * Dispatches `campaign.paused` for end date passed
+  * Wrapped in try-catch; webhook failures don't fail the job
+- Relates to: SPECIFICATION.md §3.6, PROMPT_PLAYBOOK.md §4 (Decision-driving)
+
+**e2d83ed** — `docs: add SPECIFICATION.md and ARCHITECTURE.md as authoritative project documents`
+- Created SPECIFICATION.md (16 sections): product overview, architecture, requirements, API endpoints, entities, quality standards, deployment, environment variables, non-functional requirements, constraints, roadmap
+- Created ARCHITECTURE.md (13+ sections): directory tree, layer breakdown, DI pattern, repository pattern, adapter pattern, OAuth flow, queues, error handling, frontend/mobile architecture, testing strategy, security notes, performance targets
+- Establishes living documentation model per PROMPT_PLAYBOOK.md §3
+- Every commit that changes code must update ARCHITECTURE.md in the same commit
+- Relates to: PROMPT_PLAYBOOK.md §3 (Standing Instructions), §5 (Quality Bar)
+
+**3133f48** — `chore: initialize git, commitlint, and CI/CD infrastructure`
+- Initialized git repository with user config
+- Installed commitlint + husky for Conventional Commits enforcement
+- Created commitlint config: types (feat, fix, docs, style, refactor, perf, test, chore, ci, build), strict case rules, body requirements
+- Set up .husky/commit-msg hook for message validation
+- Added GitHub Actions CI workflow (lint, build, test, docker health checks)
+- Created CONTRIBUTING.md documenting: development setup, branching strategy, Conventional Commits format with examples, testing standards (unit, integration, E2E), code quality expectations, documentation requirements, PR workflow
+- Added .gitignore for Node.js monorepo (node_modules, .env, build artifacts, IDE configs)
+- Updated root package.json with format script
+- Foundation ensures atomic commits, clear audit trails, prevents low-quality commits, blocks merges that fail tests/lint
+- Relates to: PROMPT_PLAYBOOK.md §2 (Kickoff), §3 (Standing Orders), §5 (Quality Bar)
+
+### Existing Features (Pre-Compliance Sprint)
+
+The codebase includes 21 backend services, 28+ route files, 14+ entities covering:
+- Campaign CRUD + status machine + AI toggle + cloning
+- Analytics (unified, per-platform, per-campaign breakdowns)
+- AI optimization (4 recommendation types, auto-apply)
+- Anomaly detection (4 triggers, auto-pause)
+- OAuth (Google, Meta, TikTok, LinkedIn, Pinterest)
+- Platform metrics aggregation (5 platforms)
+- CDP (data collection, audiences, CRM integrations)
+- Rewards + QR redemption (9-step, HMAC-SHA256, one-time-use)
+- Team collaboration (RBAC, audit logging)
+- Reviews (expectation vs reality)
+- A/B testing (control + 4 variants)
+- Frontend: 23 pages, TanStack Query v5, Zustand, React Router, RBAC
+- Mobile: Expo SDK 55, consumer-facing (view ads, claim rewards), full auth flow
+
+---
+
 **Last Updated:** May 17, 2026  
 **Maintained By:** Development Team  
 **Status:** Living Document
