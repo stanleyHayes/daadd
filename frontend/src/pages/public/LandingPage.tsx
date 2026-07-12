@@ -4,8 +4,9 @@ import {
  ArrowRight, Eye, Gift, TrendingUp, BarChart3, Cpu, ShoppingBag,
  Film, Trophy, Heart, Sparkles, Star, Quote, ChevronLeft,
  ChevronRight, CheckCircle2, Shield, Zap, MousePointerClick,
- MapPin, ArrowUpRight, Globe
+ MapPin, ArrowUpRight, Globe, ChevronDown, Code, Mail
 } from 'lucide-react';
+import toast from 'react-hot-toast';
 import { WatermarkBanner } from '@/components/ui/Watermark';
 import { motion, useInView, useMotionValue, useTransform, animate } from 'framer-motion';
 import { PageTransition } from '@/components/ui/PageTransition';
@@ -331,7 +332,86 @@ export function LandingPage() {
  </div>
  </section>
 
- {/* ========== FEATURES ========== */}
+ {/* ========== LATEST BLOG ========== */}
+    <section className="py-20 bg-gray-50 dark:bg-slate-800/30">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-end justify-between mb-10">
+          <div>
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Latest from the Blog</h2>
+            <p className="text-gray-500 dark:text-slate-400 mt-2">Insights, case studies, and platform updates from our team.</p>
+          </div>
+          <Link
+            to="/blog"
+            className="hidden sm:inline-flex items-center gap-1 text-sm font-semibold text-primary-600 hover:text-primary-700 transition-colors"
+          >
+            View all articles <ArrowUpRight className="h-4 w-4" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[
+            {
+              id: 3,
+              title: 'How FitLife Increased Conversions by 340% with AdPlatform',
+              excerpt: 'A deep dive into how a fitness brand leveraged AI optimization and reward-based engagement.',
+              date: 'February 28, 2026',
+              category: 'Case Studies',
+            },
+            {
+              id: 1,
+              title: 'The Future of Geo-Targeted Advertising in 2026',
+              excerpt: 'Privacy-first targeting and new technologies reshaping local advertising at scale.',
+              date: 'March 10, 2026',
+              category: 'AdTech Trends',
+            },
+            {
+              id: 2,
+              title: 'Introducing the Ad Journey Storyteller',
+              excerpt: 'Turn raw campaign analytics into compelling narratives for stakeholders.',
+              date: 'March 5, 2026',
+              category: 'Platform Updates',
+            },
+          ].map((post, index) => (
+            <motion.article
+              key={post.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              onClick={() => navigate(`/blog/${post.id}`)}
+              className="group bg-white dark:bg-slate-800 rounded-2xl border border-gray-200/80 dark:border-slate-700/80 p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+            >
+              <span className="inline-block px-2.5 py-1 rounded-full text-xs font-medium bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300 border border-primary-100 dark:border-primary-900/30 mb-4">
+                {post.category}
+              </span>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-primary-700 dark:group-hover:text-secondary-400 transition-colors">
+                {post.title}
+              </h3>
+              <p className="text-sm text-gray-500 dark:text-slate-400 line-clamp-3 leading-relaxed mb-4">
+                {post.excerpt}
+              </p>
+              <div className="flex items-center justify-between text-xs text-gray-400 dark:text-slate-500">
+                <span>{post.date}</span>
+                <span className="flex items-center gap-1 text-primary-600 dark:text-secondary-400 font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+                  Read more <ArrowUpRight className="h-3 w-3" />
+                </span>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+
+        <div className="mt-10 text-center sm:hidden">
+          <Link
+            to="/blog"
+            className="inline-flex items-center justify-center gap-1 rounded-md px-4 py-2 text-sm font-medium bg-primary-700 text-white hover:bg-primary-800 transition-colors"
+          >
+            View all articles <ArrowUpRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </div>
+    </section>
+
+    {/* ========== FEATURES ========== */}
  <section className="py-20 bg-gray-50 dark:bg-slate-800/30">
  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
  <div className="text-center max-w-2xl mx-auto mb-16">
@@ -369,7 +449,78 @@ export function LandingPage() {
  </div>
  </section>
 
- {/* ========== HOW IT WORKS ========== */}
+ {/* ========== CASE STUDIES ========== */}
+    <section className="py-20 bg-white dark:bg-slate-900">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-end justify-between mb-10">
+          <div>
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Success Stories</h2>
+            <p className="text-gray-500 dark:text-slate-400 mt-2">See how brands are winning with AI-powered advertising.</p>
+          </div>
+          <Link
+            to="/blog?category=Case Studies"
+            className="hidden sm:inline-flex items-center gap-1 text-sm font-semibold text-primary-600 hover:text-primary-700 transition-colors"
+          >
+            Read case studies <ArrowUpRight className="h-4 w-4" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {[
+            {
+              brand: 'FitLife',
+              metric: '+340%',
+              metricLabel: 'conversion lift',
+              quote: "AdPlatform's AI optimization and reward-based engagement completely changed how we think about advertising.",
+              author: 'Jessica Park, CMO',
+              color: 'from-accent-500 to-accent-600',
+            },
+            {
+              brand: 'TechStart',
+              metric: '4.8x',
+              metricLabel: 'return on ad spend',
+              quote: 'The geographic heatmaps and real-time anomaly detection saved us thousands in ad spend.',
+              author: 'Marcus Chen, Growth Lead',
+              color: 'from-primary-500 to-primary-600',
+            },
+          ].map((study, i) => (
+            <motion.div
+              key={study.brand}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="relative overflow-hidden rounded-2xl bg-primary-700 text-white p-8"
+            >
+              <div className={cn('absolute top-0 right-0 w-64 h-64 rounded-full blur-3xl opacity-30', study.color)} />
+              <div className="relative">
+                <div className="flex items-start justify-between mb-6">
+                  <div>
+                    <p className="text-sm text-primary-200 font-medium uppercase tracking-wider">{study.brand}</p>
+                    <p className="text-5xl font-extrabold mt-1">{study.metric}</p>
+                    <p className="text-sm text-primary-200">{study.metricLabel}</p>
+                  </div>
+                  <Quote className="h-8 w-8 text-white/30" />
+                </div>
+                <p className="text-lg text-white/90 leading-relaxed mb-6">"{study.quote}"</p>
+                <p className="text-sm text-primary-200">— {study.author}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="mt-10 text-center sm:hidden">
+          <Link
+            to="/blog?category=Case Studies"
+            className="inline-flex items-center justify-center gap-1 rounded-md px-4 py-2 text-sm font-medium bg-primary-700 text-white hover:bg-primary-800 transition-colors"
+          >
+            Read case studies <ArrowUpRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </div>
+    </section>
+
+    {/* ========== HOW IT WORKS ========== */}
  <section className="py-20 bg-white dark:bg-slate-900">
  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
  <div className="text-center max-w-2xl mx-auto mb-16">
@@ -415,7 +566,66 @@ export function LandingPage() {
  </div>
  </section>
 
- {/* ========== CATEGORIES ========== */}
+ {/* ========== FAQ ========== */}
+    <section className="py-20 bg-white dark:bg-slate-900">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Frequently Asked Questions</h2>
+          <p className="text-gray-500 dark:text-slate-400 mt-3">Everything you need to know about earning rewards and advertising with us.</p>
+        </div>
+
+        <div className="space-y-4">
+          {[
+            {
+              q: 'How do I earn rewards from ads?',
+              a: 'Simply browse ads that interest you, view the content, and claim the reward shown. Rewards are credited to your account and can be cashed out once you reach the minimum balance.',
+            },
+            {
+              q: 'Is it free for advertisers to join?',
+              a: 'Yes. Creating an advertiser account is free. You only pay for the ad budget you allocate to campaigns, plus a small platform fee based on performance.',
+            },
+            {
+              q: 'What makes AdPlatform different from other ad networks?',
+              a: 'We combine AI-powered optimization, privacy-first targeting, geographic heatmaps, and a reward-based engagement model that values user attention.',
+            },
+            {
+              q: 'How does the AI optimization work?',
+              a: 'Our machine learning engine analyzes campaign performance in real time and recommends adjustments to bids, budgets, audiences, and creatives to improve ROAS.',
+            },
+            {
+              q: 'Can I integrate AdPlatform with my existing ad accounts?',
+              a: 'Yes. We offer integrations with major programmatic platforms and ad exchanges. Visit our developer docs to learn more about API and OAuth connections.',
+            },
+          ].map((item, i) => (
+            <details
+              key={i}
+              className="group bg-gray-50 dark:bg-slate-800/50 rounded-xl border border-gray-200 dark:border-slate-700 open:bg-white dark:open:bg-slate-800 transition-colors"
+            >
+              <summary className="flex items-center justify-between cursor-pointer p-5 text-left font-semibold text-gray-900 dark:text-white list-none">
+                {item.q}
+                <span className="ml-4 shrink-0 w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300 flex items-center justify-center group-open:rotate-180 transition-transform">
+                  <ChevronDown className="h-4 w-4" />
+                </span>
+              </summary>
+              <div className="px-5 pb-5 text-sm text-gray-600 dark:text-slate-400 leading-relaxed">
+                {item.a}
+              </div>
+            </details>
+          ))}
+        </div>
+
+        <div className="mt-10 text-center">
+          <Link
+            to="/contact"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-primary-600 hover:text-primary-700 transition-colors"
+          >
+            Still have questions? Contact us <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </div>
+    </section>
+
+    {/* ========== CATEGORIES ========== */}
  <section className="py-20 bg-gray-50 dark:bg-slate-800/30">
  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
  <div className="text-center max-w-2xl mx-auto mb-12">
@@ -594,7 +804,87 @@ export function LandingPage() {
  </div>
  </section>
 
- {/* ========== CTA ========== */}
+ {/* ========== API / DEVELOPER TEASER ========== */}
+    <section className="py-20 bg-gray-50 dark:bg-slate-800/30">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative overflow-hidden rounded-2xl bg-primary-800 dark:bg-primary-900 p-8 md:p-12">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-secondary-500/10 rounded-full blur-3xl" />
+          <div className="relative grid md:grid-cols-2 gap-10 items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white text-xs font-semibold uppercase tracking-wider mb-4">
+                <Code className="h-3.5 w-3.5" />
+                Developer Ready
+              </div>
+              <h2 className="text-3xl font-bold text-white mb-4">Built for Integrations</h2>
+              <p className="text-primary-100 leading-relaxed mb-6">
+                Connect your existing programmatic stack, sync campaign data, and build custom workflows with our REST API, webhooks, and OAuth-enabled platform accounts.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Link
+                  to="/register"
+                  className="inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-semibold bg-secondary-500 text-primary-900 hover:bg-secondary-400 transition-colors"
+                >
+                  Get API Access
+                </Link>
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-semibold border border-white/30 text-white hover:bg-white/10 transition-colors"
+                >
+                  Talk to Engineering
+                </Link>
+              </div>
+            </div>
+            <div className="bg-black/30 rounded-xl p-5 font-mono text-xs sm:text-sm text-green-300 overflow-hidden">
+              <p className="text-white/50 mb-2">// Fetch campaign performance</p>
+              <p>GET /api/v1/campaigns/&#123;campaignId&#125;/analytics</p>
+              <p className="mt-2 text-white/70">Authorization: Bearer &#123;token&#125;</p>
+              <div className="mt-4 space-y-1 text-white/80">
+                <p>&#123;</p>
+                <p className="pl-4">"impressions": 2450000,</p>
+                <p className="pl-4">"clicks": 48200,</p>
+                <p className="pl-4">"ctr": 1.97,</p>
+                <p className="pl-4">"conversions": 1840</p>
+                <p>&#125;</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ========== NEWSLETTER ========== */}
+    <section className="py-16 bg-primary-700 text-white">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <Mail className="h-8 w-8 mx-auto mb-4 text-secondary-400" />
+        <h2 className="text-2xl sm:text-3xl font-bold mb-3">Stay Ahead of AdTech</h2>
+        <p className="text-primary-100 mb-6 max-w-xl mx-auto">
+          Get the latest platform updates, case studies, and advertising tips delivered to your inbox every two weeks.
+        </p>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            toast.success('Thanks for subscribing!');
+          }}
+          className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+        >
+          <input
+            type="email"
+            required
+            placeholder="Enter your email"
+            className="flex-1 px-4 py-3 rounded-md bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-secondary-500/50"
+          />
+          <button
+            type="submit"
+            className="px-6 py-3 rounded-md font-semibold bg-secondary-500 text-primary-900 hover:bg-secondary-400 transition-colors"
+          >
+            Subscribe
+          </button>
+        </form>
+        <p className="text-xs text-primary-200 mt-3">No spam. Unsubscribe anytime.</p>
+      </div>
+    </section>
+
+    {/* ========== CTA ========== */}
  <section className="relative py-24 overflow-hidden">
  <div className="absolute inset-0 bg-primary-600" />
  <FloatingBlob className="top-0 left-1/4 w-72 h-72 bg-white/10" delay={0} />
