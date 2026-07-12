@@ -65,6 +65,7 @@ export function PublicLayout() {
 
  const navLinks = [
  { to: '/ads', label: t('header.nav.ads') },
+ { to: '/partners', label: t('header.nav.partners') },
  { to: '/about', label: t('header.nav.about') },
  { to: '/blog', label: t('header.nav.blog') },
  ];
@@ -309,6 +310,7 @@ export function PublicLayout() {
  <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Platform</h4>
  <ul className="space-y-3 text-sm text-white/70">
  <li><Link to="/ads" className="hover:text-secondary-300 transition-colors">Browse Ads</Link></li>
+ <li><Link to="/partners" className="hover:text-secondary-300 transition-colors">Partners</Link></li>
  <li><Link to="/register" className="hover:text-secondary-300 transition-colors">For Advertisers</Link></li>
  <li><Link to="/ads" className="hover:text-secondary-300 transition-colors">Earn Rewards</Link></li>
  <li><Link to="/blog" className="hover:text-secondary-300 transition-colors">Blog</Link></li>

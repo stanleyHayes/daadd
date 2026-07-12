@@ -5,6 +5,7 @@ import adRoutes from './ads';
 import reviewRoutes from './reviews';
 import rewardRoutes from './rewards';
 import notificationRoutes from './notifications';
+import analyticsRoutes from './analytics';
 
 const router = Router();
 
@@ -14,5 +15,6 @@ router.use('/ads', adRoutes);
 router.use('/reviews', reviewRoutes);
 router.use('/rewards', rewardRoutes);
 router.use('/notifications', notificationRoutes);
+router.use('/analytics', analyticsRoutes);
 
 export default router;

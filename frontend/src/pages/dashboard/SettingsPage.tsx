@@ -101,7 +101,7 @@ export function SettingsPage() {
  const handleSaveProfile = async () => {
  if (!user) return;
  try {
- await updateProfileMutation.mutateAsync({ id: user.id, data: { name: profileForm.name, email: profileForm.email } });
+ await updateProfileMutation.mutateAsync({ name: profileForm.name, email: profileForm.email });
  toast.success('Profile updated');
  } catch {
  toast.error('Failed to update profile');

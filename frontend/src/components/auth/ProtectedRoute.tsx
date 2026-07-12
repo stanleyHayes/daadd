@@ -18,11 +18,6 @@ export function ProtectedRoute({ allowedRoles }: ProtectedRouteProps) {
 
   const userRole = user?.role || 'end_user';
 
-  // end_user should never see the dashboard — redirect to /ads
-  if (userRole === 'end_user') {
-    return <Navigate to="/ads" replace />;
-  }
-
   // If specific allowed roles are provided, check against them
   if (allowedRoles && !allowedRoles.includes(userRole)) {
     return <Navigate to="/dashboard" replace />;
@@ -30,6 +25,10 @@ export function ProtectedRoute({ allowedRoles }: ProtectedRouteProps) {
 
   // Check route-level access based on role
   if (!canAccessRoute(userRole, location.pathname)) {
+    // End users don't have a dashboard overview; send them to their profile
+    if (userRole === 'end_user') {
+      return <Navigate to="/dashboard/profile" replace />;
+    }
     return <Navigate to="/dashboard" replace />;
   }
 

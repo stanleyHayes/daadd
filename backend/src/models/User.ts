@@ -9,10 +9,16 @@ export interface IUser extends Document {
   password_hash: string;
   role: UserRole;
   avatar_url?: string;
+  preferences?: {
+    theme?: 'light' | 'dark' | 'system';
+    language?: string;
+    email_notifications?: boolean;
+  };
   created_at: Date;
 }
 
 const UserSchema = new Schema<IUser>({
+  _id: { type: Schema.Types.Mixed },
   name: { type: String, required: true, trim: true },
   email: { type: String, required: true, unique: true, lowercase: true, trim: true },
   password_hash: { type: String, required: true },
@@ -22,6 +28,11 @@ const UserSchema = new Schema<IUser>({
     default: 'end_user',
   },
   avatar_url: { type: String, default: '' },
+  preferences: {
+    theme: { type: String, enum: ['light', 'dark', 'system'], default: 'system' },
+    language: { type: String, default: 'en' },
+    email_notifications: { type: Boolean, default: true },
+  },
   created_at: { type: Date, default: Date.now },
 });
 

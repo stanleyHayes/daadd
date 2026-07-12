@@ -45,6 +45,7 @@ router.get('/', async (req: Request, res: Response) => {
     const {
       industry,
       search,
+      advertiser,
       sort = 'created_at',
       order = 'desc',
       page = '1',
@@ -56,6 +57,7 @@ router.get('/', async (req: Request, res: Response) => {
 
     const filter: Record<string, any> = {};
     if (industry) filter.industry = { $regex: industry, $options: 'i' };
+    if (advertiser) filter.brand = { $regex: advertiser, $options: 'i' };
     if (search) {
       filter.$or = [
         { title: { $regex: search, $options: 'i' } },

@@ -156,7 +156,7 @@ export function LandingPage() {
  <div>
  {/* ========== HERO ========== */}
  <section className="relative overflow-hidden bg-primary-700 text-white">
-          <WatermarkBanner />
+          <WatermarkBanner icon={<Zap />} />
  {/* Animated background blobs */}
  <FloatingBlob className="top-0 left-0 w-96 h-96 bg-accent-400" delay={0} />
  <FloatingBlob className="bottom-0 right-0 w-80 h-80 bg-secondary-400" delay={2} />

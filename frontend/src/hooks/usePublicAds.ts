@@ -33,14 +33,16 @@ interface PublicAd {
 
 export type { PublicAd };
 
-export function usePublicAds(filters?: { industry?: string; search?: string; sort?: string }) {
+export function usePublicAds(filters?: { industry?: string; search?: string; sort?: string; advertiser?: string; enabled?: boolean }) {
+  const { enabled, ...params } = filters || {};
   return useQuery({
-    queryKey: ['publicAds', filters],
+    queryKey: ['publicAds', params],
     queryFn: async (): Promise<PublicAd[]> => {
-      const res = await api.get('/ads', { params: filters });
+      const res = await api.get('/ads', { params });
       // Backend returns { success, data: [...], total, page, limit } via paginatedResponse
       return res.data.data || [];
     },
+    enabled: enabled !== false,
   });
 }
 

@@ -34,29 +34,49 @@ const adTitles: Record<string, string[]> = {
   Automotive: ['EV Test Drive', 'Car Care Kit', 'Roadside Assistance Plan'],
 };
 
+const testAccounts = [
+  { name: 'Demo User', email: 'demo@example.com', role: 'end_user' },
+  { name: 'Admin User', email: 'admin@example.com', role: 'admin' },
+  { name: 'James Owusu', email: 'admin@adplatform.com', role: 'admin' },
+  { name: 'Sarah Johnson', email: 'advertiser1@adplatform.com', role: 'advertiser' },
+  { name: 'Michael Chen', email: 'advertiser2@adplatform.com', role: 'advertiser' },
+  { name: 'Emma Williams', email: 'advertiser3@adplatform.com', role: 'advertiser' },
+  { name: 'Kofi Mensah', email: 'advertiser4@adplatform.com', role: 'advertiser' },
+  { name: 'David Rodriguez', email: 'manager@adplatform.com', role: 'campaign_manager' },
+  { name: 'Priya Sharma', email: 'manager2@adplatform.com', role: 'campaign_manager' },
+  { name: 'Lisa Park', email: 'analyst@adplatform.com', role: 'analyst' },
+  { name: 'Alex Turner', email: 'user1@example.com', role: 'end_user' },
+  { name: 'Jordan Blake', email: 'user2@example.com', role: 'end_user' },
+  { name: 'Fatima Al-Hassan', email: 'user3@example.com', role: 'end_user' },
+  { name: 'Carlos Rivera', email: 'user4@example.com', role: 'end_user' },
+];
+
 export async function seedDatabase(): Promise<void> {
-  const existingUser = await User.findOne({ email: 'demo@example.com' });
-  if (existingUser) {
-    return;
+  const passwordHash = bcrypt.hashSync('Password123!', 10);
+
+  const seededUsers: InstanceType<typeof User>[] = [];
+  for (const account of testAccounts) {
+    const user = await User.findOneAndUpdate(
+      { email: account.email.toLowerCase() },
+      {
+        name: account.name,
+        email: account.email.toLowerCase(),
+        password_hash: passwordHash,
+        role: account.role,
+        avatar_url: `https://i.pravatar.cc/150?u=${account.email.toLowerCase()}`,
+      },
+      { upsert: true, new: true }
+    );
+    seededUsers.push(user);
   }
 
-  const passwordHash = bcrypt.hashSync('password', 10);
+  const adminUser = seededUsers.find((u) => u.email === 'admin@example.com') || seededUsers[0];
+  const demoUser = seededUsers.find((u) => u.email === 'demo@example.com') || seededUsers[0];
 
-  const demoUser = await User.create({
-    name: 'Demo User',
-    email: 'demo@example.com',
-    password_hash: passwordHash,
-    role: 'end_user',
-    avatar_url: 'https://i.pravatar.cc/150?u=demo@example.com',
-  });
-
-  const adminUser = await User.create({
-    name: 'Admin User',
-    email: 'admin@example.com',
-    password_hash: passwordHash,
-    role: 'admin',
-    avatar_url: 'https://i.pravatar.cc/150?u=admin@example.com',
-  });
+  if (await Campaign.countDocuments() > 0) {
+    console.log('Campaigns already seeded.');
+    return;
+  }
 
   const campaigns = await Campaign.insertMany(
     campaignTemplates.map((template, index) => ({

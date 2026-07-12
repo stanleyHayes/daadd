@@ -15,7 +15,7 @@ export interface ICampaign extends Document {
   enable_ai_optimization: boolean;
   language: string;
   platform_ids: string[];
-  owner: Types.ObjectId;
+  owner: string | Types.ObjectId;
   created_at: Date;
   updated_at: Date;
 }
@@ -37,7 +37,7 @@ const CampaignSchema = new Schema<ICampaign>(
     enable_ai_optimization: { type: Boolean, default: false },
     language: { type: String, default: 'en' },
     platform_ids: { type: [String], default: [] },
-    owner: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    owner: { type: Schema.Types.Mixed, ref: 'User', required: true },
   },
   { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }
 );

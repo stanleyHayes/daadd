@@ -81,6 +81,29 @@ router.get('/me', authMiddleware, async (req: Request, res: Response) => {
   }
 });
 
+router.patch('/me', authMiddleware, async (req: Request, res: Response) => {
+  try {
+    const { name, avatar_url, preferences } = req.body;
+    const updates: Record<string, any> = {};
+    if (name !== undefined) updates.name = name;
+    if (avatar_url !== undefined) updates.avatar_url = avatar_url;
+    if (preferences !== undefined) updates.preferences = preferences;
+
+    const user = await User.findByIdAndUpdate(
+      req.user!.userId,
+      { $set: updates },
+      { new: true }
+    );
+    if (!user) {
+      res.status(404).json({ success: false, message: 'User not found' });
+      return;
+    }
+    res.json(success(sanitizeUser(user), 'Profile updated'));
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message || 'Failed to update profile' });
+  }
+});
+
 router.patch('/change-password', authMiddleware, async (req: Request, res: Response) => {
   try {
     const { currentPassword, newPassword } = req.body;

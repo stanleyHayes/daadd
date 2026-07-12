@@ -108,7 +108,7 @@ export function ContactPage() {
       <div className="bg-bg-primary dark:bg-slate-950">
         {/* Hero */}
         <section className="bg-primary-700 text-white">
-          <WatermarkBanner />
+          <WatermarkBanner icon={<Mail />} />
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
             <div className="max-w-2xl">
               <p className="text-secondary-300 font-semibold tracking-wide uppercase text-sm mb-3">Contact</p>

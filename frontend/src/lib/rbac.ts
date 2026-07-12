@@ -2,11 +2,11 @@ import type { UserRole } from '@/types';
 
 // Define which sidebar nav keys each role can see
 export const ROLE_NAV_ITEMS: Record<UserRole, string[]> = {
-  admin: ['dashboard', 'campaigns', 'analytics', 'heatmaps', 'ai-optimization', 'anomalies', 'benchmarking', 'storyteller', 'team', 'settings'],
-  advertiser: ['dashboard', 'campaigns', 'analytics', 'heatmaps', 'ai-optimization', 'anomalies', 'benchmarking', 'storyteller', 'team', 'settings'],
-  campaign_manager: ['dashboard', 'campaigns', 'analytics', 'heatmaps', 'settings'],
-  analyst: ['dashboard', 'analytics', 'heatmaps', 'benchmarking', 'storyteller', 'settings'],
-  end_user: [],
+  admin: ['dashboard', 'campaigns', 'analytics', 'heatmaps', 'ai-optimization', 'anomalies', 'benchmarking', 'storyteller', 'team', 'profile', 'settings'],
+  advertiser: ['dashboard', 'campaigns', 'analytics', 'heatmaps', 'ai-optimization', 'anomalies', 'benchmarking', 'storyteller', 'team', 'profile', 'settings'],
+  campaign_manager: ['dashboard', 'campaigns', 'analytics', 'heatmaps', 'profile', 'settings'],
+  analyst: ['dashboard', 'analytics', 'heatmaps', 'benchmarking', 'storyteller', 'profile', 'settings'],
+  end_user: ['profile', 'settings'],
 };
 
 // Action-level permissions: which roles can perform each action
@@ -34,8 +34,6 @@ export function hasPermission(userRole: string, permission: PermissionKey): bool
  * Other roles are checked against their ROLE_NAV_ITEMS.
  */
 export function canAccessRoute(userRole: string, route: string): boolean {
-  if (userRole === 'end_user') return false;
-
   // Extract the first segment after /dashboard/
   // e.g. /dashboard/campaigns/new -> "campaigns"
   // e.g. /dashboard -> "dashboard"

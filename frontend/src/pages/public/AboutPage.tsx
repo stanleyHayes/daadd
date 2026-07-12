@@ -66,7 +66,7 @@ export function AboutPage() {
       <div>
         {/* Hero */}
         <section className="relative overflow-hidden bg-primary-700 text-white py-24">
-          <WatermarkBanner />
+          <WatermarkBanner icon={<Rocket />} />
           <div className="max-w-4xl mx-auto px-4 text-center relative">
             <motion.div
               initial={{ opacity: 0, y: 20 }}

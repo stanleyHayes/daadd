@@ -39,7 +39,7 @@ router.get('/', authMiddleware, async (req: Request, res: Response) => {
 router.get('/balance', authMiddleware, async (req: Request, res: Response) => {
   try {
     const result = await Reward.aggregate([
-      { $match: { user_id: new Types.ObjectId(req.user!.userId), status: { $in: ['approved', 'paid'] } } },
+      { $match: { user_id: req.user!.userId, status: { $in: ['approved', 'paid'] } } },
       {
         $group: {
           _id: '$user_id',

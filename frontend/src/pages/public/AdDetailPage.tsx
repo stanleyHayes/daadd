@@ -103,7 +103,7 @@ export function AdDetailPage() {
             <div className="lg:col-span-2 space-y-8">
               {/* Creative Display */}
               <div className="aspect-video bg-card-bg rounded-2xl border border-border-color flex items-center justify-center relative overflow-hidden shadow-sm">
-                <WatermarkBanner className="opacity-50" />
+                <WatermarkBanner className="opacity-50" icon={<Eye />} />
                 {ad.creativeUrl ? (
                   ad.creativeType === 'video' ? (
                     <video src={ad.creativeUrl} controls className="w-full h-full object-contain" />

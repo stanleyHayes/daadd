@@ -31,7 +31,7 @@ export function useRewardBalance() {
   return useQuery({
     queryKey: ['rewardBalance'],
     queryFn: async () => {
-      const res = await api.get<ApiResponse<{ balance: number; total_earned: number }>>('/rewards/balance');
+      const res = await api.get<ApiResponse<{ balance: number; currency: string }>>('/rewards/balance');
       return res.data.data;
     },
   });

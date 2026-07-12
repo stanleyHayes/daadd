@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
@@ -10,6 +11,8 @@ import { PublicLayout } from '@/layouts/PublicLayout';
 
 // UI
 import { ErrorBoundary } from '@/components/ui/ErrorBoundary';
+import { ScrollToTopOnRouteChange } from '@/components/ui/ScrollToTopOnRouteChange';
+import { SplashScreen } from '@/components/layout/SplashScreen';
 
 // Auth
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
@@ -30,6 +33,9 @@ import { PrivacyPage } from '@/pages/public/PrivacyPage';
 import { TermsPage } from '@/pages/public/TermsPage';
 import { CookiePolicyPage } from '@/pages/public/CookiePolicyPage';
 import { ContactPage } from '@/pages/public/ContactPage';
+import { PartnersPage } from '@/pages/public/PartnersPage';
+import { PartnerDetailPage } from '@/pages/public/PartnerDetailPage';
+import { NotFoundPage } from '@/pages/public/NotFoundPage';
 
 // Dashboard Pages
 import { DashboardHome } from '@/pages/dashboard/DashboardHome';
@@ -44,6 +50,7 @@ import { AnomaliesPage } from '@/pages/dashboard/AnomaliesPage';
 import { BenchmarkingPage } from '@/pages/dashboard/BenchmarkingPage';
 import { StorytellerPage } from '@/pages/dashboard/StorytellerPage';
 import { TeamPage } from '@/pages/dashboard/TeamPage';
+import { ProfilePage } from '@/pages/dashboard/ProfilePage';
 import { SettingsPage } from '@/pages/dashboard/SettingsPage';
 
 const queryClient = new QueryClient({
@@ -58,12 +65,22 @@ const queryClient = new QueryClient({
 
 function App() {
   const location = useLocation();
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowSplash(false), 1400);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
+      <ScrollToTopOnRouteChange />
       <ErrorBoundary>
         <AnimatePresence mode="wait">
-          <Routes location={location} key={location.pathname}>
+          {showSplash ? (
+            <SplashScreen key="splash" />
+          ) : (
+            <Routes location={location} key={location.pathname}>
           {/* Public Routes */}
           <Route element={<PublicLayout />}>
             <Route path="/" element={<LandingPage />} />
@@ -77,6 +94,9 @@ function App() {
             <Route path="/terms" element={<TermsPage />} />
             <Route path="/cookies" element={<CookiePolicyPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/partners" element={<PartnersPage />} />
+            <Route path="/partners/:slug" element={<PartnerDetailPage />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Route>
 
           {/* Auth Routes (no layout wrapper) */}
@@ -108,10 +128,13 @@ function App() {
               <Route element={<ProtectedRoute allowedRoles={['admin', 'advertiser', 'campaign_manager']} />}>
                 <Route path="/dashboard/team" element={<TeamPage />} />
               </Route>
+              <Route path="/dashboard/profile" element={<ProfilePage />} />
               <Route path="/dashboard/settings" element={<SettingsPage />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Route>
           </Route>
           </Routes>
+          )}
         </AnimatePresence>
       </ErrorBoundary>
 

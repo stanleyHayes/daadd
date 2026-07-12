@@ -113,7 +113,7 @@ export function BlogPage() {
       <div className="relative min-h-screen bg-bg-secondary">
         {/* Hero */}
         <section className="relative bg-primary-700 text-white py-20 overflow-hidden">
-          <WatermarkBanner />
+          <WatermarkBanner icon={<BookOpen />} />
           <div className="absolute inset-0 opacity-10">
             <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-secondary-500 blur-3xl" />
             <div className="absolute bottom-0 left-0 w-72 h-72 rounded-full bg-white blur-3xl" />

@@ -80,8 +80,8 @@ export function useUpdateProfile() {
   const setUser = useAuthStore((s) => s.setUser);
 
   return useMutation({
-    mutationFn: async ({ id, data }: { id: string; data: Partial<User> }) => {
-      const res = await api.patch<ApiResponse<User>>(`/users/${id}`, data);
+    mutationFn: async (data: Partial<User>) => {
+      const res = await api.patch<ApiResponse<User>>('/auth/me', data);
       return res.data.data;
     },
     onSuccess: (updatedUser) => {

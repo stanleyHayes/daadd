@@ -1,12 +1,20 @@
 import React from 'react';
+import { Cookie } from 'lucide-react';
 import { PageTransition } from '@/components/ui/PageTransition';
+import { WatermarkBanner } from '@/components/ui/Watermark';
 
 export function CookiePolicyPage() {
   return (
     <PageTransition>
+      <section className="relative bg-primary-700 text-white py-16 sm:py-20 overflow-hidden">
+        <WatermarkBanner icon={<Cookie />} />
+        <div className="relative max-w-4xl mx-auto px-4 text-center">
+          <h1 className="text-3xl sm:text-4xl font-extrabold mb-4">Cookie Policy</h1>
+          <p className="text-sm text-primary-100">Last updated: March 1, 2026</p>
+        </div>
+      </section>
+
       <div className="max-w-4xl mx-auto px-4 py-12">
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white mb-2">Cookie Policy</h1>
-        <p className="text-sm text-gray-500 dark:text-slate-400 mb-10">Last updated: March 1, 2026</p>
 
         <div className="prose-container space-y-10">
           {/* What Are Cookies */}

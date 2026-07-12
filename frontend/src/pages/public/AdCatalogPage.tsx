@@ -59,7 +59,7 @@ export function AdCatalogPage() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* Header */}
           <div className="relative -mx-4 sm:-mx-6 lg:-mx-8 mb-10 px-4 sm:px-6 lg:px-8 py-12 bg-primary-700 text-white overflow-hidden rounded-b-2xl sm:rounded-b-3xl">
-            <WatermarkBanner />
+            <WatermarkBanner icon={<LayoutGrid />} />
             <div className="relative">
               <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
                 Browse Ads

@@ -35,6 +35,7 @@ const breadcrumbLabels: Record<string, string> = {
  storyteller: 'Storyteller',
  team: 'Team',
  settings: 'Settings',
+ profile: 'My Profile',
 };
 
 const commandItems = [
@@ -249,7 +250,7 @@ export function TopBar() {
  description="View your profile"
  onClick={() => {
  setUserMenuOpen(false);
- navigate('/dashboard/settings');
+ navigate('/dashboard/profile');
  }}
  />
  <MenuButton

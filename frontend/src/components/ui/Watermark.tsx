@@ -82,10 +82,12 @@ export function WatermarkBanner({
   className,
   text = 'AdPlatform',
   align = 'right',
+  icon,
 }: {
   className?: string;
   text?: string;
   align?: 'left' | 'right';
+  icon?: React.ReactNode;
 }) {
   return (
     <div
@@ -96,15 +98,28 @@ export function WatermarkBanner({
       )}
       aria-hidden="true"
     >
-      <div
-        className={cn(
-          'text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-none',
-          'opacity-[0.06] dark:opacity-[0.045] text-white whitespace-nowrap',
-          align === 'right' ? '-rotate-12 translate-x-8 translate-y-6' : 'rotate-12 -translate-x-8 translate-y-6'
-        )}
-      >
-        {text}
-      </div>
+      {icon ? (
+        <div
+          className={cn(
+            'w-32 h-32 sm:w-40 sm:h-40 md:w-52 md:h-52',
+            'opacity-[0.08] dark:opacity-[0.06] text-white',
+            align === 'right' ? '-rotate-12 translate-x-6 translate-y-6' : 'rotate-12 -translate-x-6 translate-y-6',
+            '[&>svg]:w-full [&>svg]:h-full'
+          )}
+        >
+          {icon}
+        </div>
+      ) : (
+        <div
+          className={cn(
+            'text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-none',
+            'opacity-[0.06] dark:opacity-[0.045] text-white whitespace-nowrap',
+            align === 'right' ? '-rotate-12 translate-x-8 translate-y-6' : 'rotate-12 -translate-x-8 translate-y-6'
+          )}
+        >
+          {text}
+        </div>
+      )}
     </div>
   );
 }

@@ -7,6 +7,11 @@ export interface User {
   email: string;
   role: UserRole;
   avatar_url?: string;
+  preferences?: {
+    theme?: 'light' | 'dark' | 'system';
+    language?: string;
+    email_notifications?: boolean;
+  };
   created_at: string;
 }
 
@@ -234,7 +239,7 @@ export interface AdJourneyStory {
 }
 
 // ---- Rewards ----
-export type RewardStatus = 'pending' | 'claimed' | 'expired';
+export type RewardStatus = 'pending' | 'approved' | 'paid' | 'rejected' | 'claimed' | 'expired';
 
 export interface Reward {
   id: string;
@@ -270,7 +275,7 @@ export interface AuditLogEntry {
 }
 
 // ---- Notifications ----
-export type NotificationType = 'anomaly' | 'optimization' | 'campaign' | 'team' | 'info';
+export type NotificationType = 'anomaly' | 'optimization' | 'campaign' | 'team' | 'info' | 'reward' | 'welcome' | 'system';
 
 export interface Notification {
   id: string;

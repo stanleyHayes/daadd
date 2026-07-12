@@ -1,5 +1,7 @@
 import React from 'react';
+import { Scale } from 'lucide-react';
 import { PageTransition } from '@/components/ui/PageTransition';
+import { WatermarkBanner } from '@/components/ui/Watermark';
 
 const sections = [
   { id: 'acceptance', title: '1. Acceptance of Terms' },
@@ -18,9 +20,15 @@ const sections = [
 export function TermsPage() {
   return (
     <PageTransition>
+      <section className="relative bg-primary-700 text-white py-16 sm:py-20 overflow-hidden">
+        <WatermarkBanner icon={<Scale />} />
+        <div className="relative max-w-4xl mx-auto px-4 text-center">
+          <h1 className="text-3xl sm:text-4xl font-extrabold mb-4">Terms of Service</h1>
+          <p className="text-sm text-primary-100">Last updated: March 1, 2026</p>
+        </div>
+      </section>
+
       <div className="max-w-4xl mx-auto px-4 py-12">
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white mb-2">Terms of Service</h1>
-        <p className="text-sm text-gray-500 dark:text-slate-400 mb-10">Last updated: March 1, 2026</p>
 
         {/* Table of Contents */}
         <nav className="bg-gray-50 dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 p-6 mb-12">

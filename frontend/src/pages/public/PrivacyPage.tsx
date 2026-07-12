@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Shield } from 'lucide-react';
 import { PageTransition } from '@/components/ui/PageTransition';
+import { WatermarkBanner } from '@/components/ui/Watermark';
 
 const sections = [
   { id: 'information-we-collect', title: '1. Information We Collect' },
@@ -18,9 +20,15 @@ const sections = [
 export function PrivacyPage() {
   return (
     <PageTransition>
+      <section className="relative bg-primary-700 text-white py-16 sm:py-20 overflow-hidden">
+        <WatermarkBanner icon={<Shield />} />
+        <div className="relative max-w-4xl mx-auto px-4 text-center">
+          <h1 className="text-3xl sm:text-4xl font-extrabold mb-4">Privacy Policy</h1>
+          <p className="text-sm text-primary-100">Last updated: March 1, 2026</p>
+        </div>
+      </section>
+
       <div className="max-w-4xl mx-auto px-4 py-12">
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white mb-2">Privacy Policy</h1>
-        <p className="text-sm text-gray-500 dark:text-slate-400 mb-10">Last updated: March 1, 2026</p>
 
         {/* Table of Contents */}
         <nav className="bg-gray-50 dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 p-6 mb-12">
