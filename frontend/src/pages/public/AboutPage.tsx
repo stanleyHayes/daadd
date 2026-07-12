@@ -5,6 +5,7 @@ import {
   Zap, Target, Users, Shield, Brain,
   ArrowRight, Heart, Lightbulb, Rocket
 } from 'lucide-react';
+import { WatermarkBanner } from '@/components/ui/Watermark';
 import { motion, useInView, useMotionValue, animate } from 'framer-motion';
 
 const stats = [
@@ -65,6 +66,7 @@ export function AboutPage() {
       <div>
         {/* Hero */}
         <section className="relative overflow-hidden bg-primary-700 text-white py-24">
+          <WatermarkBanner />
           <div className="max-w-4xl mx-auto px-4 text-center relative">
             <motion.div
               initial={{ opacity: 0, y: 20 }}

@@ -16,6 +16,7 @@ import {
   ChevronDown,
   Clock,
 } from 'lucide-react';
+import { WatermarkBanner } from '@/components/ui/Watermark';
 import toast from 'react-hot-toast';
 import { cn } from '@/lib/utils';
 
@@ -107,6 +108,7 @@ export function ContactPage() {
       <div className="bg-bg-primary dark:bg-slate-950">
         {/* Hero */}
         <section className="bg-primary-700 text-white">
+          <WatermarkBanner />
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
             <div className="max-w-2xl">
               <p className="text-secondary-300 font-semibold tracking-wide uppercase text-sm mb-3">Contact</p>

@@ -28,6 +28,7 @@ export function EmptyState({
   size = 'md',
   variant = 'default',
 }: EmptyStateProps) {
+  const isBordered = variant === 'bordered';
   const sizeClasses = {
     sm: 'py-8 px-4',
     md: 'py-14 px-6',
@@ -62,7 +63,8 @@ export function EmptyState({
     <div
       className={cn(
         'relative overflow-hidden rounded-2xl text-center',
-        'bg-card-bg border-2 border-dashed border-border-color',
+        'bg-card-bg',
+        isBordered ? 'border-2 border-dashed border-border-color' : 'border border-border-color',
         sizeClasses[size],
         className
       )}

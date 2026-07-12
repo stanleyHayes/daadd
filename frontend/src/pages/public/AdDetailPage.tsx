@@ -10,6 +10,7 @@ import { useClaimReward } from '@/hooks/useRewards';
 import { usePublicAd, useRelatedAds } from '@/hooks/usePublicAds';
 import { useAuthStore } from '@/stores/auth.store';
 import { Eye, Play, ArrowLeft, AlertTriangle, Star, Gift, Building2, Calendar, Shield } from 'lucide-react';
+import { WatermarkBanner } from '@/components/ui/Watermark';
 import { INDUSTRY_COLOR_MAP } from '@/lib/constants';
 import toast from 'react-hot-toast';
 import { PageTransition } from '@/components/ui/PageTransition';
@@ -102,6 +103,7 @@ export function AdDetailPage() {
             <div className="lg:col-span-2 space-y-8">
               {/* Creative Display */}
               <div className="aspect-video bg-card-bg rounded-2xl border border-border-color flex items-center justify-center relative overflow-hidden shadow-sm">
+                <WatermarkBanner className="opacity-50" />
                 {ad.creativeUrl ? (
                   ad.creativeType === 'video' ? (
                     <video src={ad.creativeUrl} controls className="w-full h-full object-contain" />

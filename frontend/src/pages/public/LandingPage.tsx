@@ -6,6 +6,7 @@ import {
  ChevronRight, CheckCircle2, Shield, Zap, MousePointerClick,
  MapPin, ArrowUpRight, Globe
 } from 'lucide-react';
+import { WatermarkBanner } from '@/components/ui/Watermark';
 import { motion, useInView, useMotionValue, useTransform, animate } from 'framer-motion';
 import { PageTransition } from '@/components/ui/PageTransition';
 import { EmptyState } from '@/components/ui/EmptyState';
@@ -154,6 +155,7 @@ export function LandingPage() {
  <div>
  {/* ========== HERO ========== */}
  <section className="relative overflow-hidden bg-primary-700 text-white">
+          <WatermarkBanner />
  {/* Animated background blobs */}
  <FloatingBlob className="top-0 left-0 w-96 h-96 bg-accent-400" delay={0} />
  <FloatingBlob className="bottom-0 right-0 w-80 h-80 bg-secondary-400" delay={2} />

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Sidebar } from '@/components/layout/Sidebar';
 import { TopBar } from '@/components/layout/TopBar';
+import { WatermarkPattern } from '@/components/ui/Watermark';
 
 export function DashboardLayout() {
   const [collapsed, setCollapsed] = useState(false);
@@ -17,6 +18,7 @@ export function DashboardLayout() {
       >
         <TopBar />
         <main className="flex-1 p-4 md:p-6 relative">
+          <WatermarkPattern />
           <Outlet />
         </main>
       </div>

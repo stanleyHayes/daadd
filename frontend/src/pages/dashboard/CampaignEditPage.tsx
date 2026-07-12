@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { Select } from '@/components/ui/Select';
 import { PageTransition } from '@/components/ui/PageTransition';
 import { cn } from '@/lib/utils';
 import { INDUSTRIES, DEVICE_TYPES, LANGUAGES, REGIONS } from '@/lib/constants';
@@ -56,7 +55,7 @@ export function CampaignEditPage() {
     }
   }, [campaign]);
 
-  const updateField = (field: string, value: any) => {
+  const updateField = (field: string, value: unknown) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -87,20 +86,24 @@ export function CampaignEditPage() {
         data: {
           name: formData.name,
           description: formData.description,
-          industry: formData.industry,
+          industry: formData.industry as import('@/types').Industry,
           budget_total: formData.budget_total,
           reward_value: formData.reward_value,
           is_age_restricted: formData.age_restricted,
           targeting_config: {
             regions: formData.regions,
-            devices: formData.devices,
-          },
+            devices: formData.devices as ('desktop' | 'mobile' | 'tablet')[],
+            age_min: formData.age_min,
+            age_max: formData.age_max,
+            languages: formData.languages,
+            localized: formData.localized,
+          } as import('@/types').TargetingConfig,
           language: formData.languages[0],
         },
       });
       toast.success('Campaign updated successfully');
       navigate(`/dashboard/campaigns/${id}`);
-    } catch (error) {
+    } catch {
       toast.error('Failed to update campaign');
     }
   };
@@ -214,23 +217,28 @@ export function CampaignEditPage() {
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-2">Description</label>
-                    <Input
+                    <textarea
                       value={formData.description}
                       onChange={(e) => updateField('description', e.target.value)}
                       placeholder="Describe your campaign..."
-                      as="textarea"
+                      rows={4}
+                      className="block w-full rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-2 text-sm dark:text-white placeholder:text-gray-400 dark:placeholder:text-slate-500 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 focus:outline-none resize-y"
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-2">Industry</label>
-                    <Select value={formData.industry} onChange={(e) => updateField('industry', e.target.value)}>
+                    <select
+                      value={formData.industry}
+                      onChange={(e) => updateField('industry', e.target.value)}
+                      className="block w-full rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-2 text-sm dark:text-white focus:border-primary-500 focus:ring-1 focus:ring-primary-500 focus:outline-none"
+                    >
                       <option value="">Select an industry</option>
                       {INDUSTRIES.map((ind) => (
-                        <option key={ind} value={ind}>
-                          {ind}
+                        <option key={ind.value} value={ind.value}>
+                          {ind.label}
                         </option>
                       ))}
-                    </Select>
+                    </select>
                   </div>
                 </div>
               )}
@@ -264,16 +272,16 @@ export function CampaignEditPage() {
                     <div className="flex flex-wrap gap-2">
                       {DEVICE_TYPES.map((device) => (
                         <button
-                          key={device}
-                          onClick={() => toggleArrayItem('devices', device)}
+                          key={device.value}
+                          onClick={() => toggleArrayItem('devices', device.value)}
                           className={cn(
                             'px-3 py-2 rounded-lg text-sm font-medium transition',
-                            formData.devices.includes(device)
+                            formData.devices.includes(device.value)
                               ? 'bg-primary-600 text-white'
                               : 'bg-gray-200 dark:bg-slate-700 text-gray-700 dark:text-slate-300'
                           )}
                         >
-                          {device}
+                          {device.label}
                         </button>
                       ))}
                     </div>
@@ -284,16 +292,16 @@ export function CampaignEditPage() {
                     <div className="flex flex-wrap gap-2">
                       {LANGUAGES.map((lang) => (
                         <button
-                          key={lang.code}
-                          onClick={() => toggleArrayItem('languages', lang.code)}
+                          key={lang.value}
+                          onClick={() => toggleArrayItem('languages', lang.value)}
                           className={cn(
                             'px-3 py-2 rounded-lg text-sm font-medium transition',
-                            formData.languages.includes(lang.code)
+                            formData.languages.includes(lang.value)
                               ? 'bg-primary-600 text-white'
                               : 'bg-gray-200 dark:bg-slate-700 text-gray-700 dark:text-slate-300'
                           )}
                         >
-                          {lang.name}
+                          {lang.label}
                         </button>
                       ))}
                     </div>
@@ -304,16 +312,16 @@ export function CampaignEditPage() {
                     <div className="flex flex-wrap gap-2">
                       {REGIONS.map((region) => (
                         <button
-                          key={region.code}
-                          onClick={() => toggleArrayItem('regions', region.code)}
+                          key={region.value}
+                          onClick={() => toggleArrayItem('regions', region.value)}
                           className={cn(
                             'px-3 py-2 rounded-lg text-sm font-medium transition',
-                            formData.regions.includes(region.code)
+                            formData.regions.includes(region.value)
                               ? 'bg-primary-600 text-white'
                               : 'bg-gray-200 dark:bg-slate-700 text-gray-700 dark:text-slate-300'
                           )}
                         >
-                          {region.name}
+                          {region.label}
                         </button>
                       ))}
                     </div>

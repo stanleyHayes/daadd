@@ -26,7 +26,11 @@ export function Watermark({
 }: WatermarkProps) {
   return (
     <div
-      className={cn('pointer-events-none select-none absolute opacity-[0.04] dark:opacity-[0.03]', sizes[size], className)}
+      className={cn(
+        'pointer-events-none select-none absolute opacity-[0.06] dark:opacity-[0.045]',
+        sizes[size],
+        className
+      )}
       style={{ transform: `rotate(${rotate}deg)` }}
       aria-hidden="true"
     >
@@ -43,7 +47,7 @@ export function Watermark({
 }
 
 function makeWatermarkPattern(text: string) {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="220" height="220" viewBox="0 0 220 220"><text x="50%" y="50%" fill="currentColor" font-size="14" font-family="Outfit, sans-serif" font-weight="600" letter-spacing="0.1em" text-anchor="middle" dominant-baseline="middle" transform="rotate(-35 110 110)">${text}</text></svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="280" height="280" viewBox="0 0 280 280"><text x="50%" y="50%" fill="currentColor" font-size="16" font-family="Outfit, sans-serif" font-weight="700" letter-spacing="0.12em" text-anchor="middle" dominant-baseline="middle" transform="rotate(-30 140 140)">${text}</text></svg>`;
   return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
 }
 
@@ -57,12 +61,12 @@ export function WatermarkPattern({
   return (
     <div
       className={cn(
-        'pointer-events-none absolute inset-0 opacity-[0.035] dark:opacity-[0.025]',
+        'pointer-events-none absolute inset-0 opacity-[0.055] dark:opacity-[0.04]',
         className
       )}
       style={{
         backgroundImage: makeWatermarkPattern(text),
-        backgroundSize: '220px 220px',
+        backgroundSize: '280px 280px',
       }}
       aria-hidden="true"
     />
@@ -72,4 +76,35 @@ export function WatermarkPattern({
 /** @deprecated Use WatermarkPattern for solid-color watermark backgrounds */
 export function WatermarkGrid({ className }: { className?: string }) {
   return <WatermarkPattern className={className} />;
+}
+
+export function WatermarkBanner({
+  className,
+  text = 'AdPlatform',
+  align = 'right',
+}: {
+  className?: string;
+  text?: string;
+  align?: 'left' | 'right';
+}) {
+  return (
+    <div
+      className={cn(
+        'pointer-events-none absolute select-none overflow-hidden',
+        align === 'right' ? 'right-0 bottom-0' : 'left-0 bottom-0',
+        className
+      )}
+      aria-hidden="true"
+    >
+      <div
+        className={cn(
+          'text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-none',
+          'opacity-[0.06] dark:opacity-[0.045] text-white whitespace-nowrap',
+          align === 'right' ? '-rotate-12 translate-x-8 translate-y-6' : 'rotate-12 -translate-x-8 translate-y-6'
+        )}
+      >
+        {text}
+      </div>
+    </div>
+  );
 }

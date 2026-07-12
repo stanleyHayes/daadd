@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { PageTransition } from '@/components/ui/PageTransition';
 import { Clock, ArrowUpRight, BookOpen, Filter } from 'lucide-react';
+import { WatermarkBanner } from '@/components/ui/Watermark';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
@@ -112,6 +113,7 @@ export function BlogPage() {
       <div className="relative min-h-screen bg-bg-secondary">
         {/* Hero */}
         <section className="relative bg-primary-700 text-white py-20 overflow-hidden">
+          <WatermarkBanner />
           <div className="absolute inset-0 opacity-10">
             <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-secondary-500 blur-3xl" />
             <div className="absolute bottom-0 left-0 w-72 h-72 rounded-full bg-white blur-3xl" />

@@ -6,6 +6,7 @@ import { z } from 'zod';
 import toast from 'react-hot-toast';
 import { useRegister } from '@/hooks/useAuth';
 import { User, Mail, Lock, Eye, EyeOff, Zap, ArrowRight, Megaphone, Gift, Check } from 'lucide-react';
+import { WatermarkBanner } from '@/components/ui/Watermark';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
@@ -69,6 +70,7 @@ export function RegisterPage() {
  <div className="min-h-screen flex">
  {/* Left Panel - Branding */}
  <div className="hidden lg:flex lg:w-5/12 relative overflow-hidden bg-primary-700">
+ <WatermarkBanner />
  <div className="relative z-10 flex flex-col justify-between p-12 text-white w-full">
  <motion.div
  initial={{ opacity: 0, x: -20 }}

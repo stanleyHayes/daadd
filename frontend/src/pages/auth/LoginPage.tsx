@@ -8,6 +8,7 @@ import toast from 'react-hot-toast';
 
 import { useLogin } from '@/hooks/useAuth';
 import { Mail, Lock, Eye, EyeOff, Zap, ArrowRight, BarChart3, Shield, TrendingUp, Gift } from 'lucide-react';
+import { WatermarkBanner } from '@/components/ui/Watermark';
 import { motion } from 'framer-motion';
 
 const loginSchema = z.object({
@@ -51,6 +52,7 @@ export function LoginPage() {
  <div className="min-h-screen flex">
  {/* Left Panel - Branding & Features */}
  <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-primary-600">
+ <WatermarkBanner />
  <div className="relative z-10 flex flex-col justify-between p-12 text-white w-full">
  {/* Logo */}
  <motion.div

@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 import { Search, SlidersHorizontal, AlertTriangle, EyeOff, LayoutGrid, List } from 'lucide-react';
 import { INDUSTRIES } from '@/lib/constants';
 import { PageTransition } from '@/components/ui/PageTransition';
+import { WatermarkBanner } from '@/components/ui/Watermark';
 import { usePublicAds } from '@/hooks/usePublicAds';
 import { motion } from 'framer-motion';
 import { SkeletonAdCard, SkeletonAdListItem } from '@/components/ui/Skeleton';
@@ -57,14 +58,17 @@ export function AdCatalogPage() {
       <div className="relative min-h-screen bg-bg-secondary">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* Header */}
-          <div className="mb-8 text-center sm:text-left">
-            <h1 className="text-3xl sm:text-4xl font-bold text-text-primary tracking-tight">
-              Browse Ads
-            </h1>
-            <p className="text-text-secondary mt-2 max-w-2xl">
-              Discover premium campaigns and earn rewards for your engagement.
-            </p>
-            <div className="mt-4 mx-auto sm:mx-0 h-1 w-20 bg-secondary-500 rounded-full" />
+          <div className="relative -mx-4 sm:-mx-6 lg:-mx-8 mb-10 px-4 sm:px-6 lg:px-8 py-12 bg-primary-700 text-white overflow-hidden rounded-b-2xl sm:rounded-b-3xl">
+            <WatermarkBanner />
+            <div className="relative">
+              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+                Browse Ads
+              </h1>
+              <p className="text-primary-100 mt-2 max-w-2xl">
+                Discover premium campaigns and earn rewards for your engagement.
+              </p>
+              <div className="mt-4 h-1 w-20 bg-secondary-500 rounded-full" />
+            </div>
           </div>
 
           {/* Toolbar */}

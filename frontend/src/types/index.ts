@@ -62,6 +62,9 @@ export interface Campaign {
   ai_mode: AIMode;
   advertiser_id: string;
   is_age_restricted: boolean;
+  age_min?: number;
+  age_max?: number;
+  language?: string;
   ctr?: number;
   created_at: string;
   updated_at: string;

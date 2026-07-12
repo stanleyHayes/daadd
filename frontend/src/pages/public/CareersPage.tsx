@@ -1,6 +1,7 @@
 import React from 'react';
 import { PageTransition } from '@/components/ui/PageTransition';
 import { Globe, TrendingUp, BookOpen, Clock, MapPin, Mail } from 'lucide-react';
+import { WatermarkBanner } from '@/components/ui/Watermark';
 import toast from 'react-hot-toast';
 
 const perks = [
@@ -65,6 +66,7 @@ export function CareersPage() {
  <div>
  {/* Hero */}
  <section className="bg-primary-600 text-white py-20">
+          <WatermarkBanner />
  <div className="max-w-4xl mx-auto px-4 text-center">
  <h1 className="text-4xl sm:text-5xl font-extrabold mb-4">Join Our Team</h1>
  <p className="text-lg text-primary-100 max-w-2xl mx-auto">

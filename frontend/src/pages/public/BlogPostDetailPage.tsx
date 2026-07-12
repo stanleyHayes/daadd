@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import DOMPurify from 'dompurify';
 import { ArrowLeft, Clock, Share2, Bookmark, Calendar } from 'lucide-react';
+import { WatermarkBanner } from '@/components/ui/Watermark';
 import { PageTransition } from '@/components/ui/PageTransition';
 
 import { cn } from '@/lib/utils';
@@ -322,6 +323,7 @@ export function BlogPostDetailPage() {
         {/* Header */}
         <section className={cn('relative overflow-hidden py-16 sm:py-20', post.image)}>
           <div className="absolute inset-0 bg-primary-700/90 dark:bg-primary-900/90" />
+          <WatermarkBanner className="opacity-40" />
           <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-secondary-500/20 blur-3xl" />
           <div className="absolute bottom-0 left-0 w-72 h-72 rounded-full bg-white/10 blur-3xl" />
 

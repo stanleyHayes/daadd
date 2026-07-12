@@ -18,6 +18,7 @@ import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
 import { getInitials } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ScrollToTop } from '@/components/ui/ScrollToTop';
+import { WatermarkPattern } from '@/components/ui/Watermark';
 import { cn } from '@/lib/utils';
 
 export function PublicLayout() {
@@ -267,7 +268,8 @@ export function PublicLayout() {
  </AnimatePresence>
  </header>
 
- <main className="flex-1">
+ <main className="flex-1 relative">
+ <WatermarkPattern />
  <Outlet />
  </main>
 
