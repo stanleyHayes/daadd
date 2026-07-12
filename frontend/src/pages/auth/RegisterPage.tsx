@@ -300,9 +300,9 @@ export function RegisterPage() {
  />
  <span className="text-sm text-gray-600 dark:text-slate-400 leading-relaxed">
  I agree to the{' '}
- <Link to="/terms" className="text-primary-600 hover:text-primary-700 font-medium">Terms of Service</Link>
+ <Link to="/terms" className="text-primary-600 hover:text-primary-700 dark:text-secondary-400 dark:hover:text-secondary-300 font-medium">Terms of Service</Link>
  {' '}and{' '}
- <Link to="/privacy" className="text-primary-600 hover:text-primary-700 font-medium">Privacy Policy</Link>
+ <Link to="/privacy" className="text-primary-600 hover:text-primary-700 dark:text-secondary-400 dark:hover:text-secondary-300 font-medium">Privacy Policy</Link>
  </span>
  </label>
  {errors.terms && <p className="text-xs text-danger-600">{errors.terms.message}</p>}
@@ -311,7 +311,7 @@ export function RegisterPage() {
  <button
  type="submit"
  disabled={registerMutation.isPending}
- className="w-full flex items-center justify-center gap-2 rounded-xl bg-primary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-medium py-3 px-4 text-sm shadow-lg shadow-primary-500/25 hover:shadow-primary-500/40 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-2"
+ className="w-full flex items-center justify-center gap-2 rounded-xl bg-secondary-600 hover:bg-secondary-700 text-primary-900 font-medium py-3 px-4 text-sm shadow-lg shadow-secondary-500/25 hover:shadow-secondary-500/40 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-2"
  >
  {registerMutation.isPending ? (
  <div className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -323,7 +323,7 @@ export function RegisterPage() {
 
  <p className="mt-6 text-center text-sm text-gray-500 dark:text-slate-400">
  Already have an account?{' '}
- <Link to="/login" className="text-primary-600 hover:text-primary-700 font-semibold">
+ <Link to="/login" className="text-primary-600 hover:text-primary-700 dark:text-secondary-400 dark:hover:text-secondary-300 font-semibold">
  Sign in
  </Link>
  </p>

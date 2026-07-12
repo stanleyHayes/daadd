@@ -176,7 +176,7 @@ export function LoginPage() {
  <div>
  <div className="flex items-center justify-between mb-1.5">
  <label className="block text-sm font-medium text-gray-700 dark:text-slate-300">Password</label>
- <Link to="/forgot-password" className="text-xs text-primary-600 hover:text-primary-700 font-medium">Forgot password?</Link>
+ <Link to="/forgot-password" className="text-xs text-primary-600 hover:text-primary-700 dark:text-secondary-400 dark:hover:text-secondary-300 font-medium">Forgot password?</Link>
  </div>
  <div className="relative">
  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-slate-500" />
@@ -209,7 +209,7 @@ export function LoginPage() {
  <button
  type="submit"
  disabled={loginMutation.isPending}
- className="w-full flex items-center justify-center gap-2 rounded-xl bg-primary-600 hover:from-primary-700 hover:to-primary-800 text-white font-medium py-3 px-4 text-sm shadow-lg shadow-primary-500/25 hover:shadow-primary-500/40 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+ className="w-full flex items-center justify-center gap-2 rounded-xl bg-secondary-600 hover:bg-secondary-700 text-primary-900 font-medium py-3 px-4 text-sm shadow-lg shadow-secondary-500/25 hover:shadow-secondary-500/40 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
  >
  {loginMutation.isPending ? (
  <div className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -221,7 +221,7 @@ export function LoginPage() {
 
  <p className="mt-6 text-center text-sm text-gray-500 dark:text-slate-400">
  Don't have an account?{' '}
- <Link to="/register" className="text-primary-600 hover:text-primary-700 font-semibold">
+ <Link to="/register" className="text-primary-600 hover:text-primary-700 dark:text-secondary-400 dark:hover:text-secondary-300 font-semibold">
  Create free account
  </Link>
  </p>
