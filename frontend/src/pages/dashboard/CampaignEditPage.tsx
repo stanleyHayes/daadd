@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Card } from '@/components/ui/Card';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { PageTransition } from '@/components/ui/PageTransition';
@@ -145,18 +146,19 @@ export function CampaignEditPage() {
   return (
     <PageTransition>
       <div className="max-w-4xl mx-auto space-y-6">
-        <div className="flex items-center gap-4">
-          <button
-            onClick={() => navigate(`/dashboard/campaigns/${id}`)}
-            className="p-2 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition"
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </button>
-          <div>
-            <h1 className="page-title">Edit Campaign</h1>
-            <p className="page-subtitle">Update campaign details</p>
-          </div>
-        </div>
+        <PageHeader
+          title="Edit Campaign"
+          subtitle="Update campaign details"
+          action={
+            <button
+              onClick={() => navigate(`/dashboard/campaigns/${id}`)}
+              className="p-2 hover:bg-white/10 rounded-lg transition text-white"
+              aria-label="Back to campaign"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+          }
+        />
 
         <div className="flex items-center justify-between px-4">
           {steps.map((step, i) => (

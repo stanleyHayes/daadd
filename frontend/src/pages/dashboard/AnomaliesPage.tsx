@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/Card';
+import { MetricsCard } from '@/components/analytics/MetricsCard';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
-import { MetricsCard } from '@/components/analytics/MetricsCard';
 import { Select } from '@/components/ui/Select';
 import { useAnomalies, useResolveAnomaly } from '@/hooks/useAnomalies';
 import { useCampaigns } from '@/hooks/useCampaigns';
@@ -48,10 +49,15 @@ export function AnomaliesPage() {
   return (
     <PageTransition>
     <div className="max-w-7xl mx-auto space-y-6">
-      <div>
-        <h1 className="page-title">Anomaly Detection</h1>
-        <p className="page-subtitle">Monitor and respond to campaign anomalies</p>
-      </div>
+      <PageHeader title="Anomaly Detection" subtitle="Monitor and respond to campaign anomalies" />
+
+      {campaignId && !isLoading && activeAnomalies.length > 0 && (
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <MetricsCard icon={<AlertTriangle className="h-5 w-5" />} label="Total Anomalies" value={String(activeAnomalies.length)} iconColor="text-warning-600" iconBg="bg-warning-50 dark:bg-warning-900/30" />
+          <MetricsCard icon={<Shield className="h-5 w-5" />} label="High / Critical" value={String(activeAnomalies.filter(a => a.severity === 'high' || a.severity === 'critical').length)} iconColor="text-danger-600" iconBg="bg-danger-50 dark:bg-danger-900/30" />
+          <MetricsCard icon={<PauseCircle className="h-5 w-5" />} label="Auto-Paused" value={String(autoPaused)} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
+        </div>
+      )}
 
       <div className="w-56">
         <Select

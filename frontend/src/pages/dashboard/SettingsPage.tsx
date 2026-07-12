@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardHeader, CardFooter } from '@/components/ui/Card';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { Select } from '@/components/ui/Select';
@@ -128,10 +129,10 @@ export function SettingsPage() {
  return (
  <PageTransition>
  <div className="max-w-4xl mx-auto space-y-6">
- <div>
- <h1 className="page-title">Settings</h1>
- <p className="page-subtitle">Manage your account, preferences, and security</p>
- </div>
+ <PageHeader
+ title="Settings"
+ subtitle="Manage your account, preferences, and security"
+ />
 
  {/* Tab bar */}
  <div className="flex gap-1 bg-gray-100 dark:bg-slate-800 rounded-xl p-1">

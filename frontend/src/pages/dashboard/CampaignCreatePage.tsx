@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Card } from '@/components/ui/Card';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
@@ -99,10 +100,10 @@ export function CampaignCreatePage() {
   return (
     <PageTransition>
       <div className="max-w-4xl mx-auto space-y-6">
-        <div>
-          <h1 className="page-title">Create Campaign</h1>
-          <p className="page-subtitle">Set up a new advertising campaign</p>
-        </div>
+        <PageHeader
+          title="Create Campaign"
+          subtitle="Set up a new advertising campaign"
+        />
 
         <div className="flex items-center justify-between px-4">
           {steps.map((step, i) => (

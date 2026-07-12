@@ -1,13 +1,15 @@
 
 import React, { useState } from 'react';
 import { Card, CardHeader } from '@/components/ui/Card';
+import { MetricsCard } from '@/components/analytics/MetricsCard';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Select } from '@/components/ui/Select';
 import { cn, formatDate } from '@/lib/utils';
 import { useRecommendations, useApplyRecommendation, useAIAuditLog, useDismissRecommendation } from '@/hooks/useAI';
 import { useCampaigns } from '@/hooks/useCampaigns';
-import { TrendingUp, DollarSign, Image, Smartphone, Check, X, Brain, AlertTriangle } from 'lucide-react';
+import { TrendingUp, DollarSign, Image, Smartphone, Check, X, Brain, AlertTriangle, CheckCircle, XCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { PageTransition } from '@/components/ui/PageTransition';
 import { Skeleton, SkeletonCard, SkeletonText, SkeletonList } from '@/components/ui/Skeleton';
@@ -66,10 +68,18 @@ export function AIOptimizationPage() {
   return (
     <PageTransition>
     <div className="max-w-7xl mx-auto space-y-6">
-      <div>
-        <h1 className="page-title">AI Optimization</h1>
-        <p className="page-subtitle">AI-powered recommendations for campaign performance</p>
-      </div>
+      <PageHeader
+        title="AI Optimization"
+        subtitle="AI-powered recommendations for campaign performance"
+      />
+
+      {campaignId && !recsLoading && (
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <MetricsCard icon={<Brain className="h-5 w-5" />} label="Recommendations" value={String(recs.length)} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
+          <MetricsCard icon={<CheckCircle className="h-5 w-5" />} label="Applied" value={String(recs.filter(r => r.status === 'applied').length)} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
+          <MetricsCard icon={<XCircle className="h-5 w-5" />} label="Dismissed" value={String(recs.filter(r => r.status === 'dismissed').length)} iconColor="text-danger-600" iconBg="bg-danger-50 dark:bg-danger-900/30" />
+        </div>
+      )}
 
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
         <div className="sm:w-56">

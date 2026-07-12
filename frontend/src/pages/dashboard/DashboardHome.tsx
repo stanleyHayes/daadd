@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Card, CardHeader } from '@/components/ui/Card';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { StatusBadge } from '@/components/ui/StatusBadge';
 import { Button } from '@/components/ui/Button';
 import { EmptyState } from '@/components/ui/EmptyState';
@@ -27,15 +28,15 @@ export function DashboardHome() {
   return (
     <PageTransition>
       <div className="max-w-7xl mx-auto space-y-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="page-title">Dashboard</h1>
-            <p className="page-subtitle">Overview of your advertising performance</p>
-          </div>
-          <Link to="/dashboard/campaigns/new">
-            <Button icon={<Plus className="h-4 w-4" />}>New Campaign</Button>
-          </Link>
-        </div>
+        <PageHeader
+          title="Dashboard"
+          subtitle="Overview of your advertising performance"
+          action={
+            <Link to="/dashboard/campaigns/new">
+              <Button icon={<Plus className="h-4 w-4" />}>New Campaign</Button>
+            </Link>
+          }
+        />
 
         {metricsLoading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

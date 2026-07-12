@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Card, CardHeader } from '@/components/ui/Card';
+import { MetricsCard } from '@/components/analytics/MetricsCard';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { Badge } from '@/components/ui/Badge';
 import { useBenchmarkData } from '@/hooks/useBenchmarks';
 import { Select } from '@/components/ui/Select';
 import { useCampaigns } from '@/hooks/useCampaigns';
 import { formatPercentage, formatCurrency, cn } from '@/lib/utils';
-import { TrendingUp, TrendingDown, AlertCircle, BarChart3 } from 'lucide-react';
+import { TrendingUp, TrendingDown, AlertCircle, BarChart3, Users } from 'lucide-react';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { PageTransition } from '@/components/ui/PageTransition';
 import { useThemeStore } from '@/stores/theme.store';
@@ -26,10 +28,15 @@ export function BenchmarkingPage() {
   return (
     <PageTransition>
     <div className="max-w-7xl mx-auto space-y-6">
-      <div>
-        <h1 className="page-title">Benchmarking</h1>
-        <p className="page-subtitle">Compare your performance against industry averages</p>
-      </div>
+      <PageHeader title="Benchmarking" subtitle="Compare your performance against industry averages" />
+
+      {campaignId && benchmark && !isLoading && (
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <MetricsCard icon={<Users className="h-5 w-5" />} label="Advertisers in Industry" value={String(advertiserCount)} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
+          <MetricsCard icon={<BarChart3 className="h-5 w-5" />} label="Comparisons" value={String(comparisons.length)} iconColor="text-secondary-600" iconBg="bg-secondary-50 dark:bg-secondary-900/30" />
+          <MetricsCard icon={<TrendingUp className="h-5 w-5" />} label="Above Average" value={String(comparisons.filter(c => c.is_above_avg).length)} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
+        </div>
+      )}
 
       <div className="w-56">
         <Select

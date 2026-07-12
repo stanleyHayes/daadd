@@ -3,7 +3,10 @@ import { useQuery, useMutation } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import api from '@/lib/api';
 import { Button } from '@/components/ui/Button';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { Card } from '@/components/ui/Card';
+import { MetricsCard } from '@/components/analytics/MetricsCard';
+import { Plug, AlertTriangle, Globe } from 'lucide-react';
 
 interface PlatformAccount {
   id: string;
@@ -80,9 +83,15 @@ export function PlatformAccountsPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold">Platform Accounts</h1>
-        <p className="text-gray-600 mt-2">Connect your ad platform accounts to enable metrics sync</p>
+      <PageHeader
+        title="Platform Accounts"
+        subtitle="Connect your ad platform accounts to enable metrics sync"
+      />
+
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <MetricsCard icon={<Plug className="h-5 w-5" />} label="Connected" value={String(accounts.filter(a => a.status === 'connected').length)} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
+        <MetricsCard icon={<AlertTriangle className="h-5 w-5" />} label="Sync Errors" value={String(accounts.filter(a => a.status === 'sync_error').length)} iconColor="text-danger-600" iconBg="bg-danger-50 dark:bg-danger-900/30" />
+        <MetricsCard icon={<Globe className="h-5 w-5" />} label="Available Platforms" value={String(PLATFORMS.length)} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
       </div>
 
       {/* Connected Accounts */}

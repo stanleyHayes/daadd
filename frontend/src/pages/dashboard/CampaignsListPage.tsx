@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Card } from '@/components/ui/Card';
+import { MetricsCard } from '@/components/analytics/MetricsCard';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
@@ -11,7 +13,7 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { Dropdown } from '@/components/ui/Dropdown';
 import { Badge, type BadgeVariant } from '@/components/ui/Badge';
 import { PageTransition } from '@/components/ui/PageTransition';
-import { Plus, Search, Eye, Pencil, Trash2, Megaphone, Copy } from 'lucide-react';
+import { Plus, Search, Eye, Pencil, Trash2, Megaphone, Copy, CheckCircle2, PauseCircle, Clock } from 'lucide-react';
 import { SkeletonCard, SkeletonTable } from '@/components/ui/Skeleton';
 import { formatCurrency, formatPercentage, formatDate } from '@/lib/utils';
 import { useCampaigns, useDeleteCampaign } from '@/hooks/useCampaigns';
@@ -79,17 +81,26 @@ export function CampaignsListPage() {
   return (
     <PageTransition>
       <div className="max-w-7xl mx-auto space-y-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="page-title">Campaigns</h1>
-            <p className="page-subtitle">Manage and monitor your ad campaigns</p>
+        <PageHeader
+          title="Campaigns"
+          subtitle="Manage and monitor your ad campaigns"
+          action={
+            canCreate && (
+              <Link to="/dashboard/campaigns/new">
+                <Button icon={<Plus className="h-4 w-4" />}>Create Campaign</Button>
+              </Link>
+            )
+          }
+        />
+
+        {campaignsData && !isLoading && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <MetricsCard icon={<Megaphone className="h-5 w-5" />} label="Total Campaigns" value={String(campaignsData.pagination?.total ?? campaigns.length)} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
+            <MetricsCard icon={<CheckCircle2 className="h-5 w-5" />} label="Active" value={String(campaigns.filter(c => c.status === 'active').length)} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
+            <MetricsCard icon={<PauseCircle className="h-5 w-5" />} label="Paused" value={String(campaigns.filter(c => c.status === 'paused').length)} iconColor="text-warning-600" iconBg="bg-warning-50 dark:bg-warning-900/30" />
+            <MetricsCard icon={<Clock className="h-5 w-5" />} label="Completed" value={String(campaigns.filter(c => c.status === 'completed').length)} iconColor="text-secondary-600" iconBg="bg-secondary-50 dark:bg-secondary-900/30" />
           </div>
-          {canCreate && (
-            <Link to="/dashboard/campaigns/new">
-              <Button icon={<Plus className="h-4 w-4" />}>Create Campaign</Button>
-            </Link>
-          )}
-        </div>
+        )}
 
         <Card>
           {isLoading ? (

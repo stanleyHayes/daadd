@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Card, CardHeader } from '@/components/ui/Card';
+import { MetricsCard } from '@/components/analytics/MetricsCard';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/Button';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { StoryChapter, type Chapter } from '@/components/storyteller/StoryChapter';
@@ -29,22 +31,31 @@ export function StorytellerPage() {
   return (
     <PageTransition>
     <div className="max-w-4xl mx-auto space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="page-title">Ad Journey Storyteller</h1>
-          <p className="page-subtitle">The narrative of your campaign's journey</p>
+      <PageHeader
+        title="Ad Journey Storyteller"
+        subtitle="The narrative of your campaign's journey"
+        action={
+          campaignId && (
+            <div className="flex items-center gap-2">
+              <Button variant="outline" size="sm" icon={<FileText className="h-4 w-4" />} onClick={() => { exportPDF.mutate(campaignId); toast.success('Exporting PDF...'); }} loading={exportPDF.isPending}>
+                Export PDF
+              </Button>
+              <Button variant="outline" size="sm" icon={<Code className="h-4 w-4" />} onClick={() => { exportHTML.mutate(campaignId); toast.success('Exporting HTML...'); }} loading={exportHTML.isPending}>
+                Export HTML
+              </Button>
+            </div>
+          )
+        }
+      />
+
+      {campaignId && story && !isLoading && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <MetricsCard icon={<BookOpen className="h-5 w-5" />} label="Chapters" value={String(chapters.length)} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
+          <MetricsCard icon={<Lightbulb className="h-5 w-5" />} label="Key Insights" value={String(insights.length)} iconColor="text-secondary-600" iconBg="bg-secondary-50 dark:bg-secondary-900/30" />
+          <MetricsCard icon={<ArrowRight className="h-5 w-5" />} label="Recommendations" value={String(recommendations.length)} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
+          <MetricsCard icon={<Clock className="h-5 w-5" />} label="Campaign Age" value={campaignAge ? `${Math.round(campaignAge)}h` : 'N/A'} iconColor="text-warning-600" iconBg="bg-warning-50 dark:bg-warning-900/30" />
         </div>
-        {campaignId && (
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" icon={<FileText className="h-4 w-4" />} onClick={() => { exportPDF.mutate(campaignId); toast.success('Exporting PDF...'); }} loading={exportPDF.isPending}>
-              Export PDF
-            </Button>
-            <Button variant="outline" size="sm" icon={<Code className="h-4 w-4" />} onClick={() => { exportHTML.mutate(campaignId); toast.success('Exporting HTML...'); }} loading={exportHTML.isPending}>
-              Export HTML
-            </Button>
-          </div>
-        )}
-      </div>
+      )}
 
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
         <div className="sm:w-56">

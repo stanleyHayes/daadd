@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Card, CardHeader } from '@/components/ui/Card';
+import { MetricsCard } from '@/components/analytics/MetricsCard';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { HeatmapView } from '@/components/heatmap/HeatmapView';
 import { Select } from '@/components/ui/Select';
@@ -23,10 +25,15 @@ export function HeatmapPage() {
   return (
     <PageTransition>
     <div className="max-w-7xl mx-auto space-y-6">
-      <div>
-        <h1 className="page-title">Heatmaps</h1>
-        <p className="page-subtitle">Geographic engagement visualization</p>
-      </div>
+      <PageHeader title="Heatmaps" subtitle="Geographic engagement visualization" />
+
+      {campaignId && heatmapData && !isLoading && (
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <MetricsCard icon={<Eye className="h-5 w-5" />} label="Total Views" value={formatNumber(heatmapData.total_views)} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
+          <MetricsCard icon={<MapPin className="h-5 w-5" />} label="Active Regions" value={String(heatmapData.active_regions ?? heatmapData.top_regions?.length ?? 0)} iconColor="text-secondary-600" iconBg="bg-secondary-50 dark:bg-secondary-900/30" />
+          <MetricsCard icon={<TrendingUp className="h-5 w-5" />} label="Avg CTR" value={formatPercentage(heatmapData.avg_ctr)} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
+        </div>
+      )}
 
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
         <div className="sm:w-56">

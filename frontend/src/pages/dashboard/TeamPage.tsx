@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Card, CardHeader } from '@/components/ui/Card';
+import { MetricsCard } from '@/components/analytics/MetricsCard';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Select } from '@/components/ui/Select';
 import { useTeamMembers, useInviteMember, useRemoveMember, useUpdateRole, useTeamAuditLog } from '@/hooks/useTeam';
 import { useCampaigns } from '@/hooks/useCampaigns';
 import { formatDate, getInitials } from '@/lib/utils';
-import { Mail, UserPlus, Trash2, Clock, AlertTriangle, Users } from 'lucide-react';
+import { Mail, UserPlus, Trash2, Clock, AlertTriangle, Users, Shield } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { PageTransition } from '@/components/ui/PageTransition';
 import { hasPermission } from '@/lib/rbac';
@@ -73,10 +75,18 @@ export function TeamPage() {
   return (
     <PageTransition>
     <div className="max-w-5xl mx-auto space-y-6">
-      <div>
-        <h1 className="page-title">Team Management</h1>
-        <p className="page-subtitle">Manage team members and their permissions</p>
-      </div>
+      <PageHeader
+        title="Team Management"
+        subtitle="Manage team members and their permissions"
+      />
+
+      {campaignId && !isLoading && (
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <MetricsCard icon={<Users className="h-5 w-5" />} label="Team Members" value={String(teamMembers.length)} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
+          <MetricsCard icon={<Shield className="h-5 w-5" />} label="Admins" value={String(teamMembers.filter(m => m.role === 'admin').length)} iconColor="text-secondary-600" iconBg="bg-secondary-50 dark:bg-secondary-900/30" />
+          <MetricsCard icon={<Mail className="h-5 w-5" />} label="Editors" value={String(teamMembers.filter(m => m.role === 'editor').length)} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
+        </div>
+      )}
 
       <div className="w-56">
         <Select

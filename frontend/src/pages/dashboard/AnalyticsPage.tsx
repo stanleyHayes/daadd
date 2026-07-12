@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Card, CardHeader } from '@/components/ui/Card';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { Select } from '@/components/ui/Select';
 import { Button } from '@/components/ui/Button';
 import { EmptyState } from '@/components/ui/EmptyState';
@@ -40,22 +41,22 @@ export function AnalyticsPage() {
   return (
     <PageTransition>
     <div className="max-w-7xl mx-auto space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="page-title">Analytics</h1>
-          <p className="page-subtitle">Deep dive into your advertising performance</p>
-        </div>
-        {canExport && campaignId && (
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" icon={<FileText className="h-4 w-4" />} onClick={() => exportPDF.mutate({ campaignId })} loading={exportPDF.isPending}>
-              Export PDF
-            </Button>
-            <Button variant="outline" size="sm" icon={<Download className="h-4 w-4" />} onClick={() => exportCSV.mutate({ campaignId })} loading={exportCSV.isPending}>
-              Export CSV
-            </Button>
-          </div>
-        )}
-      </div>
+      <PageHeader
+        title="Analytics"
+        subtitle="Deep dive into your advertising performance"
+        action={
+          canExport && campaignId && (
+            <div className="flex items-center gap-2">
+              <Button variant="outline" size="sm" icon={<FileText className="h-4 w-4" />} onClick={() => exportPDF.mutate({ campaignId })} loading={exportPDF.isPending}>
+                Export PDF
+              </Button>
+              <Button variant="outline" size="sm" icon={<Download className="h-4 w-4" />} onClick={() => exportCSV.mutate({ campaignId })} loading={exportCSV.isPending}>
+                Export CSV
+              </Button>
+            </div>
+          )
+        }
+      />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <Select
