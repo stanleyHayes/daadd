@@ -68,8 +68,10 @@ export function RewardClaimButton({ amount, onClaim, disabled, className }: Rewa
  'relative flex items-center gap-3 px-8 py-4 rounded-xl font-bold text-lg transition-all',
  state === 'claimed'
  ? 'bg-secondary-600 text-white'
- : 'bg-gradient-to-r from-primary-700 to-primary-600 text-white hover:from-primary-800 hover:to-primary-700 shadow-lg hover:shadow-xl',
- (disabled || state === 'loading') && 'opacity-60 cursor-not-allowed'
+ : disabled
+ ? 'bg-gradient-to-r from-primary-700 to-primary-600 text-white/90 dark:from-secondary-600 dark:to-secondary-500 dark:text-primary-900 shadow-lg opacity-80 cursor-not-allowed'
+ : 'bg-gradient-to-r from-primary-700 to-primary-600 text-white hover:from-primary-800 hover:to-primary-700 dark:from-secondary-500 dark:to-secondary-400 dark:text-primary-900 dark:hover:from-secondary-400 dark:hover:to-secondary-300 shadow-lg hover:shadow-xl',
+ state === 'loading' && 'opacity-80 cursor-not-allowed'
  )}
  >
  {state === 'claimed' ? (

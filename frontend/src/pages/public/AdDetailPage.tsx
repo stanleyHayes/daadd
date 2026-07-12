@@ -189,8 +189,8 @@ export function AdDetailPage() {
                 />
                 {!isAuthenticated && (
                   <p className="mt-4 text-xs text-text-secondary">
-                    <Link to="/login" className="text-primary-700 hover:text-primary-800 font-medium">Log in</Link> or{' '}
-                    <Link to="/register" className="text-primary-700 hover:text-primary-800 font-medium">sign up</Link> to claim rewards
+                    <Link to="/login" className="text-primary-600 hover:text-primary-700 dark:text-secondary-400 dark:hover:text-secondary-300 font-medium underline underline-offset-2">Log in</Link> or{' '}
+                    <Link to="/register" className="text-primary-600 hover:text-primary-700 dark:text-secondary-400 dark:hover:text-secondary-300 font-medium underline underline-offset-2">sign up</Link> to claim rewards
                   </p>
                 )}
               </Card>
