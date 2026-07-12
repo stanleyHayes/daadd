@@ -1,0 +1,58 @@
+{
+  "header": {
+    "logo": "AdPlatform",
+    "tagline": "Intelligente Anzeigenverwaltung",
+    "nav": {
+      "home": "Startseite",
+      "ads": "Anzeigen durchsuchen",
+      "about": "Über uns",
+      "blog": "Blog",
+      "careers": "Karriere"
+    },
+    "cta": "Jetzt Starten"
+  },
+  "landing": {
+    "hero": {
+      "title": "Verwandeln Sie Ihre Werbung mit KI",
+      "subtitle": "Erreichen Sie die richtige Zielgruppe, optimieren Sie in Echtzeit, maximieren Sie Ihren ROI.",
+      "cta": "Kostenlose Testversion"
+    },
+    "features": {
+      "title": "Warum AdPlatform Wählen?",
+      "ai": {
+        "title": "KI-gestützte Optimierung",
+        "desc": "Automatische Gebotsanpassungen, Zielgruppenausrichtung und kreative Optimierung basierend auf Echtzeitleistungsdaten."
+      },
+      "realtime": {
+        "title": "Echtzeit-Analysen",
+        "desc": "Überwachen Sie die Kampagnenleistung, erkennen Sie Anomalien und handeln Sie sofort mit unserem intuitiven Dashboard."
+      },
+      "rewards": {
+        "title": "Belohnungsbasiertes Engagement",
+        "desc": "Incentivieren Sie Benutzeraktionen und bauen Sie Loyalität mit unserem integrierten Belohnungssystem auf."
+      }
+    }
+  },
+  "blog": {
+    "title": "AdPlatform Blog",
+    "subtitle": "Einblicke, Updates und Geschichten aus der Welt der intelligenten Werbung.",
+    "allPosts": "Alle Artikel",
+    "noResults": "Keine Artikel in dieser Kategorie gefunden.",
+    "readMore": "Vollständigen Artikel Lesen",
+    "readTime": "min Lesezeit",
+    "category": {
+      "trends": "AdTech-Trends",
+      "updates": "Plattform-Updates",
+      "cases": "Fallstudien",
+      "guides": "Tipps & Anleitungen"
+    }
+  },
+  "footer": {
+    "copyright": "© 2026 AdPlatform. Alle Rechte vorbehalten.",
+    "links": {
+      "privacy": "Datenschutzrichtlinie",
+      "terms": "Nutzungsbedingungen",
+      "cookies": "Cookie-Richtlinie"
+    }
+  }
+}

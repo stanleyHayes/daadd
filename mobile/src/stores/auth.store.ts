@@ -1,0 +1,56 @@
+import { create } from 'zustand';
+import { User } from '@/types';
+import { setToken, removeToken, getToken, clearAuth } from '@/lib/storage';
+
+interface AuthState {
+  user: User | null;
+  token: string | null;
+  isAuthenticated: boolean;
+  isLoading: boolean;
+
+  login: (user: User, token: string) => Promise<void>;
+  logout: () => Promise<void>;
+  setUser: (user: User) => void;
+  updateUser: (updates: Partial<User>) => void;
+  initialize: () => Promise<void>;
+}
+
+export const useAuthStore = create<AuthState>((set) => ({
+  user: null,
+  token: null,
+  isAuthenticated: false,
+  isLoading: true,
+
+  login: async (user: User, token: string) => {
+    await setToken(token);
+    set({ user, token, isAuthenticated: true });
+  },
+
+  logout: async () => {
+    await clearAuth();
+    set({ user: null, token: null, isAuthenticated: false });
+  },
+
+  setUser: (user: User) => {
+    set({ user });
+  },
+
+  updateUser: (updates: Partial<User>) => {
+    set((state) => ({
+      user: state.user ? { ...state.user, ...updates } : null,
+    }));
+  },
+
+  initialize: async () => {
+    try {
+      const token = await getToken();
+      if (token) {
+        set({ token, isAuthenticated: true, isLoading: false });
+      } else {
+        set({ isLoading: false });
+      }
+    } catch {
+      set({ isLoading: false });
+    }
+  },
+}));

@@ -1,0 +1,4 @@
+{
+  "extends": "./tsconfig.json",
+  "exclude": ["node_modules", "dist", "test", "src/services/ai-optimization.service.ts", "src/services/ai-creative.service.ts", "src/services/ai-creative-advanced.service.ts", "src/routes/ai.routes.ts", "src/routes/ai-advanced.routes.ts"]
+}

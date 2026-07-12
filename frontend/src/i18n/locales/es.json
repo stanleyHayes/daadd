@@ -1,0 +1,58 @@
+{
+  "header": {
+    "logo": "AdPlatform",
+    "tagline": "Gestión Inteligente de Anuncios",
+    "nav": {
+      "home": "Inicio",
+      "ads": "Explorar Anuncios",
+      "about": "Acerca de",
+      "blog": "Blog",
+      "careers": "Carreras"
+    },
+    "cta": "Comenzar"
+  },
+  "landing": {
+    "hero": {
+      "title": "Transforma tu Publicidad con IA",
+      "subtitle": "Llega a la audiencia correcta, optimiza en tiempo real, maximiza tu ROI.",
+      "cta": "Prueba Gratuita"
+    },
+    "features": {
+      "title": "¿Por qué elegir AdPlatform?",
+      "ai": {
+        "title": "Optimización Impulsada por IA",
+        "desc": "Ajustes automáticos de ofertas, orientación de audiencia y optimización creativa basada en datos de rendimiento en tiempo real."
+      },
+      "realtime": {
+        "title": "Análisis en Tiempo Real",
+        "desc": "Supervisa el rendimiento de campañas, detecta anomalías y actúa al instante con nuestro panel intuitivo."
+      },
+      "rewards": {
+        "title": "Compromiso Basado en Recompensas",
+        "desc": "Incentiva acciones del usuario y construye lealtad con nuestro sistema de recompensas integrado."
+      }
+    }
+  },
+  "blog": {
+    "title": "Blog de AdPlatform",
+    "subtitle": "Información, actualizaciones e historias del mundo de la publicidad inteligente.",
+    "allPosts": "Todos los Artículos",
+    "noResults": "No se encontraron artículos en esta categoría.",
+    "readMore": "Leer Artículo Completo",
+    "readTime": "min de lectura",
+    "category": {
+      "trends": "Tendencias de AdTech",
+      "updates": "Actualizaciones de Plataforma",
+      "cases": "Casos de Estudio",
+      "guides": "Consejos y Guías"
+    }
+  },
+  "footer": {
+    "copyright": "© 2026 AdPlatform. Todos los derechos reservados.",
+    "links": {
+      "privacy": "Política de Privacidad",
+      "terms": "Términos de Servicio",
+      "cookies": "Política de Cookies"
+    }
+  }
+}

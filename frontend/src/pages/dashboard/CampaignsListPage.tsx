@@ -1,0 +1,206 @@
+
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Card } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
+import { Select } from '@/components/ui/Select';
+import { StatusBadge } from '@/components/ui/StatusBadge';
+import { ProgressBar } from '@/components/ui/ProgressBar';
+import { EmptyState } from '@/components/ui/EmptyState';
+import { Dropdown } from '@/components/ui/Dropdown';
+import { Badge, type BadgeVariant } from '@/components/ui/Badge';
+import { PageTransition } from '@/components/ui/PageTransition';
+import { Plus, Search, Eye, Pencil, Trash2, Megaphone, Copy } from 'lucide-react';
+import { SkeletonCard, SkeletonTable } from '@/components/ui/Skeleton';
+import { formatCurrency, formatPercentage, formatDate } from '@/lib/utils';
+import { useCampaigns, useDeleteCampaign } from '@/hooks/useCampaigns';
+import { useCampaignClone } from '@/hooks/useCampaignClone';
+import { INDUSTRIES, CAMPAIGN_STATUSES, INDUSTRY_COLOR_MAP } from '@/lib/constants';
+import { hasPermission } from '@/lib/rbac';
+import { useAuthStore } from '@/stores/auth.store';
+import toast from 'react-hot-toast';
+import type { CampaignStatus, Industry } from '@/types';
+
+export function CampaignsListPage() {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const user = useAuthStore((s) => s.user);
+  const userRole = user?.role || 'end_user';
+  const canCreate = hasPermission(userRole, 'CAMPAIGN_CREATE');
+  const canEdit = hasPermission(userRole, 'CAMPAIGN_EDIT');
+  const canDelete = hasPermission(userRole, 'CAMPAIGN_DELETE');
+  const [statusFilter, setStatusFilter] = useState('');
+  const [industryFilter, setIndustryFilter] = useState('');
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(10);
+
+  useEffect(() => {
+    const urlSearch = searchParams.get('search');
+    if (urlSearch) {
+      setSearchQuery(urlSearch);
+      setPage(1);
+    }
+  }, [searchParams]);
+
+  const { data: campaignsData, isLoading, error } = useCampaigns({
+    status: statusFilter as CampaignStatus,
+    industry: industryFilter as Industry | undefined,
+    search: searchQuery,
+    page,
+    limit: perPage,
+  });
+  const deleteMutation = useDeleteCampaign();
+  const cloneMutation = useCampaignClone();
+
+  const campaigns = campaignsData?.data || [];
+  const pagination = campaignsData?.pagination;
+  const totalPages = pagination?.totalPages || 0;
+
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteMutation.mutateAsync(id);
+      toast.success('Campaign deleted');
+    } catch {
+      toast.error('Failed to delete campaign');
+    }
+  };
+
+  const handleClone = async (id: string, name: string) => {
+    try {
+      const _cloned = await cloneMutation.mutateAsync(id);
+      toast.success(`Campaign "${name}" cloned successfully`);
+    } catch {
+      toast.error('Failed to clone campaign');
+    }
+  };
+
+  return (
+    <PageTransition>
+      <div className="max-w-7xl mx-auto space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="page-title">Campaigns</h1>
+            <p className="page-subtitle">Manage and monitor your ad campaigns</p>
+          </div>
+          {canCreate && (
+            <Link to="/dashboard/campaigns/new">
+              <Button icon={<Plus className="h-4 w-4" />}>Create Campaign</Button>
+            </Link>
+          )}
+        </div>
+
+        <Card>
+          {isLoading ? (
+            <>
+              <div className="flex flex-col sm:flex-row gap-3 mb-6">
+                <SkeletonCard className="h-10 flex-1" />
+                <SkeletonCard className="h-10 w-40" />
+                <SkeletonCard className="h-10 w-48" />
+              </div>
+              <SkeletonTable rows={8} columns={8} />
+            </>
+          ) : error ? (
+            <div className="text-center py-12">
+              <Megaphone className="h-10 w-10 text-danger-500 mx-auto mb-3" />
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">Failed to load campaigns</h3>
+              <p className="text-sm text-gray-500 dark:text-slate-400">Please try again later.</p>
+            </div>
+          ) : (
+          <>
+          <div className="flex flex-col sm:flex-row gap-3 mb-6">
+            <div className="flex-1">
+              <Input placeholder="Search campaigns..." leftIcon={<Search className="h-4 w-4" />} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+            </div>
+            <Select options={[{ value: '', label: 'All Statuses' }, ...CAMPAIGN_STATUSES.map((s) => ({ value: s.value, label: s.label }))]} value={statusFilter} onChange={setStatusFilter} className="w-40" />
+            <Select options={[{ value: '', label: 'All Industries' }, ...INDUSTRIES.map((i) => ({ value: i.value, label: i.label }))]} value={industryFilter} onChange={setIndustryFilter} className="w-48" />
+          </div>
+
+          {campaigns.length === 0 ? (
+            <EmptyState icon={<Megaphone className="h-12 w-12" />} title="No campaigns found" description={canCreate ? "Create your first campaign to get started with advertising." : "No campaigns are available to view."} actionLabel={canCreate ? "Create Campaign" : undefined} onAction={canCreate ? () => navigate('/dashboard/campaigns/new') : undefined} />
+          ) : (
+            <>
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200 dark:divide-slate-700">
+                  <thead className="bg-gray-50 dark:bg-slate-700/50">
+                    <tr>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-400 uppercase">Name</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-400 uppercase">Industry</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-400 uppercase">Status</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-400 uppercase">Budget</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-400 uppercase">Start</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-400 uppercase">End</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-400 uppercase">CTR</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-400 uppercase">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200 dark:divide-slate-700">
+                    {campaigns.map((c) => (
+                      <tr key={c.id} className="hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-gray-900 dark:text-white">
+                          <Link to={`/dashboard/campaigns/${c.id}`} className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">{c.name}</Link>
+                        </td>
+                        <td className="px-4 py-3"><Badge variant={(INDUSTRY_COLOR_MAP[c.industry] || 'gray') as BadgeVariant} size="sm">{c.industry.replace('_', ' ')}</Badge></td>
+                        <td className="px-4 py-3"><StatusBadge status={c.status} /></td>
+                        <td className="px-4 py-3">
+                          <div className="w-32">
+                            <ProgressBar value={c.budget_spent} max={c.budget_total} size="sm" showPercentage />
+                            <p className="text-xs text-gray-500 dark:text-slate-400 mt-1">{formatCurrency(c.budget_spent)} / {formatCurrency(c.budget_total)}</p>
+                          </div>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-gray-500 dark:text-slate-400">{formatDate(c.start_date)}</td>
+                        <td className="px-4 py-3 text-sm text-gray-500 dark:text-slate-400">{formatDate(c.end_date)}</td>
+                        <td className="px-4 py-3 text-sm text-gray-900 dark:text-slate-200 font-medium">{(c.ctr ?? 0) > 0 ? formatPercentage(c.ctr!) : '--'}</td>
+                        <td className="px-4 py-3">
+                          <Dropdown items={[
+                            { key: 'view', label: 'View', icon: <Eye className="h-4 w-4 text-gray-400" />, onClick: () => navigate(`/dashboard/campaigns/${c.id}`) },
+                            ...(canEdit ? [{ key: 'edit', label: 'Edit', icon: <Pencil className="h-4 w-4 text-gray-400" />, onClick: () => navigate(`/dashboard/campaigns/${c.id}/edit`) }] : []),
+                            { key: 'clone', label: 'Clone', icon: <Copy className="h-4 w-4 text-gray-400" />, onClick: () => handleClone(c.id, c.name) },
+                            ...(canDelete ? [
+                              { key: 'divider', label: '', divider: true },
+                              { key: 'delete', label: 'Delete', icon: <Trash2 className="h-4 w-4" />, danger: true, onClick: () => handleDelete(c.id) },
+                            ] : []),
+                          ]} />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {totalPages > 1 && (
+                <div className="flex items-center justify-between px-4 py-3 border-t border-gray-200 dark:border-slate-700 mt-4">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-gray-500 dark:text-slate-400">Items per page:</span>
+                    <Select
+                      options={[
+                        { value: '5', label: '5' },
+                        { value: '10', label: '10' },
+                        { value: '25', label: '25' },
+                      ]}
+                      value={String(perPage)}
+                      onChange={(v) => { setPerPage(Number(v)); setPage(1); }}
+                      size="sm"
+                      fullWidth={false}
+                      className="w-20"
+                    />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button onClick={() => setPage(Math.max(1, page - 1))} disabled={page === 1} className="px-3 py-1.5 text-sm border border-gray-300 dark:border-slate-600 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-700 dark:text-slate-300 disabled:opacity-50">Prev</button>
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                      <button key={p} onClick={() => setPage(p)} className={`w-8 h-8 text-sm rounded-lg ${p === page ? 'bg-primary-600 text-white' : 'border border-gray-300 dark:border-slate-600 hover:bg-gray-50 dark:hover:bg-slate-700 dark:text-slate-300'}`}>{p}</button>
+                    ))}
+                    <button onClick={() => setPage(Math.min(totalPages, page + 1))} disabled={page === totalPages} className="px-3 py-1.5 text-sm border border-gray-300 dark:border-slate-600 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-700 dark:text-slate-300 disabled:opacity-50">Next</button>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+          </>
+          )}
+        </Card>
+      </div>
+    </PageTransition>
+  );
+}

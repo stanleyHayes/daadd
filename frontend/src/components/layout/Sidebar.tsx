@@ -1,0 +1,245 @@
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { cn } from '@/lib/utils';
+import { useAuthStore } from '@/stores/auth.store';
+import { getInitials } from '@/lib/utils';
+import { ROLE_NAV_ITEMS } from '@/lib/rbac';
+import type { UserRole } from '@/types';
+import {
+ LayoutDashboard,
+ Megaphone,
+ BarChart3,
+ Map,
+ Brain,
+ AlertTriangle,
+ TrendingUp,
+ BookOpen,
+ Users,
+ Settings,
+ ChevronLeft,
+ ChevronRight,
+ Zap,
+ Menu,
+ X,
+} from 'lucide-react';
+
+interface NavItem {
+ key: string;
+ href: string;
+ label: string;
+ icon: React.ComponentType<{ className?: string }>;
+}
+
+interface NavGroup {
+ title: string;
+ items: NavItem[];
+}
+
+const allNavGroups: NavGroup[] = [
+ {
+ title: 'Overview',
+ items: [{ key: 'dashboard', href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard }],
+ },
+ {
+ title: 'Campaigns',
+ items: [
+ { key: 'campaigns', href: '/dashboard/campaigns', label: 'Campaigns', icon: Megaphone },
+ { key: 'ai-optimization', href: '/dashboard/ai-optimization', label: 'AI Optimization', icon: Brain },
+ { key: 'anomalies', href: '/dashboard/anomalies', label: 'Anomalies', icon: AlertTriangle },
+ ],
+ },
+ {
+ title: 'Analytics',
+ items: [
+ { key: 'analytics', href: '/dashboard/analytics', label: 'Analytics', icon: BarChart3 },
+ { key: 'heatmaps', href: '/dashboard/heatmaps', label: 'Heatmaps', icon: Map },
+ { key: 'benchmarking', href: '/dashboard/benchmarking', label: 'Benchmarking', icon: TrendingUp },
+ { key: 'storyteller', href: '/dashboard/storyteller', label: 'Storyteller', icon: BookOpen },
+ ],
+ },
+ {
+ title: 'Workspace',
+ items: [
+ { key: 'team', href: '/dashboard/team', label: 'Team', icon: Users },
+ { key: 'settings', href: '/dashboard/settings', label: 'Settings', icon: Settings },
+ ],
+ },
+];
+
+interface SidebarProps {
+ collapsed: boolean;
+ onToggle: () => void;
+}
+
+export function Sidebar({ collapsed, onToggle }: SidebarProps) {
+ const location = useLocation();
+ const user = useAuthStore((s) => s.user);
+ const [mobileOpen, setMobileOpen] = useState(false);
+
+ const userRole = (user?.role || 'end_user') as UserRole;
+ const allowedKeys = ROLE_NAV_ITEMS[userRole] || [];
+
+ const visibleGroups = allNavGroups
+ .map((group) => ({
+ ...group,
+ items: group.items.filter((item) => allowedKeys.includes(item.key)),
+ }))
+ .filter((group) => group.items.length > 0);
+
+ const sidebarContent = (
+ <>
+ {/* Brand */}
+ <div className="flex items-center gap-3 px-4 h-[72px] border-b border-white/10 shrink-0">
+ <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-secondary-400 shrink-0 shadow-lg shadow-secondary-500/20">
+ <Zap className="h-5 w-5 text-primary-900" />
+ </div>
+ {!collapsed && (
+ <div className="flex flex-col">
+ <span className="text-lg font-bold text-white tracking-tight">AdPlatform</span>
+ <span className="text-[10px] text-secondary-300/80 uppercase tracking-wider font-medium">Workspace</span>
+ </div>
+ )}
+ </div>
+
+ {/* Gold hairline */}
+ <div className="gold-hairline w-full" />
+
+ {/* Nav */}
+ <nav className="flex-1 overflow-y-auto scrollbar-thin py-4 px-2">
+ <div className="space-y-6">
+ {visibleGroups.map((group) => (
+ <div key={group.title}>
+ {!collapsed && (
+ <p className="px-3 mb-2 text-[10px] font-semibold uppercase tracking-widest text-white/40">
+ {group.title}
+ </p>
+ )}
+ {collapsed && <div className="mx-auto w-6 border-t border-white/10 mb-3" />}
+ <ul className="space-y-1">
+ {group.items.map((item) => {
+ const isActive =
+ item.href === '/dashboard'
+ ? location.pathname === '/dashboard'
+ : location.pathname.startsWith(item.href);
+ const Icon = item.icon;
+ return (
+ <li key={item.href}>
+ <Link
+ to={item.href}
+ onClick={() => setMobileOpen(false)}
+ className={cn(
+ 'group flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 relative',
+ isActive
+ ? 'bg-white/10 text-secondary-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]'
+ : 'text-white/70 hover:bg-white/5 hover:text-white',
+ collapsed && 'justify-center px-2'
+ )}
+ title={collapsed ? item.label : undefined}
+ >
+ {isActive && !collapsed && (
+ <motion.div
+ layoutId="sidebar-active-pill"
+ className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-secondary-500 rounded-r-full"
+ transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+ />
+ )}
+ {isActive && collapsed && (
+ <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-5 bg-secondary-500 rounded-r-full" />
+ )}
+ <Icon
+ className={cn(
+ 'h-5 w-5 shrink-0 transition-colors',
+ isActive ? 'text-secondary-400' : 'text-white/50 group-hover:text-white'
+ )}
+ />
+ {!collapsed && item.label}
+ </Link>
+ </li>
+ );
+ })}
+ </ul>
+ </div>
+ ))}
+ </div>
+ </nav>
+
+ {/* User */}
+ {!collapsed && user && (
+ <div className="px-3 py-4 border-t border-white/10 shrink-0">
+ <div className="flex items-center gap-3 px-2 py-2 rounded-xl bg-white/5 border border-white/5">
+ <div className="w-9 h-9 rounded-full bg-secondary-400 flex items-center justify-center text-primary-900 text-xs font-bold shrink-0">
+ {getInitials(user.name)}
+ </div>
+ <div className="min-w-0">
+ <p className="text-sm font-semibold text-white truncate">{user.name}</p>
+ <p className="text-xs text-white/50 capitalize">{user.role.replace('_', ' ')}</p>
+ </div>
+ </div>
+ </div>
+ )}
+
+ {/* Collapse toggle */}
+ <div className="px-3 py-3 border-t border-white/10 shrink-0">
+ <button
+ onClick={onToggle}
+ className="flex items-center justify-center w-full p-2 rounded-xl text-white/50 hover:bg-white/5 hover:text-white transition-colors"
+ title={collapsed ? 'Expand' : 'Collapse'}
+ >
+ {collapsed ? <ChevronRight className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
+ </button>
+ </div>
+ </>
+ );
+
+ return (
+ <>
+ {/* Desktop rail */}
+ <aside
+ style={{ width: collapsed ? 76 : 264 }}
+ className="fixed left-0 top-0 h-screen bg-primary-700 dark:bg-primary-900 z-30 hidden md:flex flex-col shadow-2xl shadow-primary-900/30"
+ >
+ {sidebarContent}
+ </aside>
+
+ {/* Mobile toggle */}
+ <button
+ onClick={() => setMobileOpen(true)}
+ className="md:hidden fixed top-4 left-4 z-40 p-2.5 rounded-xl bg-primary-700 text-white shadow-lg"
+ aria-label="Open menu"
+ >
+ <Menu className="h-5 w-5" />
+ </button>
+
+ {/* Mobile drawer */}
+ <AnimatePresence>
+ {mobileOpen && (
+ <>
+ <motion.div
+ initial={{ opacity: 0 }}
+ animate={{ opacity: 1 }}
+ exit={{ opacity: 0 }}
+ onClick={() => setMobileOpen(false)}
+ className="md:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
+ />
+ <motion.aside
+ initial={{ x: '-100%' }}
+ animate={{ x: 0 }}
+ exit={{ x: '-100%' }}
+ transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+ className="md:hidden fixed left-0 top-0 h-screen w-[264px] bg-primary-700 dark:bg-primary-900 z-50 flex flex-col shadow-2xl"
+ >
+ <div className="flex items-center justify-between px-4 h-[72px] border-b border-white/10">
+ <span className="text-lg font-bold text-white tracking-tight">AdPlatform</span>
+ <button onClick={() => setMobileOpen(false)} className="p-2 rounded-lg text-white/70 hover:bg-white/10">
+ <X className="h-5 w-5" />
+ </button>
+ </div>
+ {sidebarContent}
+ </motion.aside>
+ </>
+ )}
+ </AnimatePresence>
+ </>
+ );
+}

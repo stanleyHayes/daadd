@@ -1,0 +1,58 @@
+{
+  "header": {
+    "logo": "AdPlatform",
+    "tagline": "Gestion Intelligente des Annonces",
+    "nav": {
+      "home": "Accueil",
+      "ads": "Parcourir les Annonces",
+      "about": "À propos",
+      "blog": "Blog",
+      "careers": "Carrières"
+    },
+    "cta": "Commencer"
+  },
+  "landing": {
+    "hero": {
+      "title": "Transformez Votre Publicité avec l'IA",
+      "subtitle": "Atteignez le bon public, optimisez en temps réel, maximisez votre ROI.",
+      "cta": "Essai Gratuit"
+    },
+    "features": {
+      "title": "Pourquoi Choisir AdPlatform?",
+      "ai": {
+        "title": "Optimisation Alimentée par l'IA",
+        "desc": "Ajustements automatiques des enchères, ciblage d'audience et optimisation créative basés sur les données de performance en temps réel."
+      },
+      "realtime": {
+        "title": "Analyses en Temps Réel",
+        "desc": "Surveillez les performances de campagne, détectez les anomalies et agissez instantanément avec notre tableau de bord intuitif."
+      },
+      "rewards": {
+        "title": "Engagement Basé sur les Récompenses",
+        "desc": "Incitez les actions des utilisateurs et construisez la fidélité avec notre système de récompenses intégré."
+      }
+    }
+  },
+  "blog": {
+    "title": "Blog AdPlatform",
+    "subtitle": "Aperçus, mises à jour et histoires du monde de la publicité intelligente.",
+    "allPosts": "Tous les Articles",
+    "noResults": "Aucun article trouvé dans cette catégorie.",
+    "readMore": "Lire l'Article Complet",
+    "readTime": "min de lecture",
+    "category": {
+      "trends": "Tendances AdTech",
+      "updates": "Mises à Jour de Plateforme",
+      "cases": "Études de Cas",
+      "guides": "Conseils et Guides"
+    }
+  },
+  "footer": {
+    "copyright": "© 2026 AdPlatform. Tous droits réservés.",
+    "links": {
+      "privacy": "Politique de Confidentialité",
+      "terms": "Conditions de Service",
+      "cookies": "Politique de Cookies"
+    }
+  }
+}

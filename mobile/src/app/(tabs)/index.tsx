@@ -1,0 +1,289 @@
+import React from 'react';
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
+import { useFeaturedAds, useTrendingAds, useAds } from '@/hooks/useAds';
+import { FeaturedCarousel } from '@/components/FeaturedCarousel';
+import { AdCard } from '@/components/AdCard';
+import { CategoryChip } from '@/components/CategoryChip';
+import { LoadingScreen } from '@/components/ui/LoadingScreen';
+import { FadeIn } from '@/components/ui/FadeIn';
+import { useColors } from '@/hooks/useColors';
+import { spacing } from '@/theme/spacing';
+import { typography, fontFamily } from '@/theme/typography';
+import { industries } from '@/constants/industries';
+
+export default function HomeScreen() {
+  const router = useRouter();
+  const colors = useColors();
+  const { data: featuredAds, isLoading: featuredLoading } = useFeaturedAds();
+  const { data: trendingAds, isLoading: trendingLoading } = useTrendingAds();
+  const { data: allAds } = useAds();
+
+  if (featuredLoading && trendingLoading) {
+    return <LoadingScreen message="Loading ads..." />;
+  }
+
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }} edges={['top']}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: spacing.xl }}
+      >
+        {/* Header */}
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingHorizontal: spacing.md,
+            paddingTop: spacing.sm,
+            paddingBottom: spacing.md,
+          }}
+        >
+          <View>
+            <Text
+              style={[typography.bodyMedium, { color: colors.text.secondary }]}
+            >
+              Welcome to
+            </Text>
+            <Text style={[typography.displaySmall, { color: colors.primary }]}>
+              AdPlatform
+            </Text>
+          </View>
+          <TouchableOpacity
+            style={{
+              width: 44,
+              height: 44,
+              borderRadius: 22,
+              backgroundColor: colors.surfaceSecondary,
+              justifyContent: 'center',
+              alignItems: 'center',
+              position: 'relative',
+            }}
+            onPress={() => Alert.alert('Notifications', 'No new notifications.')}
+          >
+            <Ionicons
+              name="notifications-outline"
+              size={24}
+              color={colors.text.primary}
+            />
+            <View
+              style={{
+                position: 'absolute',
+                top: 10,
+                right: 12,
+                width: 8,
+                height: 8,
+                borderRadius: 4,
+                backgroundColor: colors.danger,
+                borderWidth: 1.5,
+                borderColor: colors.surfaceSecondary,
+              }}
+            />
+          </TouchableOpacity>
+        </View>
+
+        {/* Featured Carousel */}
+        <FadeIn delay={0}>
+          <View style={{ marginBottom: spacing.lg }}>
+            <Text
+              style={[
+                typography.headingMedium,
+                {
+                  color: colors.text.primary,
+                  paddingHorizontal: spacing.md,
+                  marginBottom: spacing.sm,
+                },
+              ]}
+            >
+              Featured Ads
+            </Text>
+            <FeaturedCarousel ads={Array.isArray(featuredAds) ? featuredAds : []} />
+          </View>
+        </FadeIn>
+
+        {/* Trending Ads */}
+        <FadeIn delay={100}>
+          <View style={{ marginBottom: spacing.lg }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                paddingHorizontal: spacing.md,
+                marginBottom: spacing.sm,
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: spacing.xs,
+                }}
+              >
+                <Ionicons name="flame" size={20} color={colors.warning} />
+                <Text
+                  style={[
+                    typography.headingMedium,
+                    {
+                      color: colors.text.primary,
+                      paddingHorizontal: 0,
+                      marginBottom: 0,
+                    },
+                  ]}
+                >
+                  Trending Now
+                </Text>
+              </View>
+              <TouchableOpacity onPress={() => router.push('/search')}>
+                <Text
+                  style={[
+                    typography.bodyMedium,
+                    { color: colors.primary, fontFamily: fontFamily.semibold },
+                  ]}
+                >
+                  See All
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ paddingHorizontal: spacing.md, gap: spacing.sm }}
+            >
+              {(Array.isArray(trendingAds) ? trendingAds : []).map((ad) => (
+                <View key={ad.id} style={{ width: 200, marginRight: spacing.sm }}>
+                  <AdCard ad={ad} compact />
+                </View>
+              ))}
+            </ScrollView>
+          </View>
+        </FadeIn>
+
+        {/* Categories */}
+        <FadeIn delay={200}>
+          <View style={{ marginBottom: spacing.lg }}>
+            <Text
+              style={[
+                typography.headingMedium,
+                {
+                  color: colors.text.primary,
+                  paddingHorizontal: spacing.md,
+                  marginBottom: spacing.sm,
+                },
+              ]}
+            >
+              Browse by Category
+            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                paddingHorizontal: spacing.md,
+                justifyContent: 'space-between',
+              }}
+            >
+              {industries.slice(0, 8).map((industry, idx) => (
+                <FadeIn key={industry.id} delay={250 + idx * 50}>
+                  <TouchableOpacity
+                    style={{
+                      width: 80,
+                      alignItems: 'center',
+                      marginBottom: spacing.md,
+                    }}
+                    onPress={() =>
+                      router.push({
+                        pathname: '/search',
+                        params: { industry: industry.id },
+                      })
+                    }
+                  >
+                    <View
+                      style={{
+                        width: 56,
+                        height: 56,
+                        borderRadius: 16,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginBottom: spacing.xs,
+                        backgroundColor: industry.color + '15',
+                      }}
+                    >
+                      <Ionicons
+                        name={industry.icon as any}
+                        size={24}
+                        color={industry.color}
+                      />
+                    </View>
+                    <Text
+                      style={[
+                        typography.caption,
+                        { color: colors.text.secondary, textAlign: 'center' },
+                      ]}
+                      numberOfLines={1}
+                    >
+                      {industry.label}
+                    </Text>
+                  </TouchableOpacity>
+                </FadeIn>
+              ))}
+            </View>
+          </View>
+        </FadeIn>
+
+        {/* Browse All */}
+        <FadeIn delay={400}>
+          <View style={{ marginBottom: spacing.lg }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                paddingHorizontal: spacing.md,
+                marginBottom: spacing.sm,
+              }}
+            >
+              <Text
+                style={[
+                  typography.headingMedium,
+                  {
+                    color: colors.text.primary,
+                    paddingHorizontal: 0,
+                    marginBottom: 0,
+                  },
+                ]}
+              >
+                Recent Ads
+              </Text>
+              <TouchableOpacity onPress={() => router.push('/search')}>
+                <Text
+                  style={[
+                    typography.bodyMedium,
+                    { color: colors.primary, fontFamily: fontFamily.semibold },
+                  ]}
+                >
+                  Browse All
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{ paddingHorizontal: spacing.md }}>
+              {(Array.isArray(allAds) ? allAds : Array.isArray(allAds?.data) ? allAds.data : []).slice(0, 4).map((ad, idx) => (
+                <FadeIn key={ad.id} delay={450 + idx * 80}>
+                  <AdCard ad={ad} />
+                </FadeIn>
+              ))}
+            </View>
+          </View>
+        </FadeIn>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}

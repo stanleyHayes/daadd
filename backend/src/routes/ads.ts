@@ -1,0 +1,113 @@
+import { Router, Request, Response } from 'express';
+import { Types } from 'mongoose';
+import { Ad } from '../models';
+import { success, paginated } from '../utils/response';
+
+const router = Router();
+
+function serializeAd(ad: any) {
+  return {
+    id: ad._id?.toString() || ad.id,
+    title: ad.title,
+    description: ad.description,
+    creativeUrl: ad.creative_url || ad.image_url || ad.media_url || '',
+    creativeType: ad.creative_type || (ad.media_url ? 'video' : 'image'),
+    advertiser: ad.advertiser || {
+      id: '',
+      name: ad.brand || ad.advertiser_name || 'Advertiser',
+      logo: '',
+      verified: true,
+    },
+    industry: ad.industry,
+    rewardAmount: ad.reward_amount ?? 0,
+    rewardCurrency: ad.reward_currency || '$',
+    isTrending: ad.trending ?? false,
+    isFeatured: ad.is_featured ?? false,
+    isAgeRestricted: ad.isAgeRestricted ?? ad.age_restricted ?? false,
+    rating: ad.rating ?? 4.5,
+    reviewCount: ad.review_count ?? 0,
+    viewCount: ad.view_count ?? 0,
+    createdAt: ad.created_at || ad.createdAt,
+    campaign: ad.campaign,
+  };
+}
+
+function toObjectId(id: string): Types.ObjectId | null {
+  try {
+    return new Types.ObjectId(id);
+  } catch {
+    return null;
+  }
+}
+
+router.get('/', async (req: Request, res: Response) => {
+  try {
+    const {
+      industry,
+      search,
+      sort = 'created_at',
+      order = 'desc',
+      page = '1',
+      limit = '10',
+    } = req.query as Record<string, string | undefined>;
+
+    const pageNum = Math.max(1, parseInt(page || '1', 10));
+    const limitNum = Math.max(1, Math.min(100, parseInt(limit || '10', 10)));
+
+    const filter: Record<string, any> = {};
+    if (industry) filter.industry = { $regex: industry, $options: 'i' };
+    if (search) {
+      filter.$or = [
+        { title: { $regex: search, $options: 'i' } },
+        { description: { $regex: search, $options: 'i' } },
+        { brand: { $regex: search, $options: 'i' } },
+      ];
+    }
+
+    const sortDirection = order === 'asc' ? 1 : -1;
+    const sortField = ['reward_amount', 'created_at', 'title'].includes(sort) ? sort : 'created_at';
+
+    const total = await Ad.countDocuments(filter);
+    const ads = await Ad.find(filter)
+      .sort({ [sortField]: sortDirection })
+      .skip((pageNum - 1) * limitNum)
+      .limit(limitNum)
+      .lean();
+
+    res.json(paginated(ads.map(serializeAd), total, pageNum, limitNum));
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message || 'Failed to fetch ads' });
+  }
+});
+
+router.get('/featured', async (_req: Request, res: Response) => {
+  try {
+    const ads = await Ad.find({ status: 'active', reward_amount: { $gt: 0 } })
+      .sort({ reward_amount: -1, created_at: -1 })
+      .limit(6)
+      .lean();
+    res.json(success(ads.map(serializeAd)));
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message || 'Failed to fetch featured ads' });
+  }
+});
+
+router.get('/:id', async (req: Request, res: Response) => {
+  try {
+    const id = toObjectId(req.params.id);
+    if (!id) {
+      res.status(400).json({ success: false, message: 'Invalid ad id' });
+      return;
+    }
+    const ad = await Ad.findById(id).lean();
+    if (!ad) {
+      res.status(404).json({ success: false, message: 'Ad not found' });
+      return;
+    }
+    res.json(success(serializeAd(ad)));
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message || 'Failed to fetch ad' });
+  }
+});
+
+export default router;

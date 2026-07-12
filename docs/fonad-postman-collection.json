@@ -1,0 +1,1544 @@
+{
+  "info": {
+    "name": "AdPlatform / DAADD API",
+    "description": "Complete API collection for the AdPlatform / DAADD (Digital Ad Analytics & Dynamic Dashboard) platform. Covers authentication, campaign management, analytics, event tracking, AI optimization, anomaly detection, benchmarking, attribution, storytelling, rewards, teams, and notifications.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "adplatform-daadd-api-collection"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:4000/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "campaign_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "user_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "notification_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "team_member_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "anomaly_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "recommendation_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "event_id",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "description": "Authentication endpoints: register, login, token refresh, and current user retrieval.",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jane Advertiser\",\n  \"email\": \"advertiser@adplatform.com\",\n  \"password\": \"password123\",\n  \"role\": \"advertiser\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "register"]
+            },
+            "description": "Register a new user account. Requires name, email, and password (min 8 characters). Optionally specify a role: advertiser, campaign_manager, analyst, end_user, or admin."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var jsonData = pm.response.json();",
+                  "    if (jsonData.data && jsonData.data.token) {",
+                  "        pm.collectionVariables.set(\"token\", jsonData.data.token);",
+                  "    }",
+                  "    if (jsonData.data && jsonData.data.user && jsonData.data.user.id) {",
+                  "        pm.collectionVariables.set(\"user_id\", jsonData.data.user.id);",
+                  "    }",
+                  "    pm.test(\"Registration successful\", function () {",
+                  "        pm.expect(jsonData.success).to.be.true;",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"advertiser@adplatform.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            },
+            "description": "Authenticate with email and password. Returns a JWT token that is automatically saved to the collection variable for use in subsequent requests."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    if (jsonData.data && jsonData.data.token) {",
+                  "        pm.collectionVariables.set(\"token\", jsonData.data.token);",
+                  "        console.log(\"Token saved to collection variables\");",
+                  "    }",
+                  "    if (jsonData.data && jsonData.data.user && jsonData.data.user.id) {",
+                  "        pm.collectionVariables.set(\"user_id\", jsonData.data.user.id);",
+                  "    }",
+                  "    pm.test(\"Login successful\", function () {",
+                  "        pm.expect(jsonData.success).to.be.true;",
+                  "        pm.expect(jsonData.data.token).to.be.a(\"string\");",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/refresh",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "refresh"]
+            },
+            "description": "Refresh the current JWT token. Requires a valid existing token in the Authorization header. Returns a new token."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    if (jsonData.data && jsonData.data.token) {",
+                  "        pm.collectionVariables.set(\"token\", jsonData.data.token);",
+                  "        console.log(\"Token refreshed and saved\");",
+                  "    }",
+                  "    pm.test(\"Token refreshed\", function () {",
+                  "        pm.expect(jsonData.success).to.be.true;",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/me",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "me"]
+            },
+            "description": "Retrieve the currently authenticated user's profile information."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.test(\"Current user retrieved\", function () {",
+                  "        pm.expect(jsonData.success).to.be.true;",
+                  "        pm.expect(jsonData.data).to.have.property(\"id\");",
+                  "    });",
+                  "    if (jsonData.data && jsonData.data.id) {",
+                  "        pm.collectionVariables.set(\"user_id\", jsonData.data.id);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "description": "User management endpoints. List users (admin only), get, update, and delete users.",
+      "item": [
+        {
+          "name": "List Users (Admin Only)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users?page=1&limit=20",
+              "host": ["{{base_url}}"],
+              "path": ["users"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "20" }
+              ]
+            },
+            "description": "Retrieve a paginated list of all users. Requires admin role."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/{{user_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["users", "{{user_id}}"]
+            },
+            "description": "Retrieve a specific user by their UUID."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"User retrieved\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "    pm.expect(jsonData.data).to.have.property(\"email\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jane Advertiser Updated\",\n  \"is_active\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/users/{{user_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["users", "{{user_id}}"]
+            },
+            "description": "Update a user's profile. Users can only update themselves unless they have admin role."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User (Admin Only)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/{{user_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["users", "{{user_id}}"]
+            },
+            "description": "Delete a user account. Requires admin role."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Campaigns",
+      "description": "Campaign management: CRUD operations, status updates, AI optimization toggle, and creative uploads.",
+      "item": [
+        {
+          "name": "List Campaigns",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/campaigns?page=1&limit=10&status=active&industry=sports&search=summer",
+              "host": ["{{base_url}}"],
+              "path": ["campaigns"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" },
+                { "key": "status", "value": "active", "description": "Filter by status: draft, active, paused, completed, suspended" },
+                { "key": "industry", "value": "sports", "description": "Filter by industry" },
+                { "key": "search", "value": "summer", "description": "Search by campaign name" },
+                { "key": "advertiser_id", "value": "{{user_id}}", "description": "Filter by advertiser", "disabled": true }
+              ]
+            },
+            "description": "Retrieve a paginated, filterable list of campaigns. Supports filtering by status, industry, advertiser, and free-text search."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Campaign by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/campaigns/{{campaign_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["campaigns", "{{campaign_id}}"]
+            },
+            "description": "Retrieve full details of a specific campaign by its UUID."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Campaign retrieved\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "    pm.expect(jsonData.data).to.have.property(\"name\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create Campaign",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Summer Sports Campaign\",\n  \"description\": \"Promote summer sports equipment and apparel across mobile and desktop platforms targeting US and EU markets.\",\n  \"budget_total\": 5000.00,\n  \"start_date\": \"2026-06-01\",\n  \"end_date\": \"2026-08-31\",\n  \"industry\": \"sports\",\n  \"targeting_config\": {\n    \"age_range\": { \"min\": 18, \"max\": 45 },\n    \"regions\": [\"US\", \"UK\", \"DE\", \"FR\"],\n    \"devices\": [\"mobile\", \"desktop\"],\n    \"languages\": [\"en\", \"de\", \"fr\"]\n  },\n  \"reward_value\": 0.25,\n  \"is_age_restricted\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/campaigns",
+              "host": ["{{base_url}}"],
+              "path": ["campaigns"]
+            },
+            "description": "Create a new advertising campaign. Requires advertiser, admin, or campaign_manager role. The campaign starts in DRAFT status."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var jsonData = pm.response.json();",
+                  "    if (jsonData.data && jsonData.data.id) {",
+                  "        pm.collectionVariables.set(\"campaign_id\", jsonData.data.id);",
+                  "        console.log(\"campaign_id saved: \" + jsonData.data.id);",
+                  "    }",
+                  "    pm.test(\"Campaign created\", function () {",
+                  "        pm.expect(jsonData.success).to.be.true;",
+                  "        pm.expect(jsonData.data.name).to.eql(\"Summer Sports Campaign\");",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update Campaign",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Summer Sports Campaign 2026\",\n  \"description\": \"Updated description with expanded targeting for the summer sports season.\",\n  \"budget_total\": 7500.00,\n  \"targeting_config\": {\n    \"age_range\": { \"min\": 16, \"max\": 55 },\n    \"regions\": [\"US\", \"UK\", \"DE\", \"FR\", \"ES\", \"IT\"],\n    \"devices\": [\"mobile\", \"desktop\", \"tablet\"],\n    \"languages\": [\"en\", \"de\", \"fr\", \"es\", \"it\"]\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/campaigns/{{campaign_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["campaigns", "{{campaign_id}}"]
+            },
+            "description": "Update an existing campaign's properties. Only the campaign owner or an admin can update."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Campaign",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/campaigns/{{campaign_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["campaigns", "{{campaign_id}}"]
+            },
+            "description": "Permanently delete a campaign. Only the campaign owner or an admin can delete."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Campaign Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"active\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/campaigns/{{campaign_id}}/status",
+              "host": ["{{base_url}}"],
+              "path": ["campaigns", "{{campaign_id}}", "status"]
+            },
+            "description": "Update the campaign status. Valid values: draft, active, paused, completed, suspended."
+          },
+          "response": []
+        },
+        {
+          "name": "Toggle AI Optimization",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enabled\": true,\n  \"mode\": \"recommendation_only\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/campaigns/{{campaign_id}}/toggle-ai",
+              "host": ["{{base_url}}"],
+              "path": ["campaigns", "{{campaign_id}}", "toggle-ai"]
+            },
+            "description": "Enable or disable AI optimization for a campaign. Modes: auto_adjust (AI applies changes automatically) or recommendation_only (AI suggests, human approves)."
+          },
+          "response": []
+        },
+        {
+          "name": "Upload Creative",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "",
+                  "description": "Creative asset file (image, video, etc.)"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/campaigns/{{campaign_id}}/creatives",
+              "host": ["{{base_url}}"],
+              "path": ["campaigns", "{{campaign_id}}", "creatives"]
+            },
+            "description": "Upload a creative asset (image or video) for a campaign. Uses multipart/form-data with a 'file' field."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Analytics",
+      "description": "Analytics endpoints for dashboard metrics, time series, funnel analysis, device/region breakdowns, and data export.",
+      "item": [
+        {
+          "name": "Dashboard Metrics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/analytics/dashboard/{{campaign_id}}?start_date=2026-06-01&end_date=2026-08-31",
+              "host": ["{{base_url}}"],
+              "path": ["analytics", "dashboard", "{{campaign_id}}"],
+              "query": [
+                { "key": "start_date", "value": "2026-06-01", "description": "Start date (YYYY-MM-DD)" },
+                { "key": "end_date", "value": "2026-08-31", "description": "End date (YYYY-MM-DD)" }
+              ]
+            },
+            "description": "Retrieve aggregated dashboard metrics (impressions, clicks, conversions, CTR, spend, etc.) for a campaign within an optional date range."
+          },
+          "response": []
+        },
+        {
+          "name": "Time Series Data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/analytics/timeseries/{{campaign_id}}?start_date=2026-06-01&end_date=2026-06-30&granularity=day",
+              "host": ["{{base_url}}"],
+              "path": ["analytics", "timeseries", "{{campaign_id}}"],
+              "query": [
+                { "key": "start_date", "value": "2026-06-01" },
+                { "key": "end_date", "value": "2026-06-30" },
+                { "key": "granularity", "value": "day", "description": "Granularity: hour or day" }
+              ]
+            },
+            "description": "Retrieve time series analytics data for charting. Supports hourly or daily granularity."
+          },
+          "response": []
+        },
+        {
+          "name": "Funnel Data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/analytics/funnel/{{campaign_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["analytics", "funnel", "{{campaign_id}}"]
+            },
+            "description": "Retrieve funnel analysis data showing conversion rates through impression > click > conversion stages."
+          },
+          "response": []
+        },
+        {
+          "name": "Device Breakdown",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/analytics/devices/{{campaign_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["analytics", "devices", "{{campaign_id}}"]
+            },
+            "description": "Retrieve analytics breakdown by device type (desktop, mobile, tablet) for a campaign."
+          },
+          "response": []
+        },
+        {
+          "name": "Region Breakdown",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/analytics/regions/{{campaign_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["analytics", "regions", "{{campaign_id}}"]
+            },
+            "description": "Retrieve analytics breakdown by geographic region for a campaign."
+          },
+          "response": []
+        },
+        {
+          "name": "Export CSV",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/analytics/export/{{campaign_id}}/csv?start_date=2026-06-01&end_date=2026-08-31",
+              "host": ["{{base_url}}"],
+              "path": ["analytics", "export", "{{campaign_id}}", "csv"],
+              "query": [
+                { "key": "start_date", "value": "2026-06-01" },
+                { "key": "end_date", "value": "2026-08-31" }
+              ]
+            },
+            "description": "Export campaign analytics data as a CSV file download."
+          },
+          "response": []
+        },
+        {
+          "name": "Export PDF",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/analytics/export/{{campaign_id}}/pdf?start_date=2026-06-01&end_date=2026-08-31",
+              "host": ["{{base_url}}"],
+              "path": ["analytics", "export", "{{campaign_id}}", "pdf"],
+              "query": [
+                { "key": "start_date", "value": "2026-06-01" },
+                { "key": "end_date", "value": "2026-08-31" }
+              ]
+            },
+            "description": "Export campaign analytics data as a PDF report download."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Events",
+      "description": "Ad event tracking endpoints. Track individual events, batch events, and query campaign events.",
+      "item": [
+        {
+          "name": "Track Event",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event_type\": \"impression\",\n  \"campaign_id\": \"{{campaign_id}}\",\n  \"device_type\": \"mobile\",\n  \"device_id\": \"device-abc-12345\",\n  \"ip_address\": \"203.0.113.42\",\n  \"geo_lat\": 40.7128,\n  \"geo_lng\": -74.006,\n  \"geo_city\": \"New York\",\n  \"geo_country\": \"US\",\n  \"metadata\": {\n    \"placement\": \"in-feed\",\n    \"creative_variant\": \"A\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/events/track",
+              "host": ["{{base_url}}"],
+              "path": ["events", "track"]
+            },
+            "description": "Track a single ad event. No authentication required (public SDK endpoint). Event types: impression, click, conversion, share, reward_claim, ad_view, ad_dismiss."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var jsonData = pm.response.json();",
+                  "    if (jsonData.data && jsonData.data.id) {",
+                  "        pm.collectionVariables.set(\"event_id\", jsonData.data.id);",
+                  "        console.log(\"event_id saved: \" + jsonData.data.id);",
+                  "    }",
+                  "    pm.test(\"Event tracked\", function () {",
+                  "        pm.expect(jsonData.success).to.be.true;",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Batch Track Events",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"events\": [\n    {\n      \"event_type\": \"impression\",\n      \"campaign_id\": \"{{campaign_id}}\",\n      \"device_type\": \"mobile\",\n      \"device_id\": \"device-abc-12345\",\n      \"geo_lat\": 40.7128,\n      \"geo_lng\": -74.006,\n      \"geo_city\": \"New York\",\n      \"geo_country\": \"US\"\n    },\n    {\n      \"event_type\": \"click\",\n      \"campaign_id\": \"{{campaign_id}}\",\n      \"device_type\": \"desktop\",\n      \"device_id\": \"device-def-67890\",\n      \"geo_lat\": 51.5074,\n      \"geo_lng\": -0.1278,\n      \"geo_city\": \"London\",\n      \"geo_country\": \"UK\"\n    },\n    {\n      \"event_type\": \"conversion\",\n      \"campaign_id\": \"{{campaign_id}}\",\n      \"device_type\": \"tablet\",\n      \"device_id\": \"device-ghi-11121\",\n      \"geo_lat\": 48.8566,\n      \"geo_lng\": 2.3522,\n      \"geo_city\": \"Paris\",\n      \"geo_country\": \"FR\",\n      \"metadata\": {\n        \"conversion_value\": 49.99,\n        \"product_id\": \"SKU-SUMMER-001\"\n      }\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/events/batch",
+              "host": ["{{base_url}}"],
+              "path": ["events", "batch"]
+            },
+            "description": "Track multiple ad events in a single request. Maximum 1000 events per batch. No authentication required."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Batch events tracked\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "    pm.expect(jsonData.data.tracked).to.eql(3);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Campaign Events",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/events/campaign/{{campaign_id}}?page=1&limit=20&event_type=impression&device_type=mobile&start_date=2026-06-01&end_date=2026-08-31",
+              "host": ["{{base_url}}"],
+              "path": ["events", "campaign", "{{campaign_id}}"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "20" },
+                { "key": "event_type", "value": "impression", "description": "Filter by event type" },
+                { "key": "device_type", "value": "mobile", "description": "Filter by device type", "disabled": true },
+                { "key": "start_date", "value": "2026-06-01", "disabled": true },
+                { "key": "end_date", "value": "2026-08-31", "disabled": true }
+              ]
+            },
+            "description": "Retrieve paginated events for a specific campaign. Supports filtering by event_type, device_type, and date range."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Heatmaps",
+      "description": "Geographic heatmap data for campaign event visualization.",
+      "item": [
+        {
+          "name": "Get Heatmap Data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/heatmaps/{{campaign_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["heatmaps", "{{campaign_id}}"]
+            },
+            "description": "Retrieve geographic heatmap data for a campaign, showing event density by location."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "AI Optimization",
+      "description": "AI-powered campaign optimization: recommendations, applying changes, audit log, and mode configuration.",
+      "item": [
+        {
+          "name": "Get Recommendations",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/ai/recommendations/{{campaign_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["ai", "recommendations", "{{campaign_id}}"]
+            },
+            "description": "Retrieve AI-generated optimization recommendations for a campaign (e.g., budget reallocation, targeting adjustments, creative suggestions)."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    if (jsonData.data && Array.isArray(jsonData.data) && jsonData.data.length > 0) {",
+                  "        pm.collectionVariables.set(\"recommendation_id\", jsonData.data[0].id);",
+                  "        console.log(\"recommendation_id saved: \" + jsonData.data[0].id);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Apply Recommendation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/ai/apply/{{campaign_id}}/{{recommendation_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["ai", "apply", "{{campaign_id}}", "{{recommendation_id}}"]
+            },
+            "description": "Apply a specific AI recommendation to a campaign. The recommendation changes are executed and logged in the audit trail."
+          },
+          "response": []
+        },
+        {
+          "name": "Get AI Audit Log",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/ai/audit-log/{{campaign_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["ai", "audit-log", "{{campaign_id}}"]
+            },
+            "description": "Retrieve the AI optimization audit log for a campaign, showing all AI actions and recommendations history."
+          },
+          "response": []
+        },
+        {
+          "name": "Update AI Mode",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mode\": \"auto_adjust\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/ai/mode/{{campaign_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["ai", "mode", "{{campaign_id}}"]
+            },
+            "description": "Update the AI optimization mode for a campaign. Modes: auto_adjust (fully autonomous) or recommendation_only (human-in-the-loop)."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Anomaly Detection",
+      "description": "Anomaly detection for campaign metrics: list anomalies, resolve, and trigger manual checks.",
+      "item": [
+        {
+          "name": "Get Campaign Anomalies",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/anomalies/{{campaign_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["anomalies", "{{campaign_id}}"]
+            },
+            "description": "Retrieve detected anomalies for a campaign (e.g., click fraud, unusual traffic spikes, budget anomalies)."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    if (jsonData.data && Array.isArray(jsonData.data) && jsonData.data.length > 0) {",
+                  "        pm.collectionVariables.set(\"anomaly_id\", jsonData.data[0].id);",
+                  "        console.log(\"anomaly_id saved: \" + jsonData.data[0].id);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Resolve Anomaly",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/anomalies/{{anomaly_id}}/resolve",
+              "host": ["{{base_url}}"],
+              "path": ["anomalies", "{{anomaly_id}}", "resolve"]
+            },
+            "description": "Mark an anomaly as resolved. The resolving user is recorded in the audit trail."
+          },
+          "response": []
+        },
+        {
+          "name": "Trigger Anomaly Check",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/anomalies/check/{{campaign_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["anomalies", "check", "{{campaign_id}}"]
+            },
+            "description": "Manually trigger an anomaly detection check for a campaign. Returns any newly detected anomalies."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Benchmarking",
+      "description": "Industry benchmarking data to compare campaign performance against peers.",
+      "item": [
+        {
+          "name": "Get Benchmark Data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/benchmarks/{{campaign_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["benchmarks", "{{campaign_id}}"]
+            },
+            "description": "Retrieve industry benchmark data for a campaign, comparing its performance metrics (CTR, CPC, conversion rate, etc.) against industry averages."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Attribution",
+      "description": "Cross-device attribution and user journey tracking.",
+      "item": [
+        {
+          "name": "Get Cross-Device Data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/attribution/{{campaign_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["attribution", "{{campaign_id}}"]
+            },
+            "description": "Retrieve cross-device attribution data for a campaign, showing how users interact across multiple devices."
+          },
+          "response": []
+        },
+        {
+          "name": "Get User Journey",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/attribution/journey/{{user_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["attribution", "journey", "{{user_id}}"]
+            },
+            "description": "Retrieve the full ad interaction journey for a specific user, showing touchpoints across campaigns and devices."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Device Path Mapping",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/attribution/devices/{{campaign_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["attribution", "devices", "{{campaign_id}}"]
+            },
+            "description": "Retrieve device path mapping data showing common device transition paths (e.g., mobile > desktop > conversion)."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Storyteller",
+      "description": "AI-generated campaign performance narratives with export capabilities.",
+      "item": [
+        {
+          "name": "Generate / Get Story",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/storyteller/{{campaign_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["storyteller", "{{campaign_id}}"]
+            },
+            "description": "Generate or retrieve an AI-crafted narrative summarizing campaign performance, key insights, and recommendations in natural language."
+          },
+          "response": []
+        },
+        {
+          "name": "Export Story PDF",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/storyteller/{{campaign_id}}/export/pdf",
+              "host": ["{{base_url}}"],
+              "path": ["storyteller", "{{campaign_id}}", "export", "pdf"]
+            },
+            "description": "Export the campaign story as a formatted PDF document for stakeholder presentations."
+          },
+          "response": []
+        },
+        {
+          "name": "Export Story HTML",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/storyteller/{{campaign_id}}/export/html",
+              "host": ["{{base_url}}"],
+              "path": ["storyteller", "{{campaign_id}}", "export", "html"]
+            },
+            "description": "Export the campaign story as an HTML document for embedding or email distribution."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Rewards",
+      "description": "User reward system: view rewards, claim rewards from ad interactions, and check balance.",
+      "item": [
+        {
+          "name": "Get User Rewards",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rewards?page=1&limit=20",
+              "host": ["{{base_url}}"],
+              "path": ["rewards"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "20" }
+              ]
+            },
+            "description": "Retrieve a paginated list of the authenticated user's earned rewards."
+          },
+          "response": []
+        },
+        {
+          "name": "Claim Reward",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rewards/claim/{{event_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["rewards", "claim", "{{event_id}}"]
+            },
+            "description": "Claim a reward for a specific ad event interaction. The reward value is determined by the campaign's reward_value setting."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Reward Balance",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rewards/balance",
+              "host": ["{{base_url}}"],
+              "path": ["rewards", "balance"]
+            },
+            "description": "Retrieve the authenticated user's total reward balance."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Teams",
+      "description": "Team collaboration: invite members, manage roles, and view audit logs for campaign teams.",
+      "item": [
+        {
+          "name": "Invite Member",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"campaign_id\": \"{{campaign_id}}\",\n  \"email\": \"newmember@example.com\",\n  \"role\": \"editor\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/teams/invite",
+              "host": ["{{base_url}}"],
+              "path": ["teams", "invite"]
+            },
+            "description": "Invite a user to collaborate on a campaign by email. Roles: owner, editor, viewer."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var jsonData = pm.response.json();",
+                  "    if (jsonData.data && jsonData.data.id) {",
+                  "        pm.collectionVariables.set(\"team_member_id\", jsonData.data.id);",
+                  "        console.log(\"team_member_id saved: \" + jsonData.data.id);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Team Members",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/teams/campaign/{{campaign_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["teams", "campaign", "{{campaign_id}}"]
+            },
+            "description": "Retrieve all team members for a specific campaign."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Member Role",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"viewer\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/teams/{{team_member_id}}/role",
+              "host": ["{{base_url}}"],
+              "path": ["teams", "{{team_member_id}}", "role"]
+            },
+            "description": "Update a team member's role on a campaign. Roles: owner, editor, viewer."
+          },
+          "response": []
+        },
+        {
+          "name": "Remove Member",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/teams/{{team_member_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["teams", "{{team_member_id}}"]
+            },
+            "description": "Remove a member from a campaign team."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Team Audit Log",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/teams/audit-log/{{campaign_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["teams", "audit-log", "{{campaign_id}}"]
+            },
+            "description": "Retrieve the team activity audit log for a campaign, showing member additions, role changes, and removals."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Notifications",
+      "description": "User notification management: view, mark as read, and bulk mark all as read.",
+      "item": [
+        {
+          "name": "Get User Notifications",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/notifications?unread=true",
+              "host": ["{{base_url}}"],
+              "path": ["notifications"],
+              "query": [
+                { "key": "unread", "value": "true", "description": "Set to 'true' to return only unread notifications" }
+              ]
+            },
+            "description": "Retrieve the authenticated user's notifications. Optionally filter to show only unread notifications."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    if (jsonData.data && Array.isArray(jsonData.data) && jsonData.data.length > 0) {",
+                  "        pm.collectionVariables.set(\"notification_id\", jsonData.data[0].id);",
+                  "        console.log(\"notification_id saved: \" + jsonData.data[0].id);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Mark Notification Read",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/notifications/{{notification_id}}/read",
+              "host": ["{{base_url}}"],
+              "path": ["notifications", "{{notification_id}}", "read"]
+            },
+            "description": "Mark a specific notification as read."
+          },
+          "response": []
+        },
+        {
+          "name": "Mark All Notifications Read",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/notifications/read-all",
+              "host": ["{{base_url}}"],
+              "path": ["notifications", "read-all"]
+            },
+            "description": "Mark all of the authenticated user's notifications as read."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
