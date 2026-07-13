@@ -17,6 +17,7 @@ import { FadeIn } from '@/components/ui/FadeIn';
 import { useColors } from '@/hooks/useColors';
 import { spacing } from '@/theme/spacing';
 import { typography, fontFamily } from '@/theme/typography';
+import { useTranslation } from 'react-i18next';
 
 interface FormErrors {
   name?: string;
@@ -26,6 +27,7 @@ interface FormErrors {
 }
 
 export default function RegisterScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const colors = useColors();
   const registerMutation = useRegister();
@@ -40,22 +42,22 @@ export default function RegisterScreen() {
   const validate = (): boolean => {
     const newErrors: FormErrors = {};
     if (!name.trim()) {
-      newErrors.name = 'Name is required';
+      newErrors.name = t('mobile.auth.errors.nameRequired');
     }
     if (!email.trim()) {
-      newErrors.email = 'Email is required';
+      newErrors.email = t('mobile.auth.errors.emailRequired');
     } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = 'Please enter a valid email';
+      newErrors.email = t('mobile.auth.errors.emailInvalid');
     }
     if (!password) {
-      newErrors.password = 'Password is required';
+      newErrors.password = t('mobile.auth.errors.passwordRequired');
     } else if (password.length < 8) {
-      newErrors.password = 'Password must be at least 8 characters';
+      newErrors.password = t('mobile.auth.errors.passwordMin8');
     }
     if (!confirmPassword) {
-      newErrors.confirmPassword = 'Please confirm your password';
+      newErrors.confirmPassword = t('mobile.auth.errors.confirmRequired');
     } else if (password !== confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
+      newErrors.confirmPassword = t('mobile.auth.errors.passwordsMismatch');
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -72,7 +74,7 @@ export default function RegisterScreen() {
       });
       router.replace('/(tabs)');
     } catch {
-      setErrors({ email: 'Registration failed. Please try again.' });
+      setErrors({ email: t('mobile.auth.errors.registrationFailed') });
     }
   };
 
@@ -120,7 +122,7 @@ export default function RegisterScreen() {
                   { color: colors.text.primary, marginBottom: spacing.xs },
                 ]}
               >
-                Create Account
+                {t('mobile.auth.createAccount')}
               </Text>
               <Text
                 style={[
@@ -128,7 +130,7 @@ export default function RegisterScreen() {
                   { color: colors.text.secondary, lineHeight: 24 },
                 ]}
               >
-                Join AdPlatform and start earning rewards by watching ads
+                {t('mobile.auth.createAccountSubtitle')}
               </Text>
             </View>
           </FadeIn>
@@ -137,8 +139,8 @@ export default function RegisterScreen() {
           <FadeIn delay={100}>
             <View style={{ marginBottom: spacing.xl }}>
               <Input
-                label="Full Name"
-                placeholder="Enter your full name"
+                label={t('mobile.auth.fullName')}
+                placeholder={t('mobile.auth.fullNamePlaceholder')}
                 value={name}
                 onChangeText={setName}
                 icon="person-outline"
@@ -147,8 +149,8 @@ export default function RegisterScreen() {
               />
 
               <Input
-                label="Email"
-                placeholder="Enter your email"
+                label={t('mobile.auth.email')}
+                placeholder={t('mobile.auth.emailPlaceholder')}
                 value={email}
                 onChangeText={setEmail}
                 icon="mail-outline"
@@ -159,8 +161,8 @@ export default function RegisterScreen() {
               />
 
               <Input
-                label="Password"
-                placeholder="Create a password"
+                label={t('mobile.auth.password')}
+                placeholder={t('mobile.auth.createPasswordPlaceholder')}
                 value={password}
                 onChangeText={setPassword}
                 icon="lock-closed-outline"
@@ -171,8 +173,8 @@ export default function RegisterScreen() {
               />
 
               <Input
-                label="Confirm Password"
-                placeholder="Confirm your password"
+                label={t('mobile.auth.confirmPassword')}
+                placeholder={t('mobile.auth.confirmPasswordPlaceholder')}
                 value={confirmPassword}
                 onChangeText={setConfirmPassword}
                 icon="lock-closed-outline"
@@ -192,23 +194,23 @@ export default function RegisterScreen() {
                   },
                 ]}
               >
-                By creating an account, you agree to our{' '}
+                {t('mobile.auth.termsPrefix')}{' '}
                 <Text
                   style={{ color: colors.primary, fontFamily: fontFamily.semibold }}
                 >
-                  Terms of Service
+                  {t('mobile.auth.termsOfService')}
                 </Text>{' '}
-                and{' '}
+                {t('mobile.auth.termsAnd')}{' '}
                 <Text
                   style={{ color: colors.primary, fontFamily: fontFamily.semibold }}
                 >
-                  Privacy Policy
+                  {t('mobile.auth.privacyPolicy')}
                 </Text>
                 .
               </Text>
 
               <Button
-                title="Create Account"
+                title={t('mobile.auth.createAccount')}
                 onPress={handleRegister}
                 loading={registerMutation.isPending}
                 size="lg"
@@ -229,7 +231,7 @@ export default function RegisterScreen() {
             <Text
               style={[typography.bodyMedium, { color: colors.text.secondary }]}
             >
-              Already have an account?{' '}
+              {t('mobile.auth.alreadyHaveAccount')}{' '}
             </Text>
             <TouchableOpacity onPress={() => router.back()}>
               <Text
@@ -238,7 +240,7 @@ export default function RegisterScreen() {
                   { color: colors.primary, fontFamily: fontFamily.bold },
                 ]}
               >
-                Sign In
+                {t('mobile.auth.signIn')}
               </Text>
             </TouchableOpacity>
           </View>

@@ -12,7 +12,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#2563EB"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.adplatform.mobile"
@@ -37,7 +39,8 @@
         {
           "cameraPermission": "Allow AdPlatform to scan customer QR codes."
         }
-      ]
+      ],
+      "expo-localization"
     ],
     "experiments": {
       "typedRoutes": true

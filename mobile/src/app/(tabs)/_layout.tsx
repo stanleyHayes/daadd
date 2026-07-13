@@ -5,8 +5,10 @@ import { Platform } from 'react-native';
 import { useColors } from '@/hooks/useColors';
 import { fontSize } from '@/theme/typography';
 import { fontFamily } from '@/theme/typography';
+import { useTranslation } from 'react-i18next';
 
 export default function TabLayout() {
+  const { t } = useTranslation();
   const colors = useColors();
 
   return (
@@ -40,7 +42,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: t('mobile.tabs.home'),
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
               name={focused ? 'home' : 'home-outline'}
@@ -53,7 +55,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="search"
         options={{
-          title: 'Search',
+          title: t('mobile.tabs.search'),
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
               name={focused ? 'search' : 'search-outline'}
@@ -66,7 +68,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="rewards"
         options={{
-          title: 'Rewards',
+          title: t('mobile.tabs.rewards'),
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
               name={focused ? 'gift' : 'gift-outline'}
@@ -79,7 +81,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          title: 'Profile',
+          title: t('mobile.tabs.profile'),
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
               name={focused ? 'person' : 'person-outline'}

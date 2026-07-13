@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   Alert,
+  Modal,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -20,11 +21,13 @@ import { spacing, borderRadius } from '@/theme/spacing';
 import { typography, fontFamily } from '@/theme/typography';
 import { LinkedDevice } from '@/types';
 import { Platform } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import i18n, { languages, setLanguage } from '@/i18n';
 
 // Current device only — cross-device listing requires backend support
 const CURRENT_DEVICE: LinkedDevice = {
   id: 'current',
-  name: Platform.OS === 'ios' ? 'iPhone' : Platform.OS === 'android' ? 'Android Device' : 'This Device',
+  name: '',
   type: 'phone',
   lastActive: new Date().toISOString(),
   isCurrent: true,
@@ -37,11 +40,23 @@ const deviceIcons: Record<string, keyof typeof Ionicons.glyphMap> = {
 };
 
 export default function ProfileScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const colors = useColors();
   const logout = useLogout();
   const user = useAuthStore((s) => s.user);
   const { theme, setTheme } = useThemeStore();
+  const [languageModalVisible, setLanguageModalVisible] = useState(false);
+
+  const currentLanguageName =
+    languages[i18n.resolvedLanguage ?? i18n.language]?.name ?? languages.en.name;
+
+  const deviceName =
+    Platform.OS === 'ios'
+      ? t('mobile.profile.devices.iphone')
+      : Platform.OS === 'android'
+        ? t('mobile.profile.devices.android')
+        : t('mobile.profile.devices.other');
 
   const displayUser = user;
   const { data: rewards } = useRewards();
@@ -55,9 +70,9 @@ export default function ProfileScreen() {
   const joinedDate = (displayUser as any)?.created_at || (displayUser as any)?.createdAt;
 
   const themeLabels: Record<string, string> = {
-    light: 'Light',
-    dark: 'Dark',
-    system: 'System',
+    light: t('mobile.profile.theme.light'),
+    dark: t('mobile.profile.theme.dark'),
+    system: t('mobile.profile.theme.system'),
   };
 
   const themeIcons: Record<string, keyof typeof Ionicons.glyphMap> = {
@@ -77,7 +92,7 @@ export default function ProfileScreen() {
     {
       id: 'theme',
       icon: themeIcons[theme] as keyof typeof Ionicons.glyphMap,
-      label: 'Appearance',
+      label: t('mobile.profile.items.appearance'),
       color: colors.secondary,
       value: themeLabels[theme],
       onPress: handleThemeToggle,
@@ -85,49 +100,50 @@ export default function ProfileScreen() {
     {
       id: 'notifications',
       icon: 'notifications-outline' as const,
-      label: 'Notifications',
+      label: t('mobile.profile.items.notifications'),
       color: colors.primary,
       onPress: () => router.push('/notifications' as Href),
     },
     {
       id: 'merchant-scan',
       icon: 'qr-code-outline' as const,
-      label: 'Merchant: Scan Customer QR',
+      label: t('mobile.profile.items.merchantScan'),
       color: colors.accent,
       onPress: () => router.push('/merchant-scan' as Href),
     },
     {
       id: 'language',
       icon: 'language-outline' as const,
-      label: 'Language',
+      label: t('mobile.profile.items.language'),
       color: colors.secondary,
-      value: 'English',
+      value: currentLanguageName,
+      onPress: () => setLanguageModalVisible(true),
     },
     {
       id: 'privacy',
       icon: 'shield-outline' as const,
-      label: 'Privacy',
+      label: t('mobile.profile.items.privacy'),
       color: colors.accent,
     },
     {
       id: 'help',
       icon: 'help-circle-outline' as const,
-      label: 'Help & Support',
+      label: t('mobile.profile.items.help'),
       color: colors.warning,
     },
     {
       id: 'about',
       icon: 'information-circle-outline' as const,
-      label: 'About AdPlatform',
+      label: t('mobile.profile.items.about'),
       color: colors.text.secondary,
     },
   ];
 
   const handleLogout = () => {
-    Alert.alert('Logout', 'Are you sure you want to logout?', [
-      { text: 'Cancel', style: 'cancel' },
+    Alert.alert(t('mobile.profile.logout'), t('mobile.profile.logoutConfirm'), [
+      { text: t('mobile.common.cancel'), style: 'cancel' },
       {
-        text: 'Logout',
+        text: t('mobile.profile.logout'),
         style: 'destructive',
         onPress: async () => {
           await logout();
@@ -142,7 +158,7 @@ export default function ProfileScreen() {
       item.onPress();
       return;
     }
-    Alert.alert(item.label, 'This feature is coming soon!');
+    Alert.alert(item.label, t('mobile.common.comingSoon'));
   };
 
   return (
@@ -168,7 +184,7 @@ export default function ProfileScreen() {
           <Text
             style={[typography.headingLarge, { color: colors.text.primary }]}
           >
-            Profile
+            {t('mobile.profile.title')}
           </Text>
           <TouchableOpacity
             style={{
@@ -206,7 +222,7 @@ export default function ProfileScreen() {
           <Text
             style={[typography.headingLarge, { color: colors.text.primary }]}
           >
-            {displayUser?.name || 'User'}
+            {displayUser?.name || t('mobile.profile.defaultUser')}
           </Text>
           <Text
             style={[
@@ -236,7 +252,7 @@ export default function ProfileScreen() {
                   { color: colors.text.tertiary, marginTop: 2 },
                 ]}
               >
-                Ads Viewed
+                {t('mobile.profile.stats.adsViewed')}
               </Text>
             </View>
             <View
@@ -257,7 +273,7 @@ export default function ProfileScreen() {
                   { color: colors.text.tertiary, marginTop: 2 },
                 ]}
               >
-                Earned
+                {t('mobile.profile.stats.earned')}
               </Text>
             </View>
             <View
@@ -271,7 +287,7 @@ export default function ProfileScreen() {
                 ]}
               >
                 {joinedDate
-                  ? new Date(joinedDate).toLocaleDateString('en', {
+                  ? new Date(joinedDate).toLocaleDateString(i18n.language, {
                       month: 'short',
                       year: 'numeric',
                     })
@@ -283,7 +299,7 @@ export default function ProfileScreen() {
                   { color: colors.text.tertiary, marginTop: 2 },
                 ]}
               >
-                Joined
+                {t('mobile.profile.stats.joined')}
               </Text>
             </View>
           </View>
@@ -302,7 +318,7 @@ export default function ProfileScreen() {
               { color: colors.text.primary, marginBottom: spacing.sm },
             ]}
           >
-            Linked Devices
+            {t('mobile.profile.linkedDevices')}
           </Text>
           <Card padded={false}>
             {[CURRENT_DEVICE].map((device) => (
@@ -341,7 +357,7 @@ export default function ProfileScreen() {
                       },
                     ]}
                   >
-                    {device.name}
+                    {deviceName}
                     {device.isCurrent && (
                       <Text
                         style={[
@@ -353,7 +369,7 @@ export default function ProfileScreen() {
                         ]}
                       >
                         {' '}
-                        (Current)
+                        ({t('mobile.profile.currentDevice')})
                       </Text>
                     )}
                   </Text>
@@ -363,7 +379,7 @@ export default function ProfileScreen() {
                       { color: colors.text.tertiary, marginTop: 2 },
                     ]}
                   >
-                    Last active:{' '}
+                    {t('mobile.profile.lastActive')}{' '}
                     {new Date(device.lastActive).toLocaleDateString()}
                   </Text>
                 </View>
@@ -390,7 +406,7 @@ export default function ProfileScreen() {
               { color: colors.text.primary, marginBottom: spacing.sm },
             ]}
           >
-            Settings
+            {t('mobile.profile.settings')}
           </Text>
           <Card padded={false}>
             {settingsItems.map((item, index) => (
@@ -477,7 +493,7 @@ export default function ProfileScreen() {
         >
           <Ionicons name="log-out-outline" size={20} color={colors.danger} />
           <Text style={[typography.button, { color: colors.danger }]}>
-            Logout
+            {t('mobile.profile.logout')}
           </Text>
         </TouchableOpacity>
 
@@ -494,6 +510,85 @@ export default function ProfileScreen() {
           AdPlatform v1.0.0
         </Text>
       </ScrollView>
+
+      {/* Language Selection Modal */}
+      <Modal
+        visible={languageModalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setLanguageModalVisible(false)}
+      >
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={() => setLanguageModalVisible(false)}
+          style={{
+            flex: 1,
+            backgroundColor: colors.overlay,
+            justifyContent: 'center',
+            padding: spacing.lg,
+          }}
+        >
+          <TouchableOpacity activeOpacity={1} onPress={() => {}}>
+            <Card style={{ padding: 0, overflow: 'hidden' }}>
+              <Text
+                style={[
+                  typography.headingSmall,
+                  {
+                    color: colors.text.primary,
+                    padding: spacing.md,
+                    paddingBottom: spacing.sm,
+                  },
+                ]}
+              >
+                {t('mobile.profile.languageModal.title')}
+              </Text>
+              {Object.entries(languages).map(([code, lang], index, arr) => {
+                const isSelected =
+                  (i18n.resolvedLanguage ?? i18n.language) === code;
+                return (
+                  <TouchableOpacity
+                    key={code}
+                    style={[
+                      {
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        padding: spacing.md,
+                        gap: spacing.sm,
+                      },
+                      index < arr.length - 1 && {
+                        borderBottomWidth: 1,
+                        borderBottomColor: colors.borderLight,
+                      },
+                    ]}
+                    onPress={() => {
+                      setLanguage(code);
+                      setLanguageModalVisible(false);
+                    }}
+                  >
+                    <Text style={{ fontSize: 20 }}>{lang.flag}</Text>
+                    <Text
+                      style={[
+                        typography.bodyMedium,
+                        { color: colors.text.primary, flex: 1 },
+                        isSelected && { fontFamily: fontFamily.semibold },
+                      ]}
+                    >
+                      {lang.name}
+                    </Text>
+                    {isSelected && (
+                      <Ionicons
+                        name="checkmark-circle"
+                        size={20}
+                        color={colors.primary}
+                      />
+                    )}
+                  </TouchableOpacity>
+                );
+              })}
+            </Card>
+          </TouchableOpacity>
+        </TouchableOpacity>
+      </Modal>
     </SafeAreaView>
   );
 }

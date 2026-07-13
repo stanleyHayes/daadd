@@ -26,17 +26,19 @@ import { useColors } from '@/hooks/useColors';
 import { spacing, borderRadius } from '@/theme/spacing';
 import { typography, fontFamily } from '@/theme/typography';
 import { RewardStatus } from '@/types';
+import { useTranslation } from 'react-i18next';
 
 type FilterOption = 'all' | RewardStatus;
 
-const filterOptions: { value: FilterOption; label: string }[] = [
-  { value: 'all', label: 'All' },
-  { value: 'pending', label: 'Pending' },
-  { value: 'credited', label: 'Credited' },
-  { value: 'redeemed', label: 'Redeemed' },
+const filterOptions: { value: FilterOption }[] = [
+  { value: 'all' },
+  { value: 'pending' },
+  { value: 'credited' },
+  { value: 'redeemed' },
 ];
 
 export default function RewardsScreen() {
+  const { t } = useTranslation();
   const colors = useColors();
   const router = useRouter();
   const { data: rewards, isLoading: rewardsLoading } = useRewards();
@@ -67,7 +69,7 @@ export default function RewardsScreen() {
   };
 
   if (rewardsLoading && balanceLoading) {
-    return <LoadingScreen message="Loading rewards..." />;
+    return <LoadingScreen message={t('mobile.rewards.loading')} />;
   }
 
   return (
@@ -90,7 +92,7 @@ export default function RewardsScreen() {
           <Text
             style={[typography.headingLarge, { color: colors.text.primary }]}
           >
-            My Rewards
+            {t('mobile.rewards.title')}
           </Text>
         </View>
 
@@ -130,7 +132,7 @@ export default function RewardsScreen() {
                   { color: 'rgba(255,255,255,0.8)' },
                 ]}
               >
-                Available Balance
+                {t('mobile.rewards.availableBalance')}
               </Text>
             </View>
             <Text
@@ -152,7 +154,7 @@ export default function RewardsScreen() {
               {balance?.currency || 'USD'}
             </Text>
             <Button
-              title="Redeem Rewards"
+              title={t('mobile.rewards.redeemRewards')}
               onPress={handleRedeem}
               variant="outline"
               style={{
@@ -196,7 +198,7 @@ export default function RewardsScreen() {
                   { color: colors.text.tertiary, marginTop: 2 },
                 ]}
               >
-                Pending
+                {t('mobile.rewards.status.pending')}
               </Text>
             </View>
             <View
@@ -221,7 +223,7 @@ export default function RewardsScreen() {
                   { color: colors.text.tertiary, marginTop: 2 },
                 ]}
               >
-                Credited
+                {t('mobile.rewards.status.credited')}
               </Text>
             </View>
             <View
@@ -246,7 +248,7 @@ export default function RewardsScreen() {
                   { color: colors.text.tertiary, marginTop: 2 },
                 ]}
               >
-                Redeemed
+                {t('mobile.rewards.status.redeemed')}
               </Text>
             </View>
           </View>
@@ -289,7 +291,7 @@ export default function RewardsScreen() {
                   },
                 ]}
               >
-                {option.label}
+                {t(`mobile.rewards.filter.${option.value}`)}
               </Text>
             </TouchableOpacity>
           ))}
@@ -303,7 +305,7 @@ export default function RewardsScreen() {
               { color: colors.text.primary, marginBottom: spacing.sm },
             ]}
           >
-            Reward History
+            {t('mobile.rewards.history')}
           </Text>
           {filteredRewards && filteredRewards.length > 0 ? (
             filteredRewards.map((reward, index) => (
@@ -312,8 +314,8 @@ export default function RewardsScreen() {
           ) : (
             <EmptyState
               icon="gift-outline"
-              title="No rewards yet"
-              message="Start viewing ads to earn rewards!"
+              title={t('mobile.rewards.noRewardsYet')}
+              message={t('mobile.rewards.noRewardsMessage')}
             />
           )}
         </View>

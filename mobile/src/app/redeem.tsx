@@ -18,10 +18,12 @@ import { Card } from '@/components/ui/Card';
 import { useColors } from '@/hooks/useColors';
 import { spacing, borderRadius } from '@/theme/spacing';
 import { typography, fontFamily } from '@/theme/typography';
+import { useTranslation } from 'react-i18next';
 
 const TOKEN_VALUE = 0.05; // 1 token = $0.05
 
 export default function RedeemScreen() {
+  const { t } = useTranslation();
   const colors = useColors();
   const { data: balance } = useRewardBalance();
   const generateQR = useGenerateRedemptionQR();
@@ -66,7 +68,7 @@ export default function RedeemScreen() {
       setNow(Date.now());
     } catch (err) {
       setError(
-        extractApiError(err, 'Failed to generate QR code. Please try again.')
+        extractApiError(err, t('mobile.redeem.generateError'))
       );
     }
   };
@@ -102,7 +104,7 @@ export default function RedeemScreen() {
           <Text
             style={[typography.bodyMedium, { color: colors.text.secondary }]}
           >
-            Available Balance
+            {t('mobile.redeem.availableBalance')}
           </Text>
         </View>
         <Text
@@ -119,7 +121,7 @@ export default function RedeemScreen() {
             { color: colors.text.tertiary, marginTop: spacing.xs },
           ]}
         >
-          Max {maxTokens} tokens (1 token = $0.05)
+          {t('mobile.redeem.maxTokens', { count: maxTokens })}
         </Text>
       </Card>
 
@@ -152,7 +154,7 @@ export default function RedeemScreen() {
                     { color: colors.warningDark, flex: 1 },
                   ]}
                 >
-                  Your QR code expired. Generate a new one below.
+                  {t('mobile.redeem.expiredMessage')}
                 </Text>
               </View>
             </Card>
@@ -165,7 +167,7 @@ export default function RedeemScreen() {
               { color: colors.text.primary, marginBottom: spacing.xs },
             ]}
           >
-            Tokens to redeem
+            {t('mobile.redeem.tokensToRedeem')}
           </Text>
           <View
             style={{
@@ -191,7 +193,7 @@ export default function RedeemScreen() {
                 setTokensInput(text.replace(/[^0-9]/g, ''));
                 setError(null);
               }}
-              placeholder={`Enter 1 - ${maxTokens}`}
+              placeholder={t('mobile.redeem.placeholder', { max: maxTokens })}
               placeholderTextColor={colors.text.tertiary}
               keyboardType="number-pad"
               editable={maxTokens > 0}
@@ -224,8 +226,8 @@ export default function RedeemScreen() {
               ]}
             >
               {maxTokens < 1
-                ? 'Your balance is too low to redeem tokens.'
-                : `Enter a whole number between 1 and ${maxTokens}.`}
+                ? t('mobile.redeem.balanceTooLow')
+                : t('mobile.redeem.enterWholeNumber', { max: maxTokens })}
             </Text>
           )}
 
@@ -241,7 +243,7 @@ export default function RedeemScreen() {
           )}
 
           <Button
-            title="Generate QR"
+            title={t('mobile.redeem.generateQR')}
             onPress={handleGenerate}
             loading={generateQR.isPending}
             disabled={!isValidTokens}
@@ -313,7 +315,7 @@ export default function RedeemScreen() {
                 },
               ]}
             >
-              {parsedTokens} tokens (${(parsedTokens * TOKEN_VALUE).toFixed(2)})
+              {t('mobile.redeem.tokensValue', { count: parsedTokens, amount: (parsedTokens * TOKEN_VALUE).toFixed(2) })}
             </Text>
             <Text
               style={[
@@ -321,13 +323,12 @@ export default function RedeemScreen() {
                 { color: colors.text.secondary, textAlign: 'center' },
               ]}
             >
-              Show this to the merchant. Tokens are only deducted after
-              merchant approval.
+              {t('mobile.redeem.showToMerchant')}
             </Text>
           </Card>
 
           <Button
-            title="Cancel"
+            title={t('mobile.common.cancel')}
             onPress={handleReset}
             variant="outline"
             style={{ marginTop: spacing.xs }}

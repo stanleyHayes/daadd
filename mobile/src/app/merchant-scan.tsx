@@ -21,10 +21,12 @@ import { Card } from '@/components/ui/Card';
 import { useColors } from '@/hooks/useColors';
 import { spacing, borderRadius } from '@/theme/spacing';
 import { typography, fontFamily } from '@/theme/typography';
+import { useTranslation } from 'react-i18next';
 
 type Step = 'scan' | 'amount' | 'summary' | 'success' | 'error';
 
 export default function MerchantScanScreen() {
+  const { t } = useTranslation();
   const colors = useColors();
   const [permission, requestPermission] = useCameraPermissions();
   const processingRef = useRef(false);
@@ -61,7 +63,7 @@ export default function MerchantScanScreen() {
         throw new Error('Missing fields');
       }
     } catch {
-      setError('Invalid QR code. Please scan a valid customer redemption QR.');
+      setError(t('mobile.merchantScan.invalidQR'));
       setStep('error');
       return;
     }
@@ -74,7 +76,7 @@ export default function MerchantScanScreen() {
       setError(
         extractApiError(
           err,
-          'This QR code is expired, invalid, or already used.'
+          t('mobile.merchantScan.qrExpired')
         )
       );
       setStep('error');
@@ -97,7 +99,7 @@ export default function MerchantScanScreen() {
       setStep('summary');
     } catch (err) {
       setError(
-        extractApiError(err, 'Failed to validate redemption. Please try again.')
+        extractApiError(err, t('mobile.merchantScan.validateError'))
       );
     }
   };
@@ -113,7 +115,7 @@ export default function MerchantScanScreen() {
       setStep('success');
     } catch (err) {
       setError(
-        extractApiError(err, 'Failed to confirm redemption. Please try again.')
+        extractApiError(err, t('mobile.merchantScan.confirmError'))
       );
     }
   };
@@ -159,7 +161,7 @@ export default function MerchantScanScreen() {
             },
           ]}
         >
-          Camera Access Needed
+          {t('mobile.merchantScan.cameraAccessNeeded')}
         </Text>
         <Text
           style={[
@@ -171,9 +173,9 @@ export default function MerchantScanScreen() {
             },
           ]}
         >
-          To scan customer QR codes, please allow camera access.
+          {t('mobile.merchantScan.cameraAccessMessage')}
         </Text>
-        <Button title="Grant Permission" onPress={requestPermission} />
+        <Button title={t('mobile.merchantScan.grantPermission')} onPress={requestPermission} />
       </View>
     );
   }
@@ -203,7 +205,7 @@ export default function MerchantScanScreen() {
               { color: '#FFF', textAlign: 'center' },
             ]}
           >
-            Point the camera at the customer's redemption QR code
+            {t('mobile.merchantScan.pointCamera')}
           </Text>
         </View>
       </View>
@@ -241,7 +243,7 @@ export default function MerchantScanScreen() {
               },
             ]}
           >
-            Scan Failed
+            {t('mobile.merchantScan.scanFailed')}
           </Text>
           <Text
             style={[
@@ -255,7 +257,7 @@ export default function MerchantScanScreen() {
           >
             {error}
           </Text>
-          <Button title="Scan Again" onPress={reset} style={{ width: '100%' }} />
+          <Button title={t('mobile.merchantScan.scanAgain')} onPress={reset} style={{ width: '100%' }} />
         </Card>
       )}
 
@@ -284,9 +286,9 @@ export default function MerchantScanScreen() {
             <Text
               style={[typography.bodyMedium, { color: colors.text.secondary }]}
             >
-              Redeeming{' '}
+              {t('mobile.merchantScan.redeeming')}{' '}
               <Text style={{ fontFamily: fontFamily.bold, color: colors.accent }}>
-                {scanResult.tokens} tokens
+                {t('mobile.merchantScan.tokens', { count: scanResult.tokens })}
               </Text>
             </Text>
           </Card>
@@ -297,7 +299,7 @@ export default function MerchantScanScreen() {
               { color: colors.text.primary, marginBottom: spacing.xs },
             ]}
           >
-            Purchase amount ($)
+            {t('mobile.merchantScan.purchaseAmount')}
           </Text>
           <View
             style={{
@@ -351,14 +353,14 @@ export default function MerchantScanScreen() {
           )}
 
           <Button
-            title="Continue"
+            title={t('mobile.merchantScan.continue')}
             onPress={handleValidate}
             loading={validateRedemption.isPending}
             disabled={!isValidAmount}
             size="lg"
           />
           <Button
-            title="Cancel"
+            title={t('mobile.common.cancel')}
             onPress={reset}
             variant="outline"
             style={{ marginTop: spacing.sm }}
@@ -375,25 +377,25 @@ export default function MerchantScanScreen() {
                 { color: colors.text.primary, marginBottom: spacing.xs },
               ]}
             >
-              Redemption Summary
+              {t('mobile.merchantScan.summary.title')}
             </Text>
             <SummaryRow
-              label="Customer"
+              label={t('mobile.merchantScan.summary.customer')}
               value={validateResult.customer_name}
               colors={colors}
             />
             <SummaryRow
-              label="Purchase"
+              label={t('mobile.merchantScan.summary.purchase')}
               value={`$${validateResult.purchase_amount.toFixed(2)}`}
               colors={colors}
             />
             <SummaryRow
-              label="Tokens used"
+              label={t('mobile.merchantScan.summary.tokensUsed')}
               value={`${validateResult.tokens_used}`}
               colors={colors}
             />
             <SummaryRow
-              label="Discount"
+              label={t('mobile.merchantScan.summary.discount')}
               value={`-$${validateResult.discount.toFixed(2)}`}
               colors={colors}
               valueColor={colors.accent}
@@ -406,7 +408,7 @@ export default function MerchantScanScreen() {
               }}
             />
             <SummaryRow
-              label="Customer pays"
+              label={t('mobile.merchantScan.summary.customerPays')}
               value={`$${validateResult.final_amount.toFixed(2)}`}
               colors={colors}
               bold
@@ -425,7 +427,7 @@ export default function MerchantScanScreen() {
           )}
 
           <Button
-            title="Approve Redemption"
+            title={t('mobile.merchantScan.approveRedemption')}
             onPress={handleConfirm}
             loading={confirmRedemption.isPending}
             size="lg"
@@ -438,7 +440,7 @@ export default function MerchantScanScreen() {
             }
           />
           <Button
-            title="Cancel"
+            title={t('mobile.common.cancel')}
             onPress={reset}
             variant="outline"
             style={{ marginTop: spacing.sm }}
@@ -471,7 +473,7 @@ export default function MerchantScanScreen() {
               },
             ]}
           >
-            Redemption Approved
+            {t('mobile.merchantScan.approvedTitle')}
           </Text>
           <Text
             style={[
@@ -483,12 +485,14 @@ export default function MerchantScanScreen() {
               },
             ]}
           >
-            {confirmResult.tokens_used} tokens (${confirmResult.discount.toFixed(2)})
-            deducted. Customer's new balance: $
-            {confirmResult.new_balance.toFixed(2)}.
+            {t('mobile.merchantScan.approvedMessage', {
+              tokens: confirmResult.tokens_used,
+              discount: confirmResult.discount.toFixed(2),
+              balance: confirmResult.new_balance.toFixed(2),
+            })}
           </Text>
           <Button
-            title="Scan Another"
+            title={t('mobile.merchantScan.scanAnother')}
             onPress={reset}
             style={{ width: '100%' }}
           />

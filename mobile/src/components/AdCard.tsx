@@ -19,6 +19,7 @@ import { spacing, borderRadius } from '@/theme/spacing';
 import { typography, fontFamily } from '@/theme/typography';
 import { Badge } from './ui/Badge';
 import { getIndustryById } from '@/constants/industries';
+import { useTranslation } from 'react-i18next';
 
 interface AdCardProps {
   ad: Ad;
@@ -26,6 +27,7 @@ interface AdCardProps {
 }
 
 export function AdCard({ ad, compact = false }: AdCardProps) {
+  const { t } = useTranslation();
   const router = useRouter();
   const colors = useColors();
   const scaleAnim = useSharedValue(1);
@@ -103,7 +105,7 @@ export function AdCard({ ad, compact = false }: AdCardProps) {
               ]}
               numberOfLines={1}
             >
-              {ad.advertiser?.name || 'Advertiser'}
+              {ad.advertiser?.name || t('mobile.adDetail.advertiserFallback')}
             </Text>
             <View
               style={{
@@ -188,7 +190,7 @@ export function AdCard({ ad, compact = false }: AdCardProps) {
                   { color: '#FFF', fontFamily: fontFamily.bold },
                 ]}
               >
-                Trending
+                {t('mobile.common.trending')}
               </Text>
             </View>
           )}
@@ -253,7 +255,7 @@ export function AdCard({ ad, compact = false }: AdCardProps) {
           >
             {industry && (
               <Badge
-                label={industry.label}
+                label={t(`mobile.industries.${industry.id}`)}
                 backgroundColor={industry.color + '20'}
                 color={industry.color}
                 size="sm"

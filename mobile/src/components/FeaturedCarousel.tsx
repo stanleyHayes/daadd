@@ -23,6 +23,7 @@ import { Ad } from '@/types';
 import { useColors } from '@/hooks/useColors';
 import { spacing, borderRadius } from '@/theme/spacing';
 import { typography, fontFamily } from '@/theme/typography';
+import { useTranslation } from 'react-i18next';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const CARD_WIDTH = SCREEN_WIDTH - spacing.md * 2;
@@ -42,6 +43,7 @@ function CarouselCard({
   index: number;
   scrollX: SharedValue<number>;
 }) {
+  const { t } = useTranslation();
   const router = useRouter();
   const colors = useColors();
   const cardOffset = index * (CARD_WIDTH + spacing.sm);
@@ -118,7 +120,10 @@ function CarouselCard({
                 { color: '#FFF', fontFamily: fontFamily.bold },
               ]}
             >
-              Earn ${ad.rewardAmount.toFixed(2)}
+              {t('mobile.adDetail.earnReward', {
+                amount: ad.rewardAmount.toFixed(2),
+                currency: '',
+              }).trim()}
             </Text>
           </View>
           <Text

@@ -18,8 +18,10 @@ import { FadeIn } from '@/components/ui/FadeIn';
 import { useColors } from '@/hooks/useColors';
 import { spacing } from '@/theme/spacing';
 import { typography, fontFamily } from '@/theme/typography';
+import { useTranslation } from 'react-i18next';
 
 export default function LoginScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const colors = useColors();
   const loginMutation = useLogin();
@@ -33,14 +35,14 @@ export default function LoginScreen() {
   const validate = (): boolean => {
     const newErrors: typeof errors = {};
     if (!email.trim()) {
-      newErrors.email = 'Email is required';
+      newErrors.email = t('mobile.auth.errors.emailRequired');
     } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = 'Please enter a valid email';
+      newErrors.email = t('mobile.auth.errors.emailInvalid');
     }
     if (!password) {
-      newErrors.password = 'Password is required';
+      newErrors.password = t('mobile.auth.errors.passwordRequired');
     } else if (password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
+      newErrors.password = t('mobile.auth.errors.passwordMin6');
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -52,7 +54,7 @@ export default function LoginScreen() {
       await loginMutation.mutateAsync({ email, password });
       router.replace('/(tabs)');
     } catch {
-      setErrors({ email: 'Invalid email or password' });
+      setErrors({ email: t('mobile.auth.errors.invalidCredentials') });
     }
   };
 
@@ -102,7 +104,7 @@ export default function LoginScreen() {
                   },
                 ]}
               >
-                Watch ads. Earn rewards. It's that simple.
+                {t('mobile.auth.tagline')}
               </Text>
             </View>
           </FadeIn>
@@ -116,7 +118,7 @@ export default function LoginScreen() {
                   { color: colors.text.primary, marginBottom: spacing.xs },
                 ]}
               >
-                Welcome Back
+                {t('mobile.auth.welcomeBack')}
               </Text>
               <Text
                 style={[
@@ -124,12 +126,12 @@ export default function LoginScreen() {
                   { color: colors.text.secondary, marginBottom: spacing.lg },
                 ]}
               >
-                Sign in to your account to continue
+                {t('mobile.auth.signInSubtitle')}
               </Text>
 
               <Input
-                label="Email"
-                placeholder="Enter your email"
+                label={t('mobile.auth.email')}
+                placeholder={t('mobile.auth.emailPlaceholder')}
                 value={email}
                 onChangeText={setEmail}
                 icon="mail-outline"
@@ -140,8 +142,8 @@ export default function LoginScreen() {
               />
 
               <Input
-                label="Password"
-                placeholder="Enter your password"
+                label={t('mobile.auth.password')}
+                placeholder={t('mobile.auth.passwordPlaceholder')}
                 value={password}
                 onChangeText={setPassword}
                 icon="lock-closed-outline"
@@ -157,9 +159,9 @@ export default function LoginScreen() {
                   marginBottom: spacing.lg,
                   marginTop: -spacing.sm,
                 }}
-                onPress={() => Alert.alert('Reset Password', 'A password reset link will be sent to your email address.', [
-                  { text: 'Cancel', style: 'cancel' },
-                  { text: 'Send Link', onPress: () => Alert.alert('Sent!', 'Check your inbox for the reset link.') },
+                onPress={() => Alert.alert(t('mobile.auth.resetPasswordTitle'), t('mobile.auth.resetPasswordMessage'), [
+                  { text: t('mobile.common.cancel'), style: 'cancel' },
+                  { text: t('mobile.auth.sendLink'), onPress: () => Alert.alert(t('mobile.auth.sentTitle'), t('mobile.auth.sentMessage')) },
                 ])}
               >
                 <Text
@@ -168,12 +170,12 @@ export default function LoginScreen() {
                     { color: colors.primary, fontFamily: fontFamily.semibold },
                   ]}
                 >
-                  Forgot Password?
+                  {t('mobile.auth.forgotPassword')}
                 </Text>
               </TouchableOpacity>
 
               <Button
-                title="Sign In"
+                title={t('mobile.auth.signIn')}
                 onPress={handleLogin}
                 loading={loginMutation.isPending}
                 size="lg"
@@ -193,7 +195,7 @@ export default function LoginScreen() {
             <Text
               style={[typography.bodyMedium, { color: colors.text.secondary }]}
             >
-              Don't have an account?{' '}
+              {t('mobile.auth.noAccount')}{' '}
             </Text>
             <TouchableOpacity
               onPress={() => router.push('/(auth)/register')}
@@ -204,7 +206,7 @@ export default function LoginScreen() {
                   { color: colors.primary, fontFamily: fontFamily.bold },
                 ]}
               >
-                Create Account
+                {t('mobile.auth.createAccount')}
               </Text>
             </TouchableOpacity>
           </View>

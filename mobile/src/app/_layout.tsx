@@ -12,6 +12,8 @@ import { useThemeStore } from '@/stores/theme.store';
 import { useColors } from '@/hooks/useColors';
 import { usePushNotifications } from '@/hooks/useNotifications';
 import { SplashAnimated } from '@/components/SplashAnimated';
+import { useTranslation } from 'react-i18next';
+import { initI18n } from '@/i18n';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -31,6 +33,7 @@ function PushNotificationsRegistrar() {
 }
 
 function RootLayoutInner() {
+  const { t } = useTranslation();
   const colors = useColors();
   const resolvedTheme = useThemeStore((s) => s.resolvedTheme);
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
@@ -72,7 +75,7 @@ function RootLayoutInner() {
           options={{
             headerShown: true,
             headerTitle: '',
-            headerBackTitle: 'Back',
+            headerBackTitle: t('mobile.common.back'),
             headerTintColor: colors.primary,
             headerStyle: { backgroundColor: colors.surface },
             headerShadowVisible: false,
@@ -83,8 +86,8 @@ function RootLayoutInner() {
           name="redeem"
           options={{
             headerShown: true,
-            headerTitle: 'Redeem Tokens',
-            headerBackTitle: 'Back',
+            headerTitle: t('mobile.redeem.title'),
+            headerBackTitle: t('mobile.common.back'),
             headerTintColor: colors.primary,
             headerStyle: { backgroundColor: colors.surface },
             headerShadowVisible: false,
@@ -94,8 +97,8 @@ function RootLayoutInner() {
           name="merchant-scan"
           options={{
             headerShown: true,
-            headerTitle: 'Scan Customer QR',
-            headerBackTitle: 'Back',
+            headerTitle: t('mobile.merchantScan.title'),
+            headerBackTitle: t('mobile.common.back'),
             headerTintColor: colors.primary,
             headerStyle: { backgroundColor: colors.surface },
             headerShadowVisible: false,
@@ -122,6 +125,7 @@ export default function RootLayout() {
   useEffect(() => {
     initializeAuth();
     initializeTheme();
+    initI18n();
   }, [initializeAuth, initializeTheme]);
 
   useEffect(() => {

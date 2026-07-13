@@ -19,6 +19,7 @@ import { spacing, borderRadius } from '@/theme/spacing';
 import { typography, fontFamily } from '@/theme/typography';
 import { Button } from './ui/Button';
 import api from '@/lib/api';
+import { useTranslation } from 'react-i18next';
 
 interface AgeGateProps {
   visible: boolean;
@@ -30,6 +31,7 @@ interface AgeGateProps {
 }
 
 export function AgeGate({ visible, minAge, onVerify, onClose, verifying = false, errorMessage }: AgeGateProps) {
+  const { t } = useTranslation();
   const colors = useColors();
   const [code, setCode] = useState<string[]>(Array(6).fill(''));
   const [devCode, setDevCode] = useState<string | null>(null);
@@ -155,7 +157,7 @@ export function AgeGate({ visible, minAge, onVerify, onClose, verifying = false,
               },
             ]}
           >
-            Age Verification Required
+            {t('mobile.ageGate.title')}
           </Text>
           <Text
             style={[
@@ -168,9 +170,7 @@ export function AgeGate({ visible, minAge, onVerify, onClose, verifying = false,
               },
             ]}
           >
-            This ad is restricted to viewers aged {minAge} and above. Please
-            enter the 6-digit verification code sent to your registered phone
-            number.
+            {t('mobile.ageGate.description', { minAge })}
           </Text>
 
           {devCode && (
@@ -185,7 +185,7 @@ export function AgeGate({ visible, minAge, onVerify, onClose, verifying = false,
                 },
               ]}
             >
-              Dev code: {devCode}
+              {t('mobile.ageGate.devCode', { code: devCode })}
             </Text>
           )}
 
@@ -251,14 +251,14 @@ export function AgeGate({ visible, minAge, onVerify, onClose, verifying = false,
 
           <View style={{ width: '100%', gap: spacing.sm }}>
             <Button
-              title="Verify"
+              title={t('mobile.ageGate.verify')}
               onPress={handleVerify}
               loading={verifying}
               disabled={!isComplete}
               style={{ width: '100%' }}
             />
             <Button
-              title="Cancel"
+              title={t('mobile.common.cancel')}
               onPress={onClose}
               variant="outline"
               style={{ width: '100%' }}

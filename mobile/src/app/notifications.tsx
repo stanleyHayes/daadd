@@ -19,8 +19,10 @@ import {
   useMarkAllNotificationsRead,
 } from '@/hooks/useNotifications';
 import { format } from 'date-fns';
+import { useTranslation } from 'react-i18next';
 
 export default function NotificationsScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const colors = useColors();
   const { data: notifications = [], isLoading } = useNotifications();
@@ -76,7 +78,7 @@ export default function NotificationsScreen() {
             { color: colors.text.primary, marginLeft: spacing.md, flex: 1 },
           ]}
         >
-          Notifications
+          {t('mobile.notifications.title')}
         </Text>
         {unreadCount > 0 && (
           <TouchableOpacity
@@ -90,7 +92,7 @@ export default function NotificationsScreen() {
                 { color: colors.primary, fontFamily: fontFamily.semibold },
               ]}
             >
-              Mark all read
+              {t('mobile.notifications.markAllRead')}
             </Text>
           </TouchableOpacity>
         )}
@@ -128,7 +130,7 @@ export default function NotificationsScreen() {
               { color: colors.text.primary, textAlign: 'center', marginBottom: spacing.xs },
             ]}
           >
-            No Notifications
+            {t('mobile.notifications.empty')}
           </Text>
           <Text
             style={[
@@ -136,7 +138,7 @@ export default function NotificationsScreen() {
               { color: colors.text.secondary, textAlign: 'center' },
             ]}
           >
-            You're all caught up! Check back later for updates.
+            {t('mobile.notifications.emptyMessage')}
           </Text>
         </View>
       ) : (

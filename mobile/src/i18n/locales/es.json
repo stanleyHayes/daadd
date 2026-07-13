@@ -1,0 +1,324 @@
+{
+  "header": {
+    "logo": "AdPlatform",
+    "tagline": "Gestión Inteligente de Anuncios",
+    "nav": {
+      "home": "Inicio",
+      "ads": "Explorar Anuncios",
+      "about": "Acerca de",
+      "blog": "Blog",
+      "careers": "Carreras",
+      "partners": "Partners"
+    },
+    "cta": "Comenzar"
+  },
+  "landing": {
+    "hero": {
+      "title": "Transforma tu Publicidad con IA",
+      "subtitle": "Llega a la audiencia correcta, optimiza en tiempo real, maximiza tu ROI.",
+      "cta": "Prueba Gratuita"
+    },
+    "features": {
+      "title": "¿Por qué elegir AdPlatform?",
+      "ai": {
+        "title": "Optimización Impulsada por IA",
+        "desc": "Ajustes automáticos de ofertas, orientación de audiencia y optimización creativa basada en datos de rendimiento en tiempo real."
+      },
+      "realtime": {
+        "title": "Análisis en Tiempo Real",
+        "desc": "Supervisa el rendimiento de campañas, detecta anomalías y actúa al instante con nuestro panel intuitivo."
+      },
+      "rewards": {
+        "title": "Compromiso Basado en Recompensas",
+        "desc": "Incentiva acciones del usuario y construye lealtad con nuestro sistema de recompensas integrado."
+      }
+    }
+  },
+  "blog": {
+    "title": "Blog de AdPlatform",
+    "subtitle": "Información, actualizaciones e historias del mundo de la publicidad inteligente.",
+    "allPosts": "Todos los Artículos",
+    "noResults": "No se encontraron artículos en esta categoría.",
+    "readMore": "Leer Artículo Completo",
+    "readTime": "min de lectura",
+    "category": {
+      "trends": "Tendencias de AdTech",
+      "updates": "Actualizaciones de Plataforma",
+      "cases": "Casos de Estudio",
+      "guides": "Consejos y Guías"
+    }
+  },
+  "footer": {
+    "copyright": "© 2026 AdPlatform. Todos los derechos reservados.",
+    "links": {
+      "privacy": "Política de Privacidad",
+      "terms": "Términos de Servicio",
+      "cookies": "Política de Cookies"
+    }
+  },
+  "mobile": {
+    "common": {
+      "back": "Atrás",
+      "cancel": "Cancelar",
+      "ok": "Aceptar",
+      "error": "Error",
+      "success": "Éxito",
+      "loading": "Cargando...",
+      "comingSoon": "¡Esta función estará disponible pronto!",
+      "trending": "Tendencia"
+    },
+    "tabs": {
+      "home": "Inicio",
+      "search": "Buscar",
+      "rewards": "Recompensas",
+      "profile": "Perfil"
+    },
+    "splash": {
+      "subtitle": "Descubre anuncios. Gana recompensas.",
+      "tagline": "Plataforma de publicidad inteligente"
+    },
+    "auth": {
+      "tagline": "Mira anuncios. Gana recompensas. Así de simple.",
+      "welcomeBack": "Bienvenido de nuevo",
+      "signInSubtitle": "Inicia sesión en tu cuenta para continuar",
+      "email": "Correo electrónico",
+      "emailPlaceholder": "Ingresa tu correo electrónico",
+      "password": "Contraseña",
+      "passwordPlaceholder": "Ingresa tu contraseña",
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "signIn": "Iniciar sesión",
+      "noAccount": "¿No tienes una cuenta?",
+      "createAccount": "Crear cuenta",
+      "createAccountSubtitle": "Únete a AdPlatform y empieza a ganar recompensas viendo anuncios",
+      "fullName": "Nombre completo",
+      "fullNamePlaceholder": "Ingresa tu nombre completo",
+      "createPasswordPlaceholder": "Crea una contraseña",
+      "confirmPassword": "Confirmar contraseña",
+      "confirmPasswordPlaceholder": "Confirma tu contraseña",
+      "termsPrefix": "Al crear una cuenta, aceptas nuestros",
+      "termsOfService": "Términos de servicio",
+      "termsAnd": "y nuestra",
+      "privacyPolicy": "Política de privacidad",
+      "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+      "resetPasswordTitle": "Restablecer contraseña",
+      "resetPasswordMessage": "Se enviará un enlace para restablecer la contraseña a tu correo electrónico.",
+      "sendLink": "Enviar enlace",
+      "sentTitle": "¡Enviado!",
+      "sentMessage": "Revisa tu bandeja de entrada para ver el enlace.",
+      "errors": {
+        "emailRequired": "El correo electrónico es obligatorio",
+        "emailInvalid": "Ingresa un correo electrónico válido",
+        "passwordRequired": "La contraseña es obligatoria",
+        "passwordMin6": "La contraseña debe tener al menos 6 caracteres",
+        "passwordMin8": "La contraseña debe tener al menos 8 caracteres",
+        "nameRequired": "El nombre es obligatorio",
+        "confirmRequired": "Confirma tu contraseña",
+        "passwordsMismatch": "Las contraseñas no coinciden",
+        "invalidCredentials": "Correo electrónico o contraseña incorrectos",
+        "registrationFailed": "Error al registrarse. Inténtalo de nuevo."
+      }
+    },
+    "home": {
+      "welcomeTo": "Bienvenido a",
+      "featuredAds": "Anuncios destacados",
+      "trendingNow": "En tendencia",
+      "seeAll": "Ver todo",
+      "browseByCategory": "Explorar por categoría",
+      "recentAds": "Anuncios recientes",
+      "browseAll": "Explorar todo",
+      "loadingAds": "Cargando anuncios..."
+    },
+    "search": {
+      "title": "Buscar anuncios",
+      "placeholder": "Buscar anuncios, marcas, categorías...",
+      "sortBy": "Ordenar por:",
+      "sort": {
+        "trending": "Tendencia",
+        "newest": "Más recientes",
+        "rewardValue": "Valor de recompensa"
+      },
+      "adsFound": "{{count}} anuncios encontrados",
+      "noAdsFound": "No se encontraron anuncios",
+      "noAdsMessage": "Ajusta tu búsqueda o los filtros para encontrar más anuncios.",
+      "clearFilters": "Borrar filtros",
+      "loadingMore": "Cargando más anuncios...",
+      "searching": "Buscando anuncios..."
+    },
+    "rewards": {
+      "title": "Mis recompensas",
+      "availableBalance": "Saldo disponible",
+      "redeemRewards": "Canjear recompensas",
+      "history": "Historial de recompensas",
+      "noRewardsYet": "Aún no hay recompensas",
+      "noRewardsMessage": "¡Empieza a ver anuncios para ganar recompensas!",
+      "loading": "Cargando recompensas...",
+      "filter": {
+        "all": "Todas",
+        "pending": "Pendientes",
+        "credited": "Acreditadas",
+        "redeemed": "Canjeadas"
+      },
+      "status": {
+        "pending": "Pendiente",
+        "credited": "Acreditada",
+        "redeemed": "Canjeada",
+        "expired": "Expirada"
+      }
+    },
+    "profile": {
+      "title": "Perfil",
+      "defaultUser": "Usuario",
+      "stats": {
+        "adsViewed": "Anuncios vistos",
+        "earned": "Ganado",
+        "joined": "Miembro desde"
+      },
+      "linkedDevices": "Dispositivos vinculados",
+      "currentDevice": "Actual",
+      "lastActive": "Última actividad:",
+      "devices": {
+        "iphone": "iPhone",
+        "android": "Dispositivo Android",
+        "other": "Este dispositivo"
+      },
+      "settings": "Ajustes",
+      "items": {
+        "appearance": "Apariencia",
+        "notifications": "Notificaciones",
+        "merchantScan": "Comercio: Escanear QR del cliente",
+        "language": "Idioma",
+        "privacy": "Privacidad",
+        "help": "Ayuda y soporte",
+        "about": "Acerca de AdPlatform"
+      },
+      "theme": {
+        "light": "Claro",
+        "dark": "Oscuro",
+        "system": "Sistema"
+      },
+      "logout": "Cerrar sesión",
+      "logoutConfirm": "¿Seguro que quieres cerrar sesión?",
+      "languageModal": {
+        "title": "Seleccionar idioma"
+      }
+    },
+    "adDetail": {
+      "loading": "Cargando anuncio...",
+      "earnReward": "Gana ${{amount}} {{currency}}",
+      "viewToClaim": "Mira este anuncio para reclamar tu recompensa",
+      "views": "{{count}} mil visualizaciones",
+      "ageRestricted": "Contenido restringido: solo mayores de {{age}} años",
+      "shareAd": "Compartir este anuncio",
+      "reviewsTitle": "Reseñas y valoraciones",
+      "reviewCount_one": "{{count}} reseña",
+      "reviewCount_other": "{{count}} reseñas",
+      "noReviews": "Aún no hay reseñas. ¡Sé el primero en compartir tu opinión!",
+      "reward": "Recompensa",
+      "claimReward": "Reclamar recompensa",
+      "claimedTitle": "¡Recompensa reclamada!",
+      "claimedMessage": "Has ganado ${{amount}} de {{advertiser}}. Se acreditará a tu saldo en breve.",
+      "claimedButton": "¡Genial!",
+      "claimError": "No se pudo reclamar la recompensa. Inténtalo de nuevo.",
+      "ageVerifyError": "Código de verificación inválido o expirado. Inténtalo de nuevo.",
+      "shareMessage": "Mira este anuncio en AdPlatform: {{title}} - ¡Gana ${{amount}}!",
+      "advertiserFallback": "Anunciante"
+    },
+    "ageGate": {
+      "title": "Verificación de edad requerida",
+      "description": "Este anuncio está restringido a mayores de {{minAge}} años. Ingresa el código de verificación de 6 dígitos enviado a tu número de teléfono registrado.",
+      "verify": "Verificar",
+      "devCode": "Código de desarrollo: {{code}}"
+    },
+    "redeem": {
+      "title": "Canjear tokens",
+      "availableBalance": "Saldo disponible",
+      "maxTokens": "Máximo {{count}} tokens (1 token = $0.05)",
+      "expiredMessage": "Tu código QR expiró. Genera uno nuevo abajo.",
+      "tokensToRedeem": "Tokens a canjear",
+      "placeholder": "Ingresa 1 - {{max}}",
+      "balanceTooLow": "Tu saldo es demasiado bajo para canjear tokens.",
+      "enterWholeNumber": "Ingresa un número entero entre 1 y {{max}}.",
+      "generateQR": "Generar QR",
+      "generateError": "No se pudo generar el código QR. Inténtalo de nuevo.",
+      "tokensValue": "{{count}} tokens (${{amount}})",
+      "showToMerchant": "Muéstraselo al comercio. Los tokens solo se descuentan tras la aprobación del comercio."
+    },
+    "merchantScan": {
+      "title": "Escanear QR del cliente",
+      "cameraAccessNeeded": "Se necesita acceso a la cámara",
+      "cameraAccessMessage": "Para escanear los códigos QR de los clientes, permite el acceso a la cámara.",
+      "grantPermission": "Conceder permiso",
+      "pointCamera": "Apunta la cámara al código QR de canje del cliente",
+      "scanFailed": "Error al escanear",
+      "scanAgain": "Escanear de nuevo",
+      "scanAnother": "Escanear otro",
+      "invalidQR": "Código QR inválido. Escanea un código QR de canje de cliente válido.",
+      "qrExpired": "Este código QR expiró, es inválido o ya fue utilizado.",
+      "redeeming": "Canjeando",
+      "tokens": "{{count}} tokens",
+      "purchaseAmount": "Monto de compra ($)",
+      "continue": "Continuar",
+      "validateError": "No se pudo validar el canje. Inténtalo de nuevo.",
+      "confirmError": "No se pudo confirmar el canje. Inténtalo de nuevo.",
+      "summary": {
+        "title": "Resumen del canje",
+        "customer": "Cliente",
+        "purchase": "Compra",
+        "tokensUsed": "Tokens utilizados",
+        "discount": "Descuento",
+        "customerPays": "El cliente paga"
+      },
+      "approvedTitle": "Canje aprobado",
+      "approvedMessage": "Se descontaron {{tokens}} tokens (${{discount}}). Nuevo saldo del cliente: ${{balance}}.",
+      "approveRedemption": "Aprobar canje"
+    },
+    "notifications": {
+      "title": "Notificaciones",
+      "markAllRead": "Marcar todo como leído",
+      "empty": "Sin notificaciones",
+      "emptyMessage": "¡Estás al día! Vuelve más tarde para ver novedades."
+    },
+    "editProfile": {
+      "title": "Editar perfil",
+      "emailAddress": "Correo electrónico",
+      "noEmailOnFile": "No hay correo registrado",
+      "emailCannotChange": "El correo electrónico no se puede cambiar",
+      "saveChanges": "Guardar cambios",
+      "saving": "Guardando...",
+      "changePassword": "Cambiar contraseña",
+      "currentPassword": "Contraseña actual",
+      "currentPasswordPlaceholder": "Ingresa tu contraseña actual",
+      "newPassword": "Nueva contraseña",
+      "newPasswordPlaceholder": "Ingresa la nueva contraseña",
+      "confirmNewPassword": "Confirmar nueva contraseña",
+      "confirmNewPasswordPlaceholder": "Vuelve a ingresar la nueva contraseña",
+      "updatePassword": "Actualizar contraseña",
+      "updating": "Actualizando...",
+      "errors": {
+        "nameEmpty": "El nombre no puede estar vacío",
+        "notLoggedIn": "Debes iniciar sesión para actualizar tu perfil",
+        "profileUpdated": "Perfil actualizado correctamente",
+        "updateFailed": "No se pudo actualizar el perfil",
+        "fillPasswordFields": "Completa todos los campos de contraseña",
+        "passwordMin6": "La nueva contraseña debe tener al menos 6 caracteres",
+        "passwordsMismatch": "Las nuevas contraseñas no coinciden",
+        "passwordUpdated": "Contraseña actualizada correctamente",
+        "passwordFailed": "No se pudo actualizar la contraseña"
+      }
+    },
+    "industries": {
+      "technology": "Tecnología",
+      "food_beverage": "Alimentos y bebidas",
+      "fashion": "Moda",
+      "health": "Salud",
+      "finance": "Finanzas",
+      "entertainment": "Entretenimiento",
+      "travel": "Viajes",
+      "education": "Educación",
+      "sports": "Deportes",
+      "automotive": "Automotriz",
+      "real_estate": "Bienes raíces",
+      "retail": "Comercio minorista"
+    }
+  }
+}

@@ -14,6 +14,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 
 const { width, height } = Dimensions.get('window');
 
@@ -22,6 +23,7 @@ interface SplashAnimatedProps {
 }
 
 export function SplashAnimated({ onFinish }: SplashAnimatedProps) {
+  const { t } = useTranslation();
   const logoScale = useSharedValue(0);
   const logoRotate = useSharedValue(-30);
   const logoOpacity = useSharedValue(0);
@@ -143,7 +145,7 @@ export function SplashAnimated({ onFinish }: SplashAnimatedProps) {
 
         {/* Subtitle */}
         <Animated.View style={subtitleStyle}>
-          <Text style={styles.subtitle}>Discover Ads. Earn Rewards.</Text>
+          <Text style={styles.subtitle}>{t('mobile.splash.subtitle')}</Text>
         </Animated.View>
 
         {/* Loading indicator */}
@@ -154,7 +156,7 @@ export function SplashAnimated({ onFinish }: SplashAnimatedProps) {
 
       {/* Bottom text */}
       <Animated.View style={[styles.bottomContainer, subtitleStyle]}>
-        <Text style={styles.bottomText}>Intelligent Advertising Platform</Text>
+        <Text style={styles.bottomText}>{t('mobile.splash.tagline')}</Text>
       </Animated.View>
     </Animated.View>
   );

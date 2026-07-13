@@ -1,0 +1,324 @@
+{
+  "header": {
+    "logo": "AdPlatform",
+    "tagline": "Intelligent Ad Management",
+    "nav": {
+      "home": "Home",
+      "ads": "Browse Ads",
+      "about": "About",
+      "blog": "Blog",
+      "careers": "Careers",
+      "partners": "Partners"
+    },
+    "cta": "Get Started"
+  },
+  "landing": {
+    "hero": {
+      "title": "Transform Your Advertising with AI",
+      "subtitle": "Reach the right audience, optimize in real-time, maximize your ROI.",
+      "cta": "Start Free Trial"
+    },
+    "features": {
+      "title": "Why Choose AdPlatform?",
+      "ai": {
+        "title": "AI-Powered Optimization",
+        "desc": "Automatic bid adjustments, audience targeting, and creative optimization based on real-time performance data."
+      },
+      "realtime": {
+        "title": "Real-Time Analytics",
+        "desc": "Monitor campaign performance, detect anomalies, and act instantly with our intuitive dashboard."
+      },
+      "rewards": {
+        "title": "Reward-Based Engagement",
+        "desc": "Incentivize user actions and build loyalty with our built-in rewards system."
+      }
+    }
+  },
+  "blog": {
+    "title": "AdPlatform Blog",
+    "subtitle": "Insights, updates, and stories from the world of intelligent advertising.",
+    "allPosts": "All Posts",
+    "noResults": "No posts found in this category.",
+    "readMore": "Read Full Article",
+    "readTime": "min read",
+    "category": {
+      "trends": "AdTech Trends",
+      "updates": "Platform Updates",
+      "cases": "Case Studies",
+      "guides": "Tips & Guides"
+    }
+  },
+  "footer": {
+    "copyright": "© 2026 AdPlatform. All rights reserved.",
+    "links": {
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "cookies": "Cookie Policy"
+    }
+  },
+  "mobile": {
+    "common": {
+      "back": "Back",
+      "cancel": "Cancel",
+      "ok": "OK",
+      "error": "Error",
+      "success": "Success",
+      "loading": "Loading...",
+      "comingSoon": "This feature is coming soon!",
+      "trending": "Trending"
+    },
+    "tabs": {
+      "home": "Home",
+      "search": "Search",
+      "rewards": "Rewards",
+      "profile": "Profile"
+    },
+    "splash": {
+      "subtitle": "Discover Ads. Earn Rewards.",
+      "tagline": "Intelligent Advertising Platform"
+    },
+    "auth": {
+      "tagline": "Watch ads. Earn rewards. It's that simple.",
+      "welcomeBack": "Welcome Back",
+      "signInSubtitle": "Sign in to your account to continue",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "forgotPassword": "Forgot Password?",
+      "signIn": "Sign In",
+      "noAccount": "Don't have an account?",
+      "createAccount": "Create Account",
+      "createAccountSubtitle": "Join AdPlatform and start earning rewards by watching ads",
+      "fullName": "Full Name",
+      "fullNamePlaceholder": "Enter your full name",
+      "createPasswordPlaceholder": "Create a password",
+      "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "Confirm your password",
+      "termsPrefix": "By creating an account, you agree to our",
+      "termsOfService": "Terms of Service",
+      "termsAnd": "and",
+      "privacyPolicy": "Privacy Policy",
+      "alreadyHaveAccount": "Already have an account?",
+      "resetPasswordTitle": "Reset Password",
+      "resetPasswordMessage": "A password reset link will be sent to your email address.",
+      "sendLink": "Send Link",
+      "sentTitle": "Sent!",
+      "sentMessage": "Check your inbox for the reset link.",
+      "errors": {
+        "emailRequired": "Email is required",
+        "emailInvalid": "Please enter a valid email",
+        "passwordRequired": "Password is required",
+        "passwordMin6": "Password must be at least 6 characters",
+        "passwordMin8": "Password must be at least 8 characters",
+        "nameRequired": "Name is required",
+        "confirmRequired": "Please confirm your password",
+        "passwordsMismatch": "Passwords do not match",
+        "invalidCredentials": "Invalid email or password",
+        "registrationFailed": "Registration failed. Please try again."
+      }
+    },
+    "home": {
+      "welcomeTo": "Welcome to",
+      "featuredAds": "Featured Ads",
+      "trendingNow": "Trending Now",
+      "seeAll": "See All",
+      "browseByCategory": "Browse by Category",
+      "recentAds": "Recent Ads",
+      "browseAll": "Browse All",
+      "loadingAds": "Loading ads..."
+    },
+    "search": {
+      "title": "Search Ads",
+      "placeholder": "Search ads, brands, categories...",
+      "sortBy": "Sort by:",
+      "sort": {
+        "trending": "Trending",
+        "newest": "Newest",
+        "rewardValue": "Reward Value"
+      },
+      "adsFound": "{{count}} ads found",
+      "noAdsFound": "No ads found",
+      "noAdsMessage": "Try adjusting your search or filters to find more ads.",
+      "clearFilters": "Clear Filters",
+      "loadingMore": "Loading more ads...",
+      "searching": "Searching ads..."
+    },
+    "rewards": {
+      "title": "My Rewards",
+      "availableBalance": "Available Balance",
+      "redeemRewards": "Redeem Rewards",
+      "history": "Reward History",
+      "noRewardsYet": "No rewards yet",
+      "noRewardsMessage": "Start viewing ads to earn rewards!",
+      "loading": "Loading rewards...",
+      "filter": {
+        "all": "All",
+        "pending": "Pending",
+        "credited": "Credited",
+        "redeemed": "Redeemed"
+      },
+      "status": {
+        "pending": "Pending",
+        "credited": "Credited",
+        "redeemed": "Redeemed",
+        "expired": "Expired"
+      }
+    },
+    "profile": {
+      "title": "Profile",
+      "defaultUser": "User",
+      "stats": {
+        "adsViewed": "Ads Viewed",
+        "earned": "Earned",
+        "joined": "Joined"
+      },
+      "linkedDevices": "Linked Devices",
+      "currentDevice": "Current",
+      "lastActive": "Last active:",
+      "devices": {
+        "iphone": "iPhone",
+        "android": "Android Device",
+        "other": "This Device"
+      },
+      "settings": "Settings",
+      "items": {
+        "appearance": "Appearance",
+        "notifications": "Notifications",
+        "merchantScan": "Merchant: Scan Customer QR",
+        "language": "Language",
+        "privacy": "Privacy",
+        "help": "Help & Support",
+        "about": "About AdPlatform"
+      },
+      "theme": {
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System"
+      },
+      "logout": "Logout",
+      "logoutConfirm": "Are you sure you want to logout?",
+      "languageModal": {
+        "title": "Select Language"
+      }
+    },
+    "adDetail": {
+      "loading": "Loading ad...",
+      "earnReward": "Earn ${{amount}} {{currency}}",
+      "viewToClaim": "View this ad to claim your reward",
+      "views": "{{count}}k views",
+      "ageRestricted": "Age restricted: {{age}}+ only",
+      "shareAd": "Share this ad",
+      "reviewsTitle": "Reviews & Ratings",
+      "reviewCount_one": "{{count}} review",
+      "reviewCount_other": "{{count}} reviews",
+      "noReviews": "No reviews yet. Be the first to share your thoughts!",
+      "reward": "Reward",
+      "claimReward": "Claim Reward",
+      "claimedTitle": "Reward Claimed!",
+      "claimedMessage": "You've earned ${{amount}} from {{advertiser}}. It will be credited to your balance shortly.",
+      "claimedButton": "Great!",
+      "claimError": "Failed to claim reward. Please try again.",
+      "ageVerifyError": "Invalid or expired verification code. Please try again.",
+      "shareMessage": "Check out this ad on AdPlatform: {{title}} - Earn ${{amount}}!",
+      "advertiserFallback": "Advertiser"
+    },
+    "ageGate": {
+      "title": "Age Verification Required",
+      "description": "This ad is restricted to viewers aged {{minAge}} and above. Please enter the 6-digit verification code sent to your registered phone number.",
+      "verify": "Verify",
+      "devCode": "Dev code: {{code}}"
+    },
+    "redeem": {
+      "title": "Redeem Tokens",
+      "availableBalance": "Available Balance",
+      "maxTokens": "Max {{count}} tokens (1 token = $0.05)",
+      "expiredMessage": "Your QR code expired. Generate a new one below.",
+      "tokensToRedeem": "Tokens to redeem",
+      "placeholder": "Enter 1 - {{max}}",
+      "balanceTooLow": "Your balance is too low to redeem tokens.",
+      "enterWholeNumber": "Enter a whole number between 1 and {{max}}.",
+      "generateQR": "Generate QR",
+      "generateError": "Failed to generate QR code. Please try again.",
+      "tokensValue": "{{count}} tokens (${{amount}})",
+      "showToMerchant": "Show this to the merchant. Tokens are only deducted after merchant approval."
+    },
+    "merchantScan": {
+      "title": "Scan Customer QR",
+      "cameraAccessNeeded": "Camera Access Needed",
+      "cameraAccessMessage": "To scan customer QR codes, please allow camera access.",
+      "grantPermission": "Grant Permission",
+      "pointCamera": "Point the camera at the customer's redemption QR code",
+      "scanFailed": "Scan Failed",
+      "scanAgain": "Scan Again",
+      "scanAnother": "Scan Another",
+      "invalidQR": "Invalid QR code. Please scan a valid customer redemption QR.",
+      "qrExpired": "This QR code is expired, invalid, or already used.",
+      "redeeming": "Redeeming",
+      "tokens": "{{count}} tokens",
+      "purchaseAmount": "Purchase amount ($)",
+      "continue": "Continue",
+      "validateError": "Failed to validate redemption. Please try again.",
+      "confirmError": "Failed to confirm redemption. Please try again.",
+      "summary": {
+        "title": "Redemption Summary",
+        "customer": "Customer",
+        "purchase": "Purchase",
+        "tokensUsed": "Tokens used",
+        "discount": "Discount",
+        "customerPays": "Customer pays"
+      },
+      "approvedTitle": "Redemption Approved",
+      "approvedMessage": "{{tokens}} tokens (${{discount}}) deducted. Customer's new balance: ${{balance}}.",
+      "approveRedemption": "Approve Redemption"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "markAllRead": "Mark all read",
+      "empty": "No Notifications",
+      "emptyMessage": "You're all caught up! Check back later for updates."
+    },
+    "editProfile": {
+      "title": "Edit Profile",
+      "emailAddress": "Email Address",
+      "noEmailOnFile": "No email on file",
+      "emailCannotChange": "Email cannot be changed",
+      "saveChanges": "Save Changes",
+      "saving": "Saving...",
+      "changePassword": "Change Password",
+      "currentPassword": "Current Password",
+      "currentPasswordPlaceholder": "Enter current password",
+      "newPassword": "New Password",
+      "newPasswordPlaceholder": "Enter new password",
+      "confirmNewPassword": "Confirm New Password",
+      "confirmNewPasswordPlaceholder": "Re-enter new password",
+      "updatePassword": "Update Password",
+      "updating": "Updating...",
+      "errors": {
+        "nameEmpty": "Name cannot be empty",
+        "notLoggedIn": "You must be logged in to update your profile",
+        "profileUpdated": "Profile updated successfully",
+        "updateFailed": "Failed to update profile",
+        "fillPasswordFields": "Please fill in all password fields",
+        "passwordMin6": "New password must be at least 6 characters",
+        "passwordsMismatch": "New passwords do not match",
+        "passwordUpdated": "Password updated successfully",
+        "passwordFailed": "Failed to update password"
+      }
+    },
+    "industries": {
+      "technology": "Technology",
+      "food_beverage": "Food & Beverage",
+      "fashion": "Fashion",
+      "health": "Health",
+      "finance": "Finance",
+      "entertainment": "Entertainment",
+      "travel": "Travel",
+      "education": "Education",
+      "sports": "Sports",
+      "automotive": "Automotive",
+      "real_estate": "Real Estate",
+      "retail": "Retail"
+    }
+  }
+}

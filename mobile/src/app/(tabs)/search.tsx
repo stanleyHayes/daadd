@@ -20,13 +20,14 @@ import { spacing, borderRadius } from '@/theme/spacing';
 import { typography, fontFamily } from '@/theme/typography';
 import { industries } from '@/constants/industries';
 import { IndustryType, AdFilters } from '@/types';
+import { useTranslation } from 'react-i18next';
 
 type SortOption = 'trending' | 'newest' | 'reward_value';
 
-const sortOptions: { value: SortOption; label: string; icon: string }[] = [
-  { value: 'trending', label: 'Trending', icon: 'flame' },
-  { value: 'newest', label: 'Newest', icon: 'time' },
-  { value: 'reward_value', label: 'Reward Value', icon: 'cash' },
+const sortOptions: { value: SortOption; labelKey: string; icon: string }[] = [
+  { value: 'trending', labelKey: 'trending', icon: 'flame' },
+  { value: 'newest', labelKey: 'newest', icon: 'time' },
+  { value: 'reward_value', labelKey: 'rewardValue', icon: 'cash' },
 ];
 
 interface SearchListHeaderProps {
@@ -46,6 +47,7 @@ function SearchListHeader({
   onIndustryPress,
   onSortChange,
 }: SearchListHeaderProps) {
+  const { t } = useTranslation();
   return (
     <View>
       {/* Filter Chips */}
@@ -60,7 +62,7 @@ function SearchListHeader({
         {industries.map((industry) => (
           <CategoryChip
             key={industry.id}
-            label={industry.label}
+            label={t(`mobile.industries.${industry.id}`)}
             icon={industry.icon as any}
             color={industry.color}
             selected={selectedIndustry === industry.id}
@@ -84,7 +86,7 @@ function SearchListHeader({
             { color: colors.text.secondary, marginRight: spacing.sm },
           ]}
         >
-          Sort by:
+          {t('mobile.search.sortBy')}
         </Text>
         <View style={{ flexDirection: 'row', gap: spacing.sm }}>
           {sortOptions.map((option) => (
@@ -125,7 +127,7 @@ function SearchListHeader({
                   },
                 ]}
               >
-                {option.label}
+                {t(`mobile.search.sort.${option.labelKey}`)}
               </Text>
             </TouchableOpacity>
           ))}
@@ -142,7 +144,7 @@ function SearchListHeader({
         <Text
           style={[typography.bodySmall, { color: colors.text.secondary }]}
         >
-          {totalResults} ads found
+          {t('mobile.search.adsFound', { count: totalResults })}
         </Text>
       </View>
     </View>
@@ -150,6 +152,7 @@ function SearchListHeader({
 }
 
 export default function SearchScreen() {
+  const { t } = useTranslation();
   const colors = useColors();
   const params = useLocalSearchParams<{ industry?: string }>();
   const [searchQuery, setSearchQuery] = useState('');
@@ -227,10 +230,10 @@ export default function SearchScreen() {
             { color: colors.text.primary, marginBottom: spacing.sm },
           ]}
         >
-          Search Ads
+          {t('mobile.search.title')}
         </Text>
         <Input
-          placeholder="Search ads, brands, categories..."
+          placeholder={t('mobile.search.placeholder')}
           value={searchQuery}
           onChangeText={setSearchQuery}
           icon="search"
@@ -241,7 +244,7 @@ export default function SearchScreen() {
       </View>
 
       {isLoading ? (
-        <LoadingScreen message="Searching ads..." />
+        <LoadingScreen message={t('mobile.search.searching')} />
       ) : (
         <FlatList
           data={data?.pages.flatMap((page) => page.data) || []}
@@ -255,9 +258,9 @@ export default function SearchScreen() {
           ListEmptyComponent={
             <EmptyState
               icon="search-outline"
-              title="No ads found"
-              message="Try adjusting your search or filters to find more ads."
-              actionLabel="Clear Filters"
+              title={t('mobile.search.noAdsFound')}
+              message={t('mobile.search.noAdsMessage')}
+              actionLabel={t('mobile.search.clearFilters')}
               onAction={() => {
                 setSearchQuery('');
                 setSelectedIndustry(undefined);
@@ -280,7 +283,7 @@ export default function SearchScreen() {
                     { color: colors.text.secondary, marginBottom: spacing.sm },
                   ]}
                 >
-                  Loading more ads...
+                  {t('mobile.search.loadingMore')}
                 </Text>
               </View>
             ) : null

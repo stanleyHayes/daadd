@@ -15,8 +15,10 @@ import { useUpdateProfile, useChangePassword } from '@/hooks/useAuth';
 import { useColors } from '@/hooks/useColors';
 import { spacing, borderRadius } from '@/theme/spacing';
 import { typography, fontFamily } from '@/theme/typography';
+import { useTranslation } from 'react-i18next';
 
 export default function EditProfileScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const colors = useColors();
   const user = useAuthStore((s) => s.user);
@@ -31,34 +33,34 @@ export default function EditProfileScreen() {
 
   const handleSave = async () => {
     if (!name.trim()) {
-      Alert.alert('Error', 'Name cannot be empty');
+      Alert.alert(t('mobile.common.error'), t('mobile.editProfile.errors.nameEmpty'));
       return;
     }
     if (!user) {
-      Alert.alert('Error', 'You must be logged in to update your profile');
+      Alert.alert(t('mobile.common.error'), t('mobile.editProfile.errors.notLoggedIn'));
       return;
     }
 
     try {
       await updateProfile.mutateAsync({ name: name.trim() });
-      Alert.alert('Success', 'Profile updated successfully');
+      Alert.alert(t('mobile.common.success'), t('mobile.editProfile.errors.profileUpdated'));
       router.back();
     } catch {
-      Alert.alert('Error', 'Failed to update profile');
+      Alert.alert(t('mobile.common.error'), t('mobile.editProfile.errors.updateFailed'));
     }
   };
 
   const handleChangePassword = async () => {
     if (!currentPassword || !newPassword) {
-      Alert.alert('Error', 'Please fill in all password fields');
+      Alert.alert(t('mobile.common.error'), t('mobile.editProfile.errors.fillPasswordFields'));
       return;
     }
     if (newPassword.length < 6) {
-      Alert.alert('Error', 'New password must be at least 6 characters');
+      Alert.alert(t('mobile.common.error'), t('mobile.editProfile.errors.passwordMin6'));
       return;
     }
     if (newPassword !== confirmPassword) {
-      Alert.alert('Error', 'New passwords do not match');
+      Alert.alert(t('mobile.common.error'), t('mobile.editProfile.errors.passwordsMismatch'));
       return;
     }
 
@@ -67,11 +69,11 @@ export default function EditProfileScreen() {
       setCurrentPassword('');
       setNewPassword('');
       setConfirmPassword('');
-      Alert.alert('Success', 'Password updated successfully');
+      Alert.alert(t('mobile.common.success'), t('mobile.editProfile.errors.passwordUpdated'));
     } catch (error: any) {
       const message =
-        error?.response?.data?.message || 'Failed to update password';
-      Alert.alert('Error', message);
+        error?.response?.data?.message || t('mobile.editProfile.errors.passwordFailed');
+      Alert.alert(t('mobile.common.error'), message);
     }
   };
 
@@ -102,7 +104,7 @@ export default function EditProfileScreen() {
               { color: colors.text.primary, marginLeft: spacing.md, flex: 1 },
             ]}
           >
-            Edit Profile
+            {t('mobile.editProfile.title')}
           </Text>
         </View>
 
@@ -116,7 +118,7 @@ export default function EditProfileScreen() {
                 { color: colors.text.primary, marginBottom: spacing.xs },
               ]}
             >
-              Full Name
+              {t('mobile.auth.fullName')}
             </Text>
             <View
               style={{
@@ -138,7 +140,7 @@ export default function EditProfileScreen() {
               <TextInput
                 value={name}
                 onChangeText={setName}
-                placeholder="Enter your full name"
+                placeholder={t('mobile.auth.fullNamePlaceholder')}
                 placeholderTextColor={colors.text.secondary}
                 style={[
                   typography.bodyMedium,
@@ -160,7 +162,7 @@ export default function EditProfileScreen() {
                 { color: colors.text.primary, marginBottom: spacing.xs },
               ]}
             >
-              Email Address
+              {t('mobile.editProfile.emailAddress')}
             </Text>
             <View
               style={{
@@ -182,7 +184,7 @@ export default function EditProfileScreen() {
               />
               <TextInput
                 value={user?.email || ''}
-                placeholder="No email on file"
+                placeholder={t('mobile.editProfile.noEmailOnFile')}
                 placeholderTextColor={colors.text.secondary}
                 editable={false}
                 style={[
@@ -201,7 +203,7 @@ export default function EditProfileScreen() {
                 { color: colors.text.secondary, marginTop: spacing.xs },
               ]}
             >
-              Email cannot be changed
+              {t('mobile.editProfile.emailCannotChange')}
             </Text>
           </View>
 
@@ -224,7 +226,7 @@ export default function EditProfileScreen() {
                 { color: '#fff' },
               ]}
             >
-              {updateProfile.isPending ? 'Saving...' : 'Save Changes'}
+              {updateProfile.isPending ? t('mobile.editProfile.saving') : t('mobile.editProfile.saveChanges')}
             </Text>
           </TouchableOpacity>
 
@@ -247,7 +249,7 @@ export default function EditProfileScreen() {
                 { color: colors.text.primary },
               ]}
             >
-              Cancel
+              {t('mobile.common.cancel')}
             </Text>
           </TouchableOpacity>
         </View>
@@ -267,28 +269,28 @@ export default function EditProfileScreen() {
               { color: colors.text.primary },
             ]}
           >
-            Change Password
+            {t('mobile.editProfile.changePassword')}
           </Text>
 
           {(
             [
               {
-                label: 'Current Password',
+                label: t('mobile.editProfile.currentPassword'),
                 value: currentPassword,
                 onChangeText: setCurrentPassword,
-                placeholder: 'Enter current password',
+                placeholder: t('mobile.editProfile.currentPasswordPlaceholder'),
               },
               {
-                label: 'New Password',
+                label: t('mobile.editProfile.newPassword'),
                 value: newPassword,
                 onChangeText: setNewPassword,
-                placeholder: 'Enter new password',
+                placeholder: t('mobile.editProfile.newPasswordPlaceholder'),
               },
               {
-                label: 'Confirm New Password',
+                label: t('mobile.editProfile.confirmNewPassword'),
                 value: confirmPassword,
                 onChangeText: setConfirmPassword,
-                placeholder: 'Re-enter new password',
+                placeholder: t('mobile.editProfile.confirmNewPasswordPlaceholder'),
               },
             ] as const
           ).map((field) => (
@@ -355,7 +357,7 @@ export default function EditProfileScreen() {
                 { color: colors.text.inverse, fontFamily: fontFamily.semibold },
               ]}
             >
-              {changePassword.isPending ? 'Updating...' : 'Update Password'}
+              {changePassword.isPending ? t('mobile.editProfile.updating') : t('mobile.editProfile.updatePassword')}
             </Text>
           </TouchableOpacity>
         </View>

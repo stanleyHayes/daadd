@@ -4,6 +4,7 @@ import { useColors } from '@/hooks/useColors';
 import { spacing, borderRadius } from '@/theme/spacing';
 import { typography } from '@/theme/typography';
 import { RewardStatus } from '@/types';
+import { useTranslation } from 'react-i18next';
 
 interface BadgeProps {
   label: string;
@@ -65,14 +66,15 @@ export function Badge({
 }
 
 export function StatusBadge({ status }: { status: RewardStatus }) {
+  const { t } = useTranslation();
   const statusConfig: Record<
     RewardStatus,
     { label: string; variant: BadgeProps['variant'] }
   > = {
-    pending: { label: 'Pending', variant: 'warning' },
-    credited: { label: 'Credited', variant: 'success' },
-    redeemed: { label: 'Redeemed', variant: 'info' },
-    expired: { label: 'Expired', variant: 'default' },
+    pending: { label: t('mobile.rewards.status.pending'), variant: 'warning' },
+    credited: { label: t('mobile.rewards.status.credited'), variant: 'success' },
+    redeemed: { label: t('mobile.rewards.status.redeemed'), variant: 'info' },
+    expired: { label: t('mobile.rewards.status.expired'), variant: 'default' },
   };
 
   const config = statusConfig[status];

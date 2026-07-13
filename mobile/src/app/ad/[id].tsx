@@ -38,6 +38,7 @@ import { spacing, borderRadius } from '@/theme/spacing';
 import { typography, fontFamily } from '@/theme/typography';
 import { getIndustryById } from '@/constants/industries';
 import { Review } from '@/types';
+import { useTranslation } from 'react-i18next';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const IMAGE_HEIGHT = SCREEN_WIDTH * 0.65;
@@ -45,6 +46,7 @@ const IMAGE_HEIGHT = SCREEN_WIDTH * 0.65;
 const AnimatedScrollView = Animated.ScrollView;
 
 export default function AdDetailScreen() {
+  const { t } = useTranslation();
   const { id } = useLocalSearchParams<{ id: string }>();
   const insets = useSafeAreaInsets();
   const { data: ad, isLoading } = useAd(id ?? '');
@@ -104,7 +106,7 @@ export default function AdDetailScreen() {
   }));
 
   if (isLoading || !ad) {
-    return <LoadingScreen message="Loading ad..." />;
+    return <LoadingScreen message={t('mobile.adDetail.loading')} />;
   }
 
   const industry = getIndustryById(ad.industry);
@@ -124,15 +126,18 @@ export default function AdDetailScreen() {
     try {
       await claimReward.mutateAsync(ad.id);
       Alert.alert(
-        'Reward Claimed!',
-        `You've earned $${ad.rewardAmount.toFixed(2)} from ${ad.advertiser.name}. It will be credited to your balance shortly.`,
-        [{ text: 'Great!', style: 'default' }]
+        t('mobile.adDetail.claimedTitle'),
+        t('mobile.adDetail.claimedMessage', {
+          amount: ad.rewardAmount.toFixed(2),
+          advertiser: ad.advertiser.name,
+        }),
+        [{ text: t('mobile.adDetail.claimedButton'), style: 'default' }]
       );
     } catch (error) {
       Alert.alert(
-        'Error',
-        'Failed to claim reward. Please try again.',
-        [{ text: 'OK', style: 'default' }]
+        t('mobile.common.error'),
+        t('mobile.adDetail.claimError'),
+        [{ text: t('mobile.common.ok'), style: 'default' }]
       );
     }
   };
@@ -148,10 +153,10 @@ export default function AdDetailScreen() {
         setShowAgeGate(false);
         handleClaimReward();
       } else {
-        setAgeVerifyError('Invalid or expired verification code. Please try again.');
+        setAgeVerifyError(t('mobile.adDetail.ageVerifyError'));
       }
     } catch {
-      setAgeVerifyError('Invalid or expired verification code. Please try again.');
+      setAgeVerifyError(t('mobile.adDetail.ageVerifyError'));
     } finally {
       setAgeVerifying(false);
     }
@@ -160,7 +165,10 @@ export default function AdDetailScreen() {
   const handleShare = async () => {
     try {
       await Share.share({
-        message: `Check out this ad on AdPlatform: ${ad.title} - Earn $${ad.rewardAmount.toFixed(2)}!`,
+        message: t('mobile.adDetail.shareMessage', {
+          title: ad.title,
+          amount: ad.rewardAmount.toFixed(2),
+        }),
         url: `adplatform://ad/${ad.id}`,
       });
     } catch {
@@ -238,7 +246,7 @@ export default function AdDetailScreen() {
                   { color: '#FFF', fontFamily: fontFamily.bold },
                 ]}
               >
-                Trending
+                {t('mobile.common.trending')}
               </Text>
             </View>
           )}
@@ -263,7 +271,10 @@ export default function AdDetailScreen() {
           >
             <Ionicons name="gift" size={20} color="#FFF" />
             <Text style={[typography.headingMedium, { color: '#FFF' }]}>
-              Earn ${ad.rewardAmount.toFixed(2)} {ad.rewardCurrency}
+              {t('mobile.adDetail.earnReward', {
+                amount: ad.rewardAmount.toFixed(2),
+                currency: ad.rewardCurrency,
+              })}
             </Text>
           </View>
           <Text
@@ -276,7 +287,7 @@ export default function AdDetailScreen() {
               },
             ]}
           >
-            View this ad to claim your reward
+            {t('mobile.adDetail.viewToClaim')}
           </Text>
         </LinearGradient>
 
@@ -356,7 +367,7 @@ export default function AdDetailScreen() {
             >
               {industry && (
                 <Badge
-                  label={industry.label}
+                  label={t(`mobile.industries.${industry.id}`)}
                   backgroundColor={industry.color + '20'}
                   color={industry.color}
                 />
@@ -386,7 +397,7 @@ export default function AdDetailScreen() {
                       { color: colors.text.secondary },
                     ]}
                   >
-                    {(ad.viewCount / 1000).toFixed(1)}k views
+                    {t('mobile.adDetail.views', { count: (ad.viewCount / 1000).toFixed(1) })}
                   </Text>
                 </View>
                 <View
@@ -440,7 +451,7 @@ export default function AdDetailScreen() {
                     },
                   ]}
                 >
-                  Age restricted: {ad.minAge}+ only
+                  {t('mobile.adDetail.ageRestricted', { age: ad.minAge })}
                 </Text>
               </View>
             )}
@@ -477,7 +488,7 @@ export default function AdDetailScreen() {
                   { color: colors.primary, fontFamily: fontFamily.semibold },
                 ]}
               >
-                Share this ad
+                {t('mobile.adDetail.shareAd')}
               </Text>
             </TouchableOpacity>
           </View>
@@ -492,7 +503,7 @@ export default function AdDetailScreen() {
                 { color: colors.text.primary, marginBottom: spacing.sm },
               ]}
             >
-              Reviews & Ratings
+              {t('mobile.adDetail.reviewsTitle')}
             </Text>
 
             {/* Rating Summary */}
@@ -523,7 +534,7 @@ export default function AdDetailScreen() {
                       { color: colors.text.secondary },
                     ]}
                   >
-                    {reviewSummary ? reviewSummary.total_reviews : 0} {reviewSummary?.total_reviews === 1 ? 'review' : 'reviews'}
+                    {t('mobile.adDetail.reviewCount', { count: reviewSummary ? reviewSummary.total_reviews : 0 })}
                   </Text>
                 </View>
               </View>
@@ -608,7 +619,7 @@ export default function AdDetailScreen() {
               </FadeIn>
             )) : (
               <Text style={[typography.bodySmall, { color: colors.text.secondary, textAlign: 'center', marginVertical: spacing.lg }]}>
-                No reviews yet. Be the first to share your thoughts!
+                {t('mobile.adDetail.noReviews')}
               </Text>
             )}
           </View>
@@ -645,7 +656,7 @@ export default function AdDetailScreen() {
           <Text
             style={[typography.caption, { color: colors.text.tertiary }]}
           >
-            Reward
+            {t('mobile.adDetail.reward')}
           </Text>
           <Text
             style={[typography.headingLarge, { color: colors.accent }]}
@@ -655,7 +666,7 @@ export default function AdDetailScreen() {
         </View>
         <Animated.View style={[{ flex: 1 }, claimScaleStyle]}>
           <Button
-            title="Claim Reward"
+            title={t('mobile.adDetail.claimReward')}
             onPress={handleClaimReward}
             loading={claimReward.isPending}
             size="lg"

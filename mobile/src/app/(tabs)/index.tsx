@@ -18,8 +18,10 @@ import { spacing } from '@/theme/spacing';
 import { typography, fontFamily } from '@/theme/typography';
 import { industries } from '@/constants/industries';
 import { useNotifications } from '@/hooks/useNotifications';
+import { useTranslation } from 'react-i18next';
 
 export default function HomeScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const colors = useColors();
   const { data: featuredAds, isLoading: featuredLoading } = useFeaturedAds();
@@ -29,7 +31,7 @@ export default function HomeScreen() {
   const unreadCount = notifications.filter((n) => !n.read).length;
 
   if (featuredLoading && trendingLoading) {
-    return <LoadingScreen message="Loading ads..." />;
+    return <LoadingScreen message={t('mobile.home.loadingAds')} />;
   }
 
   return (
@@ -53,7 +55,7 @@ export default function HomeScreen() {
             <Text
               style={[typography.bodyMedium, { color: colors.text.secondary }]}
             >
-              Welcome to
+              {t('mobile.home.welcomeTo')}
             </Text>
             <Text style={[typography.displaySmall, { color: colors.primary }]}>
               AdPlatform
@@ -121,7 +123,7 @@ export default function HomeScreen() {
                 },
               ]}
             >
-              Featured Ads
+              {t('mobile.home.featuredAds')}
             </Text>
             <FeaturedCarousel ads={Array.isArray(featuredAds) ? featuredAds : []} />
           </View>
@@ -157,7 +159,7 @@ export default function HomeScreen() {
                     },
                   ]}
                 >
-                  Trending Now
+                  {t('mobile.home.trendingNow')}
                 </Text>
               </View>
               <TouchableOpacity onPress={() => router.push('/search')}>
@@ -167,7 +169,7 @@ export default function HomeScreen() {
                     { color: colors.primary, fontFamily: fontFamily.semibold },
                   ]}
                 >
-                  See All
+                  {t('mobile.home.seeAll')}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -198,7 +200,7 @@ export default function HomeScreen() {
                 },
               ]}
             >
-              Browse by Category
+              {t('mobile.home.browseByCategory')}
             </Text>
             <View
               style={{
@@ -247,7 +249,7 @@ export default function HomeScreen() {
                       ]}
                       numberOfLines={1}
                     >
-                      {industry.label}
+                      {t(`mobile.industries.${industry.id}`)}
                     </Text>
                   </TouchableOpacity>
                 </FadeIn>
@@ -278,7 +280,7 @@ export default function HomeScreen() {
                   },
                 ]}
               >
-                Recent Ads
+                {t('mobile.home.recentAds')}
               </Text>
               <TouchableOpacity onPress={() => router.push('/search')}>
                 <Text
@@ -287,7 +289,7 @@ export default function HomeScreen() {
                     { color: colors.primary, fontFamily: fontFamily.semibold },
                   ]}
                 >
-                  Browse All
+                  {t('mobile.home.browseAll')}
                 </Text>
               </TouchableOpacity>
             </View>
