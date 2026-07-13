@@ -1,9 +1,23 @@
 import { Router, Request, Response } from 'express';
 import { Types } from 'mongoose';
+import jwt from 'jsonwebtoken';
 import { Ad } from '../models';
 import { success, paginated } from '../utils/response';
+import { JWT_SECRET, JwtPayload } from '../middleware/auth';
+import { fatigueService } from '../services/fatigue.service';
 
 const router = Router();
+
+/** Optional auth: identify the user when a valid Bearer token is present. Never rejects. */
+function optionalAuth(req: Request): JwtPayload | null {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith('Bearer ')) return null;
+  try {
+    return jwt.verify(authHeader.split(' ')[1], JWT_SECRET) as JwtPayload;
+  } catch {
+    return null;
+  }
+}
 
 function serializeAd(ad: any) {
   return {
@@ -69,6 +83,18 @@ router.get('/', async (req: Request, res: Response) => {
     const sortDirection = order === 'asc' ? 1 : -1;
     const sortField = ['reward_amount', 'created_at', 'title'].includes(sort) ? sort : 'created_at';
 
+    // Spec §4.10: exclude ads the identified user is fatigued on (>= 5 views in 24h)
+    const user = optionalAuth(req);
+    if (user) {
+      const candidateIds = (
+        await Ad.find(filter).select('_id').limit(500).lean()
+      ).map((a: any) => a._id.toString());
+      const fatigued = await fatigueService.getFatiguedAdIds(user.userId, candidateIds);
+      if (fatigued.size > 0) {
+        filter._id = { $nin: [...fatigued].map((id) => new Types.ObjectId(id)) };
+      }
+    }
+
     const total = await Ad.countDocuments(filter);
     const ads = await Ad.find(filter)
       .sort({ [sortField]: sortDirection })
@@ -121,6 +147,40 @@ router.get('/:id', async (req: Request, res: Response) => {
     res.json(success(serializeAd(ad)));
   } catch (err: any) {
     res.status(500).json({ success: false, message: err.message || 'Failed to fetch ad' });
+  }
+});
+
+// Record an ad view for fatigue tracking (optional auth — anonymous views are not tracked)
+router.post('/:id/view', async (req: Request, res: Response) => {
+  try {
+    const id = toObjectId(req.params.id as string);
+    if (!id) {
+      res.status(400).json({ success: false, message: 'Invalid ad id' });
+      return;
+    }
+    const ad = await Ad.findById(id).lean();
+    if (!ad) {
+      res.status(404).json({ success: false, message: 'Ad not found' });
+      return;
+    }
+
+    const user = optionalAuth(req);
+    let fatigue = null;
+    if (user) {
+      await fatigueService.recordView(user.userId, id.toString());
+      fatigue = await fatigueService.checkFatigue(user.userId, id.toString());
+    }
+
+    res.json(
+      success({
+        recorded: !!user,
+        fatigued: fatigue?.isFatigued ?? false,
+        viewCount: fatigue?.viewCount ?? 0,
+        threshold: fatigue?.threshold,
+      })
+    );
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message || 'Failed to record ad view' });
   }
 });
 
