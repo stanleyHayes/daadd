@@ -3,6 +3,7 @@ import { Types } from 'mongoose';
 import { TeamMember, TeamAuditLog, Campaign, User } from '../models';
 import { authMiddleware } from '../middleware/auth';
 import { success } from '../utils/response';
+import { sendTeamInviteEmail } from '../services/mailer';
 
 const router = Router();
 
@@ -142,6 +143,9 @@ router.post('/invite', authMiddleware, async (req: Request, res: Response) => {
       '',
       `${email} (${role || 'viewer'})`
     );
+
+    // Send the invitation email (fire-and-forget; never blocks the response).
+    void sendTeamInviteEmail(email.toLowerCase(), req.user!.email, role || 'viewer').catch(() => {});
 
     res.status(201).json(success(serializeMember(member.toObject()), 'Invitation sent'));
   } catch (err: any) {

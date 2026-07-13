@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 import { User } from '../models';
 import { authMiddleware, generateToken } from '../middleware/auth';
 import { success } from '../utils/response';
+import { sendOtpEmail, sendPasswordResetEmail } from '../services/mailer';
 
 const router = Router();
 
@@ -137,10 +138,17 @@ router.post('/age-verify/request', authMiddleware, async (req: Request, res: Res
       code,
       expiresAt: Date.now() + AGE_VERIFY_TTL_MS,
     });
+    // Deliver the OTP by email when a mail provider is configured
+    // (fire-and-forget; never blocks the response).
+    if (process.env.RESEND_API_KEY) {
+      void sendOtpEmail(req.user!.email, code).catch(() => {});
+    }
     res.json(
       success({
         sent: true,
-        ...(process.env.NODE_ENV !== 'production' ? { dev_code: code } : {}),
+        ...(process.env.NODE_ENV !== 'production' && !process.env.RESEND_API_KEY
+          ? { dev_code: code }
+          : {}),
       })
     );
   } catch (err: any) {
@@ -199,10 +207,18 @@ router.post('/forgot-password', async (req: Request, res: Response) => {
           userId: user._id.toString(),
           expiresAt: Date.now() + RESET_TOKEN_TTL_MS,
         });
+        // Send the reset link by email when a mail provider is configured
+        // (fire-and-forget; never blocks the response).
+        if (process.env.RESEND_API_KEY) {
+          const resetUrl = `${process.env.FRONTEND_URL || 'http://localhost:3001'}/reset-password?token=${token}`;
+          void sendPasswordResetEmail(user.email, resetUrl).catch(() => {});
+        }
         res.json(
           success({
             sent: true,
-            ...(process.env.NODE_ENV !== 'production' ? { dev_reset_token: token } : {}),
+            ...(process.env.NODE_ENV !== 'production' && !process.env.RESEND_API_KEY
+              ? { dev_reset_token: token }
+              : {}),
           })
         );
         return;
