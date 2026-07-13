@@ -8,6 +8,8 @@ import mongoose from 'mongoose';
 
 import routes from './routes';
 import { seedDatabase } from './seed';
+import { rateLimit } from './middleware/rateLimit';
+import { scanAllActiveCampaigns } from './services/anomaly-detection.service';
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -19,6 +21,14 @@ app.use(compression());
 app.use(morgan('combined'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Rate limiting (spec §6). In-memory sliding window — swap the store for
+// Redis in production (see src/middleware/rateLimit.ts).
+app.use(rateLimit({ windowMs: 60_000, max: 200 })); // global: 200 req/min per IP
+app.use('/api/v1/auth', rateLimit({ windowMs: 60_000, max: 20 })); // stricter on auth
+
+// Serve locally stored creative uploads (see src/services/storage.service.ts).
+app.use('/uploads', express.static('uploads'));
 
 app.get('/health', (_req, res) => {
   const dbState = mongoose.connection.readyState;
@@ -45,6 +55,25 @@ async function startServer(): Promise<void> {
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
+
+    // Scheduled anomaly scan (spec §4.7): every 5 minutes, guarded so it
+    // only runs while the DB is connected and never overlaps itself.
+    let scanRunning = false;
+    const scanInterval = setInterval(async () => {
+      if (scanRunning || mongoose.connection.readyState !== 1) return;
+      scanRunning = true;
+      try {
+        const result = await scanAllActiveCampaigns();
+        if (result.created > 0) {
+          console.log(`[anomaly-scan] scanned=${result.scanned} created=${result.created}`);
+        }
+      } catch (err) {
+        console.warn('[anomaly-scan] failed (swallowed):', err);
+      } finally {
+        scanRunning = false;
+      }
+    }, 5 * 60 * 1000);
+    scanInterval.unref();
   } catch (err: any) {
     console.error('Failed to start server:', err.message);
     process.exit(1);

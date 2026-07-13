@@ -1,7 +1,9 @@
 import { Router, Request, Response } from 'express';
+import PDFDocument from 'pdfkit';
 import { Campaign } from '../models';
 import { authMiddleware } from '../middleware/auth';
 import { success } from '../utils/response';
+import { seededRandom } from '../utils/seeded';
 
 const router = Router();
 
@@ -16,6 +18,29 @@ function generateTimeSeries(days = 14) {
       impressions: Math.floor(Math.random() * 5000) + 1000,
       clicks: Math.floor(Math.random() * 300) + 50,
       conversions: Math.floor(Math.random() * 60) + 5,
+    });
+  }
+  return data;
+}
+
+// NOTE: there is no real event stream in this deployment. Export reports use
+// a DETERMINISTIC SYNTHETIC series seeded from the campaign id so CSV and PDF
+// exports are stable for the same campaign (see src/utils/seeded.ts).
+function generateExportSeries(campaignId: string, days = 14) {
+  const rng = seededRandom(`export:${campaignId}`);
+  const data = [];
+  const now = new Date();
+  for (let i = days - 1; i >= 0; i--) {
+    const date = new Date(now);
+    date.setDate(date.getDate() - i);
+    const impressions = Math.floor(rng() * 5000) + 1000;
+    const clicks = Math.floor(impressions * (0.03 + rng() * 0.07));
+    const conversions = Math.floor(clicks * (0.05 + rng() * 0.15));
+    data.push({
+      date: date.toISOString().split('T')[0],
+      impressions,
+      clicks,
+      conversions,
     });
   }
   return data;
@@ -114,23 +139,126 @@ router.get('/devices/:campaignId', authMiddleware, async (_req: Request, res: Re
   }
 });
 
-router.get('/export/:campaignId/csv', authMiddleware, async (_req: Request, res: Response) => {
+router.get('/export/:campaignId/csv', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const csv = 'Date,Impressions,Clicks,Conversions\n2026-07-01,1000,68,12\n';
+    const campaignId = req.params.campaignId as string;
+    const campaign = await Campaign.findById(campaignId).select('name').lean();
+    if (!campaign) {
+      res.status(404).json({ success: false, message: 'Campaign not found' });
+      return;
+    }
+    // Deterministic series seeded from the campaign id (see header note).
+    const series = generateExportSeries(campaignId);
+    const header = 'Date,Impressions,Clicks,Conversions,CTR';
+    const rows = series.map(
+      (d) =>
+        `${d.date},${d.impressions},${d.clicks},${d.conversions},${((d.clicks / d.impressions) * 100).toFixed(2)}%`
+    );
+    const csv = [header, ...rows].join('\n');
     res.setHeader('Content-Type', 'text/csv');
-    res.setHeader('Content-Disposition', 'attachment; filename=analytics-export.csv');
+    res.setHeader('Content-Disposition', `attachment; filename=analytics-${campaignId}.csv`);
     res.send(csv);
   } catch (err: any) {
     res.status(500).json({ success: false, message: err.message || 'Failed to export CSV' });
   }
 });
 
-router.get('/export/:campaignId/pdf', authMiddleware, async (_req: Request, res: Response) => {
+router.get('/export/:campaignId/pdf', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const pdf = '%PDF-1.4\n1 0 obj\n<<\n/Type /Catalog\n/Pages 2 0 R\n>>\nendobj\n';
+    const campaignId = req.params.campaignId as string;
+    const campaign = await Campaign.findById(campaignId).lean();
+    if (!campaign) {
+      res.status(404).json({ success: false, message: 'Campaign not found' });
+      return;
+    }
+    // Deterministic series seeded from the campaign id (see header note).
+    const series = generateExportSeries(campaignId);
+    const totals = series.reduce(
+      (acc, d) => ({
+        impressions: acc.impressions + d.impressions,
+        clicks: acc.clicks + d.clicks,
+        conversions: acc.conversions + d.conversions,
+      }),
+      { impressions: 0, clicks: 0, conversions: 0 }
+    );
+    const avgCtr = totals.impressions > 0 ? (totals.clicks / totals.impressions) * 100 : 0;
+
     res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'attachment; filename=analytics-report.pdf');
-    res.send(pdf);
+    res.setHeader('Content-Disposition', `attachment; filename=analytics-${campaignId}.pdf`);
+
+    const doc = new PDFDocument({ margin: 50, size: 'A4' });
+    doc.pipe(res);
+
+    // Header
+    doc.fontSize(20).text('Campaign Analytics Report', { align: 'center' });
+    doc.moveDown(0.5);
+    doc.fontSize(12).fillColor('#555555').text((campaign as any).name || campaignId, { align: 'center' });
+    doc.moveDown(1);
+
+    // Summary
+    doc.fillColor('#000000').fontSize(14).text('Summary');
+    doc.moveDown(0.3);
+    doc.fontSize(11);
+    doc.text(`Total Impressions: ${totals.impressions.toLocaleString()}`);
+    doc.text(`Total Clicks: ${totals.clicks.toLocaleString()}`);
+    doc.text(`Total Conversions: ${totals.conversions.toLocaleString()}`);
+    doc.text(`Average CTR: ${avgCtr.toFixed(2)}%`);
+    doc.text(`Budget Spent: ${(campaign as any).currency || 'USD'} ${Number((campaign as any).budget_spent || 0).toLocaleString()}`);
+    doc.moveDown(1);
+
+    // Daily metrics table
+    doc.fontSize(14).text('Daily Metrics (last 14 days)');
+    doc.moveDown(0.5);
+    const columns = [
+      { label: 'Date', width: 110 },
+      { label: 'Impressions', width: 100 },
+      { label: 'Clicks', width: 80 },
+      { label: 'Conversions', width: 100 },
+      { label: 'CTR', width: 70 },
+    ];
+    const tableLeft = 50;
+    let y = doc.y;
+    const drawRow = (cells: string[], bold: boolean) => {
+      let x = tableLeft;
+      doc.font(bold ? 'Helvetica-Bold' : 'Helvetica').fontSize(10);
+      cells.forEach((cell, i) => {
+        doc.text(cell, x, y, { width: columns[i].width });
+        x += columns[i].width;
+      });
+      y += 18;
+    };
+    drawRow(columns.map((c) => c.label), true);
+    doc.moveTo(tableLeft, y - 4).lineTo(tableLeft + 460, y - 4).strokeColor('#cccccc').stroke();
+    for (const d of series) {
+      if (y > 760) {
+        doc.addPage();
+        y = 50;
+      }
+      drawRow(
+        [
+          d.date,
+          d.impressions.toLocaleString(),
+          d.clicks.toLocaleString(),
+          d.conversions.toLocaleString(),
+          `${((d.clicks / d.impressions) * 100).toFixed(2)}%`,
+        ],
+        false
+      );
+    }
+
+    // Footer
+    doc
+      .font('Helvetica')
+      .fontSize(8)
+      .fillColor('#888888')
+      .text(
+        `Generated ${new Date().toISOString()} by AdPlatform. Metric series are deterministic synthetic data seeded from the campaign id.`,
+        50,
+        800,
+        { align: 'center', width: 495 }
+      );
+
+    doc.end();
   } catch (err: any) {
     res.status(500).json({ success: false, message: err.message || 'Failed to export PDF' });
   }

@@ -4,6 +4,8 @@ import { Campaign, Ad, Review, User, ABTest, IABTestVariant } from '../models';
 import { authMiddleware } from '../middleware/auth';
 import { success, paginated } from '../utils/response';
 import { seededRandom } from '../utils/seeded';
+import multer from 'multer';
+import { uploadCreative } from '../services/storage.service';
 
 const router = Router();
 
@@ -286,6 +288,63 @@ router.post('/:id/clone', authMiddleware, async (req: Request, res: Response) =>
     res.status(201).json(success(serializeCampaign(clone.toObject()), 'Campaign cloned'));
   } catch (err: any) {
     res.status(500).json({ success: false, message: err.message || 'Failed to clone campaign' });
+  }
+});
+
+/* ---------------- Creative file upload (spec §6) ---------------- */
+
+// Files are buffered in memory and handed to the storage service, which
+// writes to S3 when configured or to the local uploads/ dir otherwise.
+const creativeUpload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 15 * 1024 * 1024 },
+});
+
+router.post('/:id/creatives/upload', authMiddleware, creativeUpload.single('file'), async (req: Request, res: Response) => {
+  try {
+    const id = toObjectId(req.params.id as string);
+    if (!id) {
+      res.status(400).json({ success: false, message: 'Invalid campaign id' });
+      return;
+    }
+    const campaign = await Campaign.findById(id).lean();
+    if (!campaign) {
+      res.status(404).json({ success: false, message: 'Campaign not found' });
+      return;
+    }
+    if (!req.file) {
+      res.status(400).json({ success: false, message: 'file field is required (multipart/form-data)' });
+      return;
+    }
+
+    const stored = await uploadCreative({
+      buffer: req.file.buffer,
+      originalname: req.file.originalname,
+      mimetype: req.file.mimetype,
+    });
+
+    const isVideo = (req.file.mimetype || '').startsWith('video/');
+    const ad = await Ad.create({
+      title: req.body.title || req.file.originalname,
+      description: req.body.description || '',
+      brand: campaign.name,
+      industry: campaign.industry,
+      image_url: isVideo ? '' : stored.url,
+      media_url: isVideo ? stored.url : '',
+      isAgeRestricted: false,
+      reward_amount: 0,
+      status: 'draft',
+      campaign_id: id,
+    });
+
+    res.status(201).json(success({
+      id: ad._id.toString(),
+      creativeUrl: stored.url,
+      storage: stored.storage,
+      creativeType: isVideo ? 'video' : 'image',
+    }, 'Creative uploaded'));
+  } catch (err: any) {
+    res.status(400).json({ success: false, message: err.message || 'Failed to upload creative' });
   }
 });
 
