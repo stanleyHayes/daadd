@@ -7,6 +7,14 @@ import rewardRoutes from './rewards';
 import notificationRoutes from './notifications';
 import redemptionRoutes from './redemption';
 import analyticsRoutes from './analytics';
+import anomalyRoutes from './anomalies';
+import aiRoutes from './ai';
+import benchmarkRoutes from './benchmarks';
+import heatmapRoutes from './heatmaps';
+import storytellerRoutes from './storyteller';
+import teamRoutes from './teams';
+import platformAccountRoutes from './platformAccounts';
+import oauthRoutes from './oauth';
 
 const router = Router();
 
@@ -18,5 +26,13 @@ router.use('/rewards', rewardRoutes);
 router.use('/notifications', notificationRoutes);
 router.use('/redemption', redemptionRoutes);
 router.use('/analytics', analyticsRoutes);
+router.use('/anomalies', anomalyRoutes);
+router.use('/ai', aiRoutes);
+router.use('/benchmarks', benchmarkRoutes);
+router.use('/heatmaps', heatmapRoutes);
+router.use('/storyteller', storytellerRoutes);
+router.use('/teams', teamRoutes);
+router.use('/platform-accounts', platformAccountRoutes);
+router.use('/oauth', oauthRoutes);
 
 export default router;
