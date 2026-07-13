@@ -10,6 +10,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # docker-compose.yml references backend/.env (gitignored); seed it
+      # from the example so compose can resolve the backend service.
+      - name: Create backend env file
+        run: cp backend/.env.example backend/.env
+
       - name: Validate docker-compose.yml
         run: docker compose config --quiet
 
