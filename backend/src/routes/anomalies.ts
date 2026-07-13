@@ -3,6 +3,7 @@ import { Types } from 'mongoose';
 import { Anomaly } from '../models';
 import { authMiddleware } from '../middleware/auth';
 import { success } from '../utils/response';
+import { scanForUser } from '../services/anomaly-detection.service';
 
 const router = Router();
 
@@ -23,6 +24,18 @@ function serializeAnomaly(a: any) {
     auto_paused: a.auto_paused ?? false,
   };
 }
+
+// Trigger an on-demand anomaly scan (spec §4.7). Runs across the caller's
+// active campaigns — all active campaigns for admins. Must be registered
+// BEFORE the /:campaignId routes so "scan" is not captured as an id.
+router.post('/scan', authMiddleware, async (req: Request, res: Response) => {
+  try {
+    const result = await scanForUser(req.user!.userId, req.user!.role);
+    res.json(success(result, `Scanned ${result.scanned} campaign(s), created ${result.created} anomaly(ies)`));
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message || 'Failed to run anomaly scan' });
+  }
+});
 
 // List anomalies for a campaign. Empty array (never 404) when none exist.
 router.get('/:campaignId', authMiddleware, async (req: Request, res: Response) => {
