@@ -1,0 +1,31 @@
+name: Docker health (reusable)
+
+on:
+  workflow_call:
+
+jobs:
+  docker-health:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate docker-compose.yml
+        run: docker compose config --quiet
+
+      # Only the stateful services — the app containers need secrets and
+      # are built/tested elsewhere. Elasticsearch stays off (heavy, unused in CI).
+      - name: Start mongodb and redis
+        run: docker compose up -d --wait mongodb redis
+
+      - name: Check MongoDB connectivity
+        run: >-
+          docker compose exec -T mongodb mongosh --quiet
+          --eval 'db.adminCommand({ ping: 1 }).ok'
+
+      - name: Check Redis connectivity
+        run: docker compose exec -T redis redis-cli ping
+
+      - name: Cleanup
+        if: always()
+        run: docker compose down -v

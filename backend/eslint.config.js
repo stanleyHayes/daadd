@@ -27,4 +27,11 @@ export default [
       'no-console': 'off',
     },
   },
+  {
+    // Jest globals for the test suite.
+    files: ['src/**/*.test.ts', 'src/test-setup.ts', 'src/test-helpers.ts'],
+    languageOptions: {
+      globals: globals.jest,
+    },
+  },
 ];

@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 
@@ -19,5 +19,10 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: ['leaflet', 'react-leaflet', 'leaflet.heat'],
+  },
+  test: {
+    environment: 'node',
+    globals: false,
+    include: ['src/**/*.test.ts', 'src/**/*.test.tsx'],
   },
 });

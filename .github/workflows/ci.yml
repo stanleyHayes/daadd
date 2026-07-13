@@ -7,80 +7,18 @@ on:
     branches: [main]
 
 jobs:
-  lint-and-test:
-    runs-on: ubuntu-latest
+  backend:
+    uses: ./.github/workflows/_backend.yml
 
-    services:
-      mongodb:
-        image: mongo:7.0
-        options: >-
-          --health-cmd mongosh
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 27017:27017
+  frontend:
+    uses: ./.github/workflows/_frontend.yml
 
-      redis:
-        image: redis:7-alpine
-        options: >-
-          --health-cmd "redis-cli ping"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 6379:6379
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Lint all workspaces
-        run: npm run lint
-
-      - name: Build all workspaces
-        run: npm run build:all
-
-      - name: Run backend tests
-        run: npm run test --workspace=backend
-
-      - name: Run frontend tests
-        run: npm run test --workspace=frontend
-
-      - name: Check commit messages
-        if: github.event_name == 'pull_request'
-        run: |
-          npm install -g @commitlint/cli @commitlint/config-conventional
-          echo "module.exports = {extends: ['@commitlint/config-conventional']}" > commitlint.config.js
-          git log ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }} --format=%B | npx commitlint
+  mobile:
+    uses: ./.github/workflows/_mobile.yml
 
   docker-health:
-    runs-on: ubuntu-latest
+    uses: ./.github/workflows/_docker.yml
 
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Check docker-compose.yml syntax
-        run: docker-compose config > /dev/null
-
-      - name: Start services
-        run: |
-          docker-compose up -d
-          sleep 5
-
-      - name: Check MongoDB connectivity
-        run: docker-compose exec -T mongodb mongosh --eval "db.adminCommand('ping')"
-
-      - name: Check Redis connectivity
-        run: docker-compose exec -T redis redis-cli ping
-
-      - name: Cleanup
-        if: always()
-        run: docker-compose down
+  commitlint:
+    if: github.event_name == 'pull_request'
+    uses: ./.github/workflows/_commitlint.yml

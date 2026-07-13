@@ -1,0 +1,28 @@
+name: Mobile CI (reusable)
+
+on:
+  workflow_call:
+
+jobs:
+  mobile:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: mobile
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      # The Expo app has no test runner; typechecking is the gate.
+      - name: Typecheck
+        run: npx tsc --noEmit
