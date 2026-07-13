@@ -71,7 +71,8 @@
       "home": "Start",
       "search": "Suche",
       "rewards": "Prämien",
-      "profile": "Profil"
+      "profile": "Profil",
+      "dashboard": "Dashboard"
     },
     "splash": {
       "subtitle": "Anzeigen entdecken. Prämien verdienen.",
@@ -319,6 +320,101 @@
       "automotive": "Automobil",
       "real_estate": "Immobilien",
       "retail": "Einzelhandel"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "campaignTitle": "Kampagne",
+      "campaignsTitle": "Deine Kampagnen",
+      "noCampaigns": "Noch keine Kampagnen",
+      "noCampaignsMessage": "Kampagnen, die du erstellst, werden hier angezeigt.",
+      "campaignNotFound": "Kampagne nicht gefunden",
+      "spentOf": "{{spent}} von {{total}} ausgegeben",
+      "kpi": {
+        "impressions": "Impressionen",
+        "clicks": "Klicks",
+        "ctr": "CTR",
+        "spend": "Ausgaben"
+      },
+      "status": {
+        "draft": "Entwurf",
+        "active": "Aktiv",
+        "paused": "Pausiert",
+        "completed": "Abgeschlossen",
+        "archived": "Archiviert"
+      },
+      "tabs": {
+        "overview": "Übersicht",
+        "ai": "KI",
+        "anomalies": "Anomalien",
+        "story": "Story",
+        "team": "Team",
+        "attribution": "Attribution"
+      },
+      "overview": {
+        "metrics": "Leistung",
+        "info": "Kampagneninfos",
+        "budgetTotal": "Gesamtbudget",
+        "budgetSpent": "Ausgegebenes Budget",
+        "startDate": "Startdatum",
+        "endDate": "Enddatum",
+        "industry": "Branche",
+        "benchmarks": "Branchenvergleich",
+        "aboveAvg": "Über dem Durchschnitt",
+        "belowAvg": "Unter dem Durchschnitt",
+        "yoursVsIndustry": "Du: {{yours}} · Branche: {{industry}}"
+      },
+      "ai": {
+        "empty": "Keine Empfehlungen",
+        "emptyMessage": "KI-Empfehlungen für diese Kampagne werden hier angezeigt.",
+        "apply": "Anwenden",
+        "dismiss": "Verwerfen",
+        "confidence": "{{value}} % Konfidenz",
+        "status": {
+          "pending": "Ausstehend",
+          "applied": "Angewendet",
+          "dismissed": "Verworfen"
+        }
+      },
+      "anomalies": {
+        "empty": "Keine Anomalien erkannt",
+        "emptyMessage": "Diese Kampagne läuft innerhalb der erwarteten Bereiche.",
+        "resolve": "Beheben",
+        "resolved": "Behoben",
+        "metric": "Metrik",
+        "currentValue": "Aktueller Wert",
+        "threshold": "Schwellenwert",
+        "detectedAt": "Erkannt",
+        "severity": {
+          "low": "Niedrig",
+          "medium": "Mittel",
+          "high": "Hoch",
+          "critical": "Kritisch"
+        }
+      },
+      "story": {
+        "empty": "Noch keine Story verfügbar",
+        "preliminary": "Vorläufige Erkenntnisse — die Story wird mit mehr Daten aussagekräftiger.",
+        "chapter": "Kapitel {{number}}",
+        "keyInsights": "Wichtige Erkenntnisse",
+        "recommendations": "Empfehlungen"
+      },
+      "team": {
+        "empty": "Keine Teammitglieder",
+        "roles": {
+          "admin": "Admin",
+          "editor": "Bearbeiter",
+          "viewer": "Betrachter"
+        }
+      },
+      "attribution": {
+        "empty": "Keine Attributionsdaten",
+        "emptyMessage": "Geräteaufschlüsselung und geräteübergreifende Pfade sind noch nicht verfügbar.",
+        "devices": "Geräteaufschlüsselung",
+        "crossDevicePaths": "Geräteübergreifende Pfade",
+        "ctr": "CTR",
+        "clicksConversions": "{{clicks}} Klicks · {{conversions}} Conversions",
+        "conversions": "{{count}} Conversions"
+      }
     }
   }
 }

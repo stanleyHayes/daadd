@@ -71,7 +71,8 @@
       "home": "Accueil",
       "search": "Rechercher",
       "rewards": "Récompenses",
-      "profile": "Profil"
+      "profile": "Profil",
+      "dashboard": "Tableau de bord"
     },
     "splash": {
       "subtitle": "Découvrez des pubs. Gagnez des récompenses.",
@@ -319,6 +320,101 @@
       "automotive": "Automobile",
       "real_estate": "Immobilier",
       "retail": "Commerce de détail"
+    },
+    "dashboard": {
+      "title": "Tableau de bord",
+      "campaignTitle": "Campagne",
+      "campaignsTitle": "Vos campagnes",
+      "noCampaigns": "Aucune campagne pour le moment",
+      "noCampaignsMessage": "Les campagnes que vous créez apparaîtront ici.",
+      "campaignNotFound": "Campagne introuvable",
+      "spentOf": "{{spent}} sur {{total}} dépensés",
+      "kpi": {
+        "impressions": "Impressions",
+        "clicks": "Clics",
+        "ctr": "CTR",
+        "spend": "Dépenses"
+      },
+      "status": {
+        "draft": "Brouillon",
+        "active": "Active",
+        "paused": "En pause",
+        "completed": "Terminée",
+        "archived": "Archivée"
+      },
+      "tabs": {
+        "overview": "Aperçu",
+        "ai": "IA",
+        "anomalies": "Anomalies",
+        "story": "Récit",
+        "team": "Équipe",
+        "attribution": "Attribution"
+      },
+      "overview": {
+        "metrics": "Performances",
+        "info": "Infos de la campagne",
+        "budgetTotal": "Budget total",
+        "budgetSpent": "Budget dépensé",
+        "startDate": "Date de début",
+        "endDate": "Date de fin",
+        "industry": "Secteur",
+        "benchmarks": "Références du secteur",
+        "aboveAvg": "Au-dessus de la moyenne",
+        "belowAvg": "En dessous de la moyenne",
+        "yoursVsIndustry": "Vous : {{yours}} · Secteur : {{industry}}"
+      },
+      "ai": {
+        "empty": "Aucune recommandation",
+        "emptyMessage": "Les recommandations IA pour cette campagne apparaîtront ici.",
+        "apply": "Appliquer",
+        "dismiss": "Ignorer",
+        "confidence": "{{value}} % de confiance",
+        "status": {
+          "pending": "En attente",
+          "applied": "Appliquée",
+          "dismissed": "Ignorée"
+        }
+      },
+      "anomalies": {
+        "empty": "Aucune anomalie détectée",
+        "emptyMessage": "Cette campagne fonctionne dans les limites attendues.",
+        "resolve": "Résoudre",
+        "resolved": "Résolue",
+        "metric": "Métrique",
+        "currentValue": "Valeur actuelle",
+        "threshold": "Seuil",
+        "detectedAt": "Détectée",
+        "severity": {
+          "low": "Faible",
+          "medium": "Moyenne",
+          "high": "Élevée",
+          "critical": "Critique"
+        }
+      },
+      "story": {
+        "empty": "Aucun récit disponible pour le moment",
+        "preliminary": "Informations préliminaires — le récit s’enrichira au fur et à mesure des données.",
+        "chapter": "Chapitre {{number}}",
+        "keyInsights": "Points clés",
+        "recommendations": "Recommandations"
+      },
+      "team": {
+        "empty": "Aucun membre d’équipe",
+        "roles": {
+          "admin": "Admin",
+          "editor": "Éditeur",
+          "viewer": "Lecteur"
+        }
+      },
+      "attribution": {
+        "empty": "Aucune donnée d’attribution",
+        "emptyMessage": "La répartition par appareil et les parcours multi-appareils ne sont pas encore disponibles.",
+        "devices": "Répartition par appareil",
+        "crossDevicePaths": "Parcours multi-appareils",
+        "ctr": "CTR",
+        "clicksConversions": "{{clicks}} clics · {{conversions}} conversions",
+        "conversions": "{{count}} conversions"
+      }
     }
   }
 }

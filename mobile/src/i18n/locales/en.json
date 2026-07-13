@@ -71,7 +71,8 @@
       "home": "Home",
       "search": "Search",
       "rewards": "Rewards",
-      "profile": "Profile"
+      "profile": "Profile",
+      "dashboard": "Dashboard"
     },
     "splash": {
       "subtitle": "Discover Ads. Earn Rewards.",
@@ -319,6 +320,101 @@
       "automotive": "Automotive",
       "real_estate": "Real Estate",
       "retail": "Retail"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "campaignTitle": "Campaign",
+      "campaignsTitle": "Your Campaigns",
+      "noCampaigns": "No campaigns yet",
+      "noCampaignsMessage": "Campaigns you create will appear here.",
+      "campaignNotFound": "Campaign not found",
+      "spentOf": "{{spent}} of {{total}} spent",
+      "kpi": {
+        "impressions": "Impressions",
+        "clicks": "Clicks",
+        "ctr": "CTR",
+        "spend": "Spend"
+      },
+      "status": {
+        "draft": "Draft",
+        "active": "Active",
+        "paused": "Paused",
+        "completed": "Completed",
+        "archived": "Archived"
+      },
+      "tabs": {
+        "overview": "Overview",
+        "ai": "AI",
+        "anomalies": "Anomalies",
+        "story": "Story",
+        "team": "Team",
+        "attribution": "Attribution"
+      },
+      "overview": {
+        "metrics": "Performance",
+        "info": "Campaign Info",
+        "budgetTotal": "Total Budget",
+        "budgetSpent": "Budget Spent",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "industry": "Industry",
+        "benchmarks": "Industry Benchmarks",
+        "aboveAvg": "Above average",
+        "belowAvg": "Below average",
+        "yoursVsIndustry": "Yours: {{yours}} · Industry: {{industry}}"
+      },
+      "ai": {
+        "empty": "No recommendations",
+        "emptyMessage": "AI recommendations for this campaign will appear here.",
+        "apply": "Apply",
+        "dismiss": "Dismiss",
+        "confidence": "{{value}}% confidence",
+        "status": {
+          "pending": "Pending",
+          "applied": "Applied",
+          "dismissed": "Dismissed"
+        }
+      },
+      "anomalies": {
+        "empty": "No anomalies detected",
+        "emptyMessage": "This campaign is performing within expected ranges.",
+        "resolve": "Resolve",
+        "resolved": "Resolved",
+        "metric": "Metric",
+        "currentValue": "Current Value",
+        "threshold": "Threshold",
+        "detectedAt": "Detected",
+        "severity": {
+          "low": "Low",
+          "medium": "Medium",
+          "high": "High",
+          "critical": "Critical"
+        }
+      },
+      "story": {
+        "empty": "No story available yet",
+        "preliminary": "Preliminary insights — the story will become richer as more data comes in.",
+        "chapter": "Chapter {{number}}",
+        "keyInsights": "Key Insights",
+        "recommendations": "Recommendations"
+      },
+      "team": {
+        "empty": "No team members",
+        "roles": {
+          "admin": "Admin",
+          "editor": "Editor",
+          "viewer": "Viewer"
+        }
+      },
+      "attribution": {
+        "empty": "No attribution data",
+        "emptyMessage": "Device breakdown and cross-device paths are not available yet.",
+        "devices": "Device Breakdown",
+        "crossDevicePaths": "Cross-Device Paths",
+        "ctr": "CTR",
+        "clicksConversions": "{{clicks}} clicks · {{conversions}} conversions",
+        "conversions": "{{count}} conversions"
+      }
     }
   }
 }

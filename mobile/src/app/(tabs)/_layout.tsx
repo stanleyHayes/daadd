@@ -6,10 +6,18 @@ import { useColors } from '@/hooks/useColors';
 import { fontSize } from '@/theme/typography';
 import { fontFamily } from '@/theme/typography';
 import { useTranslation } from 'react-i18next';
+import { useAuthStore } from '@/stores/auth.store';
+import { useCurrentUser } from '@/hooks/useAuth';
 
 export default function TabLayout() {
   const { t } = useTranslation();
   const colors = useColors();
+  const storedUser = useAuthStore((s) => s.user);
+  // Hydrate the user (with role) from the backend; fall back to the
+  // login-time user object stored in the auth store.
+  const { data: currentUser } = useCurrentUser();
+  const role = currentUser?.role ?? storedUser?.role ?? 'end_user';
+  const isAdvertiser = role !== 'end_user';
 
   return (
     <Tabs
@@ -72,6 +80,20 @@ export default function TabLayout() {
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
               name={focused ? 'gift' : 'gift-outline'}
+              size={size}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="dashboard"
+        options={{
+          href: isAdvertiser ? undefined : null,
+          title: t('mobile.tabs.dashboard'),
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={focused ? 'grid' : 'grid-outline'}
               size={size}
               color={color}
             />

@@ -14,7 +14,8 @@
       "home": "Inicio",
       "search": "Buscar",
       "rewards": "Recompensas",
-      "profile": "Perfil"
+      "profile": "Perfil",
+      "dashboard": "Panel"
     },
     "splash": {
       "subtitle": "Descubre anuncios. Gana recompensas.",
@@ -262,6 +263,101 @@
       "automotive": "Automotriz",
       "real_estate": "Bienes raíces",
       "retail": "Comercio minorista"
+    },
+    "dashboard": {
+      "title": "Panel",
+      "campaignTitle": "Campaña",
+      "campaignsTitle": "Tus campañas",
+      "noCampaigns": "Aún no hay campañas",
+      "noCampaignsMessage": "Las campañas que crees aparecerán aquí.",
+      "campaignNotFound": "Campaña no encontrada",
+      "spentOf": "{{spent}} de {{total}} gastados",
+      "kpi": {
+        "impressions": "Impresiones",
+        "clicks": "Clics",
+        "ctr": "CTR",
+        "spend": "Gasto"
+      },
+      "status": {
+        "draft": "Borrador",
+        "active": "Activa",
+        "paused": "Pausada",
+        "completed": "Completada",
+        "archived": "Archivada"
+      },
+      "tabs": {
+        "overview": "Resumen",
+        "ai": "IA",
+        "anomalies": "Anomalías",
+        "story": "Historia",
+        "team": "Equipo",
+        "attribution": "Atribución"
+      },
+      "overview": {
+        "metrics": "Rendimiento",
+        "info": "Información de la campaña",
+        "budgetTotal": "Presupuesto total",
+        "budgetSpent": "Presupuesto gastado",
+        "startDate": "Fecha de inicio",
+        "endDate": "Fecha de fin",
+        "industry": "Industria",
+        "benchmarks": "Comparación con la industria",
+        "aboveAvg": "Por encima del promedio",
+        "belowAvg": "Por debajo del promedio",
+        "yoursVsIndustry": "Tú: {{yours}} · Industria: {{industry}}"
+      },
+      "ai": {
+        "empty": "Sin recomendaciones",
+        "emptyMessage": "Las recomendaciones de IA para esta campaña aparecerán aquí.",
+        "apply": "Aplicar",
+        "dismiss": "Descartar",
+        "confidence": "{{value}}% de confianza",
+        "status": {
+          "pending": "Pendiente",
+          "applied": "Aplicada",
+          "dismissed": "Descartada"
+        }
+      },
+      "anomalies": {
+        "empty": "No se detectaron anomalías",
+        "emptyMessage": "Esta campaña funciona dentro de los rangos esperados.",
+        "resolve": "Resolver",
+        "resolved": "Resuelta",
+        "metric": "Métrica",
+        "currentValue": "Valor actual",
+        "threshold": "Umbral",
+        "detectedAt": "Detectada",
+        "severity": {
+          "low": "Baja",
+          "medium": "Media",
+          "high": "Alta",
+          "critical": "Crítica"
+        }
+      },
+      "story": {
+        "empty": "Aún no hay historia disponible",
+        "preliminary": "Información preliminar — la historia será más completa a medida que lleguen más datos.",
+        "chapter": "Capítulo {{number}}",
+        "keyInsights": "Ideas clave",
+        "recommendations": "Recomendaciones"
+      },
+      "team": {
+        "empty": "Sin miembros del equipo",
+        "roles": {
+          "admin": "Administrador",
+          "editor": "Editor",
+          "viewer": "Lector"
+        }
+      },
+      "attribution": {
+        "empty": "Sin datos de atribución",
+        "emptyMessage": "El desglose por dispositivo y las rutas entre dispositivos aún no están disponibles.",
+        "devices": "Desglose por dispositivo",
+        "crossDevicePaths": "Rutas entre dispositivos",
+        "ctr": "CTR",
+        "clicksConversions": "{{clicks}} clics · {{conversions}} conversiones",
+        "conversions": "{{count}} conversiones"
+      }
     }
   },
   "fr": {
@@ -279,7 +375,8 @@
       "home": "Accueil",
       "search": "Rechercher",
       "rewards": "Récompenses",
-      "profile": "Profil"
+      "profile": "Profil",
+      "dashboard": "Tableau de bord"
     },
     "splash": {
       "subtitle": "Découvrez des pubs. Gagnez des récompenses.",
@@ -527,6 +624,101 @@
       "automotive": "Automobile",
       "real_estate": "Immobilier",
       "retail": "Commerce de détail"
+    },
+    "dashboard": {
+      "title": "Tableau de bord",
+      "campaignTitle": "Campagne",
+      "campaignsTitle": "Vos campagnes",
+      "noCampaigns": "Aucune campagne pour le moment",
+      "noCampaignsMessage": "Les campagnes que vous créez apparaîtront ici.",
+      "campaignNotFound": "Campagne introuvable",
+      "spentOf": "{{spent}} sur {{total}} dépensés",
+      "kpi": {
+        "impressions": "Impressions",
+        "clicks": "Clics",
+        "ctr": "CTR",
+        "spend": "Dépenses"
+      },
+      "status": {
+        "draft": "Brouillon",
+        "active": "Active",
+        "paused": "En pause",
+        "completed": "Terminée",
+        "archived": "Archivée"
+      },
+      "tabs": {
+        "overview": "Aperçu",
+        "ai": "IA",
+        "anomalies": "Anomalies",
+        "story": "Récit",
+        "team": "Équipe",
+        "attribution": "Attribution"
+      },
+      "overview": {
+        "metrics": "Performances",
+        "info": "Infos de la campagne",
+        "budgetTotal": "Budget total",
+        "budgetSpent": "Budget dépensé",
+        "startDate": "Date de début",
+        "endDate": "Date de fin",
+        "industry": "Secteur",
+        "benchmarks": "Références du secteur",
+        "aboveAvg": "Au-dessus de la moyenne",
+        "belowAvg": "En dessous de la moyenne",
+        "yoursVsIndustry": "Vous : {{yours}} · Secteur : {{industry}}"
+      },
+      "ai": {
+        "empty": "Aucune recommandation",
+        "emptyMessage": "Les recommandations IA pour cette campagne apparaîtront ici.",
+        "apply": "Appliquer",
+        "dismiss": "Ignorer",
+        "confidence": "{{value}} % de confiance",
+        "status": {
+          "pending": "En attente",
+          "applied": "Appliquée",
+          "dismissed": "Ignorée"
+        }
+      },
+      "anomalies": {
+        "empty": "Aucune anomalie détectée",
+        "emptyMessage": "Cette campagne fonctionne dans les limites attendues.",
+        "resolve": "Résoudre",
+        "resolved": "Résolue",
+        "metric": "Métrique",
+        "currentValue": "Valeur actuelle",
+        "threshold": "Seuil",
+        "detectedAt": "Détectée",
+        "severity": {
+          "low": "Faible",
+          "medium": "Moyenne",
+          "high": "Élevée",
+          "critical": "Critique"
+        }
+      },
+      "story": {
+        "empty": "Aucun récit disponible pour le moment",
+        "preliminary": "Informations préliminaires — le récit s’enrichira au fur et à mesure des données.",
+        "chapter": "Chapitre {{number}}",
+        "keyInsights": "Points clés",
+        "recommendations": "Recommandations"
+      },
+      "team": {
+        "empty": "Aucun membre d’équipe",
+        "roles": {
+          "admin": "Admin",
+          "editor": "Éditeur",
+          "viewer": "Lecteur"
+        }
+      },
+      "attribution": {
+        "empty": "Aucune donnée d’attribution",
+        "emptyMessage": "La répartition par appareil et les parcours multi-appareils ne sont pas encore disponibles.",
+        "devices": "Répartition par appareil",
+        "crossDevicePaths": "Parcours multi-appareils",
+        "ctr": "CTR",
+        "clicksConversions": "{{clicks}} clics · {{conversions}} conversions",
+        "conversions": "{{count}} conversions"
+      }
     }
   },
   "de": {
@@ -544,7 +736,8 @@
       "home": "Start",
       "search": "Suche",
       "rewards": "Prämien",
-      "profile": "Profil"
+      "profile": "Profil",
+      "dashboard": "Dashboard"
     },
     "splash": {
       "subtitle": "Anzeigen entdecken. Prämien verdienen.",
@@ -792,6 +985,101 @@
       "automotive": "Automobil",
       "real_estate": "Immobilien",
       "retail": "Einzelhandel"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "campaignTitle": "Kampagne",
+      "campaignsTitle": "Deine Kampagnen",
+      "noCampaigns": "Noch keine Kampagnen",
+      "noCampaignsMessage": "Kampagnen, die du erstellst, werden hier angezeigt.",
+      "campaignNotFound": "Kampagne nicht gefunden",
+      "spentOf": "{{spent}} von {{total}} ausgegeben",
+      "kpi": {
+        "impressions": "Impressionen",
+        "clicks": "Klicks",
+        "ctr": "CTR",
+        "spend": "Ausgaben"
+      },
+      "status": {
+        "draft": "Entwurf",
+        "active": "Aktiv",
+        "paused": "Pausiert",
+        "completed": "Abgeschlossen",
+        "archived": "Archiviert"
+      },
+      "tabs": {
+        "overview": "Übersicht",
+        "ai": "KI",
+        "anomalies": "Anomalien",
+        "story": "Story",
+        "team": "Team",
+        "attribution": "Attribution"
+      },
+      "overview": {
+        "metrics": "Leistung",
+        "info": "Kampagneninfos",
+        "budgetTotal": "Gesamtbudget",
+        "budgetSpent": "Ausgegebenes Budget",
+        "startDate": "Startdatum",
+        "endDate": "Enddatum",
+        "industry": "Branche",
+        "benchmarks": "Branchenvergleich",
+        "aboveAvg": "Über dem Durchschnitt",
+        "belowAvg": "Unter dem Durchschnitt",
+        "yoursVsIndustry": "Du: {{yours}} · Branche: {{industry}}"
+      },
+      "ai": {
+        "empty": "Keine Empfehlungen",
+        "emptyMessage": "KI-Empfehlungen für diese Kampagne werden hier angezeigt.",
+        "apply": "Anwenden",
+        "dismiss": "Verwerfen",
+        "confidence": "{{value}} % Konfidenz",
+        "status": {
+          "pending": "Ausstehend",
+          "applied": "Angewendet",
+          "dismissed": "Verworfen"
+        }
+      },
+      "anomalies": {
+        "empty": "Keine Anomalien erkannt",
+        "emptyMessage": "Diese Kampagne läuft innerhalb der erwarteten Bereiche.",
+        "resolve": "Beheben",
+        "resolved": "Behoben",
+        "metric": "Metrik",
+        "currentValue": "Aktueller Wert",
+        "threshold": "Schwellenwert",
+        "detectedAt": "Erkannt",
+        "severity": {
+          "low": "Niedrig",
+          "medium": "Mittel",
+          "high": "Hoch",
+          "critical": "Kritisch"
+        }
+      },
+      "story": {
+        "empty": "Noch keine Story verfügbar",
+        "preliminary": "Vorläufige Erkenntnisse — die Story wird mit mehr Daten aussagekräftiger.",
+        "chapter": "Kapitel {{number}}",
+        "keyInsights": "Wichtige Erkenntnisse",
+        "recommendations": "Empfehlungen"
+      },
+      "team": {
+        "empty": "Keine Teammitglieder",
+        "roles": {
+          "admin": "Admin",
+          "editor": "Bearbeiter",
+          "viewer": "Betrachter"
+        }
+      },
+      "attribution": {
+        "empty": "Keine Attributionsdaten",
+        "emptyMessage": "Geräteaufschlüsselung und geräteübergreifende Pfade sind noch nicht verfügbar.",
+        "devices": "Geräteaufschlüsselung",
+        "crossDevicePaths": "Geräteübergreifende Pfade",
+        "ctr": "CTR",
+        "clicksConversions": "{{clicks}} Klicks · {{conversions}} Conversions",
+        "conversions": "{{count}} Conversions"
+      }
     }
   },
   "pt": {
@@ -809,7 +1097,8 @@
       "home": "Início",
       "search": "Buscar",
       "rewards": "Recompensas",
-      "profile": "Perfil"
+      "profile": "Perfil",
+      "dashboard": "Painel"
     },
     "splash": {
       "subtitle": "Descubra anúncios. Ganhe recompensas.",
@@ -1057,6 +1346,101 @@
       "automotive": "Automotivo",
       "real_estate": "Imóveis",
       "retail": "Varejo"
+    },
+    "dashboard": {
+      "title": "Painel",
+      "campaignTitle": "Campanha",
+      "campaignsTitle": "Suas campanhas",
+      "noCampaigns": "Ainda não há campanhas",
+      "noCampaignsMessage": "As campanhas que você criar aparecerão aqui.",
+      "campaignNotFound": "Campanha não encontrada",
+      "spentOf": "{{spent}} de {{total}} gastos",
+      "kpi": {
+        "impressions": "Impressões",
+        "clicks": "Cliques",
+        "ctr": "CTR",
+        "spend": "Gasto"
+      },
+      "status": {
+        "draft": "Rascunho",
+        "active": "Ativa",
+        "paused": "Pausada",
+        "completed": "Concluída",
+        "archived": "Arquivada"
+      },
+      "tabs": {
+        "overview": "Visão geral",
+        "ai": "IA",
+        "anomalies": "Anomalias",
+        "story": "História",
+        "team": "Equipe",
+        "attribution": "Atribuição"
+      },
+      "overview": {
+        "metrics": "Desempenho",
+        "info": "Informações da campanha",
+        "budgetTotal": "Orçamento total",
+        "budgetSpent": "Orçamento gasto",
+        "startDate": "Data de início",
+        "endDate": "Data de término",
+        "industry": "Setor",
+        "benchmarks": "Comparação com o setor",
+        "aboveAvg": "Acima da média",
+        "belowAvg": "Abaixo da média",
+        "yoursVsIndustry": "Você: {{yours}} · Setor: {{industry}}"
+      },
+      "ai": {
+        "empty": "Sem recomendações",
+        "emptyMessage": "As recomendações de IA para esta campanha aparecerão aqui.",
+        "apply": "Aplicar",
+        "dismiss": "Descartar",
+        "confidence": "{{value}}% de confiança",
+        "status": {
+          "pending": "Pendente",
+          "applied": "Aplicada",
+          "dismissed": "Descartada"
+        }
+      },
+      "anomalies": {
+        "empty": "Nenhuma anomalia detectada",
+        "emptyMessage": "Esta campanha está dentro dos intervalos esperados.",
+        "resolve": "Resolver",
+        "resolved": "Resolvida",
+        "metric": "Métrica",
+        "currentValue": "Valor atual",
+        "threshold": "Limite",
+        "detectedAt": "Detectada",
+        "severity": {
+          "low": "Baixa",
+          "medium": "Média",
+          "high": "Alta",
+          "critical": "Crítica"
+        }
+      },
+      "story": {
+        "empty": "Nenhuma história disponível ainda",
+        "preliminary": "Informações preliminares — a história ficará mais completa conforme mais dados chegarem.",
+        "chapter": "Capítulo {{number}}",
+        "keyInsights": "Principais insights",
+        "recommendations": "Recomendações"
+      },
+      "team": {
+        "empty": "Sem membros da equipe",
+        "roles": {
+          "admin": "Administrador",
+          "editor": "Editor",
+          "viewer": "Leitor"
+        }
+      },
+      "attribution": {
+        "empty": "Sem dados de atribuição",
+        "emptyMessage": "O detalhamento por dispositivo e os caminhos entre dispositivos ainda não estão disponíveis.",
+        "devices": "Detalhamento por dispositivo",
+        "crossDevicePaths": "Caminhos entre dispositivos",
+        "ctr": "CTR",
+        "clicksConversions": "{{clicks}} cliques · {{conversions}} conversões",
+        "conversions": "{{count}} conversões"
+      }
     }
   }
 }

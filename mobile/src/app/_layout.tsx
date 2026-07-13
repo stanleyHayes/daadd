@@ -104,6 +104,18 @@ function RootLayoutInner() {
             headerShadowVisible: false,
           }}
         />
+        <Stack.Screen
+          name="dashboard/campaign/[id]"
+          options={{
+            headerShown: true,
+            headerTitle: '',
+            headerBackTitle: t('mobile.common.back'),
+            headerTintColor: colors.primary,
+            headerStyle: { backgroundColor: colors.surface },
+            headerShadowVisible: false,
+            animation: 'fade_from_bottom',
+          }}
+        />
       </Stack>
     </>
   );

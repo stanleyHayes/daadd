@@ -71,7 +71,8 @@
       "home": "Início",
       "search": "Buscar",
       "rewards": "Recompensas",
-      "profile": "Perfil"
+      "profile": "Perfil",
+      "dashboard": "Painel"
     },
     "splash": {
       "subtitle": "Descubra anúncios. Ganhe recompensas.",
@@ -319,6 +320,101 @@
       "automotive": "Automotivo",
       "real_estate": "Imóveis",
       "retail": "Varejo"
+    },
+    "dashboard": {
+      "title": "Painel",
+      "campaignTitle": "Campanha",
+      "campaignsTitle": "Suas campanhas",
+      "noCampaigns": "Ainda não há campanhas",
+      "noCampaignsMessage": "As campanhas que você criar aparecerão aqui.",
+      "campaignNotFound": "Campanha não encontrada",
+      "spentOf": "{{spent}} de {{total}} gastos",
+      "kpi": {
+        "impressions": "Impressões",
+        "clicks": "Cliques",
+        "ctr": "CTR",
+        "spend": "Gasto"
+      },
+      "status": {
+        "draft": "Rascunho",
+        "active": "Ativa",
+        "paused": "Pausada",
+        "completed": "Concluída",
+        "archived": "Arquivada"
+      },
+      "tabs": {
+        "overview": "Visão geral",
+        "ai": "IA",
+        "anomalies": "Anomalias",
+        "story": "História",
+        "team": "Equipe",
+        "attribution": "Atribuição"
+      },
+      "overview": {
+        "metrics": "Desempenho",
+        "info": "Informações da campanha",
+        "budgetTotal": "Orçamento total",
+        "budgetSpent": "Orçamento gasto",
+        "startDate": "Data de início",
+        "endDate": "Data de término",
+        "industry": "Setor",
+        "benchmarks": "Comparação com o setor",
+        "aboveAvg": "Acima da média",
+        "belowAvg": "Abaixo da média",
+        "yoursVsIndustry": "Você: {{yours}} · Setor: {{industry}}"
+      },
+      "ai": {
+        "empty": "Sem recomendações",
+        "emptyMessage": "As recomendações de IA para esta campanha aparecerão aqui.",
+        "apply": "Aplicar",
+        "dismiss": "Descartar",
+        "confidence": "{{value}}% de confiança",
+        "status": {
+          "pending": "Pendente",
+          "applied": "Aplicada",
+          "dismissed": "Descartada"
+        }
+      },
+      "anomalies": {
+        "empty": "Nenhuma anomalia detectada",
+        "emptyMessage": "Esta campanha está dentro dos intervalos esperados.",
+        "resolve": "Resolver",
+        "resolved": "Resolvida",
+        "metric": "Métrica",
+        "currentValue": "Valor atual",
+        "threshold": "Limite",
+        "detectedAt": "Detectada",
+        "severity": {
+          "low": "Baixa",
+          "medium": "Média",
+          "high": "Alta",
+          "critical": "Crítica"
+        }
+      },
+      "story": {
+        "empty": "Nenhuma história disponível ainda",
+        "preliminary": "Informações preliminares — a história ficará mais completa conforme mais dados chegarem.",
+        "chapter": "Capítulo {{number}}",
+        "keyInsights": "Principais insights",
+        "recommendations": "Recomendações"
+      },
+      "team": {
+        "empty": "Sem membros da equipe",
+        "roles": {
+          "admin": "Administrador",
+          "editor": "Editor",
+          "viewer": "Leitor"
+        }
+      },
+      "attribution": {
+        "empty": "Sem dados de atribuição",
+        "emptyMessage": "O detalhamento por dispositivo e os caminhos entre dispositivos ainda não estão disponíveis.",
+        "devices": "Detalhamento por dispositivo",
+        "crossDevicePaths": "Caminhos entre dispositivos",
+        "ctr": "CTR",
+        "clicksConversions": "{{clicks}} cliques · {{conversions}} conversões",
+        "conversions": "{{count}} conversões"
+      }
     }
   }
 }
