@@ -28,7 +28,17 @@
       "bundler": "metro",
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["expo-router", "expo-secure-store", "expo-notifications"],
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      "expo-notifications",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow AdPlatform to scan customer QR codes."
+        }
+      ]
+    ],
     "experiments": {
       "typedRoutes": true
     }

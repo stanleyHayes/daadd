@@ -4,7 +4,6 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -16,6 +15,7 @@ import Animated, {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter, type Href } from 'expo-router';
 import { useRewards, useRewardBalance } from '@/hooks/useRewards';
 import { RewardCard } from '@/components/RewardCard';
 import { Button } from '@/components/ui/Button';
@@ -38,6 +38,7 @@ const filterOptions: { value: FilterOption; label: string }[] = [
 
 export default function RewardsScreen() {
   const colors = useColors();
+  const router = useRouter();
   const { data: rewards, isLoading: rewardsLoading } = useRewards();
   const { data: balance, isLoading: balanceLoading } = useRewardBalance();
   const [activeFilter, setActiveFilter] = useState<FilterOption>('all');
@@ -62,17 +63,7 @@ export default function RewardsScreen() {
   );
 
   const handleRedeem = () => {
-    Alert.alert(
-      'Redeem Rewards',
-      `Redeem $${(balance?.balance ?? 0).toFixed(2)} to your linked payment method?`,
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Redeem',
-          onPress: () => Alert.alert('Success', 'Redemption request submitted!'),
-        },
-      ]
-    );
+    router.push('/redeem' as Href);
   };
 
   if (rewardsLoading && balanceLoading) {

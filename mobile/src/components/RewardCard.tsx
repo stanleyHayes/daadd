@@ -90,7 +90,7 @@ export function RewardCard({ reward, index = 0 }: RewardCardProps) {
             {reward.campaignName}
           </Text>
           <Text style={[typography.headingSmall, { color: colors.accent }]}>
-            +${reward.amount.toFixed(2)}
+            {reward.amount >= 0 ? '+' : ''}${reward.amount.toFixed(2)}
           </Text>
         </View>
         <Text

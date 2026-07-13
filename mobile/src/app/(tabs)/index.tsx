@@ -4,7 +4,6 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -12,13 +11,13 @@ import { useRouter } from 'expo-router';
 import { useFeaturedAds, useTrendingAds, useAds } from '@/hooks/useAds';
 import { FeaturedCarousel } from '@/components/FeaturedCarousel';
 import { AdCard } from '@/components/AdCard';
-import { CategoryChip } from '@/components/CategoryChip';
 import { LoadingScreen } from '@/components/ui/LoadingScreen';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { useColors } from '@/hooks/useColors';
 import { spacing } from '@/theme/spacing';
 import { typography, fontFamily } from '@/theme/typography';
 import { industries } from '@/constants/industries';
+import { useNotifications } from '@/hooks/useNotifications';
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -26,6 +25,8 @@ export default function HomeScreen() {
   const { data: featuredAds, isLoading: featuredLoading } = useFeaturedAds();
   const { data: trendingAds, isLoading: trendingLoading } = useTrendingAds();
   const { data: allAds } = useAds();
+  const { data: notifications = [] } = useNotifications();
+  const unreadCount = notifications.filter((n) => !n.read).length;
 
   if (featuredLoading && trendingLoading) {
     return <LoadingScreen message="Loading ads..." />;
@@ -68,26 +69,42 @@ export default function HomeScreen() {
               alignItems: 'center',
               position: 'relative',
             }}
-            onPress={() => Alert.alert('Notifications', 'No new notifications.')}
+            onPress={() => router.push('/notifications')}
           >
             <Ionicons
               name="notifications-outline"
               size={24}
               color={colors.text.primary}
             />
-            <View
-              style={{
-                position: 'absolute',
-                top: 10,
-                right: 12,
-                width: 8,
-                height: 8,
-                borderRadius: 4,
-                backgroundColor: colors.danger,
-                borderWidth: 1.5,
-                borderColor: colors.surfaceSecondary,
-              }}
-            />
+            {unreadCount > 0 && (
+              <View
+                style={{
+                  position: 'absolute',
+                  top: 6,
+                  right: 6,
+                  minWidth: 16,
+                  height: 16,
+                  borderRadius: 8,
+                  paddingHorizontal: 3,
+                  backgroundColor: colors.danger,
+                  borderWidth: 1.5,
+                  borderColor: colors.surfaceSecondary,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Text
+                  style={{
+                    color: '#FFF',
+                    fontSize: 9,
+                    fontFamily: fontFamily.bold,
+                    lineHeight: 12,
+                  }}
+                >
+                  {unreadCount > 99 ? '99+' : unreadCount}
+                </Text>
+              </View>
+            )}
           </TouchableOpacity>
         </View>
 

@@ -18,18 +18,21 @@ import { useColors } from '@/hooks/useColors';
 import { spacing, borderRadius } from '@/theme/spacing';
 import { typography, fontFamily } from '@/theme/typography';
 import { Button } from './ui/Button';
+import api from '@/lib/api';
 
 interface AgeGateProps {
   visible: boolean;
   minAge: number;
   onVerify: (code: string) => void;
   onClose: () => void;
+  verifying?: boolean;
+  errorMessage?: string | null;
 }
 
-export function AgeGate({ visible, minAge, onVerify, onClose }: AgeGateProps) {
+export function AgeGate({ visible, minAge, onVerify, onClose, verifying = false, errorMessage }: AgeGateProps) {
   const colors = useColors();
   const [code, setCode] = useState<string[]>(Array(6).fill(''));
-  const [loading, setLoading] = useState(false);
+  const [devCode, setDevCode] = useState<string | null>(null);
   const inputRefs = useRef<(TextInput | null)[]>([]);
   const slideY = useSharedValue(300);
   const opacity = useSharedValue(0);
@@ -38,11 +41,31 @@ export function AgeGate({ visible, minAge, onVerify, onClose }: AgeGateProps) {
     if (visible) {
       slideY.value = withSpring(0, { damping: 20, stiffness: 200 });
       opacity.value = withTiming(1, { duration: 250 });
+      setCode(Array(6).fill(''));
+      // Request a verification code when the gate opens.
+      // In dev the response includes `dev_code` so testers can proceed.
+      api
+        .post('/auth/age-verify/request')
+        .then((res) => {
+          setDevCode(res.data?.data?.dev_code ?? null);
+        })
+        .catch(() => {
+          setDevCode(null);
+        });
     } else {
       slideY.value = withTiming(300, { duration: 200 });
       opacity.value = withTiming(0, { duration: 200 });
+      setDevCode(null);
     }
   }, [visible]);
+
+  // Clear inputs when the parent reports a verification error
+  useEffect(() => {
+    if (errorMessage) {
+      setCode(Array(6).fill(''));
+      inputRefs.current[0]?.focus();
+    }
+  }, [errorMessage]);
 
   const animatedModalStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: slideY.value }],
@@ -71,12 +94,8 @@ export function AgeGate({ visible, minAge, onVerify, onClose }: AgeGateProps) {
 
   const handleVerify = () => {
     const fullCode = code.join('');
-    if (fullCode.length === 6) {
-      setLoading(true);
-      setTimeout(() => {
-        onVerify(fullCode);
-        setLoading(false);
-      }, 1000);
+    if (fullCode.length === 6 && !verifying) {
+      onVerify(fullCode);
     }
   };
 
@@ -154,6 +173,22 @@ export function AgeGate({ visible, minAge, onVerify, onClose }: AgeGateProps) {
             number.
           </Text>
 
+          {devCode && (
+            <Text
+              style={[
+                typography.bodySmall,
+                {
+                  color: colors.accent,
+                  textAlign: 'center',
+                  marginBottom: spacing.md,
+                  fontFamily: fontFamily.semibold,
+                },
+              ]}
+            >
+              Dev code: {devCode}
+            </Text>
+          )}
+
           <View
             style={{
               flexDirection: 'row',
@@ -199,11 +234,26 @@ export function AgeGate({ visible, minAge, onVerify, onClose }: AgeGateProps) {
             ))}
           </View>
 
+          {errorMessage && (
+            <Text
+              style={[
+                typography.bodySmall,
+                {
+                  color: colors.danger,
+                  textAlign: 'center',
+                  marginBottom: spacing.md,
+                },
+              ]}
+            >
+              {errorMessage}
+            </Text>
+          )}
+
           <View style={{ width: '100%', gap: spacing.sm }}>
             <Button
               title="Verify"
               onPress={handleVerify}
-              loading={loading}
+              loading={verifying}
               disabled={!isComplete}
               style={{ width: '100%' }}
             />

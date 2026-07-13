@@ -79,7 +79,7 @@ router.post('/claim/:adId', authMiddleware, async (req: Request, res: Response) 
       ad_id: adId,
       ad_title: ad.title,
       amount: ad.reward_amount,
-      status: 'pending',
+      status: 'approved',
     });
 
     await Notification.create({

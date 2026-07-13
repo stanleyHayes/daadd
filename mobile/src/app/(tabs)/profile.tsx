@@ -13,48 +13,22 @@ import { useRouter, type Href } from 'expo-router';
 import { useAuthStore } from '@/stores/auth.store';
 import { useThemeStore } from '@/stores/theme.store';
 import { useLogout } from '@/hooks/useAuth';
+import { useRewards } from '@/hooks/useRewards';
 import { Card } from '@/components/ui/Card';
 import { useColors } from '@/hooks/useColors';
 import { spacing, borderRadius } from '@/theme/spacing';
 import { typography, fontFamily } from '@/theme/typography';
 import { LinkedDevice } from '@/types';
+import { Platform } from 'react-native';
 
-// Placeholder data
-const MOCK_USER = {
-  name: 'Alex Johnson',
-  email: 'alex.johnson@email.com',
-  avatar: 'https://picsum.photos/seed/avatar/200/200',
-  stats: {
-    adsViewed: 142,
-    totalRewardsEarned: 86.5,
-    currentBalance: 24.5,
-    joinedDate: '2023-09-15',
-  },
+// Current device only — cross-device listing requires backend support
+const CURRENT_DEVICE: LinkedDevice = {
+  id: 'current',
+  name: Platform.OS === 'ios' ? 'iPhone' : Platform.OS === 'android' ? 'Android Device' : 'This Device',
+  type: 'phone',
+  lastActive: new Date().toISOString(),
+  isCurrent: true,
 };
-
-const MOCK_DEVICES: LinkedDevice[] = [
-  {
-    id: 'd1',
-    name: 'iPhone 15 Pro',
-    type: 'phone',
-    lastActive: '2024-03-14T10:00:00Z',
-    isCurrent: true,
-  },
-  {
-    id: 'd2',
-    name: 'iPad Air',
-    type: 'tablet',
-    lastActive: '2024-03-13T22:00:00Z',
-    isCurrent: false,
-  },
-  {
-    id: 'd3',
-    name: 'Samsung TV',
-    type: 'tv',
-    lastActive: '2024-03-10T20:00:00Z',
-    isCurrent: false,
-  },
-];
 
 const deviceIcons: Record<string, keyof typeof Ionicons.glyphMap> = {
   phone: 'phone-portrait',
@@ -69,7 +43,16 @@ export default function ProfileScreen() {
   const user = useAuthStore((s) => s.user);
   const { theme, setTheme } = useThemeStore();
 
-  const displayUser = user || MOCK_USER;
+  const displayUser = user;
+  const { data: rewards } = useRewards();
+
+  // Real stats derived from the rewards ledger
+  const rewardList = Array.isArray(rewards) ? rewards : [];
+  const adsViewed = rewardList.filter((r) => r.amount > 0 && r.status !== 'redeemed').length;
+  const totalEarned = rewardList
+    .filter((r) => r.amount > 0)
+    .reduce((sum, r) => sum + r.amount, 0);
+  const joinedDate = (displayUser as any)?.created_at || (displayUser as any)?.createdAt;
 
   const themeLabels: Record<string, string> = {
     light: 'Light',
@@ -105,6 +88,13 @@ export default function ProfileScreen() {
       label: 'Notifications',
       color: colors.primary,
       onPress: () => router.push('/notifications' as Href),
+    },
+    {
+      id: 'merchant-scan',
+      icon: 'qr-code-outline' as const,
+      label: 'Merchant: Scan Customer QR',
+      color: colors.accent,
+      onPress: () => router.push('/merchant-scan' as Href),
     },
     {
       id: 'language',
@@ -201,7 +191,7 @@ export default function ProfileScreen() {
         >
           <Image
             source={{
-              uri: (displayUser as any).avatar || MOCK_USER.avatar,
+              uri: (displayUser as any)?.avatar_url || (displayUser as any)?.avatar || 'https://picsum.photos/seed/avatar/200/200',
             }}
             style={{
               width: 96,
@@ -216,7 +206,7 @@ export default function ProfileScreen() {
           <Text
             style={[typography.headingLarge, { color: colors.text.primary }]}
           >
-            {displayUser.name}
+            {displayUser?.name || 'User'}
           </Text>
           <Text
             style={[
@@ -224,7 +214,7 @@ export default function ProfileScreen() {
               { color: colors.text.secondary, marginTop: spacing.xs },
             ]}
           >
-            {displayUser.email}
+            {displayUser?.email || ''}
           </Text>
         </View>
 
@@ -238,8 +228,7 @@ export default function ProfileScreen() {
                   { color: colors.text.primary },
                 ]}
               >
-                {(displayUser as any).stats?.adsViewed ??
-                  MOCK_USER.stats.adsViewed}
+                {adsViewed}
               </Text>
               <Text
                 style={[
@@ -260,9 +249,7 @@ export default function ProfileScreen() {
                   { color: colors.text.primary },
                 ]}
               >
-                $
-                {(displayUser as any).stats?.totalRewardsEarned?.toFixed(1) ??
-                  MOCK_USER.stats.totalRewardsEarned}
+                ${totalEarned.toFixed(1)}
               </Text>
               <Text
                 style={[
@@ -283,14 +270,12 @@ export default function ProfileScreen() {
                   { color: colors.text.primary },
                 ]}
               >
-                {(displayUser as any).stats?.joinedDate
-                  ? new Date(
-                      (displayUser as any).stats.joinedDate
-                    ).toLocaleDateString('en', {
+                {joinedDate
+                  ? new Date(joinedDate).toLocaleDateString('en', {
                       month: 'short',
                       year: 'numeric',
                     })
-                  : 'Sep 2023'}
+                  : '—'}
               </Text>
               <Text
                 style={[
@@ -320,20 +305,14 @@ export default function ProfileScreen() {
             Linked Devices
           </Text>
           <Card padded={false}>
-            {MOCK_DEVICES.map((device, index) => (
+            {[CURRENT_DEVICE].map((device) => (
               <View
                 key={device.id}
-                style={[
-                  {
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    padding: spacing.md,
-                  },
-                  index < MOCK_DEVICES.length - 1 && {
-                    borderBottomWidth: 1,
-                    borderBottomColor: colors.borderLight,
-                  },
-                ]}
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  padding: spacing.md,
+                }}
               >
                 <View
                   style={{

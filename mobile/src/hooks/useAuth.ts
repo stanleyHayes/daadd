@@ -61,3 +61,30 @@ export function useLogout() {
     queryClient.clear();
   };
 }
+
+export function useUpdateProfile() {
+  const { setUser } = useAuthStore();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (updates: { name?: string; avatar_url?: string }): Promise<User> => {
+      const res = await api.patch('/auth/me', updates);
+      return res.data.data;
+    },
+    onSuccess: (user) => {
+      setUser(user);
+      queryClient.invalidateQueries({ queryKey: ['currentUser'] });
+    },
+  });
+}
+
+export function useChangePassword() {
+  return useMutation({
+    mutationFn: async (passwords: {
+      currentPassword: string;
+      newPassword: string;
+    }): Promise<void> => {
+      await api.patch('/auth/change-password', passwords);
+    },
+  });
+}

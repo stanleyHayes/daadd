@@ -54,6 +54,8 @@ export default function AdDetailScreen() {
   const colors = useColors();
   const [showAgeGate, setShowAgeGate] = useState(false);
   const [ageVerified, setAgeVerified] = useState(false);
+  const [ageVerifying, setAgeVerifying] = useState(false);
+  const [ageVerifyError, setAgeVerifyError] = useState<string | null>(null);
 
   // Scroll-based parallax for hero image
   const scrollY = useSharedValue(0);
@@ -109,6 +111,7 @@ export default function AdDetailScreen() {
 
   const handleClaimReward = async () => {
     if (ad.isAgeRestricted && !ageVerified) {
+      setAgeVerifyError(null);
       setShowAgeGate(true);
       return;
     }
@@ -135,18 +138,22 @@ export default function AdDetailScreen() {
   };
 
   const handleAgeVerify = async (code: string) => {
+    setAgeVerifying(true);
+    setAgeVerifyError(null);
     try {
       // Validate age verification code with backend
-      const res = await api.post('/auth/age-verify/confirm', { otp: code });
+      const res = await api.post('/auth/age-verify/confirm', { code });
       if (res.data.data?.verified) {
         setAgeVerified(true);
         setShowAgeGate(false);
         handleClaimReward();
       } else {
-        Alert.alert('Verification Failed', 'Invalid or expired verification code. Please try again.');
+        setAgeVerifyError('Invalid or expired verification code. Please try again.');
       }
-    } catch (error) {
-      Alert.alert('Verification Failed', 'Invalid or expired verification code. Please try again.');
+    } catch {
+      setAgeVerifyError('Invalid or expired verification code. Please try again.');
+    } finally {
+      setAgeVerifying(false);
     }
   };
 
@@ -665,7 +672,12 @@ export default function AdDetailScreen() {
         visible={showAgeGate}
         minAge={ad.minAge || 18}
         onVerify={handleAgeVerify}
-        onClose={() => setShowAgeGate(false)}
+        onClose={() => {
+          setShowAgeGate(false);
+          setAgeVerifyError(null);
+        }}
+        verifying={ageVerifying}
+        errorMessage={ageVerifyError}
       />
     </View>
   );

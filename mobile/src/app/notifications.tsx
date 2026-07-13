@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
-  ScrollView,
   TouchableOpacity,
   FlatList,
   ActivityIndicator,
@@ -12,45 +11,27 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useColors } from '@/hooks/useColors';
 import { Card } from '@/components/ui/Card';
-import { spacing, borderRadius } from '@/theme/spacing';
+import { spacing } from '@/theme/spacing';
 import { typography, fontFamily } from '@/theme/typography';
-import { fetchNotifications, markNotificationAsRead } from '@/hooks/useNotifications';
+import {
+  useNotifications,
+  useMarkNotificationRead,
+  useMarkAllNotificationsRead,
+} from '@/hooks/useNotifications';
 import { format } from 'date-fns';
-
-interface Notification {
-  id: string;
-  type: string;
-  title: string;
-  message: string;
-  is_read: boolean;
-  created_at: string;
-}
 
 export default function NotificationsScreen() {
   const router = useRouter();
   const colors = useColors();
-  const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { data: notifications = [], isLoading } = useNotifications();
+  const markAsRead = useMarkNotificationRead();
+  const markAllRead = useMarkAllNotificationsRead();
 
-  useEffect(() => {
-    loadNotifications();
-  }, []);
+  const unreadCount = notifications.filter((n) => !n.read).length;
 
-  const loadNotifications = async () => {
-    setIsLoading(true);
-    const data = await fetchNotifications();
-    setNotifications(data);
-    setIsLoading(false);
-  };
-
-  const handleMarkAsRead = async (id: string, isRead: boolean) => {
-    if (isRead) return; // Skip already-read notifications
-    const success = await markNotificationAsRead(id);
-    if (success) {
-      setNotifications((prev) =>
-        prev.map((n) => (n.id === id ? { ...n, is_read: true } : n))
-      );
-    }
+  const handleMarkAsRead = (id: string, read: boolean) => {
+    if (read) return; // Skip already-read notifications
+    markAsRead.mutate(id);
   };
 
   const getNotificationIcon = (type: string) => {
@@ -97,6 +78,22 @@ export default function NotificationsScreen() {
         >
           Notifications
         </Text>
+        {unreadCount > 0 && (
+          <TouchableOpacity
+            onPress={() => markAllRead.mutate()}
+            disabled={markAllRead.isPending}
+            style={{ opacity: markAllRead.isPending ? 0.5 : 1 }}
+          >
+            <Text
+              style={[
+                typography.bodySmall,
+                { color: colors.primary, fontFamily: fontFamily.semibold },
+              ]}
+            >
+              Mark all read
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
 
       {/* Content */}
@@ -148,7 +145,7 @@ export default function NotificationsScreen() {
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <TouchableOpacity
-              onPress={() => handleMarkAsRead(item.id, item.is_read)}
+              onPress={() => handleMarkAsRead(item.id, item.read)}
               style={{
                 paddingHorizontal: spacing.lg,
                 paddingVertical: spacing.sm,
@@ -158,9 +155,9 @@ export default function NotificationsScreen() {
                 style={{
                   flexDirection: 'row',
                   gap: spacing.md,
-                  backgroundColor: item.is_read ? colors.background : colors.surfaceSecondary,
+                  backgroundColor: item.read ? colors.background : colors.surfaceSecondary,
                   borderLeftWidth: 4,
-                  borderLeftColor: item.is_read ? colors.border : getNotificationColor(item.type),
+                  borderLeftColor: item.read ? colors.border : getNotificationColor(item.type),
                 }}
               >
                 <View
@@ -210,7 +207,7 @@ export default function NotificationsScreen() {
                   </Text>
                 </View>
 
-                {!item.is_read && (
+                {!item.read && (
                   <View
                     style={{
                       width: 8,

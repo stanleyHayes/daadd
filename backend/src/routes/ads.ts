@@ -94,9 +94,21 @@ router.get('/featured', async (_req: Request, res: Response) => {
   }
 });
 
+router.get('/trending', async (_req: Request, res: Response) => {
+  try {
+    const ads = await Ad.find({ status: 'active' })
+      .sort({ view_count: -1, created_at: -1 })
+      .limit(10)
+      .lean();
+    res.json(success(ads.map(serializeAd)));
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message || 'Failed to fetch trending ads' });
+  }
+});
+
 router.get('/:id', async (req: Request, res: Response) => {
   try {
-    const id = toObjectId(req.params.id);
+    const id = toObjectId(req.params.id as string);
     if (!id) {
       res.status(400).json({ success: false, message: 'Invalid ad id' });
       return;

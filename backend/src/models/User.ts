@@ -9,6 +9,12 @@ export interface IUser extends Document {
   password_hash: string;
   role: UserRole;
   avatar_url?: string;
+  age_verified: boolean;
+  push_tokens?: {
+    token: string;
+    platform: string;
+    created_at: Date;
+  }[];
   preferences?: {
     theme?: 'light' | 'dark' | 'system';
     language?: string;
@@ -28,6 +34,17 @@ const UserSchema = new Schema<IUser>({
     default: 'end_user',
   },
   avatar_url: { type: String, default: '' },
+  age_verified: { type: Boolean, default: false },
+  push_tokens: {
+    type: [
+      {
+        token: { type: String, required: true },
+        platform: { type: String, required: true },
+        created_at: { type: Date, default: Date.now },
+      },
+    ],
+    default: [],
+  },
   preferences: {
     theme: { type: String, enum: ['light', 'dark', 'system'], default: 'system' },
     language: { type: String, default: 'en' },
