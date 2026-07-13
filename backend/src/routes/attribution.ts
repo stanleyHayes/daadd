@@ -209,6 +209,12 @@ router.get('/devices/:campaignId', authMiddleware, async (req: Request, res: Res
           synthetic: true,
           breakdown: synthetic.breakdown,
           cross_device_paths: synthetic.cross_device_paths,
+          // Aliases for the mobile dashboard contract.
+          devices: synthetic.breakdown,
+          paths: synthetic.cross_device_paths.map((p) => ({
+            path: p.path,
+            conversions: p.count,
+          })),
         })
       );
       return;
@@ -260,6 +266,12 @@ router.get('/devices/:campaignId', authMiddleware, async (req: Request, res: Res
         synthetic: false,
         breakdown,
         cross_device_paths,
+        // Aliases for the mobile dashboard contract.
+        devices: breakdown,
+        paths: cross_device_paths.map((p) => ({
+          path: p.path,
+          conversions: p.count,
+        })),
       })
     );
   } catch (err: any) {
