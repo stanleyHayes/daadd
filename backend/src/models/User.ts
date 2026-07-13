@@ -20,6 +20,8 @@ export interface IUser extends Document {
     language?: string;
     email_notifications?: boolean;
   };
+  device_ids: string[];
+  attribution_window_days: number;
   created_at: Date;
 }
 
@@ -50,6 +52,10 @@ const UserSchema = new Schema<IUser>({
     language: { type: String, default: 'en' },
     email_notifications: { type: Boolean, default: true },
   },
+  // Cross-device attribution (spec §4.11): known devices for this user
+  // (deduped on event record) and the lookback window for journeys.
+  device_ids: { type: [String], default: [] },
+  attribution_window_days: { type: Number, default: 30, enum: [7, 14, 30, 90] },
   created_at: { type: Date, default: Date.now },
 });
 

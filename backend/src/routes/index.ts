@@ -15,6 +15,8 @@ import storytellerRoutes from './storyteller';
 import teamRoutes from './teams';
 import platformAccountRoutes from './platformAccounts';
 import oauthRoutes from './oauth';
+import attributionRoutes from './attribution';
+import eventRoutes from './events';
 
 const router = Router();
 
@@ -34,5 +36,7 @@ router.use('/storyteller', storytellerRoutes);
 router.use('/teams', teamRoutes);
 router.use('/platform-accounts', platformAccountRoutes);
 router.use('/oauth', oauthRoutes);
+router.use('/attribution', attributionRoutes);
+router.use('/events', eventRoutes);
 
 export default router;
