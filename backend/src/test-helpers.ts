@@ -23,6 +23,15 @@ export async function connectTestDb(): Promise<void> {
   if (mongoose.connection.readyState === 1) return;
 
   let uri = process.env.TEST_MONGODB_URI;
+  if (uri) {
+    // Jest workers run in separate processes but share the external Mongo
+    // instance in CI, so give each worker its own database — otherwise a
+    // concurrent resetTestDb() drops the DB mid-test in another worker.
+    const url = new URL(uri);
+    const base = url.pathname.replace(/^\//, '') || 'adplatform-test';
+    url.pathname = `/${base}-${process.env.JEST_WORKER_ID || '1'}`;
+    uri = url.toString();
+  }
   if (!uri) {
     if (!memoryServer) {
       memoryServer = await MongoMemoryServer.create();
