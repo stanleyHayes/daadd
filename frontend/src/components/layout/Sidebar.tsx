@@ -18,6 +18,7 @@ import {
   Users,
   Settings,
   User,
+  Plug,
   ChevronLeft,
   ChevronRight,
   Zap,
@@ -64,6 +65,7 @@ const allNavGroups: NavGroup[] = [
     title: 'Workspace',
     items: [
       { key: 'team', href: '/dashboard/team', label: 'Team', icon: Users },
+      { key: 'platform-accounts', href: '/dashboard/platform-accounts', label: 'Ad Accounts', icon: Plug },
       { key: 'profile', href: '/dashboard/profile', label: 'My Profile', icon: User },
       { key: 'settings', href: '/dashboard/settings', label: 'Settings', icon: Settings },
     ],
