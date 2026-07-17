@@ -1,6 +1,8 @@
 # AdPlatform — Completion Summary
 ## May 2026 Build Phase — Final Status
 
+> **⚠️ ERRATA (July 17, 2026):** This document's headline claims ("PRODUCTION READY", "100+ endpoints", "Webhooks ✅", "Bull Queues ✅", "Redis operational", "token encryption at rest", "Zero Known Critical Bugs") were **not true when written**. A July 2026 audit found the described DI/repository/queue layer was dead code, multiple endpoints returned synthetic data, and 4 critical security bugs existed. For the verified current state see `docs/IMPLEMENTATION_STATUS_CURRENT.md` and `ARCHITECTURE.md`. Kept below for history.
+
 **Completion Date:** May 19, 2026  
 **Build Status:** ✅ PRODUCTION READY  
 **Test Status:** ✅ All Core Features Verified

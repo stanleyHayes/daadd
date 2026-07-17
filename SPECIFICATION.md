@@ -165,17 +165,17 @@
 
 ### 3.7 Rewards & Redemption
 
-- Advertiser-issued reward credits
-- QR code generation (HMAC-SHA256 signed, 2-min TTL)
-- One-time redemption per QR code
-- FIFO balance deduction
-- Merchant redemption workflow (approve/reject)
+- Advertiser-issued reward credits (ledger model: claim credits minus redemption debits)
+- QR code generation (HMAC-SHA256 signed, 2-min TTL, timing-safe verification)
+- One-time redemption per QR code (atomic state machine: pending → scanned → validated → completed/rejected/expired)
+- Balance deduction as a negative ledger entry against the aggregate balance
+- Merchant redemption workflow (scan/validate/confirm/reject; merchant/advertiser/admin roles only)
 
 ### 3.8 Team Collaboration
 
-- Role-based access (admin, campaign_manager, viewer)
+- Role-based access (admin, editor, viewer)
 - Invitation workflow
-- Audit logging of all actions
+- Audit logging of all actions (TeamAuditLog)
 - Permissions enforcement on sensitive operations
 
 ---
@@ -184,18 +184,17 @@
 
 | Layer | Technology | Version |
 |-------|-----------|---------|
-| **Backend** | Node.js + Express.js | 20.x / 7.x |
-| **Backend DI** | tsyringe | 4.x |
-| **Database** | MongoDB + Mongoose | 8.x |
-| **Cache** | Redis | 7.x |
-| **Task Queue** | Bull | 4.x |
+| **Backend** | Node.js + Express.js | 20.x / 5.x |
+| **Database** | MongoDB + Mongoose | 8.x / 9.x |
+| **Cache** | Redis | 7.x (reserved; not required by live code yet) |
+| **Task Queue** | Bull | 4.x (planned; anomaly scan currently runs on `setInterval`) |
 | **Auth** | JWT (jsonwebtoken) | 9.x |
 | **Email** | Resend API | v1 |
-| **Frontend** | React + Vite | 18.x / 5.x |
-| **Frontend Router** | React Router | 6.x |
-| **State** | Zustand + TanStack Query | 4.x / 5.x |
-| **Mobile** | Expo + React Native | SDK 55 |
-| **Validation** | Zod | 3.x |
+| **Frontend** | React + Vite | 19.x / 8.x |
+| **Frontend Router** | React Router | 7.x |
+| **State** | Zustand + TanStack Query | 5.x / 5.x |
+| **Mobile** | Expo + React Native | SDK 57 |
+| **Validation** | Zod | 4.x |
 
 ---
 
@@ -210,7 +209,7 @@
 | Creatives | `/campaigns/:id/creatives` | JWT | GET, POST |
 | Analytics | `/analytics/dashboard`, `/analytics/:campaignId` | JWT | GET |
 | Heatmaps | `/heatmaps/:campaignId` | JWT | GET |
-| AI Optimization | `/ai/recommendations`, `/ai/apply/:recommendationId` | JWT | GET, POST |
+| AI Optimization | `/ai/recommendations/:campaignId`, `/ai/apply/:campaignId/:recommendationId` | JWT | GET, POST |
 | Anomalies | `/anomalies/:campaignId` | JWT | GET |
 | Conversion Pixel | `/pixel/:campaignId` | None (public) | POST |
 | Platform Accounts | `/platform-accounts` | JWT | GET, POST, PATCH, DELETE |
@@ -220,28 +219,29 @@
 | CRM Integration | `/cdp-advanced/crm/integrate`, `/cdp-advanced/crm/sync` | JWT | POST, GET |
 | Webhooks | `/webhooks` | JWT | GET, POST, DELETE |
 | Unified Dashboard | `/dashboard/unified-metrics`, `/dashboard/sync-now` | JWT | GET, POST |
-| Rewards | `/rewards/balance`, `/rewards/claim` | JWT | GET, POST |
-| Redemption | `/redemption/generate-qr`, `/redemption/approve` | JWT | POST |
+| Rewards | `/rewards/balance`, `/rewards/claim/:adId` | JWT | GET, POST |
+| Redemption | `/redemption/qr`, `/redemption/scan`, `/redemption/validate`, `/redemption/confirm`, `/redemption/reject` | JWT (merchant roles for scan→reject) | POST |
 
 ---
 
 ## 6. Database Schema (core entities)
 
-- **User** — advertiser + admin accounts
+Implemented (Mongoose, `backend/src/models/`):
+
+- **User** — roles: admin, advertiser, campaign_manager, analyst, end_user, merchant
 - **Campaign** — advertising campaigns
-- **Creative** — ad creatives (images, copy)
-- **AdEvent** — impressions, clicks, conversions, viewability
-- **PlatformAccount** — OAuth tokens for Google, Meta, TikTok, LinkedIn, Pinterest
-- **UserProfile** — CDP unified user records
-- **Audience** — segmented user lists
-- **AudienceActivation** — per-platform audience sync status
-- **Reward** — advertiser-issued credits
-- **Redemption** — QR code redemptions
+- **Ad** — ad creatives (images, copy); doubles as the Creative entity
+- **Event / DeviceEvent / AdView** — impressions, clicks, conversions, viewability
+- **PlatformAccount** — platform connection metadata (OAuth token storage pending)
+- **Reward** — ledger of advertiser-issued credits and redemption debits
+- **Redemption** — QR code redemptions (state machine)
 - **Review** — user reviews of campaigns
-- **TeamMember** — RBAC assignments
-- **AnomalyAlert** — detected anomalies + notifications
-- **AiAuditLog** — recommendation application history
-- **Webhook** — advertiser-configured event webhooks
+- **TeamMember / TeamAuditLog** — RBAC assignments + audit trail
+- **Anomaly** — detected anomalies + notifications
+- **AIRecommendation / AIAuditLog / AICreative** — recommendation history + generated creatives
+- **ABTest** — creative variant tests
+
+Planned (not yet implemented): **UserProfile**, **Audience**, **AudienceActivation**, **Webhook** (CDP + webhook phases).
 
 ---
 
@@ -271,20 +271,19 @@ Per **PROMPT_PLAYBOOK.md**:
 - **Contributing guide:** CONTRIBUTING.md — workflow, testing, deployment
 - **Specification:** This file — product + tech decisions
 
-### 7.4 Design Patterns
+### 7.4 Design Patterns (as implemented)
 
-- **Dependency Injection (tsyringe):** All services injectable, composition-root in `container.ts`
-- **Repository pattern:** All DB access goes through repository interfaces
-- **Adapter pattern:** Platform integrations (OAuth, metrics, audience export)
-- **Strategy pattern:** Swappable storage providers (Cloudinary, S3, local)
-- **Provider pattern:** External services (email, AI) behind interfaces with stub + real impl
+- **Thin routes over Mongoose models:** routes call models directly; shared logic lives in `services/` and `utils/`. (A tsyringe DI/repository layer was once scaffolded but never wired up; it was deleted in July 2026.)
+- **Adapter pattern (planned):** platform integrations (OAuth, metrics, audience export) — not yet implemented.
+- **Strategy pattern:** storage providers (local disk default, S3 when SDK + env present) in `services/storage.service.ts`.
+- **Provider pattern (partial):** email via Resend (`services/mailer.ts`) with dev fallbacks; no interface + stub pair yet.
 
 ### 7.5 Linting
 
-- **ESLint:** Configured in `backend/.eslintrc.json` and `frontend/.eslintrc.json`
-- **Prettier:** Format enforcement
+- **ESLint:** Flat config in `backend/eslint.config.js` and `frontend/eslint.config.js`
+- **Prettier:** Root `.prettierrc.json` (`npm run format` / `format:check`); tree not yet bulk-formatted
 - **TypeScript:** `strict: true`
-- **Pre-commit hooks:** Lint + format check before commit (configured in `.husky/pre-commit`)
+- **Pre-commit hooks:** Workspace lint via `.husky/pre-commit`; commit message lint via commitlint
 
 ---
 
@@ -376,6 +375,6 @@ VITE_APP_NAME=FonAd
 
 ---
 
-**Last Updated:** May 17, 2026  
+**Last Updated:** July 17, 2026  
 **Maintained By:** Development Team  
 **Status:** Active

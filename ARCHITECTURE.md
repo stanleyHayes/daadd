@@ -2,657 +2,134 @@
 
 ## 1. System Overview
 
-This is the authoritative code map for FonAd/DAADD. Updated with every commit.
+This is the authoritative code map for FonAd/DAADD. It describes the code **as it exists** — not planned or removed architecture. (The former DI/repository layer — `container.ts`, `entities/`, `repositories/`, platform adapters, Bull queues — was dead code importing ~45 nonexistent modules and was deleted in July 2026. Live routes use Mongoose models directly.)
+
+> **Honesty note:** several read-heavy endpoints still return deterministic synthetic data (see §6). Those are marked below.
 
 ```
-daadd/                              (monorepo root)
-├── backend/                        (Express.js + Node.js + MongoDB)
+daadd/                              (npm-workspaces monorepo)
+├── backend/                        (Express 5 + Node 20 + Mongoose 9)
 │   ├── src/
-│   │   ├── app.ts                 (Express setup, middleware, queues)
-│   │   ├── container.ts           (tsyringe DI container, service registration)
-│   │   ├── main.ts                (entry point)
-│   │   │
-│   │   ├── entities/              (Data models — DO NOT add business logic)
-│   │   │   ├── campaign.entity.ts
-│   │   │   ├── creative.entity.ts
-│   │   │   ├── ad-event.entity.ts
-│   │   │   ├── platform-account.entity.ts
-│   │   │   ├── user-profile.entity.ts
-│   │   │   ├── audience.entity.ts
-│   │   │   └── [8 more entities]
-│   │   │
-│   │   ├── repositories/          (Data access layer — interfaces)
-│   │   │   ├── types.ts           (IRepository<T> base interface)
-│   │   │   ├── tokens.ts          (DI token registry)
-│   │   │   ├── campaign.repository.ts
-│   │   │   ├── platform-account.repository.ts
-│   │   │   └── [10 more interfaces]
-│   │   │
-│   │   ├── repositories/mongo/    (MongoDB implementations)
-│   │   │   ├── campaign.repository.ts
-│   │   │   ├── platform-account.repository.ts
-│   │   │   └── [10 more implementations]
-│   │   │
-│   │   ├── services/              (Business logic — @injectable())
-│   │   │   ├── campaign.service.ts
-│   │   │   ├── analytics.service.ts
-│   │   │   ├── unified-dashboard.service.ts
-│   │   │   ├── ai-optimization.service.ts
-│   │   │   ├── anomaly-detection.service.ts
-│   │   │   ├── event.service.ts
-│   │   │   ├── reward.service.ts
-│   │   │   ├── auth.service.ts
-│   │   │   ├── email.service.ts
-│   │   │   ├── data-collection.service.ts (CDP)
-│   │   │   ├── segmentation.service.ts (CDP)
-│   │   │   ├── audience-export.service.ts (CDP)
-│   │   │   ├── crm-sync.service.ts (CDP)
-│   │   │   ├── audience-advanced.service.ts (CDP)
-│   │   │   ├── ai-creative-advanced.service.ts
-│   │   │   └── [6 more services]
-│   │   │
-│   │   ├── services/oauth/       (Platform OAuth flows)
-│   │   │   ├── google-oauth.service.ts
-│   │   │   ├── meta-oauth.service.ts
-│   │   │   ├── tiktok-oauth.service.ts
-│   │   │   ├── linkedin-oauth.service.ts
-│   │   │   └── pinterest-oauth.service.ts
-│   │   │
-│   │   ├── services/platform-adapters/ (Metrics + Audience)
-│   │   │   ├── types.ts           (IPlatformAdapter, IPlatformMetricsAdapter)
-│   │   │   ├── google.adapter.ts  (audience export)
-│   │   │   ├── meta.adapter.ts
-│   │   │   ├── tiktok.adapter.ts
-│   │   │   ├── google-ads-metrics.adapter.ts
-│   │   │   ├── meta-metrics.adapter.ts
-│   │   │   ├── tiktok-metrics.adapter.ts
-│   │   │   ├── linkedin-metrics.adapter.ts
-│   │   │   └── pinterest-metrics.adapter.ts
-│   │   │
-│   │   ├── services/crm-adapters/ (CRM integrations)
-│   │   │   ├── types.ts           (ICRMAdapter)
-│   │   │   ├── shopify.adapter.ts
-│   │   │   ├── salesforce.adapter.ts
-│   │   │   └── klaviyo.adapter.ts
-│   │   │
-│   │   ├── routes/               (API route handlers)
-│   │   │   ├── index.ts          (Route registry)
-│   │   │   ├── campaign.routes.ts
-│   │   │   ├── analytics.routes.ts
-│   │   │   ├── unified-dashboard.routes.ts
-│   │   │   ├── ai.routes.ts
-│   │   │   ├── ai-creative-advanced.routes.ts
-│   │   │   ├── anomaly.routes.ts
-│   │   │   ├── event.routes.ts
-│   │   │   ├── pixel.routes.ts (conversion pixel — public)
-│   │   │   ├── platform-accounts.routes.ts
-│   │   │   ├── oauth.routes.ts
-│   │   │   ├── cdp.routes.ts
-│   │   │   ├── cdp-advanced.routes.ts
-│   │   │   ├── reward.routes.ts
-│   │   │   ├── redemption.routes.ts
-│   │   │   └── [6 more routes]
-│   │   │
-│   │   ├── queues/              (Bull job queues — background jobs)
-│   │   │   ├── index.ts
-│   │   │   ├── campaign-lifecycle.queue.ts (auto-pause expired campaigns)
-│   │   │   ├── anomaly-check.queue.ts (async anomaly detection)
-│   │   │   ├── token-refresh.queue.ts (hourly OAuth token refresh)
-│   │   │   └── report-generation.queue.ts (async PDF/CSV export)
+│   │   ├── server.ts              (entry: env checks, Mongo connect, seed guard, 5-min anomaly scan via setInterval)
+│   │   ├── app.ts                 (Express app: helmet, CORS allow-list, rate limits, routes, JSON 404 + error handler)
+│   │   ├── seed.ts                (dev seed; insert-only via $setOnInsert; skipped in production unless SEED_DATABASE=true)
 │   │   │
 │   │   ├── middleware/
-│   │   │   ├── auth.middleware.ts (JWT validation + RBAC)
-│   │   │   ├── error.middleware.ts (AppError + global error handler)
-│   │   │   ├── validate.middleware.ts (DTO validation)
-│   │   │   └── upload.middleware.ts (file upload handling)
+│   │   │   ├── auth.ts            (JWT access 1h + refresh 7d, authMiddleware, refresh-token issue/verify)
+│   │   │   └── rateLimit.ts       (in-memory sliding window; per-process)
+│   │   │
+│   │   ├── models/                (Mongoose — all DB access goes through these)
+│   │   │   ├── User.ts            (roles: admin, advertiser, campaign_manager, analyst, end_user, merchant)
+│   │   │   ├── Campaign.ts        (status: draft/active/paused/completed/archived; owner ObjectId)
+│   │   │   ├── Ad.ts              (doubles as creative)
+│   │   │   ├── ABTest.ts          (variants; winner marked manually)
+│   │   │   ├── AIRecommendation.ts, AIAuditLog.ts, AICreative.ts
+│   │   │   ├── Anomaly.ts         (7 types incl. cpa_spike, conversion_collapse; partial unique index on active alerts)
+│   │   │   ├── PlatformAccount.ts (metadata only — no OAuth tokens stored yet)
+│   │   │   ├── Reward.ts          (ledger: claim credits + redemption debits; unique partial index per (user, ad) claim)
+│   │   │   ├── Redemption.ts      (QR state machine: pending→scanned→validated→completed|rejected|expired)
+│   │   │   ├── Review.ts, Notification.ts, Event.ts, DeviceEvent.ts, AdView.ts
+│   │   │   ├── TeamMember.ts, TeamAuditLog.ts
+│   │   │   └── index.ts
+│   │   │
+│   │   ├── routes/                (all mounted under /api/v1 via routes/index.ts)
+│   │   │   ├── auth.ts            (register [role forced end_user], login, refresh, me, change-password, age-verify OTP, forgot/reset)
+│   │   │   ├── campaigns.ts       (CRUD + clone + toggle-ai + creatives + A/B tests; owner-or-admin guarded; whitelisted updates)
+│   │   │   ├── ads.ts             (public catalog, trending, featured; regex-escaped filters)
+│   │   │   ├── analytics.ts       (dashboard + per-campaign + CSV/PDF export — SYNTHETIC data, accepts start_date/end_date)
+│   │   │   ├── heatmaps.ts        (SYNTHETIC seeded geo points)
+│   │   │   ├── attribution.ts     (SYNTHETIC)
+│   │   │   ├── benchmarks.ts      (SYNTHETIC; 3-advertiser gate)
+│   │   │   ├── ai.ts              (recommendations apply/dismiss/mode + audit log — recommendations are seeded pseudo-random)
+│   │   │   ├── anomalies.ts       (list/scan/resolve — detection engine is real, input series synthetic)
+│   │   │   ├── rewards.ts         (balance, ledger list, claim/:adId with unique-index race guard)
+│   │   │   ├── redemption.ts      (qr/scan/validate/confirm/reject; HMAC-SHA256 + timing-safe compare; atomic transitions; merchant roles)
+│   │   │   ├── teams.ts           (invites, roles viewer/editor/admin, TeamAuditLog)
+│   │   │   ├── notifications.ts
+│   │   │   ├── reviews.ts
+│   │   │   ├── events.ts          (authenticated event ingest)
+│   │   │   ├── oauth.ts           (authorize URL stub — no callback/token exchange yet)
+│   │   │   ├── platformAccounts.ts (list/delete/test — no create; created via OAuth in the future)
+│   │   │   └── storyteller.ts     (AI narrative export)
+│   │   │
+│   │   ├── services/              (the only business-logic services)
+│   │   │   ├── anomaly-detection.service.ts (spec §3.6 rules vs 7-day baseline: ctr_drop −20%, cpa_spike +25%, spend_anomaly ±30%, conversion_collapse −30%; auto-pause; TeamAuditLog entries)
+│   │   │   ├── fatigue.service.ts (ad fatigue scoring)
+│   │   │   ├── mailer.ts          (Resend; dev fallbacks when no key)
+│   │   │   └── storage.service.ts (local uploads/; S3 branch activates when SDK + env present)
 │   │   │
 │   │   ├── utils/
-│   │   │   ├── api-response.ts (successResponse, errorResponse)
-│   │   │   ├── crypto.ts (email/phone hashing for CDP)
-│   │   │   ├── encryption.ts (AES-256-GCM token encryption)
-│   │   │   ├── pagination.ts
-│   │   │   ├── validators.ts
-│   │   │   └── [2 more utils]
+│   │   │   ├── response.ts        ({success,data} and paginated {data, pagination:{total,page,limit,totalPages,hasNext,hasPrev}})
+│   │   │   ├── ownership.ts       (canManageCampaign / findManageableCampaign — the IDOR guard)
+│   │   │   ├── regex.ts           (escapeRegExp for $regex filters)
+│   │   │   └── seeded.ts          (deterministic synthetic-data generators)
 │   │   │
-│   │   ├── storage/             (Storage provider abstraction)
-│   │   │   ├── types.ts         (IStorageProvider interface)
-│   │   │   ├── cloudinary.storage.ts
-│   │   │   ├── s3.storage.ts
-│   │   │   └── local.storage.ts
-│   │   │
-│   │   ├── config/
-│   │   │   ├── logger.ts (Winston)
-│   │   │   ├── passport.ts (OAuth 2.0 strategies)
-│   │   │   └── database.ts (Mongoose connection)
-│   │   │
-│   │   └── types/
-│   │       ├── index.ts (AuthUser, PaginationParams, etc.)
-│   │       └── [domain-specific types]
+│   │   └── __tests__/             (Jest + supertest + mongodb-memory-server; 9 suites)
 │   │
-│   ├── .eslintrc.json           (ESLint config — strict)
-│   ├── tsconfig.json            (TS strict mode enabled)
-│   ├── package.json
-│   └── Dockerfile               (production image)
+│   └── Dockerfile
 │
-├── frontend/                       (React + Vite)
-│   ├── src/
-│   │   ├── App.tsx
-│   │   ├── main.tsx
-│   │   ├── vite-env.d.ts
-│   │   │
-│   │   ├── pages/               (Page components — route-level)
-│   │   │   ├── auth/
-│   │   │   │   ├── LoginPage.tsx
-│   │   │   │   ├── RegisterPage.tsx
-│   │   │   │   └── ForgotPasswordPage.tsx
-│   │   │   ├── dashboard/
-│   │   │   │   ├── DashboardHome.tsx
-│   │   │   │   ├── CampaignsListPage.tsx
-│   │   │   │   ├── CampaignDetailPage.tsx
-│   │   │   │   ├── CampaignCreatePage.tsx
-│   │   │   │   ├── CampaignEditPage.tsx
-│   │   │   │   ├── AnalyticsPage.tsx
-│   │   │   │   ├── HeatmapPage.tsx
-│   │   │   │   ├── AIOptimizationPage.tsx
-│   │   │   │   ├── AnomaliesPage.tsx
-│   │   │   │   ├── PlatformAccountsPage.tsx
-│   │   │   │   ├── BenchmarkingPage.tsx
-│   │   │   │   ├── StorytellerPage.tsx
-│   │   │   │   ├── TeamPage.tsx
-│   │   │   │   └── SettingsPage.tsx
-│   │   │   └── public/
-│   │   │       ├── AdDetailPage.tsx
-│   │   │       └── AdListPage.tsx
-│   │   │
-│   │   ├── components/          (Atomic components)
-│   │   │   ├── ui/              (Primitives — Button, Input, Card, etc.)
-│   │   │   ├── ads/             (Ad display — AdCard, AdHero)
-│   │   │   ├── campaign/        (Campaign-specific components)
-│   │   │   ├── analytics/       (Charts, dashboards)
-│   │   │   ├── layout/          (TopBar, SideNav, AppShell)
-│   │   │   └── forms/           (FormFields, validation wrappers)
-│   │   │
-│   │   ├── hooks/               (Custom React hooks)
-│   │   │   ├── useAuth.ts       (Auth context provider)
-│   │   │   ├── useCampaign.ts   (Query campaign by ID)
-│   │   │   ├── useCampaigns.ts  (Query all campaigns, with filters + pagination)
-│   │   │   ├── useAnalytics.ts  (Fetch analytics data)
-│   │   │   ├── useReviews.ts    (Fetch + post campaign reviews)
-│   │   │   ├── usePlatformAccounts.ts
-│   │   │   ├── useToast.ts      (Toast notifications)
-│   │   │   └── [4 more hooks]
-│   │   │
-│   │   ├── stores/              (Zustand state management)
-│   │   │   ├── auth.store.ts    (JWT token, user profile)
-│   │   │   ├── ui.store.ts      (theme, sidebar open/close)
-│   │   │   └── app.store.ts     (global app state)
-│   │   │
-│   │   ├── lib/
-│   │   │   ├── api-client.ts    (axios instance + interceptors)
-│   │   │   ├── constants.ts     (LANGUAGES, PLATFORMS, etc.)
-│   │   │   ├── types.ts         (TS types for API responses)
-│   │   │   └── utils.ts
-│   │   │
-│   │   └── assets/
-│   │       ├── fonts/           (Outfit, custom fonts)
-│   │       ├── images/          (logos, illustrations)
-│   │       └── icons/           (lucide-react configured)
-│   │
-│   ├── index.html
-│   ├── vite.config.ts
-│   ├── tsconfig.json
-│   ├── package.json
-│   └── .env.example
+├── frontend/                       (React 19 + Vite 8 + React Router 7)
+│   └── src/
+│       ├── App.tsx                (33 routes: 14 public, 4 auth, 15 dashboard)
+│       ├── lib/api.ts             (axios instance; JWT interceptor with single-flight refresh on 401)
+│       ├── stores/                (Zustand: auth.store [token + refreshToken], theme.store)
+│       ├── hooks/                 (16 TanStack Query v5 hooks, one per API domain)
+│       ├── pages/public|auth|dashboard/
+│       └── i18n/                  (5 locales: en, es, fr, de, pt — spec wants 14)
 │
-├── mobile/                        (Expo + React Native)
-│   ├── src/
-│   │   ├── app/                 (Expo Router — file-based navigation)
-│   │   │   ├── _layout.tsx      (Root layout + font loading)
-│   │   │   ├── (auth)/          (Auth screens)
-│   │   │   │   ├── login.tsx
-│   │   │   │   ├── register.tsx
-│   │   │   │   └── _layout.tsx
-│   │   │   ├── (tabs)/          (Bottom tab navigator)
-│   │   │   │   ├── _layout.tsx
-│   │   │   │   ├── index.tsx    (Home)
-│   │   │   │   ├── search.tsx   (Search)
-│   │   │   │   ├── rewards.tsx  (Rewards history)
-│   │   │   │   └── profile.tsx  (User profile)
-│   │   │   ├── ad/
-│   │   │   │   └── [id].tsx     (Ad detail)
-│   │   │   ├── notifications.tsx (Notifications list)
-│   │   │   └── edit-profile.tsx
-│   │   │
-│   │   ├── hooks/
-│   │   │   ├── useAuth.ts       (Auth context)
-│   │   │   ├── useAds.ts        (Fetch ads)
-│   │   │   ├── useRewards.ts    (Fetch user rewards)
-│   │   │   └── [2 more hooks]
-│   │   │
-│   │   ├── components/          (Reusable components)
-│   │   │   ├── AdCard.tsx
-│   │   │   ├── ReviewCard.tsx
-│   │   │   └── [3 more components]
-│   │   │
-│   │   ├── stores/              (Zustand)
-│   │   │   └── auth.store.ts
-│   │   │
-│   │   ├── lib/
-│   │   │   ├── api-client.ts
-│   │   │   ├── constants.ts
-│   │   │   └── types.ts
-│   │   │
-│   │   ├── theme/              (Design tokens)
-│   │   │   ├── colors.ts
-│   │   │   ├── spacing.ts
-│   │   │   └── typography.ts
-│   │   │
-│   │   └── assets/
-│   │       └── fonts/
-│   │
-│   ├── app.json                (Expo config)
-│   ├── tsconfig.json
-│   ├── package.json
-│   └── .env.example
+├── mobile/                         (Expo SDK 57 + Expo Router)
+│   └── src/
+│       ├── app/                   ((auth), (tabs), ad/[id], redeem, merchant-scan, notifications, edit-profile, dashboard)
+│       ├── lib/api.ts             (axios; SecureStore tokens; single-flight refresh on 401)
+│       ├── stores/auth.store.ts
+│       └── hooks/                 (useAds, useAuth, useRewards, useDashboard — paginated via response.pagination)
 │
-├── shared/                        (Shared TypeScript types)
-│   ├── src/
-│   │   ├── types/
-│   │   │   ├── api.types.ts
-│   │   │   ├── event.types.ts
-│   │   │   ├── campaign.types.ts
-│   │   │   └── [more types]
-│   │   ├── constants/
-│   │   │   ├── languages.ts
-│   │   │   ├── platforms.ts
-│   │   │   └── currencies.ts
-│   │   └── utils/
-│   │       └── helpers.ts
-│   │
-│   ├── tsconfig.json
-│   ├── package.json
-│   └── README.md
-│
-├── docker-compose.yml            (MongoDB, Redis)
-├── .husky/                        (Git hooks)
-├── .github/
-│   └── workflows/
-│       └── ci.yml               (GitHub Actions — lint + test)
-│
-├── SPECIFICATION.md              (This specification)
-├── ARCHITECTURE.md               (This document)
-├── CONTRIBUTING.md               (Developer workflow)
-├── PROMPT_PLAYBOOK.md            (Reusable agent instructions)
-├── DESIGN_SYSTEM.md              (Reference design doc for NEMESIS)
-├── package.json                  (root workspace config)
-└── README.md
+├── shared/                         (shared TS types; built via npm run build:shared)
+└── .github/workflows/              (ci.yml → _backend (lint, typecheck, build, test w/ mongo service), _frontend, _mobile (tsc), _docker, _commitlint)
 ```
 
----
+## 2. Request Lifecycle (backend)
 
-## 2. Dependency Injection (tsyringe)
+1. `app.ts` middleware chain: helmet → CORS (env allow-list; localhost:3000 in dev; blocked in prod when unset) → compression → morgan → JSON body parsing → global rate limit (200/min) + stricter `/api/v1/auth` limit (20/min).
+2. `routes/index.ts` mounts routers under `/api/v1`.
+3. Protected routes run `authMiddleware` (verifies access JWT, rejects refresh tokens, sets `req.user = {userId, email, role}`).
+4. Mutating routes on owned resources call `findManageableCampaign`/`canManageCampaign` (owner or admin, else 404).
+5. Responses use `utils/response.ts` shapes; unmatched `/api` paths get JSON 404; errors go to the JSON `errorHandler` (CastError→400, Validation→400, JWT→401, 11000→409, else 500).
 
-All services are registered in `backend/src/container.ts`.
+## 3. Auth Model
 
-**Pattern:**
-```typescript
-@injectable()
-export class MyService {
-  constructor(
-    @inject(TOKENS.Repository) private repo: IRepository<T>,
-    @inject(TOKENS.OtherService) private other: OtherService
-  ) {}
-}
-```
+- Register always creates `end_user`; privileged roles are assigned out-of-band (seed/admin).
+- Access token: JWT, 1h default (`JWT_EXPIRATION`). Refresh token: JWT `type:'refresh'` + `jti`, 7d default (`JWT_REFRESH_EXPIRATION`), rotated by `POST /auth/refresh`. Refresh tokens are rejected as access tokens (and vice versa).
+- Production boot fails fast without `JWT_SECRET`.
+- OTP (age verify) and password-reset tokens: CSPRNG (`crypto.randomInt`/`randomBytes`), 10-min TTL, 5-attempt lockout, in-memory (single-instance only).
 
-**Tokens** defined in `backend/src/repositories/tokens.ts`. Never hardcode symbols.
+## 4. Money Flow (rewards/redemption)
 
----
+- Rewards are a ledger: positive `type:'ad_reward'` rows (unique per user+ad via partial index) and negative `type:'redemption'` debit rows. Balance = sum of approved/paid rows.
+- QR: `POST /redemption/qr` creates a pending Redemption + HMAC-SHA256 signature (`QR_SIGNING_SECRET` fallback `JWT_SECRET`), 120s TTL.
+- Merchant flow (`merchant`/`advertiser`/`admin` only): scan → validate → confirm, each an **atomic** `findOneAndUpdate` on the expected status — concurrent confirms yield exactly one debit. `reject` releases scanned/validated redemptions.
 
-## 3. Repository Pattern
+## 5. Anomaly Detection
 
-Every data access operation goes through a repository interface.
+`server.ts` runs `scanAllActiveCampaigns()` every 5 min (non-overlapping, connection-guarded). Rules compare the latest day against the 7-day baseline mean (spec §3.6); zero baselines are skipped. Detections create an `Anomaly` (unique active index dedupes), a `Notification`, an email, and a `TeamAuditLog` entry; `critical` bot-traffic auto-pauses the campaign. Input metric series is still synthesized — wiring it to real `Event`/`DeviceEvent` aggregation is future work.
 
-```
-routes/ → services/ → repositories/
-                       ├── interfaces (IRepository<T>)
-                       └── mongo/ (Mongoose implementations)
-```
+## 6. Known Synthetic Areas (not bugs — unimplemented data pipelines)
 
-Example:
-```typescript
-const campaigns = await campaignRepository.findAll({ status: 'ACTIVE' });
-```
+| Area | Status |
+|---|---|
+| `/analytics/*` metrics | Synthetic (seeded random); exports work off the same data |
+| `/heatmaps/*` | Synthetic; 100-view gate is frontend-only |
+| `/attribution/*`, `/benchmarks/*` | Synthetic (benchmarks enforces the 3-advertiser gate) |
+| `/ai/*` recommendations | Seeded pseudo-random; apply/dismiss/audit plumbing is real |
+| A/B variant metrics | Synthetic; winner is marked manually (no 10K auto-trigger) |
+| Anomaly metric series | Synthetic; detection rules are real |
+| `/oauth/authorize/:platform` | Stub URLs; no callback/token storage/encryption yet |
+| Platform metrics sync, CDP, webhooks, unified dashboard, Bull queues | **Not implemented** (see SPECIFICATION.md §12 candidates) |
 
----
+## 7. Testing & Quality Gates
 
-## 4. API Error Handling
+- Backend: `npm run test --workspace=backend` (9 suites, mongodb-memory-server), `npm run typecheck --workspace=backend` (green, enforced in CI), `npm run lint --workspace=backend`.
+- Frontend: vitest (3 lib suites) + `tsc && vite build`; mobile: `tsc --noEmit` (no test runner yet).
+- Pre-commit: `.husky/pre-commit` runs workspace lint; commit-msg runs commitlint. Prettier config exists (`.prettierrc.json`) but the tree has not been bulk-formatted — run `npm run format` deliberately, not mid-feature.
 
-All errors throw `AppError` (defined in `middleware/error.middleware.ts`).
-
-```typescript
-throw new AppError('Campaign not found', 404, 'CAMPAIGN_NOT_FOUND');
-```
-
-Global error handler catches and formats as JSON.
-
----
-
-## 5. Service Layer Patterns
-
-### 5.1 Campaign Service
-- Handles CRUD, status transitions, budget tracking
-- Validates rules before state changes
-- Creates audit log entries
-
-### 5.2 Analytics Service
-- Aggregates `ad_event` records by campaign/platform/time
-- Computes CTR, CPC, CPA, ROAS
-- Supports CSV/PDF export
-
-### 5.3 Unified Dashboard Service
-- Fetches platform accounts for advertiser
-- Calls appropriate metrics adapter per platform
-- Caches metrics in memory (30-minute TTL in production)
-- Generates AI opportunities
-
-### 5.4 AI Optimization Service
-- Analyzes campaign performance
-- Detects 4 recommendation types
-- Creates audit log of applications
-- Exposes `getRecommendations()` and `apply()`
-
-### 5.5 Anomaly Detection Service
-- Runs on event batch (triggered by Bull queue)
-- Detects 4 anomaly types
-- Auto-pauses campaign (configurable)
-- Sends email + in-app notification
-
-### 5.6 CDP Services (3 services)
-
-**DataCollectionService:**
-- `trackPixelEvent()` — conversion pixel callback
-- `importEmailList()` — CSV import
-- `unifyProfiles()` — cross-device matching
-
-**SegmentationService:**
-- `evaluateRule()` — single rule evaluation
-- `evaluateAudience()` — AND/OR logic
-- `segmentProfiles()` — batch audience evaluation
-
-**AudienceExportService:**
-- `exportAudience()` — push to platform custom audience
-- `getActivationStatus()` — sync status
-
----
-
-## 6. Platform Adapter Pattern
-
-Two types of adapters (separate interfaces):
-
-### 6.1 IPlatformAdapter (Audience export)
-- Methods: `createOrUpdateAudience()`, `syncAudience()`, `deleteAudience()`, `getAudienceStatus()`
-- Implementations: GoogleAudienceAdapter, MetaAdapter, TikTokAdapter
-
-### 6.2 IPlatformMetricsAdapter (Metrics retrieval)
-- Methods: `getMetrics()`, `validateCredentials()`
-- Implementations: GoogleAdsMetricsAdapter, MetaMetricsAdapter, TikTokMetricsAdapter, LinkedInAdapter, PinterestAdapter
-
-### 6.3 ICRMAdapter (Customer sync)
-- Methods: `syncCustomers()`, `getCustomerData()`
-- Implementations: ShopifyAdapter, SalesforceAdapter, KlaviyoAdapter
-
-**Factory pattern:** `UnifiedDashboardService.getMetricsAdapter(platform)` returns correct adapter.
-
----
-
-## 7. OAuth & Token Management
-
-**OAuth Services** (in `services/oauth/`):
-- `GoogleOAuthService`, `MetaOAuthService`, `TikTokOAuthService`, `LinkedInOAuthService`, `PinterestOAuthService`
-- Each handles: authorization URL generation, code-to-token exchange, token refresh
-
-**Routes** (`routes/oauth.routes.ts`):
-- `GET /oauth/authorize/:platform` — returns authorization_url
-- `GET /oauth/callback/:platform` — handles redirect, stores encrypted token
-
-**Token Refresh Queue** (`queues/token-refresh.queue.ts`):
-- Runs hourly
-- Finds tokens expiring within 24h
-- Calls `refreshAccountToken()` for each
-- Updates `PlatformAccount.access_token` with fresh token
-
-**Encryption** (`utils/encryption.ts`):
-- AES-256-GCM with random IV
-- Tokens decrypted only when making platform API calls
-
----
-
-## 8. Queues (Bull + Redis)
-
-Implemented in `backend/src/queues/`:
-
-| Queue | Cron | Purpose |
-|-------|------|---------|
-| campaign-lifecycle | */5 * * * * | Auto-pause campaigns (budget exhausted or end_date passed) |
-| anomaly-check | triggered by event batch | Async anomaly detection |
-| token-refresh | 0 * * * * | Refresh expiring OAuth tokens |
-| report-generation | triggered on-demand | Async PDF/CSV export |
-
-**Pattern:**
-```typescript
-queue.process('job-name', async (job) => { ... });
-queue.add('job-name', data, { repeat: { cron: '...' } });
-```
-
----
-
-## 9. Frontend Architecture
-
-### 9.1 Data Fetching (TanStack Query v5)
-All queries use `useQuery`/`useMutation` hooks in custom hooks (`src/hooks/use*.ts`).
-
-Example (`useCampaigns.ts`):
-```typescript
-export function useCampaigns(filters, pagination) {
-  return useQuery({
-    queryKey: ['campaigns', filters, pagination],
-    queryFn: () => apiClient.get('/campaigns', { params: { ...filters, ...pagination } }),
-  });
-}
-```
-
-Routes call these hooks, never directly use `apiClient`.
-
-### 9.2 State Management (Zustand)
-- `auth.store.ts` — JWT token, user profile
-- `ui.store.ts` — theme, sidebar state
-- `app.store.ts` — global notifications, modals
-
-No Redux. Zustand for simplicity.
-
-### 9.3 Routing (React Router v6)
-Defined in `App.tsx`. Protected routes check `useAuth()` hook.
-
-```typescript
-<Route element={<ProtectedRoute />}>
-  <Route path="/dashboard" element={<DashboardHome />} />
-</Route>
-```
-
-### 9.4 Styling
-- CSS Modules for layout-only concerns
-- Tailwind CSS for utility classes
-- Design tokens in `lib/constants.ts`
-
----
-
-## 10. Mobile Architecture (Expo + React Native)
-
-### 10.1 File-Based Routing (Expo Router)
-- `(auth)/` group — auth screens
-- `(tabs)/` group — bottom tab navigator
-- `ad/[id].tsx` — dynamic route
-- All typed with TypeScript
-
-### 10.2 Secure Token Storage
-- `expo-secure-store` for JWT token
-- `AsyncStorage` for preferences
-
-### 10.3 Design Tokens
-Stored in `src/theme/` (colors, spacing, typography).
-
-All screens reference theme, not hardcoded values.
-
----
-
-## 11. TypeScript Configuration
-
-- **Backend:** `strict: true`, `skipLibCheck: true`
-- **Frontend:** Same
-- **Mobile:** Same
-
-All packages share `tsconfig.json` patterns.
-
----
-
-## 12. Commit History & Change Log
-
-This section tracks significant commits to help trace code evolution.
-
-| Commit | Date | Change | Author |
-|--------|------|--------|--------|
-| TBD | TBD | Initial architecture scaffolding | TBD |
-
-*(Updated per commit — see CONTRIBUTING.md for process)*
-
----
-
-## 13. Testing Strategy
-
-### 13.1 Backend
-- **Unit tests:** Services + utilities, mock repositories
-- **Integration tests:** Repositories via testcontainers (MongoDB, Redis)
-- **E2E:** Smoke tests for critical endpoints (auth, campaign CRUD, pixel)
-
-### 13.2 Frontend
-- **Component tests:** Jest + React Testing Library
-- **Hook tests:** jest-hooks-testing-library
-- **E2E:** Cypress or Playwright (if configured)
-
-### 13.3 Mobile
-- Jest for utilities
-- React Native Testing Library for components
-
----
-
-## 14. Security Notes
-
-1. **Auth:** JWT with 1-hour expiry, refresh token rotation
-2. **OAuth:** PKCE flow (if applicable), state token validation
-3. **Encryption:** AES-256-GCM for tokens, SHA256 for PII (email/phone)
-4. **Rate Limiting:** 100 requests/min per IP (global), 100 per campaign/min for pixel endpoint
-5. **CORS:** Whitelisted origins only (see SPECIFICATION.md §8)
-6. **Secrets:** Never in code, always in `.env` (gitignore'd)
-
----
-
-## 15. Observability
-
-- **Logging:** Winston in backend, console in frontend (structured JSON)
-- **Error tracking:** Sentry (if configured)
-- **Monitoring:** DataDog (if configured)
-- **Metrics:** Node.js built-in `perf_hooks` (custom instrumentation as needed)
-
----
-
-## 16. Performance Targets
-
-- API response time: <200ms p95
-- Dashboard load: <1.5s (with 500+ campaigns)
-- Image optimization: JPEG/WebP, lazy loading
-- Bundle size: <200KB main bundle (gzipped)
-
----
-
-## 13. Commit Change Log
-
-### Recent Changes (May 17, 2026 — Compliance Sprint)
-
-**c3b013c** — `feat(backend): implement email service and campaign lifecycle queue`
-- Added `EmailService` (Resend integration) with methods: sendOTP, sendAnomalyAlert, sendTeamInvite, sendBudgetAlert, sendPasswordReset
-- HTML email templates with consistent branding and responsive design
-- Implemented `CampaignLifecycleQueue` (Bull job) running every 5 minutes
-  * Auto-pauses campaigns on budget exhaustion or past end_date
-  * Dispatches webhooks for external system integration
-  * Retryable with exponential backoff
-- Registered environment config in DI container via `registerInstance('config', process.env)`
-- Relates to: SPECIFICATION.md §3.6 (Anomaly Detection), PROMPT_PLAYBOOK.md §2 (DI Pattern)
-
-**11b4275** — `feat(backend): add input validation middleware and conversion pixel tracking`
-- Created validation middleware: `validateBody(schema)`, `validateQuery(schema)`, `validateParams(schema)`
-- All throw `AppError` with `VALIDATION_ERROR` code; prevents invalid data reaching service layer
-- Added campaign DTOs with Zod schemas: `CreateCampaignDtoSchema`, `UpdateCampaignDtoSchema`, `CampaignQuerySchema`
-- Implemented conversion pixel endpoint: `POST /api/v1/pixel/:campaignId`
-  * Public (no auth), rate-limited (100 req/min per campaign)
-  * Accepts uid, ev, val, ref, ip as query parameters
-  * Returns 1x1 transparent GIF (standard pixel response)
-  * Non-blocking: returns pixel even on error
-  * Creates CONVERSION events with source=pixel metadata
-  * Enables affiliate networks to post back conversions
-- Extended `EventService.trackConversionPixel()` for pixel-sourced conversions
-- Relates to: SPECIFICATION.md §3.5 (Platform Integrations)
-
-**6f03a35** — `feat(backend): integrate email alerts into budget pacing and lifecycle queues`
-- Updated `BudgetPacingService` to send HTML emails with progress bar
-- Email parameters: campaign name, threshold %, spent, budget
-- Redis caching (24h TTL) prevents duplicate alerts per campaign/threshold
-- Alerts triggered at 75%, 90%, 100% budget thresholds
-- Fixed `CampaignLifecycleQueue` webhook integration:
-  * Uses correct method: `dispatchEvent()` (not `dispatch()`)
-  * Dispatches `campaign.completed` for budget exhaustion
-  * Dispatches `campaign.paused` for end date passed
-  * Wrapped in try-catch; webhook failures don't fail the job
-- Relates to: SPECIFICATION.md §3.6, PROMPT_PLAYBOOK.md §4 (Decision-driving)
-
-**e2d83ed** — `docs: add SPECIFICATION.md and ARCHITECTURE.md as authoritative project documents`
-- Created SPECIFICATION.md (16 sections): product overview, architecture, requirements, API endpoints, entities, quality standards, deployment, environment variables, non-functional requirements, constraints, roadmap
-- Created ARCHITECTURE.md (13+ sections): directory tree, layer breakdown, DI pattern, repository pattern, adapter pattern, OAuth flow, queues, error handling, frontend/mobile architecture, testing strategy, security notes, performance targets
-- Establishes living documentation model per PROMPT_PLAYBOOK.md §3
-- Every commit that changes code must update ARCHITECTURE.md in the same commit
-- Relates to: PROMPT_PLAYBOOK.md §3 (Standing Instructions), §5 (Quality Bar)
-
-**3133f48** — `chore: initialize git, commitlint, and CI/CD infrastructure`
-- Initialized git repository with user config
-- Installed commitlint + husky for Conventional Commits enforcement
-- Created commitlint config: types (feat, fix, docs, style, refactor, perf, test, chore, ci, build), strict case rules, body requirements
-- Set up .husky/commit-msg hook for message validation
-- Added GitHub Actions CI workflow (lint, build, test, docker health checks)
-- Created CONTRIBUTING.md documenting: development setup, branching strategy, Conventional Commits format with examples, testing standards (unit, integration, E2E), code quality expectations, documentation requirements, PR workflow
-- Added .gitignore for Node.js monorepo (node_modules, .env, build artifacts, IDE configs)
-- Updated root package.json with format script
-- Foundation ensures atomic commits, clear audit trails, prevents low-quality commits, blocks merges that fail tests/lint
-- Relates to: PROMPT_PLAYBOOK.md §2 (Kickoff), §3 (Standing Orders), §5 (Quality Bar)
-
-### Existing Features (Pre-Compliance Sprint)
-
-The codebase includes 21 backend services, 28+ route files, 14+ entities covering:
-- Campaign CRUD + status machine + AI toggle + cloning
-- Analytics (unified, per-platform, per-campaign breakdowns)
-- AI optimization (4 recommendation types, auto-apply)
-- Anomaly detection (4 triggers, auto-pause)
-- OAuth (Google, Meta, TikTok, LinkedIn, Pinterest)
-- Platform metrics aggregation (5 platforms)
-- CDP (data collection, audiences, CRM integrations)
-- Rewards + QR redemption (9-step, HMAC-SHA256, one-time-use)
-- Team collaboration (RBAC, audit logging)
-- Reviews (expectation vs reality)
-- A/B testing (control + 4 variants)
-- Frontend: 23 pages, TanStack Query v5, Zustand, React Router, RBAC
-- Mobile: Expo SDK 55, consumer-facing (view ads, claim rewards), full auth flow
-
----
-
-**Last Updated:** May 17, 2026  
-**Maintained By:** Development Team  
-**Status:** Living Document
+**Last Updated:** July 17, 2026 — rewritten to match the live tree after the security/reliability fix pass.
