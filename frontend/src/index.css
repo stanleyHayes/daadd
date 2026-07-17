@@ -254,6 +254,41 @@
   .animate-skeleton-shimmer {
     animation: skeletonShimmer 1.6s ease-in-out infinite;
   }
+
+  /* Premium animation primitives (see components/ui/) */
+  .animate-gradient-text {
+    background-size: 200% auto;
+    animation: gradientTextShift 6s linear infinite;
+  }
+
+  .animate-marquee {
+    animation: marquee var(--marquee-duration, 40s) linear infinite;
+  }
+  .marquee-paused:hover .animate-marquee {
+    animation-play-state: paused;
+  }
+
+  .animate-aurora {
+    animation: auroraDrift 18s ease-in-out infinite alternate;
+  }
+  .animate-aurora-slow {
+    animation: auroraDrift 26s ease-in-out infinite alternate-reverse;
+  }
+}
+
+@keyframes gradientTextShift {
+  to { background-position: 200% center; }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes auroraDrift {
+  0% { transform: translate(-10%, -6%) rotate(-4deg) scale(1); }
+  50% { transform: translate(8%, 6%) rotate(3deg) scale(1.15); }
+  100% { transform: translate(-6%, 10%) rotate(-2deg) scale(1.05); }
 }
 
 @keyframes skeletonShimmer {

@@ -11,6 +11,15 @@ import { WatermarkBanner } from '@/components/ui/Watermark';
 import { motion, useInView, useMotionValue, useTransform, animate } from 'framer-motion';
 import { PageTransition } from '@/components/ui/PageTransition';
 import { EmptyState } from '@/components/ui/EmptyState';
+import { SplitText } from '@/components/ui/SplitText';
+import { RotatingWords } from '@/components/ui/RotatingWords';
+import { GradientText } from '@/components/ui/GradientText';
+import { MagneticButton } from '@/components/ui/MagneticButton';
+import { CursorGlow } from '@/components/ui/CursorGlow';
+import { AuroraBackground } from '@/components/ui/AuroraBackground';
+import { ParticleField } from '@/components/ui/ParticleField';
+import { Marquee } from '@/components/ui/Marquee';
+import { ScrambleText } from '@/components/ui/ScrambleText';
 import { useFeaturedAds } from '@/hooks/usePublicAds';
 import { AdCard } from '@/components/ads/AdCard';
 import { cn } from '@/lib/utils';
@@ -157,10 +166,10 @@ export function LandingPage() {
  {/* ========== HERO ========== */}
  <section className="relative overflow-hidden bg-primary-700 text-white">
           <WatermarkBanner icon={<Zap />} />
- {/* Animated background blobs */}
- <FloatingBlob className="top-0 left-0 w-96 h-96 bg-accent-400" delay={0} />
- <FloatingBlob className="bottom-0 right-0 w-80 h-80 bg-secondary-400" delay={2} />
- <FloatingBlob className="top-1/2 left-1/2 w-64 h-64 bg-warning-400" delay={4} />
+ {/* Layered animated background: aurora gradients + particle network + cursor spotlight */}
+ <AuroraBackground />
+ <ParticleField className="opacity-60" />
+ <CursorGlow className="bg-accent-400/15" />
 
 
  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 relative">
@@ -177,17 +186,14 @@ export function LandingPage() {
  <ArrowRight className="h-4 w-4" />
  </motion.div>
 
- <motion.h1
- initial={{ opacity: 0, y: 20 }}
- animate={{ opacity: 1, y: 0 }}
- transition={{ duration: 0.6, delay: 0.1 }}
- className="text-4xl sm:text-5xl lg:text-7xl font-extrabold leading-[1.1] tracking-tight"
- >
- Discover Ads.{" "}
- <span className="text-transparent bg-clip-text bg-accent-300">
- Earn Rewards.
- </span>
- </motion.h1>
+ <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold leading-[1.1] tracking-tight">
+ <SplitText text="Discover Ads." mode="words" stagger={0.14} delay={0.1} />
+ <br />
+ <GradientText className="from-accent-300 via-secondary-300 to-accent-300">
+ Earn{' '}
+ <RotatingWords words={['Rewards.', 'Tokens.', 'Gift Cards.', 'Cash Back.']} />
+ </GradientText>
+ </h1>
 
  <motion.p
  initial={{ opacity: 0, y: 20 }}
@@ -205,18 +211,22 @@ export function LandingPage() {
  transition={{ duration: 0.6, delay: 0.3 }}
  className="mt-10 flex flex-col sm:flex-row gap-4"
  >
+ <MagneticButton>
  <button
  onClick={() => navigate('/ads')}
  className="inline-flex items-center justify-center gap-2 rounded-xl font-semibold px-8 py-4 text-base bg-white text-primary-700 hover:bg-gray-50 shadow-xl shadow-black/10 active:scale-[0.97] transition-all"
  >
  Browse Ads <ArrowRight className="h-5 w-5" />
  </button>
+ </MagneticButton>
+ <MagneticButton>
  <button
  onClick={() => navigate('/register')}
  className="inline-flex items-center justify-center gap-2 rounded-xl font-semibold px-8 py-4 text-base border-2 border-white/30 text-white hover:bg-white/10 active:scale-[0.97] transition-all backdrop-blur-sm"
  >
  I'm an Advertiser
  </button>
+ </MagneticButton>
  </motion.div>
 
  {/* Social proof mini */}
@@ -794,13 +804,13 @@ export function LandingPage() {
  <p className="text-center text-sm font-medium text-gray-400 dark:text-slate-500 uppercase tracking-wider mb-8">
  Trusted by teams at
  </p>
- <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6 opacity-50 grayscale dark:opacity-40">
+ <Marquee duration={30} className="opacity-50 grayscale dark:opacity-40 [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
  {['FitLife', 'TechStart', 'RetailMax', 'GreenEnergy', 'MediaHub', 'CloudNine'].map((name) => (
- <span key={name} className="text-xl font-bold text-gray-700 dark:text-slate-300">
+ <span key={name} className="mx-8 text-xl font-bold text-gray-700 dark:text-slate-300 whitespace-nowrap">
  {name}
  </span>
  ))}
- </div>
+ </Marquee>
  </div>
  </section>
 
@@ -815,7 +825,9 @@ export function LandingPage() {
                 <Code className="h-3.5 w-3.5" />
                 Developer Ready
               </div>
-              <h2 className="text-3xl font-bold text-white mb-4">Built for Integrations</h2>
+              <h2 className="text-3xl font-bold text-white mb-4">
+                <ScrambleText text="Built for Integrations" />
+              </h2>
               <p className="text-primary-100 leading-relaxed mb-6">
                 Connect your existing programmatic stack, sync campaign data, and build custom workflows with our REST API, webhooks, and OAuth-enabled platform accounts.
               </p>
