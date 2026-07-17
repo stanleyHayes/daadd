@@ -2,7 +2,7 @@ import mongoose, { Schema, Document, Types } from 'mongoose';
 
 export interface INotification extends Document {
   _id: Types.ObjectId;
-  user_id: string | Types.ObjectId;
+  user_id: Types.ObjectId;
   type: string;
   title: string;
   message: string;
@@ -11,7 +11,7 @@ export interface INotification extends Document {
 }
 
 const NotificationSchema = new Schema<INotification>({
-  user_id: { type: Schema.Types.Mixed, ref: 'User', required: true },
+  user_id: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   type: { type: String, required: true },
   title: { type: String, required: true },
   message: { type: String, required: true },

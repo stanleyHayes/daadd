@@ -1,9 +1,11 @@
 import { Router, Request, Response } from 'express';
 import { Types } from 'mongoose';
-import { Campaign, Ad, Review, User, ABTest, IABTestVariant } from '../models';
+import { Campaign, Ad, Review, User, ABTest, Anomaly, AIRecommendation, AIAuditLog, DeviceEvent, TeamMember, IABTestVariant } from '../models';
 import { authMiddleware } from '../middleware/auth';
 import { success, paginated } from '../utils/response';
 import { seededRandom } from '../utils/seeded';
+import { escapeRegExp } from '../utils/regex';
+import { canManageCampaign, findManageableCampaign } from '../utils/ownership';
 import multer from 'multer';
 import { uploadCreative } from '../services/storage.service';
 
@@ -33,7 +35,8 @@ function serializeCampaign(c: any) {
   };
 }
 
-function toObjectId(id: string): Types.ObjectId | null {
+function toObjectId(id: string | string[]): Types.ObjectId | null {
+  if (typeof id !== 'string') return null;
   try {
     return new Types.ObjectId(id);
   } catch {
@@ -78,38 +81,69 @@ function validateLocalizedTargeting(body: any, existing?: any): string | null {
   return null;
 }
 
-/** Normalize the flat create-page payload into the Campaign schema shape. */
+const CAMPAIGN_STATUSES = ['draft', 'active', 'paused', 'completed', 'archived'];
+const AI_MODES = ['auto_adjust', 'recommendation_only'];
+
+/**
+ * Normalize the flat create-page payload into the Campaign schema shape.
+ * Whitelists updatable fields — budget_spent, owner, _id and timestamps are
+ * never passed through (mass-assignment guard).
+ */
 function normalizeCampaignBody(body: any): any {
-  const normalized = { ...body };
+  const normalized: Record<string, any> = {};
 
-  if (normalized.budget !== undefined && normalized.budget_total === undefined) {
-    normalized.budget_total = normalized.budget;
+  for (const key of [
+    'name',
+    'description',
+    'industry',
+    'reward_value',
+    'currency',
+    'start_date',
+    'end_date',
+    'language',
+    'platform_ids',
+  ]) {
+    if (body[key] !== undefined) normalized[key] = body[key];
   }
-  delete normalized.budget;
 
-  if (
-    normalized.targeting_config === undefined &&
-    (normalized.regions !== undefined ||
-      normalized.languages !== undefined ||
-      normalized.devices !== undefined ||
-      normalized.localized !== undefined)
+  if (body.status !== undefined && CAMPAIGN_STATUSES.includes(body.status)) {
+    normalized.status = body.status;
+  }
+  if (body.ai_mode !== undefined && AI_MODES.includes(body.ai_mode)) {
+    normalized.ai_mode = body.ai_mode;
+  }
+
+  const budgetTotal = body.budget_total ?? body.budget;
+  if (budgetTotal !== undefined) {
+    normalized.budget_total = budgetTotal;
+  }
+
+  const aiEnabled = body.enable_ai_optimization ?? body.ai_enabled;
+  if (aiEnabled !== undefined) {
+    normalized.enable_ai_optimization = aiEnabled;
+  }
+
+  if (body.targeting_config !== undefined) {
+    normalized.targeting_config = body.targeting_config;
+  } else if (
+    body.regions !== undefined ||
+    body.languages !== undefined ||
+    body.devices !== undefined ||
+    body.localized !== undefined
   ) {
     normalized.targeting_config = {
-      regions: normalized.regions ?? [],
-      languages: normalized.languages ?? [],
-      devices: normalized.devices ?? [],
-      localized: normalized.localized ?? false,
-      age_min: normalized.age_min,
-      age_max: normalized.age_max,
+      regions: body.regions ?? [],
+      languages: body.languages ?? [],
+      devices: body.devices ?? [],
+      localized: body.localized ?? false,
+      age_min: body.age_min,
+      age_max: body.age_max,
     };
   }
 
-  if (normalized.ai_enabled !== undefined && normalized.enable_ai_optimization === undefined) {
-    normalized.enable_ai_optimization = normalized.ai_enabled;
-  }
-
-  if (Array.isArray(normalized.languages) && normalized.languages.length > 0 && !normalized.language) {
-    normalized.language = normalized.languages[0];
+  const languages = body.languages ?? normalized.targeting_config?.languages;
+  if (Array.isArray(languages) && languages.length > 0 && normalized.language === undefined) {
+    normalized.language = languages[0];
   }
 
   return normalized;
@@ -130,11 +164,12 @@ router.get('/', authMiddleware, async (req: Request, res: Response) => {
 
     const filter: Record<string, any> = {};
     if (status) filter.status = status;
-    if (industry) filter.industry = { $regex: industry, $options: 'i' };
+    if (industry) filter.industry = { $regex: escapeRegExp(industry), $options: 'i' };
     if (search) {
+      const escaped = escapeRegExp(search);
       filter.$or = [
-        { name: { $regex: search, $options: 'i' } },
-        { description: { $regex: search, $options: 'i' } },
+        { name: { $regex: escaped, $options: 'i' } },
+        { description: { $regex: escaped, $options: 'i' } },
       ];
     }
 
@@ -194,7 +229,7 @@ router.patch('/:id', authMiddleware, async (req: Request, res: Response) => {
       return;
     }
     const existing = await Campaign.findById(id).lean();
-    if (!existing) {
+    if (!existing || !canManageCampaign(existing, req.user!)) {
       res.status(404).json({ success: false, message: 'Campaign not found' });
       return;
     }
@@ -217,13 +252,22 @@ router.delete('/:id', authMiddleware, async (req: Request, res: Response) => {
       res.status(400).json({ success: false, message: 'Invalid campaign id' });
       return;
     }
-    const campaign = await Campaign.findByIdAndDelete(id).lean();
-    if (!campaign) {
+    const campaign = await Campaign.findById(id).lean();
+    if (!campaign || !canManageCampaign(campaign, req.user!)) {
       res.status(404).json({ success: false, message: 'Campaign not found' });
       return;
     }
+    await Campaign.findByIdAndDelete(id);
     await Ad.deleteMany({ campaign_id: id });
     await Review.deleteMany({ campaign_id: id });
+    // Related records keyed by the string form of the campaign id
+    const campaignIdStr = id.toString();
+    await ABTest.deleteMany({ campaign_id: campaignIdStr });
+    await Anomaly.deleteMany({ campaign_id: campaignIdStr });
+    await AIRecommendation.deleteMany({ campaign_id: campaignIdStr });
+    await AIAuditLog.deleteMany({ campaign_id: campaignIdStr });
+    await DeviceEvent.deleteMany({ campaign_id: { $in: [id, campaignIdStr] } });
+    await TeamMember.deleteMany({ campaign_id: campaignIdStr });
     res.json(success(null, 'Campaign deleted'));
   } catch (err: any) {
     res.status(500).json({ success: false, message: err.message || 'Failed to delete campaign' });
@@ -238,7 +282,7 @@ router.patch('/:id/toggle-ai', authMiddleware, async (req: Request, res: Respons
       return;
     }
     const campaign = await Campaign.findById(id);
-    if (!campaign) {
+    if (!campaign || !canManageCampaign(campaign, req.user!)) {
       res.status(404).json({ success: false, message: 'Campaign not found' });
       return;
     }
@@ -258,7 +302,7 @@ router.post('/:id/clone', authMiddleware, async (req: Request, res: Response) =>
       return;
     }
     const source = await Campaign.findById(id).lean();
-    if (!source) {
+    if (!source || !canManageCampaign(source, req.user!)) {
       res.status(404).json({ success: false, message: 'Campaign not found' });
       return;
     }
@@ -308,7 +352,7 @@ router.post('/:id/creatives/upload', authMiddleware, creativeUpload.single('file
       return;
     }
     const campaign = await Campaign.findById(id).lean();
-    if (!campaign) {
+    if (!campaign || !canManageCampaign(campaign, req.user!)) {
       res.status(404).json({ success: false, message: 'Campaign not found' });
       return;
     }
@@ -356,7 +400,7 @@ router.post('/:id/creatives', authMiddleware, async (req: Request, res: Response
       return;
     }
     const campaign = await Campaign.findById(id).lean();
-    if (!campaign) {
+    if (!campaign || !canManageCampaign(campaign, req.user!)) {
       res.status(404).json({ success: false, message: 'Campaign not found' });
       return;
     }
@@ -508,6 +552,18 @@ router.post('/ab-test/mark-winner', authMiddleware, async (req: Request, res: Re
     const test = await ABTest.findById(testId);
     if (!test) {
       res.status(404).json({ success: false, message: 'A/B test not found' });
+      return;
+    }
+
+    // The test must belong to a campaign the caller manages (owner or admin)
+    const campaign = await findManageableCampaign(test.campaign_id, req.user!);
+    if (!campaign) {
+      res.status(404).json({ success: false, message: 'A/B test not found' });
+      return;
+    }
+
+    if (test.status === 'completed') {
+      res.status(409).json({ success: false, message: 'A/B test is already completed' });
       return;
     }
 

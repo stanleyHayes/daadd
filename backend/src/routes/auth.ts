@@ -2,7 +2,13 @@ import { Router, Request, Response } from 'express';
 import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
 import { User } from '../models';
-import { authMiddleware, generateToken } from '../middleware/auth';
+import {
+  authMiddleware,
+  generateToken,
+  generateRefreshToken,
+  verifyRefreshToken,
+} from '../middleware/auth';
+import { rateLimit } from '../middleware/rateLimit';
 import { success } from '../utils/response';
 import { sendOtpEmail, sendPasswordResetEmail } from '../services/mailer';
 
@@ -21,9 +27,13 @@ function sanitizeUser(user: InstanceType<typeof User>) {
 
 router.post('/register', async (req: Request, res: Response) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, email, password } = req.body;
     if (!name || !email || !password) {
       res.status(400).json({ success: false, message: 'Name, email and password are required' });
+      return;
+    }
+    if (String(password).length < 8) {
+      res.status(400).json({ success: false, message: 'Password must be at least 8 characters' });
       return;
     }
 
@@ -38,12 +48,17 @@ router.post('/register', async (req: Request, res: Response) => {
       name,
       email: email.toLowerCase(),
       password_hash: passwordHash,
-      role: role || 'end_user',
+      // Self-registration always lands on end_user; privileged roles are
+      // assigned by admins, never taken from the request body.
+      role: 'end_user',
       avatar_url: `https://i.pravatar.cc/150?u=${email.toLowerCase()}`,
     });
 
     const token = generateToken({ userId: user._id.toString(), email: user.email, role: user.role });
-    res.status(201).json(success({ user: sanitizeUser(user), token }, 'Registration successful'));
+    const refreshToken = generateRefreshToken({ userId: user._id.toString(), role: user.role });
+    res
+      .status(201)
+      .json(success({ user: sanitizeUser(user), token, refreshToken }, 'Registration successful'));
   } catch (err: any) {
     res.status(500).json({ success: false, message: err.message || 'Registration failed' });
   }
@@ -64,9 +79,40 @@ router.post('/login', async (req: Request, res: Response) => {
     }
 
     const token = generateToken({ userId: user._id.toString(), email: user.email, role: user.role });
-    res.json(success({ user: sanitizeUser(user), token }, 'Login successful'));
+    const refreshToken = generateRefreshToken({ userId: user._id.toString(), role: user.role });
+    res.json(success({ user: sanitizeUser(user), token, refreshToken }, 'Login successful'));
   } catch (err: any) {
     res.status(500).json({ success: false, message: err.message || 'Login failed' });
+  }
+});
+
+// Exchanges a refresh token for a new token pair (rotating the refresh
+// token). Same rate limit as the rest of the auth endpoints.
+router.post('/refresh', rateLimit({ windowMs: 60_000, max: 20 }), async (req: Request, res: Response) => {
+  try {
+    const { refreshToken } = req.body;
+    if (!refreshToken) {
+      res.status(400).json({ success: false, message: 'Refresh token is required' });
+      return;
+    }
+
+    const payload = verifyRefreshToken(String(refreshToken));
+    if (!payload) {
+      res.status(401).json({ success: false, message: 'Invalid or expired refresh token' });
+      return;
+    }
+
+    const user = await User.findById(payload.userId);
+    if (!user) {
+      res.status(401).json({ success: false, message: 'Invalid or expired refresh token' });
+      return;
+    }
+
+    const token = generateToken({ userId: user._id.toString(), email: user.email, role: user.role });
+    const newRefreshToken = generateRefreshToken({ userId: user._id.toString(), role: user.role });
+    res.json(success({ token, refreshToken: newRefreshToken }));
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message || 'Failed to refresh token' });
   }
 });
 
@@ -128,15 +174,19 @@ router.patch('/change-password', authMiddleware, async (req: Request, res: Respo
   }
 });
 
-const ageVerificationCodes = new Map<string, { code: string; expiresAt: number }>();
-const AGE_VERIFY_TTL_MS = 5 * 60 * 1000;
+const ageVerificationCodes = new Map<string, { code: string; expiresAt: number; attempts: number }>();
+const AGE_VERIFY_TTL_MS = 10 * 60 * 1000;
+// After this many wrong codes the pending code is invalidated and a fresh
+// one must be requested — blocks brute-forcing the 6-digit space.
+const MAX_CODE_ATTEMPTS = 5;
 
 router.post('/age-verify/request', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    const code = crypto.randomInt(100000, 1000000).toString();
     ageVerificationCodes.set(req.user!.userId, {
       code,
       expiresAt: Date.now() + AGE_VERIFY_TTL_MS,
+      attempts: 0,
     });
     // Deliver the OTP by email when a mail provider is configured
     // (fire-and-forget; never blocks the response).
@@ -173,6 +223,14 @@ router.post('/age-verify/confirm', authMiddleware, async (req: Request, res: Res
       return;
     }
     if (entry.code !== String(code)) {
+      entry.attempts += 1;
+      if (entry.attempts >= MAX_CODE_ATTEMPTS) {
+        ageVerificationCodes.delete(req.user!.userId);
+        res
+          .status(400)
+          .json({ success: false, message: 'Too many failed attempts; request a new code' });
+        return;
+      }
       res.status(400).json({ success: false, message: 'Invalid verification code' });
       return;
     }
@@ -193,8 +251,8 @@ router.post('/age-verify/confirm', authMiddleware, async (req: Request, res: Res
   }
 });
 
-const passwordResetTokens = new Map<string, { userId: string; expiresAt: number }>();
-const RESET_TOKEN_TTL_MS = 60 * 60 * 1000;
+const passwordResetTokens = new Map<string, { userId: string; expiresAt: number; attempts: number }>();
+const RESET_TOKEN_TTL_MS = 10 * 60 * 1000;
 
 router.post('/forgot-password', async (req: Request, res: Response) => {
   try {
@@ -206,6 +264,7 @@ router.post('/forgot-password', async (req: Request, res: Response) => {
         passwordResetTokens.set(token, {
           userId: user._id.toString(),
           expiresAt: Date.now() + RESET_TOKEN_TTL_MS,
+          attempts: 0,
         });
         // Send the reset link by email when a mail provider is configured
         // (fire-and-forget; never blocks the response).
@@ -237,15 +296,24 @@ router.post('/reset-password', async (req: Request, res: Response) => {
       res.status(400).json({ success: false, message: 'Token and new password are required' });
       return;
     }
-    if (String(newPassword).length < 8) {
-      res.status(400).json({ success: false, message: 'Password must be at least 8 characters' });
-      return;
-    }
 
     const entry = passwordResetTokens.get(String(token));
     if (!entry || entry.expiresAt < Date.now()) {
       passwordResetTokens.delete(String(token));
       res.status(400).json({ success: false, message: 'Invalid or expired reset token' });
+      return;
+    }
+
+    if (String(newPassword).length < 8) {
+      entry.attempts += 1;
+      if (entry.attempts >= MAX_CODE_ATTEMPTS) {
+        passwordResetTokens.delete(String(token));
+        res
+          .status(400)
+          .json({ success: false, message: 'Too many failed attempts; request a new reset link' });
+        return;
+      }
+      res.status(400).json({ success: false, message: 'Password must be at least 8 characters' });
       return;
     }
 

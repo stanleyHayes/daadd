@@ -3,6 +3,7 @@ import { Types } from 'mongoose';
 import { TeamMember, TeamAuditLog, Campaign, User } from '../models';
 import { authMiddleware } from '../middleware/auth';
 import { success } from '../utils/response';
+import { findManageableCampaign } from '../utils/ownership';
 import { sendTeamInviteEmail } from '../services/mailer';
 
 const router = Router();
@@ -117,6 +118,13 @@ router.post('/invite', authMiddleware, async (req: Request, res: Response) => {
       return;
     }
 
+    // Only the campaign owner (or an admin) may invite members
+    const campaign = await findManageableCampaign(campaign_id, req.user!);
+    if (!campaign) {
+      res.status(404).json({ success: false, message: 'Campaign not found' });
+      return;
+    }
+
     const existing = await TeamMember.findOne({ campaign_id, email: email.toLowerCase() });
     if (existing) {
       res.status(409).json({ success: false, message: 'Member already invited to this campaign' });
@@ -173,6 +181,13 @@ router.patch('/:memberId/role', authMiddleware, async (req: Request, res: Respon
       return;
     }
 
+    // Only the owning campaign's owner (or an admin) may change roles
+    const campaign = await findManageableCampaign(member.campaign_id, req.user!);
+    if (!campaign) {
+      res.status(404).json({ success: false, message: 'Team member not found' });
+      return;
+    }
+
     const oldRole = member.role;
     member.role = role as any;
     await member.save();
@@ -201,11 +216,20 @@ router.delete('/:memberId', authMiddleware, async (req: Request, res: Response) 
       return;
     }
 
-    const member = await TeamMember.findByIdAndDelete(memberId).lean();
+    const member = await TeamMember.findById(memberId).lean();
     if (!member) {
       res.status(404).json({ success: false, message: 'Team member not found' });
       return;
     }
+
+    // Only the owning campaign's owner (or an admin) may remove members
+    const campaign = await findManageableCampaign(member.campaign_id, req.user!);
+    if (!campaign) {
+      res.status(404).json({ success: false, message: 'Team member not found' });
+      return;
+    }
+
+    await TeamMember.findByIdAndDelete(memberId);
 
     await logTeamAction(
       member.campaign_id,

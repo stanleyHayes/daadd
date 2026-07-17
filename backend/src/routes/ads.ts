@@ -3,6 +3,7 @@ import { Types } from 'mongoose';
 import jwt from 'jsonwebtoken';
 import { Ad } from '../models';
 import { success, paginated } from '../utils/response';
+import { escapeRegExp } from '../utils/regex';
 import { JWT_SECRET, JwtPayload } from '../middleware/auth';
 import { fatigueService } from '../services/fatigue.service';
 
@@ -70,13 +71,14 @@ router.get('/', async (req: Request, res: Response) => {
     const limitNum = Math.max(1, Math.min(100, parseInt(limit || '10', 10)));
 
     const filter: Record<string, any> = {};
-    if (industry) filter.industry = { $regex: industry, $options: 'i' };
-    if (advertiser) filter.brand = { $regex: advertiser, $options: 'i' };
+    if (industry) filter.industry = { $regex: escapeRegExp(industry), $options: 'i' };
+    if (advertiser) filter.brand = { $regex: escapeRegExp(advertiser), $options: 'i' };
     if (search) {
+      const escaped = escapeRegExp(search);
       filter.$or = [
-        { title: { $regex: search, $options: 'i' } },
-        { description: { $regex: search, $options: 'i' } },
-        { brand: { $regex: search, $options: 'i' } },
+        { title: { $regex: escaped, $options: 'i' } },
+        { description: { $regex: escaped, $options: 'i' } },
+        { brand: { $regex: escaped, $options: 'i' } },
       ];
     }
 

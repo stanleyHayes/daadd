@@ -10,10 +10,19 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/adplat
 
 async function startServer(): Promise<void> {
   try {
+    // Fail fast rather than signing tokens with the public dev fallback.
+    if (process.env.NODE_ENV === 'production' && !process.env.JWT_SECRET) {
+      console.error('FATAL: JWT_SECRET must be set when NODE_ENV=production');
+      process.exit(1);
+    }
+
     await mongoose.connect(MONGODB_URI);
     console.log('Connected to MongoDB');
 
-    await seedDatabase();
+    // Never seed in production unless explicitly opted in.
+    if (process.env.NODE_ENV !== 'production' || process.env.SEED_DATABASE === 'true') {
+      await seedDatabase();
+    }
 
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);

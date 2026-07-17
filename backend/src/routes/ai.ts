@@ -4,6 +4,7 @@ import { AIRecommendation, AIAuditLog, AICreative, Campaign, IAIRecommendation }
 import { authMiddleware } from '../middleware/auth';
 import { success } from '../utils/response';
 import { seededRandom } from '../utils/seeded';
+import { findManageableCampaign } from '../utils/ownership';
 
 const router = Router();
 
@@ -134,6 +135,11 @@ router.post('/apply/:campaignId/:recId', authMiddleware, async (req: Request, re
       res.status(400).json({ success: false, message: 'Invalid recommendation id' });
       return;
     }
+    const campaign = await findManageableCampaign(campaignId, req.user!);
+    if (!campaign) {
+      res.status(404).json({ success: false, message: 'Recommendation not found' });
+      return;
+    }
     const rec = await AIRecommendation.findOne({ _id: recId, campaign_id: campaignId });
     if (!rec) {
       res.status(404).json({ success: false, message: 'Recommendation not found' });
@@ -165,6 +171,11 @@ router.delete('/recommendations/:campaignId/:recId', authMiddleware, async (req:
     const recId = req.params.recId as string;
     if (!Types.ObjectId.isValid(recId)) {
       res.status(400).json({ success: false, message: 'Invalid recommendation id' });
+      return;
+    }
+    const campaign = await findManageableCampaign(campaignId, req.user!);
+    if (!campaign) {
+      res.status(404).json({ success: false, message: 'Recommendation not found' });
       return;
     }
     const rec = await AIRecommendation.findOne({ _id: recId, campaign_id: campaignId });
@@ -216,6 +227,11 @@ router.patch('/mode/:campaignId', authMiddleware, async (req: Request, res: Resp
     }
     if (!Types.ObjectId.isValid(campaignId)) {
       res.status(400).json({ success: false, message: 'Invalid campaign id' });
+      return;
+    }
+    const manageable = await findManageableCampaign(campaignId, req.user!);
+    if (!manageable) {
+      res.status(404).json({ success: false, message: 'Campaign not found' });
       return;
     }
     const campaign = await Campaign.findByIdAndUpdate(

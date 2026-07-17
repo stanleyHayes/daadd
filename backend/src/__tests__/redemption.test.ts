@@ -1,8 +1,10 @@
-import { Redemption, Reward } from '../models';
+import { Redemption, Reward, User } from '../models';
+import { generateToken } from '../middleware/auth';
 import { request, connectTestDb, resetTestDb, closeTestDb } from '../test-helpers';
 
 const AUTH = '/api/v1/auth';
 const REDEMPTION = '/api/v1/redemption';
+const REWARDS = '/api/v1/rewards';
 
 // Keep in sync with src/test-setup.ts.
 const TOKEN_VALUE = 0.05;
@@ -24,6 +26,19 @@ async function registerUser(): Promise<TestUser> {
   });
   if (res.status !== 201) throw new Error(`register failed: ${JSON.stringify(res.body)}`);
   return { id: String(res.body.data.user.id), token: res.body.data.token };
+}
+
+// Registration always yields end_user (by design), so merchant fixtures are
+// promoted in the DB and handed a freshly minted merchant-role token.
+async function registerMerchant(): Promise<TestUser> {
+  const user = await registerUser();
+  await User.findByIdAndUpdate(user.id, { role: 'merchant' });
+  const token = generateToken({
+    userId: user.id,
+    email: `redemption-user-${userSeq}@example.com`,
+    role: 'merchant',
+  });
+  return { id: user.id, token };
 }
 
 async function fund(userId: string, amount: number): Promise<void> {
@@ -73,7 +88,7 @@ describe('redemption routes', () => {
   beforeEach(async () => {
     await resetTestDb();
     customer = await registerUser();
-    merchant = await registerUser();
+    merchant = await registerMerchant();
   });
 
   afterAll(async () => {

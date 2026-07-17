@@ -1,4 +1,5 @@
 import { Router, Request, Response } from 'express';
+import { Types } from 'mongoose';
 import { Notification, User } from '../models';
 import { authMiddleware } from '../middleware/auth';
 import { success, paginated } from '../utils/response';
@@ -45,6 +46,10 @@ router.patch('/read-all', authMiddleware, async (req: Request, res: Response) =>
 
 router.patch('/:id/read', authMiddleware, async (req: Request, res: Response) => {
   try {
+    if (!Types.ObjectId.isValid(req.params.id as string)) {
+      res.status(400).json({ success: false, message: 'Invalid notification id' });
+      return;
+    }
     const notification = await Notification.findOneAndUpdate(
       { _id: req.params.id, user_id: req.user!.userId },
       { $set: { read: true } },

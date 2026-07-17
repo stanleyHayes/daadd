@@ -6,7 +6,8 @@ import { success, paginated } from '../utils/response';
 
 const router = Router();
 
-function toObjectId(id: string): Types.ObjectId | null {
+function toObjectId(id: string | string[]): Types.ObjectId | null {
+  if (typeof id !== 'string') return null;
   try {
     return new Types.ObjectId(id);
   } catch {
@@ -77,12 +78,35 @@ router.post('/', authMiddleware, async (req: Request, res: Response) => {
       res.status(400).json({ success: false, message: 'Campaign id and rating are required' });
       return;
     }
-    const review = await Review.create({
-      campaign_id,
-      user: req.user!.userId,
-      rating,
-      comment: comment || '',
-    });
+    const campaignId = toObjectId(campaign_id);
+    if (!campaignId) {
+      res.status(400).json({ success: false, message: 'Invalid campaign id' });
+      return;
+    }
+
+    // Fast path for a clean 409; the unique (campaign_id, user) index is the
+    // real guard against concurrent duplicates.
+    const existing = await Review.findOne({ campaign_id: campaignId, user: req.user!.userId }).lean();
+    if (existing) {
+      res.status(409).json({ success: false, message: 'You have already reviewed this campaign' });
+      return;
+    }
+
+    let review;
+    try {
+      review = await Review.create({
+        campaign_id: campaignId,
+        user: req.user!.userId,
+        rating,
+        comment: comment || '',
+      });
+    } catch (err: any) {
+      if (err?.code === 11000) {
+        res.status(409).json({ success: false, message: 'You have already reviewed this campaign' });
+        return;
+      }
+      throw err;
+    }
     res.status(201).json(success(review, 'Review created'));
   } catch (err: any) {
     res.status(400).json({ success: false, message: err.message || 'Failed to create review' });

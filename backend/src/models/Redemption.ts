@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document, Types } from 'mongoose';
 
-export type RedemptionStatus = 'pending' | 'scanned' | 'validated' | 'completed' | 'expired';
+export type RedemptionStatus = 'pending' | 'scanned' | 'validated' | 'completed' | 'expired' | 'rejected';
 
 export interface IRedemption extends Document {
   _id: Types.ObjectId;
@@ -27,7 +27,7 @@ const RedemptionSchema = new Schema<IRedemption>({
   nonce: { type: String, required: true },
   status: {
     type: String,
-    enum: ['pending', 'scanned', 'validated', 'completed', 'expired'],
+    enum: ['pending', 'scanned', 'validated', 'completed', 'expired', 'rejected'],
     default: 'pending',
   },
   expires_at: { type: Date, required: true },

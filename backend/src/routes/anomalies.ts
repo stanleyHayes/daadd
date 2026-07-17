@@ -3,6 +3,7 @@ import { Types } from 'mongoose';
 import { Anomaly } from '../models';
 import { authMiddleware } from '../middleware/auth';
 import { success } from '../utils/response';
+import { findManageableCampaign } from '../utils/ownership';
 import { scanForUser } from '../services/anomaly-detection.service';
 
 const router = Router();
@@ -59,6 +60,12 @@ router.post('/:anomalyId/resolve', authMiddleware, async (req: Request, res: Res
       anomaly = await Anomaly.findById(anomalyId);
     }
     if (!anomaly) {
+      res.status(404).json({ success: false, message: 'Anomaly not found' });
+      return;
+    }
+    // Only the owning campaign's owner (or an admin) may resolve anomalies
+    const campaign = await findManageableCampaign(anomaly.campaign_id, req.user!);
+    if (!campaign) {
       res.status(404).json({ success: false, message: 'Anomaly not found' });
       return;
     }

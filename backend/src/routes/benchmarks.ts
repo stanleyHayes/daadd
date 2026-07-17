@@ -46,6 +46,27 @@ router.get('/:campaignId', authMiddleware, async (req: Request, res: Response) =
     const peers = await Campaign.find({ industry }).select('owner budget_total budget_spent').lean();
     const advertiserCount = new Set(peers.map((p: any) => p.owner?.toString())).size;
 
+    // Privacy gate: never expose industry aggregates drawn from fewer than 3
+    // advertisers — below that, peers are re-identifiable. Empty arrays keep
+    // the response shape intact (the UI renders its no-data state).
+    if (advertiserCount < 3) {
+      res.json(
+        success(
+          {
+            campaign_id: campaignId,
+            industry,
+            advertiser_count: advertiserCount,
+            gated: true,
+            comparisons: [],
+            format_performance: [],
+            device_trends: [],
+          },
+          'Benchmark data is available once at least 3 advertisers run campaigns in this industry'
+        )
+      );
+      return;
+    }
+
     // Deterministic "your" metrics seeded from the campaign id so values are stable
     const rng = seededRandom(`bench:${campaignId}`);
     const baselineCtr = INDUSTRY_BASELINE_CTR[industry] ?? 2.3;

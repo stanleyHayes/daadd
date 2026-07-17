@@ -45,6 +45,7 @@ const testAccounts = [
   { name: 'David Rodriguez', email: 'manager@adplatform.com', role: 'campaign_manager' },
   { name: 'Priya Sharma', email: 'manager2@adplatform.com', role: 'campaign_manager' },
   { name: 'Lisa Park', email: 'analyst@adplatform.com', role: 'analyst' },
+  { name: 'Mary Osei', email: 'merchant@adplatform.com', role: 'merchant' },
   { name: 'Alex Turner', email: 'user1@example.com', role: 'end_user' },
   { name: 'Jordan Blake', email: 'user2@example.com', role: 'end_user' },
   { name: 'Fatima Al-Hassan', email: 'user3@example.com', role: 'end_user' },
@@ -56,18 +57,22 @@ export async function seedDatabase(): Promise<void> {
 
   const seededUsers: InstanceType<typeof User>[] = [];
   for (const account of testAccounts) {
+    // $setOnInsert keeps seeding insert-only: an existing account (and its
+    // password) is left untouched instead of being reset every boot.
     const user = await User.findOneAndUpdate(
       { email: account.email.toLowerCase() },
       {
-        name: account.name,
-        email: account.email.toLowerCase(),
-        password_hash: passwordHash,
-        role: account.role,
-        avatar_url: `https://i.pravatar.cc/150?u=${account.email.toLowerCase()}`,
+        $setOnInsert: {
+          name: account.name,
+          email: account.email.toLowerCase(),
+          password_hash: passwordHash,
+          role: account.role,
+          avatar_url: `https://i.pravatar.cc/150?u=${account.email.toLowerCase()}`,
+        },
       },
       { upsert: true, new: true }
     );
-    seededUsers.push(user);
+    seededUsers.push(user!);
   }
 
   const adminUser = seededUsers.find((u) => u.email === 'admin@example.com') || seededUsers[0];

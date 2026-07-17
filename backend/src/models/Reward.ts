@@ -4,7 +4,7 @@ export type RewardStatus = 'pending' | 'approved' | 'rejected' | 'paid';
 
 export interface IReward extends Document {
   _id: Types.ObjectId;
-  user_id: string | Types.ObjectId;
+  user_id: Types.ObjectId;
   ad_id?: Types.ObjectId;
   ad_title?: string;
   amount: number;
@@ -15,7 +15,7 @@ export interface IReward extends Document {
 }
 
 const RewardSchema = new Schema<IReward>({
-  user_id: { type: Schema.Types.Mixed, ref: 'User', required: true },
+  user_id: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   ad_id: { type: Schema.Types.ObjectId, ref: 'Ad' },
   ad_title: { type: String },
   amount: { type: Number, required: true },
@@ -28,5 +28,15 @@ const RewardSchema = new Schema<IReward>({
   note: { type: String, default: '' },
   created_at: { type: Date, default: Date.now },
 });
+
+// One claim credit per (user, ad). Redemption debit rows (type 'redemption',
+// no ad_id) and ad-less credit rows are excluded from the partial filter.
+RewardSchema.index(
+  { user_id: 1, ad_id: 1 },
+  {
+    unique: true,
+    partialFilterExpression: { type: 'ad_reward', ad_id: { $exists: true } },
+  }
+);
 
 export const Reward = mongoose.model<IReward>('Reward', RewardSchema);

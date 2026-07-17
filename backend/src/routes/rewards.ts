@@ -6,7 +6,8 @@ import { success, paginated } from '../utils/response';
 
 const router = Router();
 
-function toObjectId(id: string): Types.ObjectId | null {
+function toObjectId(id: string | string[]): Types.ObjectId | null {
+  if (typeof id !== 'string') return null;
   try {
     return new Types.ObjectId(id);
   } catch {
@@ -39,7 +40,7 @@ router.get('/', authMiddleware, async (req: Request, res: Response) => {
 router.get('/balance', authMiddleware, async (req: Request, res: Response) => {
   try {
     const result = await Reward.aggregate([
-      { $match: { user_id: req.user!.userId, status: { $in: ['approved', 'paid'] } } },
+      { $match: { user_id: new Types.ObjectId(req.user!.userId), status: { $in: ['approved', 'paid'] } } },
       {
         $group: {
           _id: '$user_id',
@@ -74,16 +75,28 @@ router.post('/claim/:adId', authMiddleware, async (req: Request, res: Response) 
       return;
     }
 
-    const reward = await Reward.create({
-      user_id: req.user!.userId,
-      ad_id: adId,
-      ad_title: ad.title,
-      amount: ad.reward_amount,
-      status: 'approved',
-    });
+    // The check above is a fast path; the unique partial index on
+    // (user_id, ad_id) for 'ad_reward' rows is the real guard against
+    // concurrent duplicate claims.
+    let reward;
+    try {
+      reward = await Reward.create({
+        user_id: new Types.ObjectId(req.user!.userId),
+        ad_id: adId,
+        ad_title: ad.title,
+        amount: ad.reward_amount,
+        status: 'approved',
+      });
+    } catch (err: any) {
+      if (err?.code === 11000) {
+        res.status(409).json({ success: false, message: 'Reward already claimed for this ad' });
+        return;
+      }
+      throw err;
+    }
 
     await Notification.create({
-      user_id: req.user!.userId,
+      user_id: new Types.ObjectId(req.user!.userId),
       type: 'reward',
       title: 'Reward Claimed',
       message: `You claimed ${ad.reward_amount} for viewing "${ad.title}".`,

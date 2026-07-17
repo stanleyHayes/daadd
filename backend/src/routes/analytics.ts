@@ -1,4 +1,5 @@
 import { Router, Request, Response } from 'express';
+import { Types } from 'mongoose';
 import PDFDocument from 'pdfkit';
 import { Campaign } from '../models';
 import { authMiddleware } from '../middleware/auth';
@@ -6,6 +7,23 @@ import { success } from '../utils/response';
 import { seededRandom } from '../utils/seeded';
 
 const router = Router();
+
+/**
+ * Validate the optional start_date / end_date ISO query filters. The metric
+ * series are synthetic, so valid values are accepted and ignored; invalid
+ * ones are rejected with 400 instead of silently passing through.
+ */
+function hasValidDateFilters(req: Request, res: Response): boolean {
+  const { start_date, end_date } = req.query as Record<string, string | undefined>;
+  if (
+    (start_date !== undefined && isNaN(Date.parse(start_date))) ||
+    (end_date !== undefined && isNaN(Date.parse(end_date)))
+  ) {
+    res.status(400).json({ success: false, message: 'Invalid start_date or end_date: expected ISO date strings' });
+    return false;
+  }
+  return true;
+}
 
 function generateTimeSeries(days = 14) {
   const data = [];
@@ -46,8 +64,9 @@ function generateExportSeries(campaignId: string, days = 14) {
   return data;
 }
 
-router.get('/dashboard', authMiddleware, async (_req: Request, res: Response) => {
+router.get('/dashboard', authMiddleware, async (req: Request, res: Response) => {
   try {
+    if (!hasValidDateFilters(req, res)) return;
     const totalCampaigns = await Campaign.countDocuments();
     const totalSpend = await Campaign.aggregate([
       { $group: { _id: null, total: { $sum: '$budget_spent' } } },
@@ -74,7 +93,13 @@ router.get('/dashboard', authMiddleware, async (_req: Request, res: Response) =>
 
 router.get('/dashboard/:campaignId', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const campaign = await Campaign.findById(req.params.campaignId).lean();
+    if (!hasValidDateFilters(req, res)) return;
+    const campaignId = req.params.campaignId as string;
+    if (!Types.ObjectId.isValid(campaignId)) {
+      res.status(400).json({ success: false, message: 'Invalid campaign id' });
+      return;
+    }
+    const campaign = await Campaign.findById(campaignId).lean();
     if (!campaign) {
       res.status(404).json({ success: false, message: 'Campaign not found' });
       return;
@@ -104,7 +129,12 @@ router.get('/dashboard/:campaignId', authMiddleware, async (req: Request, res: R
 
 router.get('/timeseries/:campaignId', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const campaign = await Campaign.findById(req.params.campaignId).lean();
+    const campaignId = req.params.campaignId as string;
+    if (!Types.ObjectId.isValid(campaignId)) {
+      res.status(400).json({ success: false, message: 'Invalid campaign id' });
+      return;
+    }
+    const campaign = await Campaign.findById(campaignId).lean();
     if (!campaign) {
       res.status(404).json({ success: false, message: 'Campaign not found' });
       return;
@@ -142,6 +172,10 @@ router.get('/devices/:campaignId', authMiddleware, async (_req: Request, res: Re
 router.get('/export/:campaignId/csv', authMiddleware, async (req: Request, res: Response) => {
   try {
     const campaignId = req.params.campaignId as string;
+    if (!Types.ObjectId.isValid(campaignId)) {
+      res.status(400).json({ success: false, message: 'Invalid campaign id' });
+      return;
+    }
     const campaign = await Campaign.findById(campaignId).select('name').lean();
     if (!campaign) {
       res.status(404).json({ success: false, message: 'Campaign not found' });
@@ -166,6 +200,10 @@ router.get('/export/:campaignId/csv', authMiddleware, async (req: Request, res: 
 router.get('/export/:campaignId/pdf', authMiddleware, async (req: Request, res: Response) => {
   try {
     const campaignId = req.params.campaignId as string;
+    if (!Types.ObjectId.isValid(campaignId)) {
+      res.status(400).json({ success: false, message: 'Invalid campaign id' });
+      return;
+    }
     const campaign = await Campaign.findById(campaignId).lean();
     if (!campaign) {
       res.status(404).json({ success: false, message: 'Campaign not found' });

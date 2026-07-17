@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
@@ -14,7 +14,17 @@ import { rateLimit } from './middleware/rateLimit';
 const app = express();
 
 app.use(helmet());
-app.use(cors({ origin: process.env.CORS_ORIGINS?.split(',') || '*' }));
+// CORS: explicit allow-list when CORS_ORIGINS is set; locked down entirely
+// in production when it isn't; localhost-only in development otherwise.
+const corsOrigins = process.env.CORS_ORIGINS?.split(',');
+if (!corsOrigins && process.env.NODE_ENV === 'production') {
+  console.warn('[cors] CORS_ORIGINS is not set in production — cross-origin requests will be blocked');
+}
+app.use(
+  cors({
+    origin: corsOrigins || (process.env.NODE_ENV === 'production' ? false : ['http://localhost:3000']),
+  })
+);
 app.use(compression());
 if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('combined'));
@@ -46,5 +56,40 @@ app.get('/', (_req, res) => {
 });
 
 app.use('/api/v1', routes);
+
+// JSON 404 for unmatched API routes (must come after all routers).
+app.use('/api', (_req: Request, res: Response) => {
+  res.status(404).json({ success: false, message: 'Not found' });
+});
+
+// Final JSON error handler — Express 5's default handler leaks HTML/stacks.
+// Exported so tests can exercise the status mapping directly.
+export function errorHandler(err: any, _req: Request, res: Response, _next: NextFunction): void {
+  if (err.name === 'CastError') {
+    res.status(400).json({ success: false, message: 'Invalid identifier' });
+    return;
+  }
+  if (err.name === 'ValidationError') {
+    res.status(400).json({ success: false, message: err.message });
+    return;
+  }
+  if (err.name === 'JsonWebTokenError' || err.name === 'TokenExpiredError') {
+    res.status(401).json({ success: false, message: 'Unauthorized: invalid token' });
+    return;
+  }
+  if (err.name === 'MongoServerError' && err.code === 11000) {
+    res.status(409).json({ success: false, message: 'Resource already exists' });
+    return;
+  }
+  const status = typeof err.status === 'number' ? err.status : 500;
+  res.status(status).json({
+    success: false,
+    message:
+      status === 500 && process.env.NODE_ENV !== 'development'
+        ? 'Internal server error'
+        : err.message || 'Internal server error',
+  });
+}
+app.use(errorHandler);
 
 export default app;
