@@ -10,6 +10,11 @@ yarn.lock
 .env.local
 .env.*.local
 .env.production.local
+.env.backup
+*.env.backup
+
+# Local credentials scratch file — never commit secrets
+credentials.txt
 
 # Build artifacts
 dist/

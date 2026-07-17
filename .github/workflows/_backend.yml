@@ -32,7 +32,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 26
           cache: npm
           cache-dependency-path: package-lock.json
 
@@ -41,6 +41,9 @@ jobs:
 
       - name: Lint backend
         run: npm run lint --workspace=backend
+
+      - name: Typecheck backend
+        run: npm run typecheck --workspace=backend
 
       - name: Build shared
         run: npm run build:shared

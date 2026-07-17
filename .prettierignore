@@ -1,0 +1,12 @@
+node_modules
+dist
+build
+coverage
+.expo
+.next
+uploads
+logs
+*.log
+*.pdf
+package-lock.json
+mobile/package-lock.json

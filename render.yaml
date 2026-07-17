@@ -15,11 +15,11 @@ services:
       - key: APP_PORT
         value: 4000
       - key: STORAGE_PROVIDER
-        value: cloudinary
+        value: local
       - key: CORS_ORIGINS
         # Update this with your Vercel production URL once deployed
         value: https://your-frontend.vercel.app,http://localhost:3000
-    healthCheckPath: /api/v1/health
+    healthCheckPath: /health
     autoDeploy: true
 
 # Shared environment variables (secrets should be set in the Render dashboard)
@@ -33,7 +33,7 @@ envVarGroups:
       - key: JWT_SECRET
         generateValue: true
       - key: JWT_EXPIRATION
-        value: 7d
+        value: 1h
       - key: CLOUDINARY_CLOUD_NAME
         sync: false
       - key: CLOUDINARY_API_KEY

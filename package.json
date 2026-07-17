@@ -22,7 +22,8 @@
     "test:backend": "npm run test --workspace=backend",
     "test:frontend": "npm run test --workspace=frontend",
     "lint": "npm run lint --workspaces --if-present",
-    "format": "npm run format --workspaces --if-present",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
     "db:migrate": "npm run migration:run --workspace=backend",
@@ -41,6 +42,7 @@
     "husky": "^9.1.7",
     "markdown-pdf": "^11.0.0",
     "marked": "^18.0.3",
-    "pdf-lib": "^1.17.1"
+    "pdf-lib": "^1.17.1",
+    "prettier": "^3.9.5"
   }
 }
