@@ -21,6 +21,7 @@ import { PageTransition } from '@/components/ui/PageTransition';
 import { Skeleton, SkeletonMetric, SkeletonCard } from '@/components/ui/Skeleton';
 import { hasPermission } from '@/lib/rbac';
 import { useAuthStore } from '@/stores/auth.store';
+import type { FilterOptions } from '@/types';
 
 export function AnalyticsPage() {
   const [campaignId, setCampaignId] = useState('');
@@ -33,8 +34,13 @@ export function AnalyticsPage() {
   const { data: campaignsData } = useCampaigns();
   const campaigns = campaignsData?.data || [];
 
-  const { data: metrics, isLoading: metricsLoading, error: metricsError } = useDashboardMetrics(campaignId || undefined);
-  const { data: timeSeriesData, isLoading: timeSeriesLoading } = useTimeSeries(campaignId || undefined);
+  const dateFilters: FilterOptions = {
+    start_date: dateRange.start.toISOString(),
+    end_date: dateRange.end.toISOString(),
+  };
+
+  const { data: metrics, isLoading: metricsLoading, error: metricsError } = useDashboardMetrics(campaignId || undefined, dateFilters);
+  const { data: timeSeriesData, isLoading: timeSeriesLoading } = useTimeSeries(campaignId || undefined, dateFilters);
   const { data: funnelData, isLoading: funnelLoading } = useFunnelData(campaignId || undefined);
   const { data: deviceData, isLoading: deviceLoading } = useDeviceBreakdown(campaignId || undefined);
 
@@ -47,10 +53,10 @@ export function AnalyticsPage() {
         action={
           canExport && campaignId && (
             <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm" icon={<FileText className="h-4 w-4" />} onClick={() => exportPDF.mutate({ campaignId })} loading={exportPDF.isPending}>
+              <Button variant="outline" size="sm" icon={<FileText className="h-4 w-4" />} onClick={() => exportPDF.mutate({ campaignId, filters: dateFilters })} loading={exportPDF.isPending}>
                 Export PDF
               </Button>
-              <Button variant="outline" size="sm" icon={<Download className="h-4 w-4" />} onClick={() => exportCSV.mutate({ campaignId })} loading={exportCSV.isPending}>
+              <Button variant="outline" size="sm" icon={<Download className="h-4 w-4" />} onClick={() => exportCSV.mutate({ campaignId, filters: dateFilters })} loading={exportCSV.isPending}>
                 Export CSV
               </Button>
             </div>

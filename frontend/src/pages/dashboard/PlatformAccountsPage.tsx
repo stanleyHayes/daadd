@@ -5,6 +5,7 @@ import api from '@/lib/api';
 import { Button } from '@/components/ui/Button';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Card } from '@/components/ui/Card';
+import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { MetricsCard } from '@/components/analytics/MetricsCard';
 import { Plug, AlertTriangle, Globe } from 'lucide-react';
 
@@ -31,7 +32,7 @@ const PLATFORMS = [
 
 export function PlatformAccountsPage() {
   // Fetch platform accounts
-  const { data: accounts = [], refetch } = useQuery({
+  const { data: accounts = [], isLoading, error, refetch } = useQuery({
     queryKey: ['platform-accounts'],
     queryFn: async () => {
       const response = await api.get('/platform-accounts');
@@ -80,6 +81,38 @@ export function PlatformAccountsPage() {
 
   const getConnectedPlatforms = () => accounts.map(a => a.platform);
   const connectedPlatforms = getConnectedPlatforms();
+
+  if (isLoading) {
+    return (
+      <div className="space-y-6">
+        <PageHeader
+          title="Platform Accounts"
+          subtitle="Connect your ad platform accounts to enable metrics sync"
+        />
+        <LoadingSpinner size="lg" className="py-16" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="space-y-6">
+        <PageHeader
+          title="Platform Accounts"
+          subtitle="Connect your ad platform accounts to enable metrics sync"
+        />
+        <Card className="p-8">
+          <div className="text-center">
+            <AlertTriangle className="h-8 w-8 text-danger-500 mx-auto mb-2" />
+            <p className="text-sm text-gray-500 dark:text-slate-400 mb-4">Failed to load platform accounts.</p>
+            <Button variant="outline" size="sm" onClick={() => refetch()}>
+              Retry
+            </Button>
+          </div>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

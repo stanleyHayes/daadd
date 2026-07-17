@@ -11,9 +11,9 @@ import { TimeSeriesChart } from '@/components/analytics/TimeSeriesChart';
 import { AICreativeGenerator } from '@/components/ai/AICreativeGenerator';
 import { ABTestManager } from '@/components/ab-testing/ABTestManager';
 import { BudgetPacingIndicator } from '@/components/budget/BudgetPacingIndicator';
-import { useCampaign } from '@/hooks/useCampaigns';
+import { useCampaign, useToggleAI } from '@/hooks/useCampaigns';
 import { useDashboardMetrics, useTimeSeries } from '@/hooks/useAnalytics';
-import { formatCurrency, formatNumber, formatPercentage, formatDate } from '@/lib/utils';
+import { cn, formatCurrency, formatNumber, formatPercentage, formatDate } from '@/lib/utils';
 import { Eye, MousePointerClick, DollarSign, TrendingUp, Calendar, BarChart3, Map, Brain, Users, Sparkles, ArrowLeft, AlertTriangle } from 'lucide-react';
 import { PageTransition } from '@/components/ui/PageTransition';
 import { Skeleton, SkeletonText, SkeletonMetric, SkeletonCard } from '@/components/ui/Skeleton';
@@ -36,6 +36,7 @@ export function CampaignDetailPage() {
   const { data: metrics } = useDashboardMetrics(id);
   const { data: timeSeriesData, isLoading: tsLoading } = useTimeSeries(id);
   const [activeTab, setActiveTab] = useState('overview');
+  const toggleAI = useToggleAI();
   const user = useAuthStore((s) => s.user);
   const userRole = user?.role || 'end_user';
   const canToggleAI = hasPermission(userRole, 'CAMPAIGN_TOGGLE_AI');
@@ -90,6 +91,15 @@ export function CampaignDetailPage() {
   }
 
   const c = campaign;
+
+  const handleToggleAI = async () => {
+    try {
+      await toggleAI.mutateAsync({ id: c.id, enabled: !c.ai_optimization_enabled, mode: c.ai_mode });
+      toast.success(`AI optimization ${c.ai_optimization_enabled ? 'disabled' : 'enabled'}`);
+    } catch {
+      toast.error('Failed to update AI optimization');
+    }
+  };
 
   return (
     <PageTransition>
@@ -182,7 +192,19 @@ export function CampaignDetailPage() {
               </div>
               <div>
                 <p className="text-xs text-gray-500 dark:text-slate-400 uppercase font-medium">AI Optimization</p>
-                <p className="text-sm text-gray-900 dark:text-slate-200 mt-1">{c.ai_optimization_enabled ? 'Enabled' : 'Disabled'}</p>
+                <div className="flex items-center gap-2 mt-1">
+                  <p className="text-sm text-gray-900 dark:text-slate-200">{c.ai_optimization_enabled ? 'Enabled' : 'Disabled'}</p>
+                  {canToggleAI && (
+                    <button
+                      onClick={handleToggleAI}
+                      disabled={toggleAI.isPending}
+                      title="Toggle AI optimization"
+                      className={cn('w-9 h-5 rounded-full relative cursor-pointer transition-colors disabled:opacity-50', c.ai_optimization_enabled ? 'bg-primary-600' : 'bg-gray-300 dark:bg-slate-600')}
+                    >
+                      <div className={cn('absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform', c.ai_optimization_enabled ? 'translate-x-4' : 'translate-x-0.5')} />
+                    </button>
+                  )}
+                </div>
               </div>
               <div>
                 <p className="text-xs text-gray-500 dark:text-slate-400 uppercase font-medium">Reward Value</p>

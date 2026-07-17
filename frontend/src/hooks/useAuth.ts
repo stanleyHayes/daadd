@@ -18,6 +18,7 @@ interface RegisterPayload {
 
 interface LoginResponse {
   token: string;
+  refreshToken: string;
   user: User;
 }
 
@@ -30,7 +31,7 @@ export function useLogin() {
       return res.data.data;
     },
     onSuccess: (data) => {
-      login(data.user, data.token);
+      login(data.user, data.token, data.refreshToken);
     },
   });
 }
@@ -44,7 +45,7 @@ export function useRegister() {
       return res.data.data;
     },
     onSuccess: (data) => {
-      login(data.user, data.token);
+      login(data.user, data.token, data.refreshToken);
     },
   });
 }

@@ -20,6 +20,8 @@ import { spacing, borderRadius } from '@/theme/spacing';
 import { typography, fontFamily } from '@/theme/typography';
 import { useTranslation } from 'react-i18next';
 
+// Mirrors the backend default in backend/src/routes/redemption.ts (TOKEN_VALUE env, default 0.05);
+// the POST /redemption/qr response does not include the token value, so keep this in sync if it changes.
 const TOKEN_VALUE = 0.05; // 1 token = $0.05
 
 export default function RedeemScreen() {

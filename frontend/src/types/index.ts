@@ -203,6 +203,8 @@ export interface BenchmarkData {
   campaign_id: string;
   industry: Industry;
   advertiser_count: number;
+  /** True when <3 advertisers in the industry — aggregates withheld (privacy gate). */
+  gated?: boolean;
   comparisons: BenchmarkComparison[];
   format_performance: {
     format: string;

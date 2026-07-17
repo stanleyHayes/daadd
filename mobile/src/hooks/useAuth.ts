@@ -14,7 +14,7 @@ export function useLogin() {
       return res.data.data;
     },
     onSuccess: async (data) => {
-      await login(data.user, data.token);
+      await login(data.user, data.token, data.refreshToken);
       queryClient.invalidateQueries({ queryKey: ['currentUser'] });
     },
   });
@@ -30,7 +30,7 @@ export function useRegister() {
       return res.data.data;
     },
     onSuccess: async (data) => {
-      await login(data.user, data.token);
+      await login(data.user, data.token, data.refreshToken);
       queryClient.invalidateQueries({ queryKey: ['currentUser'] });
     },
   });

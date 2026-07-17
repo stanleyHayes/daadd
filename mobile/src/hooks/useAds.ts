@@ -14,8 +14,9 @@ export function useAds(filters?: AdFilters) {
       if (filters?.limit) params.limit = String(filters.limit);
 
       const res = await api.get('/ads', { params });
-      return res.data.data
-        ? { data: res.data.data, total: res.data.total, page: res.data.page, limit: res.data.limit, hasMore: res.data.page * res.data.limit < res.data.total }
+      const pagination = res.data.pagination;
+      return res.data.data && pagination
+        ? { data: res.data.data, total: pagination.total, page: pagination.page, limit: pagination.limit, hasMore: pagination.hasNext ?? pagination.page * pagination.limit < pagination.total }
         : { data: [], total: 0, page: 1, limit: 20, hasMore: false };
     },
     staleTime: 2 * 60 * 1000,
@@ -66,8 +67,9 @@ export function useInfiniteAds(filters?: AdFilters) {
       if (filters?.sort) params.sort = filters.sort;
 
       const res = await api.get('/ads', { params });
-      return res.data.data
-        ? { data: res.data.data, total: res.data.total, page: res.data.page, limit: res.data.limit, hasMore: res.data.page * res.data.limit < res.data.total }
+      const pagination = res.data.pagination;
+      return res.data.data && pagination
+        ? { data: res.data.data, total: pagination.total, page: pagination.page, limit: pagination.limit, hasMore: pagination.hasNext ?? pagination.page * pagination.limit < pagination.total }
         : { data: [], total: 0, page: 1, limit: 20, hasMore: false };
     },
     getNextPageParam: (lastPage) => {

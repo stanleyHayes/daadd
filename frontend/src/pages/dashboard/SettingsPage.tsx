@@ -101,7 +101,7 @@ export function SettingsPage() {
  const handleSaveProfile = async () => {
  if (!user) return;
  try {
- await updateProfileMutation.mutateAsync({ name: profileForm.name, email: profileForm.email });
+ await updateProfileMutation.mutateAsync({ name: profileForm.name });
  toast.success('Profile updated');
  } catch {
  toast.error('Failed to update profile');
@@ -178,7 +178,7 @@ export function SettingsPage() {
  </div>
  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
  <Input label="Full Name" value={profileForm.name} onChange={(e) => setProfileForm({ ...profileForm, name: e.target.value })} />
- <Input label="Email" type="email" value={profileForm.email} onChange={(e) => setProfileForm({ ...profileForm, email: e.target.value })} />
+ <Input label="Email" type="email" value={profileForm.email} disabled hint="Email address cannot be changed" />
  </div>
  <CardFooter>
  <Button onClick={handleSaveProfile} disabled={updateProfileMutation.isPending}>

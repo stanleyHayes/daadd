@@ -70,7 +70,7 @@ export function useToggleAI() {
 
   return useMutation({
     mutationFn: async ({ id, enabled, mode }: { id: string; enabled: boolean; mode?: string }) => {
-      const res = await api.patch<ApiResponse<Campaign>>(`/campaigns/${id}/toggle-ai`, { enabled, mode });
+      const res = await api.post<ApiResponse<Campaign>>(`/campaigns/${id}/toggle-ai`, { enabled, mode });
       return res.data.data;
     },
     onSuccess: (_, variables) => {
@@ -84,7 +84,7 @@ export function useUploadCreative() {
 
   return useMutation({
     mutationFn: async ({ campaignId, formData }: { campaignId: string; formData: FormData }) => {
-      const res = await api.post(`/campaigns/${campaignId}/creatives`, formData, {
+      const res = await api.post(`/campaigns/${campaignId}/creatives/upload`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       return res.data.data;

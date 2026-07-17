@@ -111,8 +111,8 @@ export default function AdDetailScreen() {
 
   const industry = getIndustryById(ad.industry);
 
-  const handleClaimReward = async () => {
-    if (ad.isAgeRestricted && !ageVerified) {
+  const handleClaimReward = async (verified = ageVerified) => {
+    if (ad.isAgeRestricted && !verified) {
       setAgeVerifyError(null);
       setShowAgeGate(true);
       return;
@@ -151,7 +151,7 @@ export default function AdDetailScreen() {
       if (res.data.data?.verified) {
         setAgeVerified(true);
         setShowAgeGate(false);
-        handleClaimReward();
+        handleClaimReward(true);
       } else {
         setAgeVerifyError(t('mobile.adDetail.ageVerifyError'));
       }
@@ -667,7 +667,7 @@ export default function AdDetailScreen() {
         <Animated.View style={[{ flex: 1 }, claimScaleStyle]}>
           <Button
             title={t('mobile.adDetail.claimReward')}
-            onPress={handleClaimReward}
+            onPress={() => handleClaimReward()}
             loading={claimReward.isPending}
             size="lg"
             icon={

@@ -44,13 +44,16 @@ export function useCampaigns(params?: { status?: string; search?: string }) {
       if (params?.search) query.search = params.search;
 
       const res = await api.get('/campaigns', { params: query });
+      const pagination = res.data.pagination;
       return res.data.data
         ? {
             data: res.data.data,
-            total: res.data.total,
-            page: res.data.page,
-            limit: res.data.limit,
-            hasMore: res.data.page * res.data.limit < res.data.total,
+            total: pagination?.total ?? 0,
+            page: pagination?.page ?? 1,
+            limit: pagination?.limit ?? 50,
+            hasMore:
+              pagination?.hasNext ??
+              (pagination ? pagination.page * pagination.limit < pagination.total : false),
           }
         : { data: [], total: 0, page: 1, limit: 50, hasMore: false };
     },

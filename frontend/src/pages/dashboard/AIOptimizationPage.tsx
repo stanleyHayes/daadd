@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardHeader } from '@/components/ui/Card';
 import { MetricsCard } from '@/components/analytics/MetricsCard';
 import { PageHeader } from '@/components/layout/PageHeader';
@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Select } from '@/components/ui/Select';
 import { cn, formatDate } from '@/lib/utils';
-import { useRecommendations, useApplyRecommendation, useAIAuditLog, useDismissRecommendation } from '@/hooks/useAI';
+import { useRecommendations, useApplyRecommendation, useAIAuditLog, useDismissRecommendation, useUpdateAIMode } from '@/hooks/useAI';
 import { useCampaigns } from '@/hooks/useCampaigns';
 import { TrendingUp, DollarSign, Image, Smartphone, Check, X, Brain, AlertTriangle, CheckCircle, XCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -41,9 +41,33 @@ export function AIOptimizationPage() {
   const { data: auditLog, isLoading: logLoading } = useAIAuditLog(campaignId || undefined);
   const applyMutation = useApplyRecommendation();
   const dismissMutation = useDismissRecommendation();
+  const updateAIModeMutation = useUpdateAIMode();
+
+  // Reflect the selected campaign's current AI mode
+  useEffect(() => {
+    const selected = campaignsData?.data?.find((c) => c.id === campaignId);
+    if (selected?.ai_mode) {
+      setAiMode(selected.ai_mode);
+    }
+  }, [campaignId, campaignsData?.data]);
 
   const recs = recommendations || [];
   const logs = auditLog || [];
+
+  const handleAIModeChange = async (mode: 'auto_adjust' | 'recommendation_only') => {
+    if (mode === aiMode || updateAIModeMutation.isPending) return;
+    if (!campaignId) {
+      setAiMode(mode);
+      return;
+    }
+    try {
+      await updateAIModeMutation.mutateAsync({ campaignId, mode });
+      setAiMode(mode);
+      toast.success('AI mode updated');
+    } catch {
+      toast.error('Failed to update AI mode');
+    }
+  };
 
   const handleApply = async (id: string) => {
     if (!campaignId) return;
@@ -95,14 +119,16 @@ export function AIOptimizationPage() {
           <label className="block text-xs font-medium text-gray-500 dark:text-slate-400 mb-1">AI Mode</label>
           <div className="flex rounded-lg border border-gray-300 dark:border-slate-600 overflow-hidden">
             <button
-              className={cn('px-4 py-2 text-sm font-medium transition-colors whitespace-nowrap', aiMode === 'auto_adjust' ? 'bg-secondary-600 text-white' : 'bg-white dark:bg-slate-800 text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-700')}
-              onClick={() => setAiMode('auto_adjust')}
+              className={cn('px-4 py-2 text-sm font-medium transition-colors whitespace-nowrap disabled:opacity-50', aiMode === 'auto_adjust' ? 'bg-secondary-600 text-white' : 'bg-white dark:bg-slate-800 text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-700')}
+              onClick={() => handleAIModeChange('auto_adjust')}
+              disabled={updateAIModeMutation.isPending}
             >
               Auto-Adjust
             </button>
             <button
-              className={cn('px-4 py-2 text-sm font-medium transition-colors whitespace-nowrap', aiMode === 'recommendation_only' ? 'bg-secondary-600 text-white' : 'bg-white dark:bg-slate-800 text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-700')}
-              onClick={() => setAiMode('recommendation_only')}
+              className={cn('px-4 py-2 text-sm font-medium transition-colors whitespace-nowrap disabled:opacity-50', aiMode === 'recommendation_only' ? 'bg-secondary-600 text-white' : 'bg-white dark:bg-slate-800 text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-700')}
+              onClick={() => handleAIModeChange('recommendation_only')}
+              disabled={updateAIModeMutation.isPending}
             >
               Recommendation Only
             </button>
