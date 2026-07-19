@@ -58,7 +58,7 @@ export default function HomeScreen() {
               {t('mobile.home.welcomeTo')}
             </Text>
             <Text style={[typography.displaySmall, { color: colors.primary }]}>
-              DAADD
+              SmartDeals
             </Text>
           </View>
           <TouchableOpacity

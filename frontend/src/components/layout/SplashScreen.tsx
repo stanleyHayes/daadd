@@ -27,7 +27,7 @@ export function SplashScreen() {
         </div>
 
         <h1 className="text-3xl font-bold tracking-tight text-primary-900 dark:text-white sm:text-4xl">
-          DAADD
+          SmartDeals
         </h1>
         <p className="mt-2 text-sm font-medium text-primary-600 dark:text-primary-200">
           AI-powered campaign intelligence

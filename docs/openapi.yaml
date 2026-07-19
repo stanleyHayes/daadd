@@ -1,14 +1,14 @@
 openapi: 3.0.3
 info:
-  title: DAADD API
+  title: SmartDeals API
   version: 1.0.0
   description: |
-    DAADD is a full-featured digital advertising and analytics platform.
+    SmartDeals is a full-featured digital advertising and analytics platform.
     It provides campaign management, real-time event tracking, AI-driven optimization,
     anomaly detection, cross-device attribution, benchmarking, storytelling reports,
     viewer reward programs, team collaboration, and notification services.
   contact:
-    name: DAADD Engineering
+    name: SmartDeals Engineering
     email: engineering@daadd.io
 
 servers:

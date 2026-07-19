@@ -1,4 +1,4 @@
-# DAADD Platform
+# SmartDeals Platform
 ## Comprehensive Feature Documentation & Roadmap
 **v2.1 - May 2026 Compliance Sprint Status**
 
@@ -15,7 +15,7 @@
 
 ## 🎯 EXECUTIVE SUMMARY
 
-DAADD is a comprehensive two-sided AdTech platform enabling advertisers to manage campaigns and consumers to earn rewards. The platform has been **fully implemented with 30+ core features across backend, frontend, and mobile**, with **compliance sprint completed** (Conventional Commits, CI/CD, Email Service, Campaign Lifecycle Automation, Validation Middleware, Conversion Pixel, Campaign Edit Page).
+SmartDeals is a comprehensive two-sided AdTech platform enabling advertisers to manage campaigns and consumers to earn rewards. The platform has been **fully implemented with 30+ core features across backend, frontend, and mobile**, with **compliance sprint completed** (Conventional Commits, CI/CD, Email Service, Campaign Lifecycle Automation, Validation Middleware, Conversion Pixel, Campaign Edit Page).
 
 **Current Status:** Production-Ready with Full Compliance ✅  
 **Coverage:** Backend (21+ services), Frontend (23+ pages), Mobile (8+ screens)  
@@ -507,7 +507,7 @@ This sprint focused on establishing production-grade infrastructure, quality sta
 - 🔌 Export audiences to 5+ platforms seamlessly
 
 **Business Impact:**
-- Core differentiator for 2026 (only DAADD + enterprise tools have this)
+- Core differentiator for 2026 (only SmartDeals + enterprise tools have this)
 - Command premium pricing for data features
 - Become essential infrastructure (like Klaviyo for email)
 - Upsell: "Managed CDP" service for mid-market
@@ -612,7 +612,7 @@ This sprint focused on establishing production-grade infrastructure, quality sta
 - 📊 Transparent pricing (avoid middlemen)
 
 **Business Impact:**
-- Programmatic is $110B+ market; DAADD currently has 0% share
+- Programmatic is $110B+ market; SmartDeals currently has 0% share
 - Positions as "full-stack ad platform" (not just campaign manager)
 - Higher deal sizes (programmatic budgets > search/social)
 - Revenue: Take 15% margin on programmatic spend
@@ -716,7 +716,7 @@ This sprint focused on establishing production-grade infrastructure, quality sta
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│ 2026-2027 DAADD Feature Roadmap                             │
+│ 2026-2027 SmartDeals Feature Roadmap                             │
 └─────────────────────────────────────────────────────────────┘
 
 Q1 2026 (✅ COMPLETE)
@@ -789,7 +789,7 @@ Q4 2026
 
 ## 🎯 COMPETITIVE ADVANTAGES
 
-| Feature | Google Ads | Meta Ads | TikTok Ads | **DAADD** |
+| Feature | Google Ads | Meta Ads | TikTok Ads | **SmartDeals** |
 |---------|-----------|----------|-----------|----------|
 | AI Creative Gen | ✓ (2024) | ✓ (2024) | ✗ | ✓ (Q1 2026) |
 | First-Party CDP | ✗ | ✗ | ✗ | ✓ (Q2 2026) |
@@ -800,7 +800,7 @@ Q4 2026
 | **SMB Price Point** | High ($$) | Medium ($) | Low ($) | **Ultra-Low (Free)** |
 | **Ease of Use** | Medium | Easy | Easy | **Very Easy** |
 
-**DAADD's Unique Positioning:**
+**SmartDeals's Unique Positioning:**
 1. **Only platform offering user rewards** (engagement + data)
 2. **Cheapest entry point** (free tier for SMBs)
 3. **Full-stack** (from creative → analytics → activation)
@@ -898,7 +898,7 @@ Connected TV / Audio / RMN
 
 ## 🎓 CONCLUSION
 
-DAADD has achieved **full feature parity with production platforms** on core functionality AND completed **4 strategic enhancements + CDP Phase 1 foundations** in Q1 2026. The platform now includes:
+SmartDeals has achieved **full feature parity with production platforms** on core functionality AND completed **4 strategic enhancements + CDP Phase 1 foundations** in Q1 2026. The platform now includes:
 
 ✅ **29 Implemented Features** (multi-language creatives, A/B testing, campaign cloning, budget alerts, CDP foundations)
 ✅ **18 Data Entities** (campaigns, creatives, audiences, profiles, etc.)
@@ -917,7 +917,7 @@ DAADD has achieved **full feature parity with production platforms** on core fun
 4. 📊 Unified Dashboard (Q4 2026)
 5. 🏷️ RTB Infrastructure (2027)
 
-This roadmap positions DAADD as the **"full-stack ad platform for SMBs"** by 2027, with **first-mover advantage in privacy-first CDP**.
+This roadmap positions SmartDeals as the **"full-stack ad platform for SMBs"** by 2027, with **first-mover advantage in privacy-first CDP**.
 
 ---
 

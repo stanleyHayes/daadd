@@ -1,7 +1,7 @@
 {
   "info": {
-    "name": "DAADD API",
-    "description": "Complete API collection for the DAADD (Digital Ad Analytics & Dynamic Dashboard) platform. Covers authentication, campaign management, analytics, event tracking, AI optimization, anomaly detection, benchmarking, attribution, storytelling, rewards, teams, and notifications.",
+    "name": "SmartDeals API",
+    "description": "Complete API collection for the SmartDeals platform. Covers authentication, campaign management, analytics, event tracking, AI optimization, anomaly detection, benchmarking, attribution, storytelling, rewards, teams, and notifications.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_postman_id": "daadd-api-collection"
   },

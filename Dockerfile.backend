@@ -1,4 +1,4 @@
-# Render production Dockerfile for the DAADD backend
+# Render production Dockerfile for the SmartDeals backend
 # Build context must be the repo root so workspace packages are accessible.
 
 FROM node:20-alpine AS base

@@ -1,4 +1,4 @@
-# 🚀 DAADD Deployment Requirements
+# 🚀 SmartDeals Deployment Requirements
 
 **Last Updated:** May 19, 2026  
 **Status:** Production-Ready
@@ -52,7 +52,7 @@ REDIS_URL=redis://:password@host:6379  # alternative single-var format
 # ===== SERVER =====
 NODE_ENV=production
 PORT=4000
-APP_NAME=DAADD
+APP_NAME=SmartDeals
 
 # ===== AUTHENTICATION =====
 JWT_SECRET=generate-a-long-random-string-here-min-32-chars
@@ -116,7 +116,7 @@ STRIPE_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxx
 
 ```bash
 VITE_API_URL=https://api.yourdomain.com/api/v1
-VITE_APP_NAME=DAADD
+VITE_APP_NAME=SmartDeals
 ```
 
 ### Mobile (EAS Build config)
@@ -124,7 +124,7 @@ VITE_APP_NAME=DAADD
 ```json
 {
   "expo": {
-    "name": "DAADD",
+    "name": "SmartDeals",
     "build": {
       "production": {
         "env": {

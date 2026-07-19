@@ -1,6 +1,6 @@
 {
   "header": {
-    "logo": "DAADD",
+    "logo": "SmartDeals",
     "tagline": "Gerenciamento Inteligente de Anúncios",
     "nav": {
       "home": "Início",
@@ -19,7 +19,7 @@
       "cta": "Teste Gratuito"
     },
     "features": {
-      "title": "Por Que Escolher DAADD?",
+      "title": "Por Que Escolher SmartDeals?",
       "ai": {
         "title": "Otimização Alimentada por IA",
         "desc": "Ajustes automáticos de lances, direcionamento de audiência e otimização criativa com base em dados de desempenho em tempo real."
@@ -35,7 +35,7 @@
     }
   },
   "blog": {
-    "title": "Blog DAADD",
+    "title": "Blog SmartDeals",
     "subtitle": "Insights, atualizações e histórias do mundo da publicidade inteligente.",
     "allPosts": "Todos os Artigos",
     "noResults": "Nenhum artigo encontrado nesta categoria.",
@@ -49,7 +49,7 @@
     }
   },
   "footer": {
-    "copyright": "© 2026 DAADD. Todos os direitos reservados.",
+    "copyright": "© 2026 SmartDeals. Todos os direitos reservados.",
     "links": {
       "privacy": "Política de Privacidade",
       "terms": "Termos de Serviço",

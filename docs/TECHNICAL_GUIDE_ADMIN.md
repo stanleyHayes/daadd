@@ -1,6 +1,6 @@
-# DAADD — Technical Guide for Admins
+# SmartDeals — Technical Guide for Admins
 
-**Platform:** DAADD (Two-Sided AdTech Platform)  
+**Platform:** SmartDeals (Two-Sided AdTech Platform)  
 **Role:** Admin (Platform Administration & Team Management)  
 **Last Updated:** May 2026  
 **Audience:** Platform administrators, team leads, account managers

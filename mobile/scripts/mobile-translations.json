@@ -33,7 +33,7 @@
       "signIn": "Iniciar sesión",
       "noAccount": "¿No tienes una cuenta?",
       "createAccount": "Crear cuenta",
-      "createAccountSubtitle": "Únete a DAADD y empieza a ganar recompensas viendo anuncios",
+      "createAccountSubtitle": "Únete a SmartDeals y empieza a ganar recompensas viendo anuncios",
       "fullName": "Nombre completo",
       "fullNamePlaceholder": "Ingresa tu nombre completo",
       "createPasswordPlaceholder": "Crea una contraseña",
@@ -133,7 +133,7 @@
         "language": "Idioma",
         "privacy": "Privacidad",
         "help": "Ayuda y soporte",
-        "about": "Acerca de DAADD"
+        "about": "Acerca de SmartDeals"
       },
       "theme": {
         "light": "Claro",
@@ -164,7 +164,7 @@
       "claimedButton": "¡Genial!",
       "claimError": "No se pudo reclamar la recompensa. Inténtalo de nuevo.",
       "ageVerifyError": "Código de verificación inválido o expirado. Inténtalo de nuevo.",
-      "shareMessage": "Mira este anuncio en DAADD: {{title}} - ¡Gana ${{amount}}!",
+      "shareMessage": "Mira este anuncio en SmartDeals: {{title}} - ¡Gana ${{amount}}!",
       "advertiserFallback": "Anunciante"
     },
     "ageGate": {
@@ -394,7 +394,7 @@
       "signIn": "Se connecter",
       "noAccount": "Vous n'avez pas de compte ?",
       "createAccount": "Créer un compte",
-      "createAccountSubtitle": "Rejoignez DAADD et gagnez des récompenses en regardant des pubs",
+      "createAccountSubtitle": "Rejoignez SmartDeals et gagnez des récompenses en regardant des pubs",
       "fullName": "Nom complet",
       "fullNamePlaceholder": "Saisissez votre nom complet",
       "createPasswordPlaceholder": "Créez un mot de passe",
@@ -494,7 +494,7 @@
         "language": "Langue",
         "privacy": "Confidentialité",
         "help": "Aide et support",
-        "about": "À propos d'DAADD"
+        "about": "À propos d'SmartDeals"
       },
       "theme": {
         "light": "Clair",
@@ -525,7 +525,7 @@
       "claimedButton": "Super !",
       "claimError": "Impossible de réclamer la récompense. Veuillez réessayer.",
       "ageVerifyError": "Code de vérification invalide ou expiré. Veuillez réessayer.",
-      "shareMessage": "Découvrez cette pub sur DAADD : {{title}} - Gagnez ${{amount}} !",
+      "shareMessage": "Découvrez cette pub sur SmartDeals : {{title}} - Gagnez ${{amount}} !",
       "advertiserFallback": "Annonceur"
     },
     "ageGate": {
@@ -755,7 +755,7 @@
       "signIn": "Anmelden",
       "noAccount": "Noch kein Konto?",
       "createAccount": "Konto erstellen",
-      "createAccountSubtitle": "Tritt DAADD bei und verdiene Prämien durch das Ansehen von Anzeigen",
+      "createAccountSubtitle": "Tritt SmartDeals bei und verdiene Prämien durch das Ansehen von Anzeigen",
       "fullName": "Vollständiger Name",
       "fullNamePlaceholder": "Gib deinen vollständigen Namen ein",
       "createPasswordPlaceholder": "Erstelle ein Passwort",
@@ -855,7 +855,7 @@
         "language": "Sprache",
         "privacy": "Datenschutz",
         "help": "Hilfe & Support",
-        "about": "Über DAADD"
+        "about": "Über SmartDeals"
       },
       "theme": {
         "light": "Hell",
@@ -886,7 +886,7 @@
       "claimedButton": "Super!",
       "claimError": "Prämie konnte nicht eingefordert werden. Bitte versuche es erneut.",
       "ageVerifyError": "Ungültiger oder abgelaufener Bestätigungscode. Bitte versuche es erneut.",
-      "shareMessage": "Schau dir diese Anzeige auf DAADD an: {{title}} - Verdiene ${{amount}}!",
+      "shareMessage": "Schau dir diese Anzeige auf SmartDeals an: {{title}} - Verdiene ${{amount}}!",
       "advertiserFallback": "Werbetreibender"
     },
     "ageGate": {
@@ -1116,7 +1116,7 @@
       "signIn": "Entrar",
       "noAccount": "Não tem uma conta?",
       "createAccount": "Criar conta",
-      "createAccountSubtitle": "Junte-se à DAADD e comece a ganhar recompensas assistindo anúncios",
+      "createAccountSubtitle": "Junte-se à SmartDeals e comece a ganhar recompensas assistindo anúncios",
       "fullName": "Nome completo",
       "fullNamePlaceholder": "Digite seu nome completo",
       "createPasswordPlaceholder": "Crie uma senha",
@@ -1216,7 +1216,7 @@
         "language": "Idioma",
         "privacy": "Privacidade",
         "help": "Ajuda e suporte",
-        "about": "Sobre a DAADD"
+        "about": "Sobre a SmartDeals"
       },
       "theme": {
         "light": "Claro",
@@ -1247,7 +1247,7 @@
       "claimedButton": "Ótimo!",
       "claimError": "Não foi possível resgatar a recompensa. Tente novamente.",
       "ageVerifyError": "Código de verificação inválido ou expirado. Tente novamente.",
-      "shareMessage": "Confira este anúncio na DAADD: {{title}} - Ganhe ${{amount}}!",
+      "shareMessage": "Confira este anúncio na SmartDeals: {{title}} - Ganhe ${{amount}}!",
       "advertiserFallback": "Anunciante"
     },
     "ageGate": {

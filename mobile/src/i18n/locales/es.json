@@ -1,6 +1,6 @@
 {
   "header": {
-    "logo": "DAADD",
+    "logo": "SmartDeals",
     "tagline": "Gestión Inteligente de Anuncios",
     "nav": {
       "home": "Inicio",
@@ -19,7 +19,7 @@
       "cta": "Prueba Gratuita"
     },
     "features": {
-      "title": "¿Por qué elegir DAADD?",
+      "title": "¿Por qué elegir SmartDeals?",
       "ai": {
         "title": "Optimización Impulsada por IA",
         "desc": "Ajustes automáticos de ofertas, orientación de audiencia y optimización creativa basada en datos de rendimiento en tiempo real."
@@ -35,7 +35,7 @@
     }
   },
   "blog": {
-    "title": "Blog de DAADD",
+    "title": "Blog de SmartDeals",
     "subtitle": "Información, actualizaciones e historias del mundo de la publicidad inteligente.",
     "allPosts": "Todos los Artículos",
     "noResults": "No se encontraron artículos en esta categoría.",
@@ -49,7 +49,7 @@
     }
   },
   "footer": {
-    "copyright": "© 2026 DAADD. Todos los derechos reservados.",
+    "copyright": "© 2026 SmartDeals. Todos los derechos reservados.",
     "links": {
       "privacy": "Política de Privacidad",
       "terms": "Términos de Servicio",
@@ -90,7 +90,7 @@
       "signIn": "Iniciar sesión",
       "noAccount": "¿No tienes una cuenta?",
       "createAccount": "Crear cuenta",
-      "createAccountSubtitle": "Únete a DAADD y empieza a ganar recompensas viendo anuncios",
+      "createAccountSubtitle": "Únete a SmartDeals y empieza a ganar recompensas viendo anuncios",
       "fullName": "Nombre completo",
       "fullNamePlaceholder": "Ingresa tu nombre completo",
       "createPasswordPlaceholder": "Crea una contraseña",
@@ -190,7 +190,7 @@
         "language": "Idioma",
         "privacy": "Privacidad",
         "help": "Ayuda y soporte",
-        "about": "Acerca de DAADD"
+        "about": "Acerca de SmartDeals"
       },
       "theme": {
         "light": "Claro",
@@ -221,7 +221,7 @@
       "claimedButton": "¡Genial!",
       "claimError": "No se pudo reclamar la recompensa. Inténtalo de nuevo.",
       "ageVerifyError": "Código de verificación inválido o expirado. Inténtalo de nuevo.",
-      "shareMessage": "Mira este anuncio en DAADD: {{title}} - ¡Gana ${{amount}}!",
+      "shareMessage": "Mira este anuncio en SmartDeals: {{title}} - ¡Gana ${{amount}}!",
       "advertiserFallback": "Anunciante"
     },
     "ageGate": {

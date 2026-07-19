@@ -1,4 +1,4 @@
-# DAADD Platform — Complete Technical Guide
+# SmartDeals Platform — Complete Technical Guide
 **For Advertisers, Consumers, Developers, Admins & Merchants**
 
 **Last Updated:** May 17, 2026  
@@ -22,7 +22,7 @@
 
 ## 🎯 PLATFORM OVERVIEW
 
-**DAADD** is a two-sided AdTech platform where:
+**SmartDeals** is a two-sided AdTech platform where:
 - **Advertisers** create campaigns, manage budgets, and track performance across Google Ads, Meta, TikTok, LinkedIn, and Pinterest
 - **Consumers** view ads and earn rewards (USD balance)
 - **Developers** integrate the platform into their systems via REST API
@@ -1455,4 +1455,4 @@ app.post('/webhooks/daadd', async (req, res) => {
 
 **Document Version:** 2.1  
 **Last Updated:** May 17, 2026  
-**Maintained By:** DAADD Platform Team
+**Maintained By:** SmartDeals Platform Team

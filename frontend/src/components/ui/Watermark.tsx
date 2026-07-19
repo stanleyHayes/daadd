@@ -1,9 +1,9 @@
 import React from 'react';
 
 /**
- * Watermark overlays (the tiled "DAADD" pattern and the corner banners) were
+ * Watermark overlays (the tiled "SmartDeals" pattern and the corner banners) were
  * removed per design request. These components are intentionally no-ops so the
- * existing call sites keep compiling and rendering nothing — no DAADD branding
+ * existing call sites keep compiling and rendering nothing — no SmartDeals branding
  * watermark appears anywhere. The call sites can be cleaned up later.
  */
 

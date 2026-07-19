@@ -1,4 +1,4 @@
-# DAADD — AI Agent Coordination Guide
+# SmartDeals — AI Agent Coordination Guide
 
 > **START HERE.** Master handoff for any AI agent working on this codebase. Describes the tree **as it is** — verified against the code on 2026-07-17. When this file and the code disagree, believe the code and update this file.
 
@@ -6,7 +6,7 @@
 
 ## What You're Working With
 
-**DAADD** is a two-sided AdTech platform (npm-workspaces monorepo: `backend/` + `frontend/` + `mobile/` + `shared/`).
+**SmartDeals** is a two-sided AdTech platform (npm-workspaces monorepo: `backend/` + `frontend/` + `mobile/` + `shared/`).
 
 **Read `ARCHITECTURE.md` first** — it is the authoritative code map. Key facts:
 

@@ -1,6 +1,6 @@
-# DAADD — Technical Guide for Consumers & Users
+# SmartDeals — Technical Guide for Consumers & Users
 
-**Platform:** DAADD (Two-Sided AdTech Platform)  
+**Platform:** SmartDeals (Two-Sided AdTech Platform)  
 **Role:** Consumer/User (Ad Viewer & Reward Earner)  
 **Last Updated:** May 2026  
 **Audience:** Mobile and web users engaging with ads and earning rewards
@@ -27,7 +27,7 @@
 
 ### What You Can Do as a Consumer
 
-DAADD lets you:
+SmartDeals lets you:
 
 - **View ads and earn rewards** — See sponsored content and get paid for engagement
 - **Claim QR-based rewards** — Use special codes to redeem offers at partner merchants
@@ -39,7 +39,7 @@ DAADD lets you:
 
 ### Age Requirements
 
-To use DAADD, you must be:
+To use SmartDeals, you must be:
 - **Minimum 13 years old** (with parental consent)
 - **18+ to claim certain rewards** (alcohol, mature products)
 
@@ -51,7 +51,7 @@ Age verification happens during signup and before accessing restricted content.
 
 ### 1. Register Your Account (Mobile)
 
-**In the DAADD mobile app:**
+**In the SmartDeals mobile app:**
 
 1. Tap **"Sign Up"**
 2. Enter your **email address** and **password**
@@ -114,7 +114,7 @@ const googleAuth = await signInWithGoogle({
   redirectUrl: 'https://daadd.example.com/auth/callback'
 });
 
-// DAADD exchanges Google token for DAADD token
+// SmartDeals exchanges Google token for SmartDeals token
 const daaddToken = googleAuth.token;
 localStorage.setItem('daadd_token', daaddToken);
 ```
@@ -132,7 +132,7 @@ const credential = await AppleAuthentication.signInAsync({
   ],
 });
 
-// Use credential.identityToken to get DAADD token
+// Use credential.identityToken to get SmartDeals token
 ```
 
 ### 4. Login to Existing Account
@@ -180,7 +180,7 @@ localStorage.setItem('daadd_token', token);
 
 **Home Screen:**
 
-The DAADD mobile app shows ads in a **Featured Carousel** at the top:
+The SmartDeals mobile app shows ads in a **Featured Carousel** at the top:
 
 1. **Swipe left/right** to browse featured campaigns
 2. **Tap an ad card** to see full details
@@ -229,7 +229,7 @@ When you **tap "View Ad"** on an ad card:
 
 ### Workflow 4: Fatigue & Ad Limits
 
-To keep your experience fresh, DAADD limits how often you see the **same ad**:
+To keep your experience fresh, SmartDeals limits how often you see the **same ad**:
 
 - **Maximum:** 5 views per user per ad, per 24 hours
 - **After limit:** That specific ad won't show in your feed again until 24 hours pass
@@ -370,7 +370,7 @@ Some campaigns offer **physical rewards** via QR codes. You can:
 1. **Receive a QR code** — Advertiser sends you a unique code
 2. **Show code at store** — Scan at participating merchant
 3. **Claim reward** — Receive discount, free item, or cash
-4. **Earn platform reward** — You also get DAADD tokens for redeeming
+4. **Earn platform reward** — You also get SmartDeals tokens for redeeming
 
 ### Workflow: Redeem a QR Code
 
@@ -385,7 +385,7 @@ QR codes come from:
 **Step 2: Open QR Code (Mobile)**
 
 ```javascript
-// User taps a QR code in the DAADD app
+// User taps a QR code in the SmartDeals app
 // System opens QR reader
 // User points camera at code
 // System scans automatically
@@ -416,7 +416,7 @@ console.log(`You'll earn: $${reward}`);
 1. **Show QR code** to cashier (or scan if merchant has QR reader)
 2. **Receive discount/offer** (e.g., $10 off purchase)
 3. **Complete transaction** with merchant
-4. **Reward credited** to your DAADD account
+4. **Reward credited** to your SmartDeals account
 
 **Step 5: Approval (if needed)**
 
@@ -424,7 +424,7 @@ Some redemptions require **merchant approval**:
 
 1. Merchant scans your QR code at register
 2. You complete purchase
-3. Merchant approves in DAADD dashboard
+3. Merchant approves in SmartDeals dashboard
 4. Reward credited to your account (usually within 24 hours)
 
 ### One-Time Use Security
@@ -458,7 +458,7 @@ Visit `https://daadd.example.com/redemptions/history`
 
 ### How Attribution Works
 
-DAADD tracks your journey **across devices** so advertisers can understand how you interact with their ads.
+SmartDeals tracks your journey **across devices** so advertisers can understand how you interact with their ads.
 
 **Example:**
 1. You see a Nike ad on mobile (impression)
@@ -466,11 +466,11 @@ DAADD tracks your journey **across devices** so advertisers can understand how y
 3. You close the app and come back the next day on desktop
 4. You search for Nike shoes on desktop and buy them (conversion)
 
-DAADD attributes this entire journey to the original Nike ad, even though it spanned 2 devices and 1 day. This is called **attribution**.
+SmartDeals attributes this entire journey to the original Nike ad, even though it spanned 2 devices and 1 day. This is called **attribution**.
 
 ### Attribution Window
 
-By default, DAADD tracks interactions for **30 days** after you see an ad.
+By default, SmartDeals tracks interactions for **30 days** after you see an ad.
 
 **Example:**
 - Day 0: You see Airbnb ad on mobile
@@ -483,9 +483,9 @@ By default, DAADD tracks interactions for **30 days** after you see an ad.
 
 ### Device Identity
 
-DAADD links your devices through:
+SmartDeals links your devices through:
 
-1. **Login** — If you're logged in on both devices, DAADD knows it's you
+1. **Login** — If you're logged in on both devices, SmartDeals knows it's you
 2. **Device ID** — Unique identifier on each phone
 3. **IP Address** — Approximate location matching
 4. **Heuristics** — Similar click patterns, user-agent info
@@ -524,7 +524,7 @@ journeys.forEach(j => {
 
 ### What Data We Collect
 
-DAADD collects:
+SmartDeals collects:
 
 | Data | Purpose | Retention |
 |------|---------|-----------|
@@ -537,10 +537,10 @@ DAADD collects:
 
 ### What We Don't Collect
 
-DAADD **never**:
+SmartDeals **never**:
 - Sells your personal data to third parties
 - Stores passwords in plain text (hashed with bcrypt)
-- Tracks across non-DAADD sites (no cross-site tracking)
+- Tracks across non-SmartDeals sites (no cross-site tracking)
 - Collects health, financial, or sensitive data
 - Stores video/audio recordings of you
 
@@ -579,12 +579,12 @@ const response = await fetch('https://daadd.example.com/api/v1/users/user_123/se
 ### Getting the App
 
 **iOS:**
-- Visit App Store and search "DAADD"
+- Visit App Store and search "SmartDeals"
 - Tap **"Get"** and authenticate with Face ID/Apple ID
 - Launch and sign up
 
 **Android:**
-- Visit Google Play and search "DAADD"
+- Visit Google Play and search "SmartDeals"
 - Tap **"Install"**
 - Launch and sign up
 
@@ -622,7 +622,7 @@ const response = await fetch('https://daadd.example.com/api/v1/users/user_123/se
 
 **iOS (Face ID/Touch ID):**
 
-1. After first login, iOS prompts: "Save password for DAADD?"
+1. After first login, iOS prompts: "Save password for SmartDeals?"
 2. Tap **"Save"**
 3. Next time, just tap the app and use Face ID/Touch ID
 
@@ -819,7 +819,7 @@ The web app works on:
 1. Earn at least $5.00 before withdrawing
 2. Verify bank details are correct (routing number, account number)
 3. Wait until next calendar month to withdraw again
-4. Complete any pending verification (email DAADD support)
+4. Complete any pending verification (email SmartDeals support)
 
 ### Issue: Ads Not Loading on Mobile
 
@@ -834,7 +834,7 @@ The web app works on:
 2. Go to **Settings** → **Privacy** and enable required permissions
 3. Force close app: (iOS: swipe up; Android: long-press and close)
 4. Reopen app and try again
-5. Update DAADD to latest version from App Store/Google Play
+5. Update SmartDeals to latest version from App Store/Google Play
 
 ---
 

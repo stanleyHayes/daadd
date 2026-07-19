@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "DAADD",
+    "name": "SmartDeals",
     "slug": "daadd",
     "scheme": "daadd",
     "version": "1.0.0",
@@ -37,7 +37,7 @@
       [
         "expo-camera",
         {
-          "cameraPermission": "Allow DAADD to scan customer QR codes."
+          "cameraPermission": "Allow SmartDeals to scan customer QR codes."
         }
       ],
       "expo-localization"

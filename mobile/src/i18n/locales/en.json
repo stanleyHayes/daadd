@@ -1,6 +1,6 @@
 {
   "header": {
-    "logo": "DAADD",
+    "logo": "SmartDeals",
     "tagline": "Intelligent Ad Management",
     "nav": {
       "home": "Home",
@@ -19,7 +19,7 @@
       "cta": "Start Free Trial"
     },
     "features": {
-      "title": "Why Choose DAADD?",
+      "title": "Why Choose SmartDeals?",
       "ai": {
         "title": "AI-Powered Optimization",
         "desc": "Automatic bid adjustments, audience targeting, and creative optimization based on real-time performance data."
@@ -35,7 +35,7 @@
     }
   },
   "blog": {
-    "title": "DAADD Blog",
+    "title": "SmartDeals Blog",
     "subtitle": "Insights, updates, and stories from the world of intelligent advertising.",
     "allPosts": "All Posts",
     "noResults": "No posts found in this category.",
@@ -49,7 +49,7 @@
     }
   },
   "footer": {
-    "copyright": "© 2026 DAADD. All rights reserved.",
+    "copyright": "© 2026 SmartDeals. All rights reserved.",
     "links": {
       "privacy": "Privacy Policy",
       "terms": "Terms of Service",
@@ -90,7 +90,7 @@
       "signIn": "Sign In",
       "noAccount": "Don't have an account?",
       "createAccount": "Create Account",
-      "createAccountSubtitle": "Join DAADD and start earning rewards by watching ads",
+      "createAccountSubtitle": "Join SmartDeals and start earning rewards by watching ads",
       "fullName": "Full Name",
       "fullNamePlaceholder": "Enter your full name",
       "createPasswordPlaceholder": "Create a password",
@@ -190,7 +190,7 @@
         "language": "Language",
         "privacy": "Privacy",
         "help": "Help & Support",
-        "about": "About DAADD"
+        "about": "About SmartDeals"
       },
       "theme": {
         "light": "Light",
@@ -221,7 +221,7 @@
       "claimedButton": "Great!",
       "claimError": "Failed to claim reward. Please try again.",
       "ageVerifyError": "Invalid or expired verification code. Please try again.",
-      "shareMessage": "Check out this ad on DAADD: {{title}} - Earn ${{amount}}!",
+      "shareMessage": "Check out this ad on SmartDeals: {{title}} - Earn ${{amount}}!",
       "advertiserFallback": "Advertiser"
     },
     "ageGate": {

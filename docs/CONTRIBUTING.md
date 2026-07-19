@@ -1,6 +1,6 @@
-# Contributing to DAADD
+# Contributing to SmartDeals
 
-This document outlines the development workflow, testing standards, and code quality expectations for the DAADD platform.
+This document outlines the development workflow, testing standards, and code quality expectations for the SmartDeals platform.
 
 ## Table of Contents
 

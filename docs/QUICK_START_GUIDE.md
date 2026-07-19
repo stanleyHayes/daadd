@@ -1,4 +1,4 @@
-# DAADD — Quick Start Guide
+# SmartDeals — Quick Start Guide
 
 **Status:** ✅ Fully Operational  
 **Last Updated:** May 19, 2026
@@ -399,5 +399,5 @@ For questions or issues:
 
 ---
 
-**Built with ❤️ on DAADD**  
+**Built with ❤️ on SmartDeals**  
 *Intelligent Ad Management Platform*

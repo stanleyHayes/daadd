@@ -167,7 +167,7 @@ export async function seedDatabase(): Promise<void> {
     {
       user_id: demoUser._id,
       type: 'welcome',
-      title: 'Welcome to DAADD',
+      title: 'Welcome to SmartDeals',
       message: 'Your demo account is ready. Explore campaigns and ads.',
     },
     {

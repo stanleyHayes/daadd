@@ -1,4 +1,4 @@
-# DAADD — Operational Costs Analysis
+# SmartDeals — Operational Costs Analysis
 
 **Analysis Date:** May 2026  
 **Testing Tier:** Basic Paid (no free tier)  

@@ -1,6 +1,6 @@
-# DAADD — Technical Guide for Advertisers
+# SmartDeals — Technical Guide for Advertisers
 
-**Platform:** DAADD (Two-Sided AdTech Platform)  
+**Platform:** SmartDeals (Two-Sided AdTech Platform)  
 **Role:** Advertiser (Campaign Creator & Manager)  
 **Last Updated:** May 2026  
 **Audience:** Non-technical and technical advertisers managing ad campaigns
@@ -27,7 +27,7 @@
 
 ### What You Can Do as an Advertiser
 
-As an advertiser on DAADD, you can:
+As an advertiser on SmartDeals, you can:
 
 - **Create and manage ad campaigns** — Define audience, budget, creative assets, and timelines
 - **Track performance in real-time** — View impressions, clicks, conversions, and ROI metrics
@@ -480,7 +480,7 @@ curl -X GET https://daadd.example.com/api/v1/analytics/heatmap/camp_456 \
 
 ### How AI Optimization Works
 
-DAADD uses machine learning to analyze your campaign performance and suggest improvements. AI reviews:
+SmartDeals uses machine learning to analyze your campaign performance and suggest improvements. AI reviews:
 
 - Click-through rates by device, region, and time
 - Conversion rates by audience segment
@@ -789,7 +789,7 @@ curl -X POST https://daadd.example.com/api/v1/webhooks \
 
 **Receiving Webhook Events:**
 
-When DAADD sends a webhook, it will be a POST request to your URL with a signed payload:
+When SmartDeals sends a webhook, it will be a POST request to your URL with a signed payload:
 
 ```json
 {
@@ -830,14 +830,14 @@ if (verifyWebhookSignature(req.body, req.headers['x-daadd-signature'], process.e
 
 ### Example 2: Set Up Conversion Pixel for Your Merchant Site
 
-If you're a merchant selling products and want to track when users complete a purchase after clicking your DAADD ad:
+If you're a merchant selling products and want to track when users complete a purchase after clicking your SmartDeals ad:
 
 **Add this pixel to your thank-you page:**
 
 ```html
 <!-- After purchase is complete -->
 <script>
-  // Fire conversion pixel to DAADD
+  // Fire conversion pixel to SmartDeals
   const campaignId = 'camp_456';
   const userId = 'user_12345'; // Optional: your user ID
   const conversionValue = 99.99;

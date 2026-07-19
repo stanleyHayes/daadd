@@ -75,10 +75,10 @@ export function CareersPage() {
  </div>
  </section>
 
- {/* Why DAADD */}
+ {/* Why SmartDeals */}
  <section className="py-16">
  <div className="max-w-5xl mx-auto px-4">
- <h2 className="text-2xl font-bold text-gray-900 dark:text-white text-center mb-10">Why DAADD?</h2>
+ <h2 className="text-2xl font-bold text-gray-900 dark:text-white text-center mb-10">Why SmartDeals?</h2>
  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
  {perks.map((perk) => {
  const Icon = perk.icon;
@@ -138,7 +138,7 @@ export function CareersPage() {
  <div className="max-w-3xl mx-auto px-4">
  <h2 className="text-2xl font-bold mb-3">Don't see your role?</h2>
  <p className="text-primary-100 mb-6">
- We are always looking for talented people. Send us your resume and tell us how you would contribute to DAADD.
+ We are always looking for talented people. Send us your resume and tell us how you would contribute to SmartDeals.
  </p>
  <a
  href="mailto:careers@daadd.com"

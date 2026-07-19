@@ -1,6 +1,6 @@
-# DAADD — Technical Guide for Developers
+# SmartDeals — Technical Guide for Developers
 
-**Platform:** DAADD (Two-Sided AdTech Platform)  
+**Platform:** SmartDeals (Two-Sided AdTech Platform)  
 **Role:** Developer (API Integration, Third-Party Tooling, Custom Implementations)  
 **Last Updated:** May 2026  
 **Audience:** Backend engineers, full-stack developers, platform integrators
@@ -105,9 +105,9 @@ All responses follow a consistent envelope:
 
 ### 1. OAuth 2.0 Authorization Code Flow
 
-For third-party integrations (your app requests access to user's DAADD account):
+For third-party integrations (your app requests access to user's SmartDeals account):
 
-**Step 1: Redirect user to DAADD login**
+**Step 1: Redirect user to SmartDeals login**
 
 ```javascript
 const clientId = 'your_client_id';
@@ -164,7 +164,7 @@ const response = await fetch('https://daadd.example.com/api/v1/campaigns', {
 
 ### 2. Service-to-Service Authentication
 
-If your backend needs to call DAADD API on behalf of your service (not a user):
+If your backend needs to call SmartDeals API on behalf of your service (not a user):
 
 **Use Client Credentials Flow:**
 
@@ -644,9 +644,9 @@ Your server receives **HTTPS POST** with signed payload:
 POST /webhooks/daadd HTTP/1.1
 Host: your-server.com
 Content-Type: application/json
-X-DAADD-Signature: sha256=abcdef1234567890
-X-DAADD-Timestamp: 1715953800
-X-DAADD-Event: campaign.budget_threshold
+X-SmartDeals-Signature: sha256=abcdef1234567890
+X-SmartDeals-Timestamp: 1715953800
+X-SmartDeals-Event: campaign.budget_threshold
 
 {
   "event": "campaign.budget_threshold",
@@ -721,22 +721,22 @@ DELETE /api/v1/webhooks/wh_123
 
 ## OAuth Integration
 
-### Common Use Case: Integrate DAADD into Your Dashboard
+### Common Use Case: Integrate SmartDeals into Your Dashboard
 
-If you're building a dashboard tool and want to let users connect their DAADD accounts:
+If you're building a dashboard tool and want to let users connect their SmartDeals accounts:
 
 **Step 1: Register Your App**
 
-Contact DAADD to get:
+Contact SmartDeals to get:
 - `client_id`
 - `client_secret`
 - Approved redirect URIs
 
-**Step 2: Send User to DAADD Login**
+**Step 2: Send User to SmartDeals Login**
 
 ```javascript
 // In your web app
-function connectDAADD() {
+function connectSmartDeals() {
   const params = new URLSearchParams({
     client_id: 'your_client_id',
     redirect_uri: 'https://yourdash.com/auth/daadd/callback',
@@ -836,7 +836,7 @@ async function getValidToken(session) {
 
 ### Server-Side Tracking (Recommended for Merchants)
 
-On your thank-you page after a purchase, POST to DAADD:
+On your thank-you page after a purchase, POST to SmartDeals:
 
 ```html
 <script>
@@ -857,7 +857,7 @@ On your thank-you page after a purchase, POST to DAADD:
 ```html
 <!-- Add to any page where you want to track conversions -->
 <script>
-  window.DAADDPixel = {
+  window.SmartDealsPixel = {
     track: function(campaignId, eventType, metadata) {
       const url = `https://daadd.example.com/api/v1/pixel/${campaignId}?ev=${eventType}`;
       const img = new Image();
@@ -866,7 +866,7 @@ On your thank-you page after a purchase, POST to DAADD:
   };
   
   // Track a purchase
-  DAADDPixel.track('camp_456', 'conversion', { value: 99.99 });
+  SmartDealsPixel.track('camp_456', 'conversion', { value: 99.99 });
 </script>
 ```
 
@@ -1146,7 +1146,7 @@ const app = express();
 
 app.use(express.json());
 
-// Webhook secret from DAADD
+// Webhook secret from SmartDeals
 const WEBHOOK_SECRET = process.env.ADPLATFORM_WEBHOOK_SECRET;
 
 function verifySignature(payload, signature) {
@@ -1235,7 +1235,7 @@ The `X-Request-ID` appears in error responses and server logs, making it easier 
 Use a webhook testing service like Webhook.cool:
 
 1. Get a unique URL from webhook.cool
-2. Register it with DAADD: `POST /webhooks` with your test URL
+2. Register it with SmartDeals: `POST /webhooks` with your test URL
 3. Trigger an event (e.g., reach budget threshold)
 4. View webhook payload on webhook.cool
 

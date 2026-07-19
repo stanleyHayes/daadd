@@ -1,6 +1,6 @@
 {
   "header": {
-    "logo": "DAADD",
+    "logo": "SmartDeals",
     "tagline": "Intelligente Anzeigenverwaltung",
     "nav": {
       "home": "Startseite",
@@ -19,7 +19,7 @@
       "cta": "Kostenlose Testversion"
     },
     "features": {
-      "title": "Warum DAADD Wählen?",
+      "title": "Warum SmartDeals Wählen?",
       "ai": {
         "title": "KI-gestützte Optimierung",
         "desc": "Automatische Gebotsanpassungen, Zielgruppenausrichtung und kreative Optimierung basierend auf Echtzeitleistungsdaten."
@@ -35,7 +35,7 @@
     }
   },
   "blog": {
-    "title": "DAADD Blog",
+    "title": "SmartDeals Blog",
     "subtitle": "Einblicke, Updates und Geschichten aus der Welt der intelligenten Werbung.",
     "allPosts": "Alle Artikel",
     "noResults": "Keine Artikel in dieser Kategorie gefunden.",
@@ -49,7 +49,7 @@
     }
   },
   "footer": {
-    "copyright": "© 2026 DAADD. Alle Rechte vorbehalten.",
+    "copyright": "© 2026 SmartDeals. Alle Rechte vorbehalten.",
     "links": {
       "privacy": "Datenschutzrichtlinie",
       "terms": "Nutzungsbedingungen",

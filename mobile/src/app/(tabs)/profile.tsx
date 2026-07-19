@@ -507,7 +507,7 @@ export default function ProfileScreen() {
             },
           ]}
         >
-          DAADD v1.0.0
+          SmartDeals v1.0.0
         </Text>
       </ScrollView>
 

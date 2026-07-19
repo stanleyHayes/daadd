@@ -2,7 +2,7 @@
   "name": "daadd",
   "version": "1.0.0",
   "private": true,
-  "description": "DAADD - Two-sided AdTech and Analytics Platform",
+  "description": "SmartDeals - Two-sided AdTech and Analytics Platform",
   "workspaces": [
     "shared",
     "backend",

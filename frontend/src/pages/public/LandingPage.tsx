@@ -75,7 +75,7 @@ const testimonials = [
  name: 'Jessica Park',
  role: 'CMO, FitLife',
  avatar: 'JP',
- text: 'We increased conversions by 340% using DAADD\'s AI optimization. The reward-based engagement model completely changed how we think about advertising.',
+ text: 'We increased conversions by 340% using SmartDeals\'s AI optimization. The reward-based engagement model completely changed how we think about advertising.',
  rating: 5,
  },
  {
@@ -362,7 +362,7 @@ export function LandingPage() {
           {[
             {
               id: 3,
-              title: 'How FitLife Increased Conversions by 340% with DAADD',
+              title: 'How FitLife Increased Conversions by 340% with SmartDeals',
               excerpt: 'A deep dive into how a fitness brand leveraged AI optimization and reward-based engagement.',
               date: 'February 28, 2026',
               category: 'Case Studies',
@@ -481,7 +481,7 @@ export function LandingPage() {
               brand: 'FitLife',
               metric: '+340%',
               metricLabel: 'conversion lift',
-              quote: "DAADD's AI optimization and reward-based engagement completely changed how we think about advertising.",
+              quote: "SmartDeals's AI optimization and reward-based engagement completely changed how we think about advertising.",
               author: 'Jessica Park, CMO',
               color: 'from-accent-500 to-accent-600',
             },
@@ -595,7 +595,7 @@ export function LandingPage() {
               a: 'Yes. Creating an advertiser account is free. You only pay for the ad budget you allocate to campaigns, plus a small platform fee based on performance.',
             },
             {
-              q: 'What makes DAADD different from other ad networks?',
+              q: 'What makes SmartDeals different from other ad networks?',
               a: 'We combine AI-powered optimization, privacy-first targeting, geographic heatmaps, and a reward-based engagement model that values user attention.',
             },
             {
@@ -603,7 +603,7 @@ export function LandingPage() {
               a: 'Our machine learning engine analyzes campaign performance in real time and recommends adjustments to bids, budgets, audiences, and creatives to improve ROAS.',
             },
             {
-              q: 'Can I integrate DAADD with my existing ad accounts?',
+              q: 'Can I integrate SmartDeals with my existing ad accounts?',
               a: 'Yes. We offer integrations with major programmatic platforms and ad exchanges. Visit our developer docs to learn more about API and OAuth connections.',
             },
           ].map((item, i) => (
@@ -690,7 +690,7 @@ export function LandingPage() {
  <div className="text-center max-w-2xl mx-auto mb-12">
  <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Loved by Advertisers</h2>
  <p className="text-gray-500 dark:text-slate-400 mt-3">
- See what industry leaders are saying about DAADD.
+ See what industry leaders are saying about SmartDeals.
  </p>
  </div>
 
@@ -909,7 +909,7 @@ export function LandingPage() {
  <div className="relative max-w-3xl mx-auto px-4 text-center">
  <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">Ready to Get Started?</h2>
  <p className="text-primary-100 text-lg mb-10 max-w-xl mx-auto">
- Join thousands of users already earning rewards on DAADD. It takes less than a minute to sign up.
+ Join thousands of users already earning rewards on SmartDeals. It takes less than a minute to sign up.
  </p>
  <div className="flex flex-col sm:flex-row justify-center gap-4">
  <button

@@ -52,7 +52,7 @@ app.get('/health', (_req, res) => {
 });
 
 app.get('/', (_req, res) => {
-  res.json({ message: 'DAADD API', version: '1.0.0' });
+  res.json({ message: 'SmartDeals API', version: '1.0.0' });
 });
 
 app.use('/api/v1', routes);
