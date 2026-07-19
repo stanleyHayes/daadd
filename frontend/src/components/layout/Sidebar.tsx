@@ -235,7 +235,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
       {/* Mobile toggle */}
       <button
         onClick={() => setMobileOpen(true)}
-        className="md:hidden fixed top-4 left-4 z-40 p-2.5 rounded-xl bg-primary-700 text-white shadow-lg"
+        className="md:hidden fixed top-4 left-4 z-50 p-2.5 rounded-xl bg-primary-700 text-white shadow-lg"
         aria-label="Open menu"
       >
         <Menu className="h-5 w-5" />

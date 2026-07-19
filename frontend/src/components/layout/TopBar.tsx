@@ -123,7 +123,7 @@ export function TopBar() {
  return (
  <>
  <header className="sticky top-0 z-40 h-[72px] flex items-center">
- <div className="mx-4 md:mx-6 flex-1">
+ <div className="ml-16 mr-4 md:mx-6 flex-1">
  <div className="flex items-center justify-between h-14 px-4 bg-card-bg/80 dark:bg-slate-950/80 backdrop-blur-xl border border-border-color dark:border-slate-800 rounded-2xl shadow-sm">
  {/* Left: Breadcrumb */}
  <nav className="hidden lg:flex items-center gap-1.5 text-sm">
