@@ -12,6 +12,7 @@ import { useCampaigns } from '@/hooks/useCampaigns';
 import { TrendingUp, DollarSign, Image, Smartphone, Check, X, Brain, AlertTriangle, CheckCircle, XCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { PageTransition } from '@/components/ui/PageTransition';
+import { EmptyState } from '@/components/ui/EmptyState';
 import { Skeleton, SkeletonCard, SkeletonText, SkeletonList } from '@/components/ui/Skeleton';
 
 const typeIcons: Record<string, React.ReactNode> = {
@@ -244,15 +245,12 @@ export function AIOptimizationPage() {
                 ))}
               </div>
             ) : logs.length === 0 ? (
-              <div className="flex flex-col items-center justify-center py-12 text-center">
-                <div className="w-16 h-16 rounded-full bg-secondary-50 dark:bg-slate-700 flex items-center justify-center mb-4">
-                  <Brain className="w-8 h-8 text-secondary-400 dark:text-slate-500" />
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">No AI changes yet</h3>
-                <p className="text-sm text-gray-500 dark:text-slate-400 max-w-sm">
-                  Once AI recommendations are applied, a versioned history of all changes will appear here.
-                </p>
-              </div>
+              <EmptyState
+                variant="plain"
+                icon={<Brain />}
+                title="No AI changes yet"
+                description="Once AI recommendations are applied, a versioned history of all changes will appear here."
+              />
             ) : (
               <div className="space-y-4">
                 {logs.map((log, i) => (

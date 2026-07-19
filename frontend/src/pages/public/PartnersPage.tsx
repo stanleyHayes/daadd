@@ -4,6 +4,7 @@ import { Building2, BadgeCheck, ArrowRight, TrendingUp, Megaphone } from 'lucide
 import { PageTransition } from '@/components/ui/PageTransition';
 import { WatermarkBanner } from '@/components/ui/Watermark';
 import { Button } from '@/components/ui/Button';
+import { EmptyState } from '@/components/ui/EmptyState';
 import { usePublicAds, type PublicAd } from '@/hooks/usePublicAds';
 import { motion } from 'framer-motion';
 import { SkeletonAdCard } from '@/components/ui/Skeleton';
@@ -99,13 +100,12 @@ export function PartnersPage() {
               ))}
             </div>
           ) : partners.length === 0 ? (
-            <div className="text-center py-20 bg-card-bg rounded-2xl border border-border-color">
-              <Building2 className="h-12 w-12 text-text-muted mx-auto mb-4" />
-              <h2 className="text-xl font-bold text-text-primary mb-2">No partners yet</h2>
-              <p className="text-text-secondary max-w-md mx-auto">
-                There are no active advertisers on the platform right now. Check back soon.
-              </p>
-            </div>
+            <EmptyState
+              size="lg"
+              icon={<Building2 />}
+              title="No partners yet"
+              description="There are no active advertisers on the platform right now. Check back soon."
+            />
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {partners.map((partner, index) => (

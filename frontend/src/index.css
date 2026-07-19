@@ -313,6 +313,21 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* Circular-reveal theme toggle (View Transitions API).
+   Disable the default cross-fade so our expanding-circle clip-path is the only
+   animation, and keep the new theme layered on top of the old during reveal. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 0;
+}
+::view-transition-new(root) {
+  z-index: 1;
+}
+
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   *,

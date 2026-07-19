@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { useAuthStore } from '@/stores/auth.store';
 import { useThemeStore } from '@/stores/theme.store';
+import { runThemeTransition } from '@/lib/theme-transition';
 import { getInitials } from '@/lib/utils';
 import { NotificationDropdown } from './NotificationDropdown';
 import { cn } from '@/lib/utils';
@@ -182,7 +183,7 @@ export function TopBar() {
  </button>
 
  <button
- onClick={toggleTheme}
+ onClick={(e) => runThemeTransition(e, toggleTheme)}
  className="hidden sm:flex p-2.5 rounded-full text-text-secondary hover:bg-bg-tertiary dark:hover:bg-slate-800 transition-colors"
  aria-label="Toggle theme"
  >

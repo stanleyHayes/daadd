@@ -6,6 +6,7 @@ import { Card, CardHeader, CardFooter } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
+import { EmptyState } from '@/components/ui/EmptyState';
 import { useAuthStore } from '@/stores/auth.store';
 import { useThemeStore } from '@/stores/theme.store';
 import { useRewards, useRewardBalance } from '@/hooks/useRewards';
@@ -128,14 +129,14 @@ export function ProfilePage() {
 
   return (
     <PageTransition>
-      <div className="max-w-5xl mx-auto space-y-6">
+      <div className="max-w-7xl mx-auto space-y-6">
         <PageHeader
           title="My Profile"
           subtitle="Manage your account, track ads you have viewed, and control your rewards."
         />
 
         {/* User hero card */}
-        <Card className="overflow-hidden">
+        <Card padding={false} className="overflow-hidden">
           <div className="relative bg-primary-700 text-white p-6 sm:p-8">
             <div className="absolute top-0 right-0 w-64 h-64 bg-secondary-500/10 rounded-full blur-3xl" />
             <div className="relative flex flex-col sm:flex-row items-start sm:items-center gap-6">
@@ -165,7 +166,7 @@ export function ProfilePage() {
               </div>
               <Button
                 variant="outline"
-                className="border-white/30 text-white hover:bg-white/10 hover:text-white"
+                className="bg-transparent border-white/30 text-white hover:bg-white/10 hover:text-white focus:ring-white/40"
                 onClick={() => setActiveTab('settings')}
               >
                 Edit Profile
@@ -252,7 +253,15 @@ export function ProfilePage() {
                     </div>
                   ))
                 ) : (
-                  <div className="py-8 text-center text-text-muted">No recent activity yet.</div>
+                  <EmptyState
+                    size="sm"
+                    variant="plain"
+                    icon={<Bell />}
+                    title="No activity yet"
+                    description="Your ad views, rewards, and account updates will show up here."
+                    actionLabel="Browse Ads"
+                    onAction={() => navigate('/ads')}
+                  />
                 )}
               </div>
             </Card>
@@ -314,9 +323,14 @@ export function ProfilePage() {
                 </table>
               </div>
             ) : (
-              <div className="py-12 text-center text-text-muted">
-                No rewards yet. Start browsing ads to earn.
-              </div>
+              <EmptyState
+                variant="plain"
+                icon={<Coins />}
+                title="No rewards yet"
+                description="Start browsing ads to earn your first reward. Every view counts."
+                actionLabel="Browse Ads"
+                onAction={() => navigate('/ads')}
+              />
             )}
           </Card>
         )}

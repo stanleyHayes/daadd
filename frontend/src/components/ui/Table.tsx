@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { ChevronUp, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Inbox } from 'lucide-react';
+import { EmptyState } from './EmptyState';
 
 export interface Column<T> {
   key: string;
@@ -18,6 +19,8 @@ interface TableProps<T> {
   pageSize?: number;
   className?: string;
   emptyMessage?: string;
+  emptyIcon?: React.ReactNode;
+  emptyDescription?: string;
   onRowClick?: (row: T) => void;
 }
 
@@ -28,6 +31,8 @@ export function Table<T extends Record<string, unknown>>({
   pageSize = 10,
   className,
   emptyMessage = 'No data available',
+  emptyIcon,
+  emptyDescription,
   onRowClick,
 }: TableProps<T>) {
   const [sortKey, setSortKey] = useState<string | null>(null);
@@ -86,8 +91,14 @@ export function Table<T extends Record<string, unknown>>({
           <tbody className="bg-white dark:bg-slate-800 divide-y divide-gray-200 dark:divide-slate-700">
             {pagedData.length === 0 ? (
               <tr>
-                <td colSpan={columns.length} className="px-4 py-12 text-center text-sm text-gray-500 dark:text-slate-400">
-                  {emptyMessage}
+                <td colSpan={columns.length} className="px-4 py-8">
+                  <EmptyState
+                    size="sm"
+                    variant="plain"
+                    icon={emptyIcon ?? <Inbox />}
+                    title={emptyMessage}
+                    description={emptyDescription}
+                  />
                 </td>
               </tr>
             ) : (

@@ -84,7 +84,7 @@ export function PlatformAccountsPage() {
 
   if (isLoading) {
     return (
-      <div className="space-y-6">
+      <div className="max-w-7xl mx-auto space-y-6">
         <PageHeader
           title="Platform Accounts"
           subtitle="Connect your ad platform accounts to enable metrics sync"
@@ -96,7 +96,7 @@ export function PlatformAccountsPage() {
 
   if (error) {
     return (
-      <div className="space-y-6">
+      <div className="max-w-7xl mx-auto space-y-6">
         <PageHeader
           title="Platform Accounts"
           subtitle="Connect your ad platform accounts to enable metrics sync"
@@ -115,7 +115,7 @@ export function PlatformAccountsPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-7xl mx-auto space-y-6">
       <PageHeader
         title="Platform Accounts"
         subtitle="Connect your ad platform accounts to enable metrics sync"

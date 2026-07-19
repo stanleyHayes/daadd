@@ -13,6 +13,7 @@ import {
 import { PageTransition } from '@/components/ui/PageTransition';
 import { WatermarkBanner } from '@/components/ui/Watermark';
 import { Button } from '@/components/ui/Button';
+import { EmptyState } from '@/components/ui/EmptyState';
 import { AdCard } from '@/components/ads/AdCard';
 import { usePublicAds } from '@/hooks/usePublicAds';
 import { motion } from 'framer-motion';
@@ -144,16 +145,13 @@ export function PartnerDetailPage() {
               ))}
             </div>
           ) : !ads || ads.length === 0 ? (
-            <div className="text-center py-16 bg-card-bg rounded-2xl border border-border-color">
-              <Megaphone className="h-12 w-12 text-text-muted mx-auto mb-4" />
-              <h3 className="text-lg font-bold text-text-primary mb-2">No ads found</h3>
-              <p className="text-text-secondary max-w-md mx-auto mb-6">
-                We couldn't find any active campaigns for this partner right now.
-              </p>
-              <Button variant="outline" onClick={() => navigate('/partners')}>
-                Browse partners
-              </Button>
-            </div>
+            <EmptyState
+              icon={<Megaphone />}
+              title="No ads found"
+              description="We couldn't find any active campaigns for this partner right now."
+              actionLabel="Browse partners"
+              onAction={() => navigate('/partners')}
+            />
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {ads.map((ad, index) => (

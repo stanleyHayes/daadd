@@ -128,9 +128,15 @@ export function DashboardHome() {
                   <p className="text-sm text-gray-500 dark:text-slate-400">Failed to load campaigns.</p>
                 </div>
               ) : recentCampaigns.length === 0 ? (
-                <div className="text-center py-8 px-6">
-                  <p className="text-sm text-gray-500 dark:text-slate-400">No campaigns yet. Create your first campaign to get started.</p>
-                </div>
+                <EmptyState
+                  size="sm"
+                  variant="plain"
+                  icon={<Megaphone />}
+                  title="No campaigns yet"
+                  description="Create your first campaign to get started."
+                  actionLabel="New Campaign"
+                  onAction={() => (window.location.href = '/dashboard/campaigns/new')}
+                />
               ) : (
                 <div className="overflow-x-auto">
                   <table className="min-w-full divide-y divide-gray-200 dark:divide-slate-700">

@@ -11,6 +11,7 @@ import { formatDate, getInitials } from '@/lib/utils';
 import { Mail, UserPlus, Trash2, Clock, AlertTriangle, Users, Shield } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { PageTransition } from '@/components/ui/PageTransition';
+import { EmptyState } from '@/components/ui/EmptyState';
 import { hasPermission } from '@/lib/rbac';
 import { useAuthStore } from '@/stores/auth.store';
 import { Skeleton, SkeletonTable, SkeletonCard, SkeletonList } from '@/components/ui/Skeleton';
@@ -74,7 +75,7 @@ export function TeamPage() {
 
   return (
     <PageTransition>
-    <div className="max-w-5xl mx-auto space-y-6">
+    <div className="max-w-7xl mx-auto space-y-6">
       <PageHeader
         title="Team Management"
         subtitle="Manage team members and their permissions"
@@ -245,15 +246,12 @@ export function TeamPage() {
             {logLoading ? (
               <SkeletonTable rows={3} columns={5} />
             ) : logs.length === 0 ? (
-              <div className="flex flex-col items-center justify-center py-12 text-center">
-                <div className="w-16 h-16 rounded-full bg-gray-100 dark:bg-slate-700 flex items-center justify-center mb-4">
-                  <Clock className="w-8 h-8 text-gray-400 dark:text-slate-500" />
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">No activity yet</h3>
-                <p className="text-sm text-gray-500 dark:text-slate-400 max-w-sm">
-                  Changes to campaigns, roles, and settings will appear here as they happen.
-                </p>
-              </div>
+              <EmptyState
+                variant="plain"
+                icon={<Clock />}
+                title="No activity yet"
+                description="Changes to campaigns, roles, and settings will appear here as they happen."
+              />
             ) : (
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200 dark:divide-slate-700">

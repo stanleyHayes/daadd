@@ -13,7 +13,8 @@ interface EmptyStateProps {
   onAction2?: () => void;
   className?: string;
   size?: 'sm' | 'md' | 'lg';
-  variant?: 'default' | 'bordered';
+  /** default: bordered card · bordered: dashed card · plain: no border/bg (for embedding in cards/tables) */
+  variant?: 'default' | 'bordered' | 'plain';
 }
 
 export function EmptyState({
@@ -29,6 +30,7 @@ export function EmptyState({
   variant = 'default',
 }: EmptyStateProps) {
   const isBordered = variant === 'bordered';
+  const isPlain = variant === 'plain';
   const sizeClasses = {
     sm: 'py-8 px-4',
     md: 'py-14 px-6',
@@ -63,17 +65,13 @@ export function EmptyState({
     <div
       className={cn(
         'relative overflow-hidden rounded-2xl text-center',
-        'bg-card-bg',
-        isBordered ? 'border-2 border-dashed border-border-color' : 'border border-border-color',
+        !isPlain && 'bg-card-bg',
+        isBordered && 'border-2 border-dashed border-border-color',
+        !isPlain && !isBordered && 'border border-border-color',
         sizeClasses[size],
         className
       )}
     >
-      {/* Subtle watermark */}
-      <span className="pointer-events-none absolute -bottom-3 -right-3 text-6xl sm:text-7xl font-black text-text-primary/[0.03] select-none tracking-tighter">
-        DAADD
-      </span>
-
       <div className="relative">
         {icon && (
           <motion.div

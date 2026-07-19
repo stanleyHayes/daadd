@@ -263,7 +263,7 @@ export function RegisterPage() {
  </div>
  {errors.password && <p className="mt-1.5 text-xs text-danger-600">{errors.password.message}</p>}
  {password.length > 0 && (
- <div className="flex gap-4 mt-2">
+ <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-4 mt-2">
  {passwordChecks.map((check) => (
  <div key={check.label} className="flex items-center gap-1.5">
  <div className={cn('w-3.5 h-3.5 rounded-full flex items-center justify-center', check.test(password) ? 'bg-accent-500' : 'bg-gray-200 dark:bg-slate-600')}>

@@ -128,7 +128,7 @@ export function SettingsPage() {
 
  return (
  <PageTransition>
- <div className="max-w-4xl mx-auto space-y-6">
+ <div className="max-w-7xl mx-auto space-y-6">
  <PageHeader
  title="Settings"
  subtitle="Manage your account, preferences, and security"
