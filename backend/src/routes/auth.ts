@@ -11,10 +11,12 @@ import {
 import { rateLimit } from '../middleware/rateLimit';
 import { success } from '../utils/response';
 import { sendOtpEmail, sendPasswordResetEmail } from '../services/mailer';
+import { advertiserGate } from '../utils/advertiser-gate';
 
 const router = Router();
 
 function sanitizeUser(user: InstanceType<typeof User>) {
+  const gate = advertiserGate(user);
   return {
     id: user._id,
     name: user.name,
@@ -22,6 +24,12 @@ function sanitizeUser(user: InstanceType<typeof User>) {
     role: user.role,
     avatar_url: user.avatar_url,
     created_at: user.created_at,
+    // Advertiser onboarding status (drives the onboarding UI + the run-ads gate).
+    email_verified: gate.email_verified,
+    advertiser_approval: gate.advertiser_approval,
+    billing_ready: gate.billing_ready,
+    can_run_ads: gate.can_run_ads,
+    onboarding_missing: gate.missing,
   };
 }
 
@@ -253,6 +261,79 @@ router.post('/age-verify/confirm', authMiddleware, async (req: Request, res: Res
     res.json(success({ verified: true }));
   } catch (err: any) {
     res.status(500).json({ success: false, message: err.message || 'Failed to verify age' });
+  }
+});
+
+// --- Email verification (advertiser onboarding gate) ---
+const emailVerificationCodes = new Map<
+  string,
+  { code: string; expiresAt: number; attempts: number }
+>();
+
+router.post('/verify-email/request', authMiddleware, async (req: Request, res: Response) => {
+  try {
+    const code = crypto.randomInt(100000, 1000000).toString();
+    emailVerificationCodes.set(req.user!.userId, {
+      code,
+      expiresAt: Date.now() + AGE_VERIFY_TTL_MS,
+      attempts: 0,
+    });
+    if (process.env.RESEND_API_KEY) {
+      void sendOtpEmail(req.user!.email, code).catch(() => {});
+    }
+    res.json(
+      success({
+        sent: true,
+        ...(process.env.NODE_ENV !== 'production' && !process.env.RESEND_API_KEY
+          ? { dev_code: code }
+          : {}),
+      })
+    );
+  } catch (err: any) {
+    res
+      .status(500)
+      .json({ success: false, message: err.message || 'Failed to send verification code' });
+  }
+});
+
+router.post('/verify-email/confirm', authMiddleware, async (req: Request, res: Response) => {
+  try {
+    const { code } = req.body;
+    if (!code) {
+      res.status(400).json({ success: false, message: 'Code is required' });
+      return;
+    }
+    const entry = emailVerificationCodes.get(req.user!.userId);
+    if (!entry || entry.expiresAt < Date.now()) {
+      emailVerificationCodes.delete(req.user!.userId);
+      res.status(400).json({ success: false, message: 'Verification code missing or expired' });
+      return;
+    }
+    if (entry.code !== String(code)) {
+      entry.attempts += 1;
+      if (entry.attempts >= MAX_CODE_ATTEMPTS) {
+        emailVerificationCodes.delete(req.user!.userId);
+        res
+          .status(400)
+          .json({ success: false, message: 'Too many failed attempts; request a new code' });
+        return;
+      }
+      res.status(400).json({ success: false, message: 'Invalid verification code' });
+      return;
+    }
+    emailVerificationCodes.delete(req.user!.userId);
+
+    const user = await User.findById(req.user!.userId);
+    if (!user) {
+      res.status(404).json({ success: false, message: 'User not found' });
+      return;
+    }
+    user.email_verified = true;
+    await user.save();
+
+    res.json(success(sanitizeUser(user), 'Email verified'));
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message || 'Failed to verify email' });
   }
 });
 

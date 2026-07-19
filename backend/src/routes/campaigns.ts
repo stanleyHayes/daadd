@@ -6,10 +6,27 @@ import { success, paginated } from '../utils/response';
 import { seededRandom } from '../utils/seeded';
 import { escapeRegExp } from '../utils/regex';
 import { canManageCampaign, findManageableCampaign } from '../utils/ownership';
+import { advertiserGate } from '../utils/advertiser-gate';
 import multer from 'multer';
 import { uploadCreative } from '../services/storage.service';
 
 const router = Router();
+
+/**
+ * Advertiser onboarding gate for "running ads". Returns a 403 message when the
+ * acting user may not set a campaign to `active` yet, otherwise null. Reads the
+ * authoritative role/flags from the DB (a stale JWT role can't bypass it).
+ * Admins and other non-advertiser roles are ungated.
+ */
+async function runAdsBlockReason(userId: string): Promise<string | null> {
+  const dbUser = await User.findById(userId)
+    .select('role email_verified advertiser_approval billing_ready')
+    .lean();
+  if (!dbUser) return 'Account not found';
+  const gate = advertiserGate(dbUser);
+  if (gate.can_run_ads) return null;
+  return `You can't launch a campaign yet — complete: ${gate.missing.join(', ')}.`;
+}
 
 function serializeCampaign(c: any) {
   return {
@@ -193,8 +210,17 @@ router.post('/', authMiddleware, async (req: Request, res: Response) => {
       res.status(400).json({ success: false, message: localizedError });
       return;
     }
+    const normalized = normalizeCampaignBody(req.body);
+    // Gate "running ads": creating a campaign already set to active.
+    if (normalized.status === 'active') {
+      const block = await runAdsBlockReason(req.user!.userId);
+      if (block) {
+        res.status(403).json({ success: false, message: block });
+        return;
+      }
+    }
     const campaign = await Campaign.create({
-      ...normalizeCampaignBody(req.body),
+      ...normalized,
       owner: req.user!.userId,
     });
     res.status(201).json(success(serializeCampaign(campaign), 'Campaign created'));
@@ -238,7 +264,16 @@ router.patch('/:id', authMiddleware, async (req: Request, res: Response) => {
       res.status(400).json({ success: false, message: localizedError });
       return;
     }
-    const campaign = await Campaign.findByIdAndUpdate(id, normalizeCampaignBody(req.body), { new: true }).lean();
+    const normalized = normalizeCampaignBody(req.body);
+    // Gate "running ads": activating a campaign (draft/paused -> active).
+    if (normalized.status === 'active' && existing.status !== 'active') {
+      const block = await runAdsBlockReason(req.user!.userId);
+      if (block) {
+        res.status(403).json({ success: false, message: block });
+        return;
+      }
+    }
+    const campaign = await Campaign.findByIdAndUpdate(id, normalized, { new: true }).lean();
     res.json(success(serializeCampaign(campaign), 'Campaign updated'));
   } catch (err: any) {
     res.status(400).json({ success: false, message: err.message || 'Failed to update campaign' });

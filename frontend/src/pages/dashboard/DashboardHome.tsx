@@ -9,6 +9,7 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { MetricsCard } from '@/components/analytics/MetricsCard';
 import { TimeSeriesChart } from '@/components/analytics/TimeSeriesChart';
 import { PageTransition } from '@/components/ui/PageTransition';
+import { AdvertiserOnboarding } from '@/components/onboarding/AdvertiserOnboarding';
 import {
   Megaphone, Eye, MousePointerClick, DollarSign, Plus, BarChart3, Brain, ArrowRight, AlertTriangle, TrendingUp,
 } from 'lucide-react';
@@ -37,6 +38,8 @@ export function DashboardHome() {
             </Link>
           }
         />
+
+        <AdvertiserOnboarding />
 
         {metricsLoading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

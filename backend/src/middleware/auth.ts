@@ -44,6 +44,20 @@ export function verifyRefreshToken(token: string): RefreshTokenPayload | null {
   }
 }
 
+/**
+ * Guard a route to one or more roles. Must run after `authMiddleware`
+ * (which populates `req.user`). Responds 403 when the role is not allowed.
+ */
+export function requireRole(...roles: string[]) {
+  return (req: Request, res: Response, next: NextFunction): void => {
+    if (!req.user || !roles.includes(req.user.role)) {
+      res.status(403).json({ success: false, message: 'Forbidden: insufficient permissions' });
+      return;
+    }
+    next();
+  };
+}
+
 export function authMiddleware(req: Request, res: Response, next: NextFunction): void {
   const authHeader = req.headers.authorization;
 

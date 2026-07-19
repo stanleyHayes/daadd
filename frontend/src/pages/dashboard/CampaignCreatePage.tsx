@@ -10,8 +10,9 @@ import { PageTransition } from '@/components/ui/PageTransition';
 import { cn } from '@/lib/utils';
 import { INDUSTRIES, DEVICE_TYPES, LANGUAGES, REGIONS } from '@/lib/constants';
 import { useCreateCampaign } from '@/hooks/useCampaigns';
+import { useAuthStore } from '@/stores/auth.store';
 import { AICreativeGenerator } from '@/components/ai/AICreativeGenerator';
-import { Upload, X, Image, Video, Check, ChevronLeft, ChevronRight, Rocket, Save, Info, Sparkles } from 'lucide-react';
+import { Upload, X, Image, Video, Check, ChevronLeft, ChevronRight, Rocket, Save, Info, Sparkles, ShieldAlert } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const steps = ['Basic Info', 'Budget & Targeting', 'Creatives', 'Review & Launch'];
@@ -19,6 +20,9 @@ const steps = ['Basic Info', 'Budget & Targeting', 'Creatives', 'Review & Launch
 export function CampaignCreatePage() {
   const navigate = useNavigate();
   const createMutation = useCreateCampaign();
+  const user = useAuthStore((s) => s.user);
+  // Advertisers must clear onboarding (email + admin approval + billing) to launch.
+  const mustVerify = user?.role === 'advertiser' && user?.can_run_ads === false;
   const [currentStep, setCurrentStep] = useState(0);
   const [direction, setDirection] = useState(1);
   const [creativeMode, setCreativeMode] = useState<'upload' | 'ai' | 'both'>('both');
@@ -83,7 +87,14 @@ export function CampaignCreatePage() {
     }
   };
 
-  const handleLaunch = async () => { try { await createMutation.mutateAsync(formData as never); toast.success('Campaign created successfully!'); navigate('/dashboard/campaigns'); } catch { toast.error('Failed to create campaign'); } };
+  const handleLaunch = async () => {
+    if (mustVerify) {
+      toast.error('Finish onboarding to launch campaigns.');
+      navigate('/dashboard');
+      return;
+    }
+    try { await createMutation.mutateAsync(formData as never); toast.success('Campaign created successfully!'); navigate('/dashboard/campaigns'); } catch { toast.error('Failed to create campaign'); }
+  };
   const handleSaveDraft = async () => { try { await createMutation.mutateAsync({ ...formData, status: 'draft' } as never); toast.success('Campaign saved as draft'); navigate('/dashboard/campaigns'); } catch { toast.error('Failed to save draft'); } };
 
   const goToStep = (step: number) => {
@@ -323,6 +334,8 @@ export function CampaignCreatePage() {
               {currentStep === 3 && <Button variant="outline" onClick={handleSaveDraft} loading={createMutation.isPending} icon={<Save className="h-4 w-4" />}>Save as Draft</Button>}
               {currentStep < 3 ? (
                 <Button onClick={() => goToStep(currentStep + 1)} disabled={!canProceed()}>Next <ChevronRight className="h-4 w-4 ml-1" /></Button>
+              ) : mustVerify ? (
+                <Button variant="secondary" onClick={() => navigate('/dashboard')} icon={<ShieldAlert className="h-4 w-4" />}>Verify account to launch</Button>
               ) : (
                 <Button onClick={handleLaunch} loading={createMutation.isPending} icon={<Rocket className="h-4 w-4" />}>Launch Campaign</Button>
               )}

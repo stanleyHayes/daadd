@@ -2,6 +2,9 @@ import mongoose, { Schema, Document, Types } from 'mongoose';
 
 export type UserRole = 'admin' | 'advertiser' | 'campaign_manager' | 'analyst' | 'end_user' | 'merchant';
 
+/** Advertiser onboarding: admin review state for self-registered advertisers. */
+export type AdvertiserApproval = 'pending' | 'approved' | 'rejected';
+
 export interface IUser extends Document {
   _id: Types.ObjectId;
   name: string;
@@ -10,6 +13,12 @@ export interface IUser extends Document {
   role: UserRole;
   avatar_url?: string;
   age_verified: boolean;
+  // Advertiser onboarding gates (see routes/auth.ts + utils/advertiser-gate.ts).
+  // An advertiser may only run ads (set a campaign to `active`) once all three
+  // are satisfied: email verified, admin-approved, and billing set up.
+  email_verified: boolean;
+  advertiser_approval: AdvertiserApproval;
+  billing_ready: boolean;
   push_tokens?: {
     token: string;
     platform: string;
@@ -36,6 +45,14 @@ const UserSchema = new Schema<IUser>({
   },
   avatar_url: { type: String, default: '' },
   age_verified: { type: Boolean, default: false },
+  // Advertiser onboarding gates.
+  email_verified: { type: Boolean, default: false },
+  advertiser_approval: {
+    type: String,
+    enum: ['pending', 'approved', 'rejected'],
+    default: 'pending',
+  },
+  billing_ready: { type: Boolean, default: false },
   push_tokens: {
     type: [
       {

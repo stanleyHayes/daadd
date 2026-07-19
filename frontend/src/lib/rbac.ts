@@ -2,7 +2,7 @@ import type { UserRole } from '@/types';
 
 // Define which sidebar nav keys each role can see
 export const ROLE_NAV_ITEMS: Record<UserRole, string[]> = {
-  admin: ['dashboard', 'campaigns', 'analytics', 'heatmaps', 'ai-optimization', 'anomalies', 'benchmarking', 'storyteller', 'team', 'platform-accounts', 'profile', 'settings'],
+  admin: ['dashboard', 'campaigns', 'analytics', 'heatmaps', 'ai-optimization', 'anomalies', 'benchmarking', 'storyteller', 'team', 'platform-accounts', 'admin-advertisers', 'profile', 'settings'],
   advertiser: ['dashboard', 'campaigns', 'analytics', 'heatmaps', 'ai-optimization', 'anomalies', 'benchmarking', 'storyteller', 'team', 'platform-accounts', 'profile', 'settings'],
   campaign_manager: ['dashboard', 'campaigns', 'analytics', 'heatmaps', 'profile', 'settings'],
   analyst: ['dashboard', 'analytics', 'heatmaps', 'benchmarking', 'storyteller', 'profile', 'settings'],

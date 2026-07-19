@@ -1,6 +1,8 @@
 // ---- User & Auth ----
 export type UserRole = 'admin' | 'advertiser' | 'campaign_manager' | 'analyst' | 'end_user';
 
+export type AdvertiserApproval = 'pending' | 'approved' | 'rejected';
+
 export interface User {
   id: string;
   name: string;
@@ -13,6 +15,12 @@ export interface User {
     email_notifications?: boolean;
   };
   created_at: string;
+  // Advertiser onboarding gate (see backend utils/advertiser-gate.ts).
+  email_verified?: boolean;
+  advertiser_approval?: AdvertiserApproval;
+  billing_ready?: boolean;
+  can_run_ads?: boolean;
+  onboarding_missing?: string[];
 }
 
 // ---- Campaign ----

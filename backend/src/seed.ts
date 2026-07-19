@@ -75,6 +75,17 @@ export async function seedDatabase(): Promise<void> {
     seededUsers.push(user!);
   }
 
+  // Demo advertiser accounts ship pre-cleared (email verified, admin-approved,
+  // billing ready) so the seeded data can "run ads" out of the box. Real,
+  // self-registered advertisers still go through the onboarding gate.
+  const advertiserEmails = testAccounts
+    .filter((a) => a.role === 'advertiser')
+    .map((a) => a.email.toLowerCase());
+  await User.updateMany(
+    { email: { $in: advertiserEmails } },
+    { $set: { email_verified: true, advertiser_approval: 'approved', billing_ready: true } }
+  );
+
   const adminUser = seededUsers.find((u) => u.email === 'admin@example.com') || seededUsers[0];
   const demoUser = seededUsers.find((u) => u.email === 'demo@example.com') || seededUsers[0];
 

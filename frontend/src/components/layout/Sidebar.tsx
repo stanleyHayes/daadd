@@ -19,6 +19,7 @@ import {
   Settings,
   User,
   Plug,
+  UserCheck,
   ChevronLeft,
   ChevronRight,
   Zap,
@@ -68,6 +69,12 @@ const allNavGroups: NavGroup[] = [
       { key: 'platform-accounts', href: '/dashboard/platform-accounts', label: 'Ad Accounts', icon: Plug },
       { key: 'profile', href: '/dashboard/profile', label: 'My Profile', icon: User },
       { key: 'settings', href: '/dashboard/settings', label: 'Settings', icon: Settings },
+    ],
+  },
+  {
+    title: 'Admin',
+    items: [
+      { key: 'admin-advertisers', href: '/dashboard/admin/advertisers', label: 'Advertiser Approvals', icon: UserCheck },
     ],
   },
 ];

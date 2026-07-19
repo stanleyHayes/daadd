@@ -53,6 +53,7 @@ import { TeamPage } from '@/pages/dashboard/TeamPage';
 import { ProfilePage } from '@/pages/dashboard/ProfilePage';
 import { SettingsPage } from '@/pages/dashboard/SettingsPage';
 import { PlatformAccountsPage } from '@/pages/dashboard/PlatformAccountsPage';
+import { AdminAdvertisersPage } from '@/pages/dashboard/AdminAdvertisersPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -131,6 +132,9 @@ function App() {
               </Route>
               <Route element={<ProtectedRoute allowedRoles={['admin', 'advertiser']} />}>
                 <Route path="/dashboard/platform-accounts" element={<PlatformAccountsPage />} />
+              </Route>
+              <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
+                <Route path="/dashboard/admin/advertisers" element={<AdminAdvertisersPage />} />
               </Route>
               <Route path="/dashboard/profile" element={<ProfilePage />} />
               <Route path="/dashboard/settings" element={<SettingsPage />} />

@@ -17,6 +17,8 @@ import platformAccountRoutes from './platformAccounts';
 import oauthRoutes from './oauth';
 import attributionRoutes from './attribution';
 import eventRoutes from './events';
+import adminRoutes from './admin';
+import billingRoutes from './billing';
 
 const router = Router();
 
@@ -38,5 +40,7 @@ router.use('/platform-accounts', platformAccountRoutes);
 router.use('/oauth', oauthRoutes);
 router.use('/attribution', attributionRoutes);
 router.use('/events', eventRoutes);
+router.use('/admin', adminRoutes);
+router.use('/billing', billingRoutes);
 
 export default router;
