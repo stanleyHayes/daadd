@@ -1,6 +1,11 @@
 import React from 'react';
-import { Zap } from 'lucide-react';
-import { cn } from '@/lib/utils';
+
+/**
+ * Watermark overlays (the tiled "DAADD" pattern and the corner banners) were
+ * removed per design request. These components are intentionally no-ops so the
+ * existing call sites keep compiling and rendering nothing — no DAADD branding
+ * watermark appears anywhere. The call sites can be cleaned up later.
+ */
 
 interface WatermarkProps {
   className?: string;
@@ -10,116 +15,24 @@ interface WatermarkProps {
   rotate?: number;
 }
 
-const sizes = {
-  sm: 'w-24 h-24 text-6xl',
-  md: 'w-40 h-40 text-8xl',
-  lg: 'w-64 h-64 text-[10rem]',
-  xl: 'w-96 h-96 text-[14rem]',
-};
-
-export function Watermark({
-  className,
-  icon,
-  text = 'DAADD',
-  size = 'md',
-  rotate = -12,
-}: WatermarkProps) {
-  return (
-    <div
-      className={cn(
-        'pointer-events-none select-none absolute opacity-[0.06] dark:opacity-[0.045]',
-        sizes[size],
-        className
-      )}
-      style={{ transform: `rotate(${rotate}deg)` }}
-      aria-hidden="true"
-    >
-      {icon ? (
-        <div className="w-full h-full flex items-center justify-center">{icon}</div>
-      ) : (
-        <div className="w-full h-full flex flex-col items-center justify-center gap-2 font-bold tracking-tight text-primary-700 dark:text-primary-300">
-          <Zap className="w-1/2 h-1/2" strokeWidth={1} />
-          <span className="text-[0.18em]">{text}</span>
-        </div>
-      )}
-    </div>
-  );
+export function Watermark(_props: WatermarkProps): null {
+  return null;
 }
 
-function makeWatermarkPattern(text: string) {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="280" height="280" viewBox="0 0 280 280"><text x="50%" y="50%" fill="currentColor" font-size="16" font-family="Outfit, sans-serif" font-weight="700" letter-spacing="0.12em" text-anchor="middle" dominant-baseline="middle" transform="rotate(-30 140 140)">${text}</text></svg>`;
-  return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
-}
-
-export function WatermarkPattern({
-  className,
-  text = 'DAADD',
-}: {
-  className?: string;
-  text?: string;
-}) {
-  return (
-    <div
-      className={cn(
-        'pointer-events-none absolute inset-0 opacity-[0.055] dark:opacity-[0.04]',
-        className
-      )}
-      style={{
-        backgroundImage: makeWatermarkPattern(text),
-        backgroundSize: '280px 280px',
-      }}
-      aria-hidden="true"
-    />
-  );
+export function WatermarkPattern(_props: { className?: string; text?: string }): null {
+  return null;
 }
 
 /** @deprecated Use WatermarkPattern for solid-color watermark backgrounds */
-export function WatermarkGrid({ className }: { className?: string }) {
-  return <WatermarkPattern className={className} />;
+export function WatermarkGrid(_props: { className?: string }): null {
+  return null;
 }
 
-export function WatermarkBanner({
-  className,
-  text = 'DAADD',
-  align = 'right',
-  icon,
-}: {
+export function WatermarkBanner(_props: {
   className?: string;
   text?: string;
   align?: 'left' | 'right';
   icon?: React.ReactNode;
-}) {
-  return (
-    <div
-      className={cn(
-        'pointer-events-none absolute select-none overflow-hidden',
-        align === 'right' ? 'right-0 bottom-0' : 'left-0 bottom-0',
-        className
-      )}
-      aria-hidden="true"
-    >
-      {icon ? (
-        <div
-          className={cn(
-            'w-32 h-32 sm:w-40 sm:h-40 md:w-52 md:h-52',
-            'opacity-[0.08] dark:opacity-[0.06] text-white',
-            align === 'right' ? '-rotate-12 translate-x-6 translate-y-6' : 'rotate-12 -translate-x-6 translate-y-6',
-            '[&>svg]:w-full [&>svg]:h-full'
-          )}
-        >
-          {icon}
-        </div>
-      ) : (
-        <div
-          className={cn(
-            'text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-none',
-            'opacity-[0.06] dark:opacity-[0.045] text-white whitespace-nowrap',
-            align === 'right' ? '-rotate-12 translate-x-8 translate-y-6' : 'rotate-12 -translate-x-8 translate-y-6'
-          )}
-        >
-          {text}
-        </div>
-      )}
-    </div>
-  );
+}): null {
+  return null;
 }

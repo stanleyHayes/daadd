@@ -208,10 +208,6 @@
   .nav-active {
     @apply relative text-secondary-500 before:absolute before:left-0 before:inset-y-0 before:w-1 before:bg-secondary-500 before:rounded-r-full;
   }
-
-  .watermark {
-    @apply pointer-events-none absolute opacity-[0.04] select-none;
-  }
 }
 
 @layer utilities {
