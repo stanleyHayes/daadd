@@ -8,7 +8,6 @@ import toast from 'react-hot-toast';
 
 import { useLogin } from '@/hooks/useAuth';
 import { Mail, Lock, Eye, EyeOff, Zap, ArrowRight, BarChart3, Shield, TrendingUp, Gift } from 'lucide-react';
-import { WatermarkBanner, WatermarkPattern } from '@/components/ui/Watermark';
 import { motion } from 'framer-motion';
 
 const loginSchema = z.object({
@@ -52,9 +51,6 @@ export function LoginPage() {
  <div className="min-h-screen flex">
  {/* Left Panel - Branding & Features */}
  <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-primary-600">
- <WatermarkPattern className="opacity-[0.03] dark:opacity-[0.02] text-white" />
- <WatermarkBanner />
- <WatermarkBanner align="left" className="opacity-50" />
  <div className="relative z-10 flex flex-col justify-between p-12 text-white w-full">
  {/* Logo */}
  <motion.div
@@ -138,7 +134,6 @@ export function LoginPage() {
 
  {/* Right Panel - Login Form */}
  <div className="relative flex-1 flex items-center justify-center bg-gray-50 dark:bg-slate-900 px-6 py-12">
- <WatermarkPattern className="opacity-[0.02] dark:opacity-[0.015] text-primary-100 dark:text-slate-700" />
  <motion.div
  initial={{ opacity: 0, y: 16 }}
  animate={{ opacity: 1, y: 0 }}
