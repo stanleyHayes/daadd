@@ -16,6 +16,7 @@ import {
  LifeBuoy,
  Moon,
  Sun,
+ Globe,
 } from 'lucide-react';
 import { useAuthStore } from '@/stores/auth.store';
 import { useThemeStore } from '@/stores/theme.store';
@@ -122,7 +123,7 @@ export function TopBar() {
  return (
  <>
  <header className="sticky top-0 z-40 h-[72px] flex items-center">
- <div className="mx-4 md:ml-[calc(var(--sidebar-width)+1rem)] md:mr-6 flex-1">
+ <div className="mx-4 md:mx-6 flex-1">
  <div className="flex items-center justify-between h-14 px-4 bg-card-bg/80 dark:bg-slate-950/80 backdrop-blur-xl border border-border-color dark:border-slate-800 rounded-2xl shadow-sm">
  {/* Left: Breadcrumb */}
  <nav className="hidden lg:flex items-center gap-1.5 text-sm">
@@ -261,6 +262,15 @@ export function TopBar() {
  onClick={() => {
  setUserMenuOpen(false);
  navigate('/dashboard/settings');
+ }}
+ />
+ <MenuButton
+ icon={Globe}
+ label="View public site"
+ description="Open the public marketing site"
+ onClick={() => {
+ setUserMenuOpen(false);
+ navigate('/');
  }}
  />
  <MenuButton

@@ -772,28 +772,32 @@ export function LandingPage() {
  </div>
 
  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
- {PROGRAMMATIC_PARTNERS.map((partner, i) => (
+ {PROGRAMMATIC_PARTNERS.map((partner, i) => {
+ const initials = partner.name
+ .split(' ')
+ .filter((w) => !['the', 'and', 'of'].includes(w.toLowerCase()))
+ .slice(0, 2)
+ .map((w) => w[0])
+ .join('')
+ .toUpperCase();
+ return (
  <motion.div
  key={partner.name}
  initial={{ opacity: 0, y: 20 }}
  whileInView={{ opacity: 1, y: 0 }}
  viewport={{ once: true }}
  transition={{ delay: i * 0.05 }}
- className="group flex flex-col items-center justify-center gap-3 rounded-xl bg-white dark:bg-slate-800/80 border border-gray-200/80 dark:border-slate-700/80 p-5 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+ className="group flex items-center gap-3 rounded-2xl bg-white dark:bg-slate-800/80 border border-gray-200/70 dark:border-slate-700/70 p-4 hover:shadow-lg hover:shadow-primary-900/5 hover:-translate-y-1 hover:border-primary-200 dark:hover:border-primary-800 transition-all duration-300"
  >
- <div className="relative h-12 w-full flex items-center justify-center overflow-hidden rounded-md bg-primary-50 dark:bg-primary-900/20">
- <img
- src={partner.logo}
- alt={partner.name}
- loading="lazy"
- className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105"
- />
+ <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary-700 to-secondary-500 text-white text-sm font-bold shadow-sm shadow-primary-900/20 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
+ {initials}
  </div>
- <span className="text-xs font-semibold text-center text-gray-700 dark:text-slate-300 line-clamp-2">
+ <span className="text-sm font-semibold text-gray-800 dark:text-slate-200 leading-snug line-clamp-2">
  {partner.name}
  </span>
  </motion.div>
- ))}
+ );
+ })}
  </div>
  </div>
  </section>
