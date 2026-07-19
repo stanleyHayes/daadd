@@ -8,6 +8,15 @@ import { scanAllActiveCampaigns } from './services/anomaly-detection.service';
 const PORT = process.env.PORT || 4000;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/daadd';
 
+// Show the target host (never the credentials) so deploy logs make the
+// misconfiguration obvious — e.g. "localhost:27017" means MONGODB_URI is unset.
+function mongoHost(uri: string): string {
+  const withCreds = uri.match(/@([^/?]+)/);
+  if (withCreds) return withCreds[1];
+  const noCreds = uri.match(/\/\/([^/?]+)/);
+  return noCreds ? noCreds[1] : 'unknown';
+}
+
 async function startServer(): Promise<void> {
   try {
     // Fail fast rather than signing tokens with the public dev fallback.
@@ -16,6 +25,17 @@ async function startServer(): Promise<void> {
       process.exit(1);
     }
 
+    // In production there is no local Mongo — the localhost fallback can never
+    // work, so fail fast with an actionable message instead of ECONNREFUSED.
+    if (process.env.NODE_ENV === 'production' && !process.env.MONGODB_URI) {
+      console.error(
+        'FATAL: MONGODB_URI must be set when NODE_ENV=production. ' +
+          'Set it in your host\'s environment (e.g. a MongoDB Atlas connection string).'
+      );
+      process.exit(1);
+    }
+
+    console.log(`[startup] connecting to MongoDB host: ${mongoHost(MONGODB_URI)}`);
     await mongoose.connect(MONGODB_URI);
     console.log('Connected to MongoDB');
 
