@@ -24,7 +24,7 @@ export function CookiePolicyPage() {
               Cookies are small text files that are stored on your device (computer, tablet, or smartphone) when you visit a website. They are widely used to make websites work efficiently, provide a better user experience, and supply information to site operators. Cookies may be set by the site you are visiting ("first-party cookies") or by third-party services operating on that site ("third-party cookies").
             </p>
             <p className="text-gray-600 dark:text-slate-300 leading-relaxed">
-              AdPlatform uses cookies and similar technologies (such as local storage and pixel tags) to operate our advertising platform, measure ad engagement, and improve your experience. This policy explains what cookies we use, why we use them, and how you can manage your preferences.
+              DAADD uses cookies and similar technologies (such as local storage and pixel tags) to operate our advertising platform, measure ad engagement, and improve your experience. This policy explains what cookies we use, why we use them, and how you can manage your preferences.
             </p>
           </section>
 
@@ -49,7 +49,7 @@ export function CookiePolicyPage() {
               <div className="bg-gray-50 dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 p-6">
                 <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-2">Analytics Cookies</h3>
                 <p className="text-gray-600 dark:text-slate-300 text-sm leading-relaxed mb-3">
-                  These cookies help us understand how visitors use AdPlatform so we can measure and improve platform performance. The data collected is aggregated and anonymized. Analytics cookies enable:
+                  These cookies help us understand how visitors use DAADD so we can measure and improve platform performance. The data collected is aggregated and anonymized. Analytics cookies enable:
                 </p>
                 <ul className="list-disc pl-6 space-y-1 text-sm text-gray-600 dark:text-slate-300">
                   <li>Page view tracking and navigation flow analysis</li>
@@ -62,7 +62,7 @@ export function CookiePolicyPage() {
               <div className="bg-gray-50 dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 p-6">
                 <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-2">Advertising Cookies</h3>
                 <p className="text-gray-600 dark:text-slate-300 text-sm leading-relaxed mb-3">
-                  As an advertising platform, AdPlatform uses advertising cookies to deliver, measure, and optimize ad campaigns. These cookies are central to the core service we provide to advertisers and users:
+                  As an advertising platform, DAADD uses advertising cookies to deliver, measure, and optimize ad campaigns. These cookies are central to the core service we provide to advertisers and users:
                 </p>
                 <ul className="list-disc pl-6 space-y-1 text-sm text-gray-600 dark:text-slate-300">
                   <li>Ad engagement tracking (views, clicks, interaction duration)</li>
@@ -96,7 +96,7 @@ export function CookiePolicyPage() {
             </p>
             <ul className="list-disc pl-6 space-y-2 text-gray-600 dark:text-slate-300">
               <li><strong>Browser Settings:</strong> Most web browsers allow you to control cookies through their settings. You can typically set your browser to block or delete cookies, or to notify you when a cookie is being set. Refer to your browser's help documentation for instructions.</li>
-              <li><strong>Platform Settings:</strong> When available, use the cookie consent banner displayed on your first visit to AdPlatform to select which optional cookie categories you wish to allow.</li>
+              <li><strong>Platform Settings:</strong> When available, use the cookie consent banner displayed on your first visit to DAADD to select which optional cookie categories you wish to allow.</li>
               <li><strong>Opt-Out Links:</strong> For third-party analytics cookies, you can use opt-out mechanisms provided by the respective services (for example, Google Analytics opt-out browser add-on).</li>
             </ul>
             <p className="text-gray-600 dark:text-slate-300 leading-relaxed mt-4">
@@ -108,10 +108,10 @@ export function CookiePolicyPage() {
           <section>
             <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Third-Party Cookies</h2>
             <p className="text-gray-600 dark:text-slate-300 leading-relaxed mb-4">
-              AdPlatform works with trusted third-party services that may set cookies on your device. These include:
+              DAADD works with trusted third-party services that may set cookies on your device. These include:
             </p>
             <ul className="list-disc pl-6 space-y-2 text-gray-600 dark:text-slate-300">
-              <li><strong>Google Maps:</strong> Used in our geographic heatmap analytics feature to display location-based campaign data. Google may set cookies for map rendering and usage analytics. See <a href="https://policies.google.com/privacy" className="text-primary-600 dark:text-primary-400 hover:underline" target="_blank" rel="noopener noreferrer">Google's Privacy Policy</a>.</li>
+              <li><strong>OpenStreetMap:</strong> Our geographic heatmap analytics feature renders maps with Leaflet using map tiles served by OpenStreetMap. No tracking cookies or API keys are used for map rendering. See the <a href="https://wiki.osmfoundation.org/wiki/Privacy_Policy" className="text-primary-600 dark:text-primary-400 hover:underline" target="_blank" rel="noopener noreferrer">OpenStreetMap Foundation Privacy Policy</a>.</li>
               <li><strong>Analytics Providers:</strong> We use analytics tools to monitor platform health and usage. These services collect anonymous usage data to help us improve the platform.</li>
               <li><strong>Payment Processors:</strong> Our payment providers may set cookies during billing and payout transactions for security and fraud prevention.</li>
               <li><strong>Cloud Infrastructure:</strong> Our hosting and CDN providers may set technical cookies for load balancing and performance optimization.</li>
@@ -128,7 +128,7 @@ export function CookiePolicyPage() {
               We may update this Cookie Policy periodically to reflect changes in our cookie practices, new technologies, or regulatory requirements. When we make changes, we will update the "Last updated" date at the top of this page. For significant changes, we will provide a prominent notice on the platform.
             </p>
             <p className="text-gray-600 dark:text-slate-300 leading-relaxed">
-              If you have questions about our use of cookies, please contact us at privacy@adplatform.com.
+              If you have questions about our use of cookies, please contact us at privacy@daadd.com.
             </p>
           </section>
         </div>

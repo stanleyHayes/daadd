@@ -143,7 +143,7 @@ VITE_API_URL=https://api.yourdomain.com/api/v1
 # 5. Deploy
 
 # Option B: Heroku
-# heroku create adplatform-api
+# heroku create daadd-api
 # git push heroku main
 # heroku config:set VAR=value ...
 

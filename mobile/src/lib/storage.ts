@@ -1,7 +1,7 @@
 import * as SecureStore from 'expo-secure-store';
 
-const TOKEN_KEY = 'adplatform_auth_token';
-const REFRESH_TOKEN_KEY = 'adplatform_refresh_token';
+const TOKEN_KEY = 'daadd_auth_token';
+const REFRESH_TOKEN_KEY = 'daadd_refresh_token';
 
 export async function getToken(): Promise<string | null> {
   try {

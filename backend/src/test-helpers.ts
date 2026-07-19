@@ -28,7 +28,7 @@ export async function connectTestDb(): Promise<void> {
     // instance in CI, so give each worker its own database — otherwise a
     // concurrent resetTestDb() drops the DB mid-test in another worker.
     const url = new URL(uri);
-    const base = url.pathname.replace(/^\//, '') || 'adplatform-test';
+    const base = url.pathname.replace(/^\//, '') || 'daadd-test';
     url.pathname = `/${base}-${process.env.JEST_WORKER_ID || '1'}`;
     uri = url.toString();
   }

@@ -1,6 +1,6 @@
-# Contributing to AdPlatform/DAADD
+# Contributing to DAADD
 
-This document outlines the development workflow, testing standards, and code quality expectations for the AdPlatform/DAADD platform.
+This document outlines the development workflow, testing standards, and code quality expectations for the DAADD platform.
 
 ## Table of Contents
 

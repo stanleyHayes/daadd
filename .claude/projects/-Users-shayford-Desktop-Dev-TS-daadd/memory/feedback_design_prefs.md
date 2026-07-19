@@ -8,5 +8,5 @@ Use Google Sans font throughout the app (loaded from CDNFonts). Previously tried
 Add animations for transitions and interactions.
 Support both dark and light themes.
 
-**Why:** User explicitly requested these design choices for the AdPlatform/DAADD platform.
+**Why:** User explicitly requested these design choices for the DAADD platform.
 **How to apply:** All frontend components should use Google Sans font, include motion/animations, and support theme toggling.

@@ -12,7 +12,7 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('adplatform_token');
+    const token = localStorage.getItem('daadd_token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -26,7 +26,7 @@ let refreshPromise: Promise<string | null> | null = null;
 
 function refreshAccessToken(): Promise<string | null> {
   if (!refreshPromise) {
-    const storedRefreshToken = localStorage.getItem('adplatform_refresh_token');
+    const storedRefreshToken = localStorage.getItem('daadd_refresh_token');
     if (!storedRefreshToken) {
       return Promise.resolve(null);
     }

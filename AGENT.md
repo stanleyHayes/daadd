@@ -1,4 +1,4 @@
-# FonAd/DAADD — AI Agent Coordination Guide
+# DAADD — AI Agent Coordination Guide
 
 > **START HERE.** Master handoff for any AI agent working on this codebase. Describes the tree **as it is** — verified against the code on 2026-07-17. When this file and the code disagree, believe the code and update this file.
 
@@ -6,7 +6,7 @@
 
 ## What You're Working With
 
-**FonAd/DAADD** is a two-sided AdTech platform (npm-workspaces monorepo: `backend/` + `frontend/` + `mobile/` + `shared/`).
+**DAADD** is a two-sided AdTech platform (npm-workspaces monorepo: `backend/` + `frontend/` + `mobile/` + `shared/`).
 
 **Read `ARCHITECTURE.md` first** — it is the authoritative code map. Key facts:
 
@@ -38,7 +38,7 @@ npm run dev                 # backend :4000 + frontend :3000
 cd mobile && npx expo start # mobile, in another terminal
 ```
 
-- Dev seeding runs automatically outside production (`backend/src/seed.ts`, insert-only). Demo logins incl. `admin@example.com` / `merchant@adplatform.com` — password is in the seed file.
+- Dev seeding runs automatically outside production (`backend/src/seed.ts`, insert-only). Demo logins incl. `admin@example.com` / `merchant@daadd.com` — password is in the seed file.
 - Health: `GET http://localhost:4000/health` (NOT `/api/v1/health`).
 
 ## Key Code Patterns (Copy These!)

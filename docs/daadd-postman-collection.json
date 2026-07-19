@@ -1,9 +1,9 @@
 {
   "info": {
-    "name": "AdPlatform / DAADD API",
-    "description": "Complete API collection for the AdPlatform / DAADD (Digital Ad Analytics & Dynamic Dashboard) platform. Covers authentication, campaign management, analytics, event tracking, AI optimization, anomaly detection, benchmarking, attribution, storytelling, rewards, teams, and notifications.",
+    "name": "DAADD API",
+    "description": "Complete API collection for the DAADD (Digital Ad Analytics & Dynamic Dashboard) platform. Covers authentication, campaign management, analytics, event tracking, AI optimization, anomaly detection, benchmarking, attribution, storytelling, rewards, teams, and notifications.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_postman_id": "adplatform-daadd-api-collection"
+    "_postman_id": "daadd-api-collection"
   },
   "variable": [
     {
@@ -79,7 +79,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Jane Advertiser\",\n  \"email\": \"advertiser@adplatform.com\",\n  \"password\": \"password123\",\n  \"role\": \"advertiser\"\n}"
+              "raw": "{\n  \"name\": \"Jane Advertiser\",\n  \"email\": \"advertiser@daadd.com\",\n  \"password\": \"password123\",\n  \"role\": \"advertiser\"\n}"
             },
             "url": {
               "raw": "{{base_url}}/auth/register",
@@ -124,7 +124,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"advertiser@adplatform.com\",\n  \"password\": \"password123\"\n}"
+              "raw": "{\n  \"email\": \"advertiser@daadd.com\",\n  \"password\": \"password123\"\n}"
             },
             "url": {
               "raw": "{{base_url}}/auth/login",

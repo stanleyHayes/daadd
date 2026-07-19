@@ -1,4 +1,4 @@
-# AdPlatform — Quick Start Guide
+# DAADD — Quick Start Guide
 
 **Status:** ✅ Fully Operational  
 **Last Updated:** May 19, 2026
@@ -318,7 +318,7 @@ DELETE /api/v1/webhooks/:id
 ```
 NODE_ENV=development
 PORT=4000
-MONGODB_URI=mongodb://localhost:27017/adplatform
+MONGODB_URI=mongodb://localhost:27017/daadd
 REDIS_URL=redis://localhost:6380
 JWT_SECRET=your-secret-key
 JWT_REFRESH_SECRET=your-refresh-secret
@@ -399,5 +399,5 @@ For questions or issues:
 
 ---
 
-**Built with ❤️ on AdPlatform**  
+**Built with ❤️ on DAADD**  
 *Intelligent Ad Management Platform*

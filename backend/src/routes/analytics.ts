@@ -290,7 +290,7 @@ router.get('/export/:campaignId/pdf', authMiddleware, async (req: Request, res: 
       .fontSize(8)
       .fillColor('#888888')
       .text(
-        `Generated ${new Date().toISOString()} by AdPlatform. Metric series are deterministic synthetic data seeded from the campaign id.`,
+        `Generated ${new Date().toISOString()} by DAADD. Metric series are deterministic synthetic data seeded from the campaign id.`,
         50,
         800,
         { align: 'center', width: 495 }

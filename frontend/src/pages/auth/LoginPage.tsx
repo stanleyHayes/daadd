@@ -66,7 +66,7 @@ export function LoginPage() {
  <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
  <Zap className="h-6 w-6 text-white" />
  </div>
- <span className="text-xl font-bold tracking-tight">AdPlatform</span>
+ <span className="text-xl font-bold tracking-tight">DAADD</span>
  </motion.div>
 
  {/* Hero text */}
@@ -150,7 +150,7 @@ export function LoginPage() {
  <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary-600 mb-3 shadow-lg shadow-primary-500/25">
  <Zap className="h-8 w-8 text-white" />
  </div>
- <h1 className="text-2xl font-bold text-gray-900 dark:text-white">AdPlatform</h1>
+ <h1 className="text-2xl font-bold text-gray-900 dark:text-white">DAADD</h1>
  </div>
 
  <div className="mb-8">

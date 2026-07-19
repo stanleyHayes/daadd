@@ -5,9 +5,8 @@ services:
     rootDir: .
     dockerfilePath: ./Dockerfile.backend
     plan: free
-    envVarGroups:
-      - daadd-backend-env
     envVars:
+      - fromGroup: daadd-backend-env
       - key: NODE_ENV
         value: production
       - key: PORT
@@ -15,10 +14,9 @@ services:
       - key: APP_PORT
         value: 4000
       - key: STORAGE_PROVIDER
-        value: local
+        value: cloudinary
       - key: CORS_ORIGINS
-        # Update this with your Vercel production URL once deployed
-        value: https://your-frontend.vercel.app,http://localhost:3000
+        value: https://daadd.vercel.app,http://localhost:3000
     healthCheckPath: /health
     autoDeploy: true
 
@@ -42,15 +40,11 @@ envVarGroups:
         sync: false
       - key: CLOUDINARY_SECURE
         value: true
-      - key: GOOGLE_MAPS_API_KEY
-        sync: false
       - key: RESEND_API_KEY
         sync: false
       - key: FROM_EMAIL
         value: noreply@daadd.io
       - key: BACKEND_URL
-        sync: false
-      - key: CORS_ORIGINS
         sync: false
 
 # Note: Render's free tier only supports web services. Managed MongoDB and Redis are not free.

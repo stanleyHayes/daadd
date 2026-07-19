@@ -85,7 +85,7 @@ export function PartnersPage() {
               transition={{ delay: 0.2 }}
               className="text-lg text-primary-100 max-w-2xl mx-auto"
             >
-              Discover the brands and creators powering campaigns on AdPlatform. Browse their profiles to see what they are advertising.
+              Discover the brands and creators powering campaigns on DAADD. Browse their profiles to see what they are advertising.
             </motion.p>
           </div>
         </section>

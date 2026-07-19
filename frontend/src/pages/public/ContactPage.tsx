@@ -24,8 +24,8 @@ const contactChannels = [
   {
     icon: Mail,
     title: 'Email us',
-    description: 'hello@adplatform.example',
-    href: 'mailto:hello@adplatform.example',
+    description: 'hello@daadd.example',
+    href: 'mailto:hello@daadd.example',
     color: 'bg-secondary-100 text-secondary-700 dark:bg-secondary-900/30 dark:text-secondary-300',
   },
   {
@@ -59,7 +59,7 @@ const contactChannels = [
   {
     icon: Users,
     title: 'Community',
-    description: 'Join the AdPlatform community',
+    description: 'Join the DAADD community',
     href: '#',
     color: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300',
   },

@@ -1,4 +1,4 @@
-# AdPlatform/DAADD — Advanced Features Roadmap
+# DAADD — Advanced Features Roadmap
 
 **Status:** Platform Complete — Advanced Features Phase  
 **Date:** May 19, 2026  
@@ -8,7 +8,7 @@
 
 ## Executive Summary
 
-The AdPlatform/DAADD platform (all 6 phases) is complete and production-ready. This document outlines **10 advanced features** that can be built incrementally to increase platform value, user engagement, and competitive differentiation.
+The DAADD platform (all 6 phases) is complete and production-ready. This document outlines **10 advanced features** that can be built incrementally to increase platform value, user engagement, and competitive differentiation.
 
 **Estimated Total Effort:** 40–60 development days  
 **Estimated ROI:** High (each feature directly impacts revenue or user retention)

@@ -1,8 +1,8 @@
 {
-  "name": "fonad-daadd",
+  "name": "daadd",
   "version": "1.0.0",
   "private": true,
-  "description": "FonAd/DAADD - Two-sided AdTech and Analytics Platform",
+  "description": "DAADD - Two-sided AdTech and Analytics Platform",
   "workspaces": [
     "shared",
     "backend",

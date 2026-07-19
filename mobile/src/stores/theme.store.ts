@@ -22,11 +22,11 @@ export const useThemeStore = create<ThemeStore>((set) => ({
   theme: 'system',
   resolvedTheme: resolveTheme('system'),
   setTheme: async (theme: Theme) => {
-    await AsyncStorage.setItem('adplatform-theme', theme);
+    await AsyncStorage.setItem('daadd-theme', theme);
     set({ theme, resolvedTheme: resolveTheme(theme) });
   },
   initialize: async () => {
-    const saved = await AsyncStorage.getItem('adplatform-theme') as Theme | null;
+    const saved = await AsyncStorage.getItem('daadd-theme') as Theme | null;
     const theme = saved || 'system';
     set({ theme, resolvedTheme: resolveTheme(theme) });
 

@@ -140,7 +140,7 @@ export function SplashAnimated({ onFinish }: SplashAnimatedProps) {
 
         {/* Title */}
         <Animated.View style={titleStyle}>
-          <Text style={styles.title}>AdPlatform</Text>
+          <Text style={styles.title}>DAADD</Text>
         </Animated.View>
 
         {/* Subtitle */}

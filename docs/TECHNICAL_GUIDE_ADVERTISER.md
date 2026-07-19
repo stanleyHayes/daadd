@@ -1,6 +1,6 @@
-# AdPlatform/DAADD — Technical Guide for Advertisers
+# DAADD — Technical Guide for Advertisers
 
-**Platform:** AdPlatform/DAADD (Two-Sided AdTech Platform)  
+**Platform:** DAADD (Two-Sided AdTech Platform)  
 **Role:** Advertiser (Campaign Creator & Manager)  
 **Last Updated:** May 2026  
 **Audience:** Non-technical and technical advertisers managing ad campaigns
@@ -27,7 +27,7 @@
 
 ### What You Can Do as an Advertiser
 
-As an advertiser on AdPlatform/DAADD, you can:
+As an advertiser on DAADD, you can:
 
 - **Create and manage ad campaigns** — Define audience, budget, creative assets, and timelines
 - **Track performance in real-time** — View impressions, clicks, conversions, and ROI metrics
@@ -39,9 +39,9 @@ As an advertiser on AdPlatform/DAADD, you can:
 
 ### Platform Access
 
-**Web Dashboard:** `https://adplatform.example.com/dashboard`  
+**Web Dashboard:** `https://daadd.example.com/dashboard`  
 **Mobile App:** Available on iOS/Android (view-only for analytics; campaign creation on web)  
-**API Base URL:** `https://adplatform.example.com/api/v1`
+**API Base URL:** `https://daadd.example.com/api/v1`
 
 ---
 
@@ -52,7 +52,7 @@ As an advertiser on AdPlatform/DAADD, you can:
 **Endpoint:** `POST /api/v1/auth/register`
 
 ```bash
-curl -X POST https://adplatform.example.com/api/v1/auth/register \
+curl -X POST https://daadd.example.com/api/v1/auth/register \
   -H "Content-Type: application/json" \
   -d '{
     "email": "advertiser@company.com",
@@ -81,7 +81,7 @@ curl -X POST https://adplatform.example.com/api/v1/auth/register \
 **Endpoint:** `POST /api/v1/auth/login`
 
 ```bash
-curl -X POST https://adplatform.example.com/api/v1/auth/login \
+curl -X POST https://daadd.example.com/api/v1/auth/login \
   -H "Content-Type: application/json" \
   -d '{
     "email": "advertiser@company.com",
@@ -110,7 +110,7 @@ curl -X POST https://adplatform.example.com/api/v1/auth/login \
 **Forgot Password:** `POST /api/v1/auth/forgot-password`
 
 ```bash
-curl -X POST https://adplatform.example.com/api/v1/auth/forgot-password \
+curl -X POST https://daadd.example.com/api/v1/auth/forgot-password \
   -H "Content-Type: application/json" \
   -d '{
     "email": "advertiser@company.com"
@@ -124,18 +124,18 @@ Check your email for a reset link. Click it to enter a new password.
 All authenticated requests require the `Authorization` header:
 
 ```bash
-curl -X GET https://adplatform.example.com/api/v1/campaigns \
+curl -X GET https://daadd.example.com/api/v1/campaigns \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 ```
 
 **Token Storage (Frontend):**
 ```javascript
 // After login, store token in localStorage
-localStorage.setItem('adplatform_token', response.data.token);
+localStorage.setItem('daadd_token', response.data.token);
 
 // For all future requests, include it
 const headers = {
-  'Authorization': `Bearer ${localStorage.getItem('adplatform_token')}`
+  'Authorization': `Bearer ${localStorage.getItem('daadd_token')}`
 };
 ```
 
@@ -161,7 +161,7 @@ Gather the following information:
 **Endpoint:** `POST /api/v1/campaigns`
 
 ```bash
-curl -X POST https://adplatform.example.com/api/v1/campaigns \
+curl -X POST https://daadd.example.com/api/v1/campaigns \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -198,7 +198,7 @@ curl -X POST https://adplatform.example.com/api/v1/campaigns \
     "name": "Summer Sale 2026",
     "status": "DRAFT",
     "created_at": "2026-05-17T10:30:00Z",
-    "url": "https://adplatform.example.com/dashboard/campaigns/camp_456"
+    "url": "https://daadd.example.com/dashboard/campaigns/camp_456"
   }
 }
 ```
@@ -210,7 +210,7 @@ Once created, your campaign is in **DRAFT** status. Review it on the dashboard, 
 **Endpoint:** `PATCH /api/v1/campaigns/camp_456`
 
 ```bash
-curl -X PATCH https://adplatform.example.com/api/v1/campaigns/camp_456 \
+curl -X PATCH https://daadd.example.com/api/v1/campaigns/camp_456 \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -225,7 +225,7 @@ Your campaign is now live and collecting impressions.
 **Endpoint:** `PATCH /api/v1/campaigns/:campaignId`
 
 ```bash
-curl -X PATCH https://adplatform.example.com/api/v1/campaigns/camp_456 \
+curl -X PATCH https://daadd.example.com/api/v1/campaigns/camp_456 \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -242,7 +242,7 @@ curl -X PATCH https://adplatform.example.com/api/v1/campaigns/camp_456 \
 **Endpoint:** `PATCH /api/v1/campaigns/:campaignId`
 
 ```bash
-curl -X PATCH https://adplatform.example.com/api/v1/campaigns/camp_456 \
+curl -X PATCH https://daadd.example.com/api/v1/campaigns/camp_456 \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -259,7 +259,7 @@ Duplicate a successful campaign and launch a new variant:
 **Endpoint:** `POST /api/v1/campaigns/:campaignId/clone`
 
 ```bash
-curl -X POST https://adplatform.example.com/api/v1/campaigns/camp_456/clone \
+curl -X POST https://daadd.example.com/api/v1/campaigns/camp_456/clone \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -284,7 +284,7 @@ curl -X POST https://adplatform.example.com/api/v1/campaigns/camp_456/clone \
 **Endpoint:** `GET /api/v1/campaigns?page=1&limit=20`
 
 ```bash
-curl -X GET "https://adplatform.example.com/api/v1/campaigns?page=1&limit=20" \
+curl -X GET "https://daadd.example.com/api/v1/campaigns?page=1&limit=20" \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
@@ -344,7 +344,7 @@ You receive notifications at three thresholds:
 **Endpoint:** `GET /api/v1/campaigns/:campaignId`
 
 ```bash
-curl -X GET https://adplatform.example.com/api/v1/campaigns/camp_456 \
+curl -X GET https://daadd.example.com/api/v1/campaigns/camp_456 \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
@@ -369,7 +369,7 @@ To prevent overspending, set a daily maximum:
 **Endpoint:** `PATCH /api/v1/campaigns/:campaignId`
 
 ```bash
-curl -X PATCH https://adplatform.example.com/api/v1/campaigns/camp_456 \
+curl -X PATCH https://daadd.example.com/api/v1/campaigns/camp_456 \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -388,7 +388,7 @@ The campaign automatically pauses if daily spend exceeds this amount.
 **Endpoint:** `GET /api/v1/analytics/dashboard/:campaignId`
 
 ```bash
-curl -X GET https://adplatform.example.com/api/v1/analytics/dashboard/camp_456 \
+curl -X GET https://daadd.example.com/api/v1/analytics/dashboard/camp_456 \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
@@ -449,7 +449,7 @@ curl -X GET https://adplatform.example.com/api/v1/analytics/dashboard/camp_456 \
 **Endpoint:** `GET /api/v1/analytics/dashboard/:campaignId?start_date=2026-05-01&end_date=2026-05-17`
 
 ```bash
-curl -X GET "https://adplatform.example.com/api/v1/analytics/dashboard/camp_456?start_date=2026-05-01&end_date=2026-05-17" \
+curl -X GET "https://daadd.example.com/api/v1/analytics/dashboard/camp_456?start_date=2026-05-01&end_date=2026-05-17" \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
@@ -458,7 +458,7 @@ curl -X GET "https://adplatform.example.com/api/v1/analytics/dashboard/camp_456?
 **Endpoint:** `GET /api/v1/analytics/export/:campaignId?format=pdf`
 
 ```bash
-curl -X GET "https://adplatform.example.com/api/v1/analytics/export/camp_456?format=pdf" \
+curl -X GET "https://daadd.example.com/api/v1/analytics/export/camp_456?format=pdf" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -o campaign_report.pdf
 ```
@@ -470,7 +470,7 @@ See which regions are performing best:
 **Endpoint:** `GET /api/v1/analytics/heatmap/:campaignId`
 
 ```bash
-curl -X GET https://adplatform.example.com/api/v1/analytics/heatmap/camp_456 \
+curl -X GET https://daadd.example.com/api/v1/analytics/heatmap/camp_456 \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
@@ -480,7 +480,7 @@ curl -X GET https://adplatform.example.com/api/v1/analytics/heatmap/camp_456 \
 
 ### How AI Optimization Works
 
-AdPlatform uses machine learning to analyze your campaign performance and suggest improvements. AI reviews:
+DAADD uses machine learning to analyze your campaign performance and suggest improvements. AI reviews:
 
 - Click-through rates by device, region, and time
 - Conversion rates by audience segment
@@ -492,7 +492,7 @@ AdPlatform uses machine learning to analyze your campaign performance and sugges
 **Endpoint:** `GET /api/v1/ai/recommendations/:campaignId`
 
 ```bash
-curl -X GET https://adplatform.example.com/api/v1/ai/recommendations/camp_456 \
+curl -X GET https://daadd.example.com/api/v1/ai/recommendations/camp_456 \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
@@ -544,7 +544,7 @@ curl -X GET https://adplatform.example.com/api/v1/ai/recommendations/camp_456 \
 **Endpoint:** `POST /api/v1/ai/recommendations/:campaignId/:recommendationId/apply`
 
 ```bash
-curl -X POST https://adplatform.example.com/api/v1/ai/recommendations/camp_456/rec_001/apply \
+curl -X POST https://daadd.example.com/api/v1/ai/recommendations/camp_456/rec_001/apply \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -573,7 +573,7 @@ curl -X POST https://adplatform.example.com/api/v1/ai/recommendations/camp_456/r
 **Endpoint:** `GET /api/v1/ai/audit-log/:campaignId`
 
 ```bash
-curl -X GET https://adplatform.example.com/api/v1/ai/audit-log/camp_456 \
+curl -X GET https://daadd.example.com/api/v1/ai/audit-log/camp_456 \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
@@ -588,7 +588,7 @@ See all recommendations applied, when they were applied, and the impact.
 **Endpoint:** `POST /api/v1/campaigns/:campaignId/creatives`
 
 ```bash
-curl -X POST https://adplatform.example.com/api/v1/campaigns/camp_456/creatives \
+curl -X POST https://daadd.example.com/api/v1/campaigns/camp_456/creatives \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -607,7 +607,7 @@ Create two versions of your creative and let the platform track which performs b
 
 ```bash
 # Creative A
-curl -X POST https://adplatform.example.com/api/v1/campaigns/camp_456/creatives \
+curl -X POST https://daadd.example.com/api/v1/campaigns/camp_456/creatives \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -617,7 +617,7 @@ curl -X POST https://adplatform.example.com/api/v1/campaigns/camp_456/creatives 
   }'
 
 # Creative B
-curl -X POST https://adplatform.example.com/api/v1/campaigns/camp_456/creatives \
+curl -X POST https://daadd.example.com/api/v1/campaigns/camp_456/creatives \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -632,7 +632,7 @@ curl -X POST https://adplatform.example.com/api/v1/campaigns/camp_456/creatives 
 **Endpoint:** `GET /api/v1/analytics/creatives/:campaignId`
 
 ```bash
-curl -X GET https://adplatform.example.com/api/v1/analytics/creatives/camp_456 \
+curl -X GET https://daadd.example.com/api/v1/analytics/creatives/camp_456 \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
@@ -678,7 +678,7 @@ curl -X GET https://adplatform.example.com/api/v1/analytics/creatives/camp_456 \
 **Endpoint:** `POST /api/v1/teams/invite`
 
 ```bash
-curl -X POST https://adplatform.example.com/api/v1/teams/invite \
+curl -X POST https://daadd.example.com/api/v1/teams/invite \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -699,7 +699,7 @@ curl -X POST https://adplatform.example.com/api/v1/teams/invite \
 **Endpoint:** `GET /api/v1/teams`
 
 ```bash
-curl -X GET https://adplatform.example.com/api/v1/teams \
+curl -X GET https://daadd.example.com/api/v1/teams \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
@@ -708,7 +708,7 @@ curl -X GET https://adplatform.example.com/api/v1/teams \
 **Endpoint:** `DELETE /api/v1/teams/:memberId`
 
 ```bash
-curl -X DELETE https://adplatform.example.com/api/v1/teams/tm_789 \
+curl -X DELETE https://daadd.example.com/api/v1/teams/tm_789 \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
@@ -771,11 +771,11 @@ Get real-time notifications when your campaign reaches budget thresholds or dete
 **Endpoint:** `POST /api/v1/webhooks`
 
 ```bash
-curl -X POST https://adplatform.example.com/api/v1/webhooks \
+curl -X POST https://daadd.example.com/api/v1/webhooks \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "url": "https://your-server.com/webhooks/adplatform",
+    "url": "https://your-server.com/webhooks/daadd",
     "secret": "your_webhook_secret_key",
     "events": [
       "campaign.budget_threshold",
@@ -789,7 +789,7 @@ curl -X POST https://adplatform.example.com/api/v1/webhooks \
 
 **Receiving Webhook Events:**
 
-When AdPlatform sends a webhook, it will be a POST request to your URL with a signed payload:
+When DAADD sends a webhook, it will be a POST request to your URL with a signed payload:
 
 ```json
 {
@@ -821,7 +821,7 @@ function verifyWebhookSignature(payload, signature, secret) {
 }
 
 // In your webhook handler
-if (verifyWebhookSignature(req.body, req.headers['x-adplatform-signature'], process.env.WEBHOOK_SECRET)) {
+if (verifyWebhookSignature(req.body, req.headers['x-daadd-signature'], process.env.WEBHOOK_SECRET)) {
   // Process webhook
 } else {
   res.status(401).send('Unauthorized');
@@ -830,19 +830,19 @@ if (verifyWebhookSignature(req.body, req.headers['x-adplatform-signature'], proc
 
 ### Example 2: Set Up Conversion Pixel for Your Merchant Site
 
-If you're a merchant selling products and want to track when users complete a purchase after clicking your AdPlatform ad:
+If you're a merchant selling products and want to track when users complete a purchase after clicking your DAADD ad:
 
 **Add this pixel to your thank-you page:**
 
 ```html
 <!-- After purchase is complete -->
 <script>
-  // Fire conversion pixel to AdPlatform
+  // Fire conversion pixel to DAADD
   const campaignId = 'camp_456';
   const userId = 'user_12345'; // Optional: your user ID
   const conversionValue = 99.99;
   
-  const pixelUrl = `https://adplatform.example.com/api/v1/pixel/${campaignId}?uid=${userId}&ev=conversion&val=${conversionValue}`;
+  const pixelUrl = `https://daadd.example.com/api/v1/pixel/${campaignId}?uid=${userId}&ev=conversion&val=${conversionValue}`;
   
   const img = new Image();
   img.src = pixelUrl;
@@ -852,7 +852,7 @@ If you're a merchant selling products and want to track when users complete a pu
 **Or use cURL if tracking server-side:**
 
 ```bash
-curl -X POST "https://adplatform.example.com/api/v1/pixel/camp_456?uid=user_12345&ev=conversion&val=99.99"
+curl -X POST "https://daadd.example.com/api/v1/pixel/camp_456?uid=user_12345&ev=conversion&val=99.99"
 ```
 
 The pixel returns a 1×1 image, so it works even if you're embedding it in HTML.
@@ -868,7 +868,7 @@ const axios = require('axios');
 async function sendSlackReport(campaignId) {
   // Get campaign metrics
   const analyticsRes = await axios.get(
-    `https://adplatform.example.com/api/v1/analytics/dashboard/${campaignId}`,
+    `https://daadd.example.com/api/v1/analytics/dashboard/${campaignId}`,
     {
       headers: {
         'Authorization': `Bearer ${process.env.ADPLATFORM_TOKEN}`
@@ -922,7 +922,7 @@ cron.schedule('0 9 * * *', () => {
 **Solution:**
 ```bash
 # Check campaign status
-curl -X GET https://adplatform.example.com/api/v1/campaigns/camp_456 \
+curl -X GET https://daadd.example.com/api/v1/campaigns/camp_456 \
   -H "Authorization: Bearer YOUR_TOKEN"
 
 # Verify it's ACTIVE and budget remaining > 0
@@ -953,7 +953,7 @@ curl -X GET https://adplatform.example.com/api/v1/campaigns/camp_456 \
 **Solution:**
 ```bash
 # Check webhook delivery logs
-curl -X GET https://adplatform.example.com/api/v1/webhooks \
+curl -X GET https://daadd.example.com/api/v1/webhooks \
   -H "Authorization: Bearer YOUR_TOKEN"
 
 # Re-register with correct URL and make sure your server responds with 200 OK
@@ -970,7 +970,7 @@ curl -X GET https://adplatform.example.com/api/v1/webhooks \
 **Solution:**
 ```bash
 # Check when recommendations were last updated
-curl -X GET https://adplatform.example.com/api/v1/ai/recommendations/camp_456 \
+curl -X GET https://daadd.example.com/api/v1/ai/recommendations/camp_456 \
   -H "Authorization: Bearer YOUR_TOKEN"
 
 # Wait 24 hours if `last_updated` is recent
@@ -999,19 +999,19 @@ curl -X GET https://adplatform.example.com/api/v1/ai/recommendations/camp_456 \
 **Solution:**
 ```bash
 # Pause campaign before editing targeting
-curl -X PATCH https://adplatform.example.com/api/v1/campaigns/camp_456 \
+curl -X PATCH https://daadd.example.com/api/v1/campaigns/camp_456 \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"status": "PAUSED"}'
 
 # Now edit
-curl -X PATCH https://adplatform.example.com/api/v1/campaigns/camp_456 \
+curl -X PATCH https://daadd.example.com/api/v1/campaigns/camp_456 \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"targeting": {...}}'
 
 # Reactivate
-curl -X PATCH https://adplatform.example.com/api/v1/campaigns/camp_456 \
+curl -X PATCH https://daadd.example.com/api/v1/campaigns/camp_456 \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"status": "ACTIVE"}'
@@ -1021,13 +1021,13 @@ curl -X PATCH https://adplatform.example.com/api/v1/campaigns/camp_456 \
 
 ## Support
 
-**Platform Docs:** https://adplatform.example.com/docs  
-**API Status:** https://status.adplatform.example.com  
-**Email Support:** support@adplatform.example.com  
+**Platform Docs:** https://daadd.example.com/docs  
+**API Status:** https://status.daadd.example.com  
+**Email Support:** support@daadd.example.com  
 **Live Chat:** Available weekdays 9 AM - 5 PM UTC
 
-**Community Slack:** https://adplatform-community.slack.com  
-**Video Tutorials:** https://adplatform.example.com/learn
+**Community Slack:** https://daadd-community.slack.com  
+**Video Tutorials:** https://daadd.example.com/learn
 
 ---
 

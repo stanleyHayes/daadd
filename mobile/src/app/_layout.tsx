@@ -6,6 +6,15 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { StyleSheet } from 'react-native';
 import { useFonts } from 'expo-font';
+import {
+  Outfit_300Light,
+  Outfit_400Regular,
+  Outfit_500Medium,
+  Outfit_600SemiBold,
+  Outfit_700Bold,
+  Outfit_800ExtraBold,
+  Outfit_900Black,
+} from '@expo-google-fonts/outfit';
 import * as SplashScreen from 'expo-splash-screen';
 import { useAuthStore } from '@/stores/auth.store';
 import { useThemeStore } from '@/stores/theme.store';
@@ -127,11 +136,13 @@ export default function RootLayout() {
   const [showSplash, setShowSplash] = useState(true);
 
   const [fontsLoaded] = useFonts({
-    'EuclidA-Light': require('../../assets/fonts/Euclid Circular A Light.ttf'),
-    'EuclidA-Regular': require('../../assets/fonts/Euclid Circular A Regular.ttf'),
-    'EuclidA-Medium': require('../../assets/fonts/Euclid Circular A Medium.ttf'),
-    'EuclidA-Semibold': require('../../assets/fonts/Euclid Circular A SemiBold.ttf'),
-    'EuclidA-Bold': require('../../assets/fonts/Euclid Circular A Bold.ttf'),
+    Outfit_300Light,
+    Outfit_400Regular,
+    Outfit_500Medium,
+    Outfit_600SemiBold,
+    Outfit_700Bold,
+    Outfit_800ExtraBold,
+    Outfit_900Black,
   });
 
   useEffect(() => {

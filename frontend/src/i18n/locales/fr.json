@@ -1,6 +1,6 @@
 {
   "header": {
-    "logo": "AdPlatform",
+    "logo": "DAADD",
     "tagline": "Gestion Intelligente des Annonces",
     "nav": {
       "home": "Accueil",
@@ -19,7 +19,7 @@
       "cta": "Essai Gratuit"
     },
     "features": {
-      "title": "Pourquoi Choisir AdPlatform?",
+      "title": "Pourquoi Choisir DAADD?",
       "ai": {
         "title": "Optimisation Alimentée par l'IA",
         "desc": "Ajustements automatiques des enchères, ciblage d'audience et optimisation créative basés sur les données de performance en temps réel."
@@ -35,7 +35,7 @@
     }
   },
   "blog": {
-    "title": "Blog AdPlatform",
+    "title": "Blog DAADD",
     "subtitle": "Aperçus, mises à jour et histoires du monde de la publicité intelligente.",
     "allPosts": "Tous les Articles",
     "noResults": "Aucun article trouvé dans cette catégorie.",
@@ -49,7 +49,7 @@
     }
   },
   "footer": {
-    "copyright": "© 2026 AdPlatform. Tous droits réservés.",
+    "copyright": "© 2026 DAADD. Tous droits réservés.",
     "links": {
       "privacy": "Politique de Confidentialité",
       "terms": "Conditions de Service",

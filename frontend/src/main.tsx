@@ -6,7 +6,7 @@ import './index.css';
 import './i18n/config';
 
 // Initialize theme from localStorage
-const savedTheme = localStorage.getItem('adplatform-theme');
+const savedTheme = localStorage.getItem('daadd-theme');
 if (savedTheme === 'dark') {
   document.documentElement.classList.add('dark');
 } else {

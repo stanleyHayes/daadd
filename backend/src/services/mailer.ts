@@ -9,7 +9,7 @@
 import { Resend } from 'resend';
 
 const FROM_EMAIL = process.env.FROM_EMAIL || 'onboarding@resend.dev';
-const APP_NAME = 'AdPlatform';
+const APP_NAME = 'DAADD';
 
 let resendClient: Resend | null = null;
 if (process.env.RESEND_API_KEY) {

@@ -1,4 +1,4 @@
-# AdPlatform/DAADD Platform — Complete Technical Guide
+# DAADD Platform — Complete Technical Guide
 **For Advertisers, Consumers, Developers, Admins & Merchants**
 
 **Last Updated:** May 17, 2026  
@@ -22,7 +22,7 @@
 
 ## 🎯 PLATFORM OVERVIEW
 
-**AdPlatform/DAADD** is a two-sided AdTech platform where:
+**DAADD** is a two-sided AdTech platform where:
 - **Advertisers** create campaigns, manage budgets, and track performance across Google Ads, Meta, TikTok, LinkedIn, and Pinterest
 - **Consumers** view ads and earn rewards (USD balance)
 - **Developers** integrate the platform into their systems via REST API
@@ -40,8 +40,8 @@
 - ✅ Role-based access control (RBAC)
 
 **Base URLs:**
-- Backend API: `https://api.adplatform.com/api/v1` (prod) or `http://localhost:4000/api/v1` (local)
-- Frontend App: `https://app.adplatform.com` (prod) or `http://localhost:3000` (local)
+- Backend API: `https://api.daadd.com/api/v1` (prod) or `http://localhost:4000/api/v1` (local)
+- Frontend App: `https://app.daadd.com` (prod) or `http://localhost:3000` (local)
 - Mobile App: Expo SDK 55 (iOS/Android via EAS Build)
 
 ---
@@ -114,7 +114,7 @@ Authorization: Bearer <token>
 ```
 
 #### Step 2: User Clicks Link & Grants Permission
-The platform redirects back to: `https://app.adplatform.com/oauth/callback/google?code=...&state=...`
+The platform redirects back to: `https://app.daadd.com/oauth/callback/google?code=...&state=...`
 
 #### Step 3: Platform Exchanges Code for Token (automatic)
 Our system stores the token **encrypted** (AES-256-GCM) at rest. Tokens refresh automatically every 24 hours.
@@ -215,7 +215,7 @@ file: <image.jpg or video.mp4>
   "id": "creative_img_001",
   "campaign_id": "camp_summer_2026",
   "type": "image",
-  "url": "https://cdn.adplatform.com/creatives/img_001.jpg",
+  "url": "https://cdn.daadd.com/creatives/img_001.jpg",
   "format": "jpg",
   "file_size": 2048000
 }
@@ -413,7 +413,7 @@ Content-Type: application/json
     {
       "id": "qr_001",
       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-      "qr_image_url": "https://cdn.adplatform.com/qr/qr_001.png",
+      "qr_image_url": "https://cdn.daadd.com/qr/qr_001.png",
       "amount": 2.50,
       "is_redeemed": false,
       "expires_at": "2026-05-17T16:02:00Z",
@@ -479,11 +479,11 @@ GET /ads?featured=true
       "advertiser": {
         "id": "advertiser_123",
         "name": "Summer Brand Co.",
-        "logo": "https://cdn.adplatform.com/logos/summer_brand.png"
+        "logo": "https://cdn.daadd.com/logos/summer_brand.png"
       },
       "title": "Summer Collection 2026",
       "description": "Shop our new summer line",
-      "creative_url": "https://cdn.adplatform.com/creatives/summer.jpg",
+      "creative_url": "https://cdn.daadd.com/creatives/summer.jpg",
       "reward_amount": 2.50,
       "is_age_restricted": false,
       "category": "Retail",
@@ -756,7 +756,7 @@ Authorization: Bearer <token>
 Content-Type: application/json
 
 {
-  "url": "https://your-api.example.com/webhooks/adplatform",
+  "url": "https://your-api.example.com/webhooks/daadd",
   "events": [
     "campaign.anomaly_detected",
     "campaign.budget_threshold",
@@ -770,7 +770,7 @@ Content-Type: application/json
 ```json
 {
   "id": "webhook_001",
-  "url": "https://your-api.example.com/webhooks/adplatform",
+  "url": "https://your-api.example.com/webhooks/daadd",
   "secret": "whsec_abc123xyz789...",
   "events": ["campaign.anomaly_detected", ...],
   "is_active": true
@@ -797,7 +797,7 @@ Content-Type: application/json
 ```javascript
 const crypto = require('crypto');
 const secret = 'whsec_abc123xyz789...';
-const [timestamp, signature] = req.headers['x-adplatform-signature'].split(',');
+const [timestamp, signature] = req.headers['x-daadd-signature'].split(',');
 
 const signed = crypto
   .createHmac('sha256', secret)
@@ -875,7 +875,7 @@ Authorization: Bearer <token>
 
 **Platform redirects back with code:**
 ```
-https://app.adplatform.com/oauth/callback/{platform}?code=...&state=...
+https://app.daadd.com/oauth/callback/{platform}?code=...&state=...
 ```
 
 **Our system exchanges code for token (automatic):**
@@ -1067,7 +1067,7 @@ Authorization: Bearer <admin_token>
 PATCH /system/settings
 Authorization: Bearer <admin_token>
 {
-  "cors_origins": ["https://app.adplatform.com", "https://staging.adplatform.com"],
+  "cors_origins": ["https://app.daadd.com", "https://staging.daadd.com"],
   "email_provider": "resend",
   "max_campaign_budget": 100000.00,
   "otp_expiry_minutes": 10
@@ -1238,7 +1238,7 @@ Authorization: Bearer <merchant_token>
 // Backend example
 const campaignId = 'camp_summer_2026';
 const response = await fetch(
-  `https://api.adplatform.com/api/v1/analytics/export/pdf?campaignId=${campaignId}`,
+  `https://api.daadd.com/api/v1/analytics/export/pdf?campaignId=${campaignId}`,
   {
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -1255,15 +1255,15 @@ const pdfBuffer = await response.arrayBuffer();
 
 ```html
 <!-- On checkout success page -->
-<img src="https://api.adplatform.com/api/v1/pixel/camp_summer_2026?uid=user_123&ev=conversion&val=5000&ref=mystore.com" width="1" height="1" />
+<img src="https://api.daadd.com/api/v1/pixel/camp_summer_2026?uid=user_123&ev=conversion&val=5000&ref=mystore.com" width="1" height="1" />
 
 <!-- Alternative: JSON POST via JavaScript -->
 <script>
   const campaignId = 'camp_summer_2026';
-  const userId = getCookie('adplatform_user_id'); // Set when user clicks ad
+  const userId = getCookie('daadd_user_id'); // Set when user clicks ad
   const orderValue = 50.00 * 100; // Convert to cents
   
-  fetch(`https://api.adplatform.com/api/v1/pixel/${campaignId}?uid=${userId}&ev=conversion&val=${orderValue}`, {
+  fetch(`https://api.daadd.com/api/v1/pixel/${campaignId}?uid=${userId}&ev=conversion&val=${orderValue}`, {
     method: 'POST'
   });
 </script>
@@ -1273,7 +1273,7 @@ const pdfBuffer = await response.arrayBuffer();
 
 ```javascript
 // Your backend receives webhook
-app.post('/webhooks/adplatform', (req, res) => {
+app.post('/webhooks/daadd', (req, res) => {
   const { event, data } = req.body;
   
   if (event === 'campaign.completed') {
@@ -1295,7 +1295,7 @@ app.post('/webhooks/adplatform', (req, res) => {
 // Webhook receives budget threshold events automatically
 // You can then integrate with Slack, PagerDuty, etc.
 
-app.post('/webhooks/adplatform', async (req, res) => {
+app.post('/webhooks/daadd', async (req, res) => {
   const { event, data } = req.body;
   
   if (event === 'campaign.budget_threshold') {
@@ -1445,14 +1445,14 @@ app.post('/webhooks/adplatform', async (req, res) => {
 
 ## Support & Resources
 
-- **API Documentation:** https://api.adplatform.com/api/docs
-- **Status Page:** https://status.adplatform.com
-- **Support Email:** support@adplatform.com
-- **Slack Channel:** #adplatform-developers (for team members)
-- **GitHub:** https://github.com/adplatform/platform (open-source components)
+- **API Documentation:** https://api.daadd.com/api/docs
+- **Status Page:** https://status.daadd.com
+- **Support Email:** support@daadd.com
+- **Slack Channel:** #daadd-developers (for team members)
+- **GitHub:** https://github.com/daadd/platform (open-source components)
 
 ---
 
 **Document Version:** 2.1  
 **Last Updated:** May 17, 2026  
-**Maintained By:** AdPlatform Platform Team
+**Maintained By:** DAADD Platform Team

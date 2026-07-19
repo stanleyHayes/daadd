@@ -1,6 +1,6 @@
-# AdPlatform/DAADD — Technical Guide for Consumers & Users
+# DAADD — Technical Guide for Consumers & Users
 
-**Platform:** AdPlatform/DAADD (Two-Sided AdTech Platform)  
+**Platform:** DAADD (Two-Sided AdTech Platform)  
 **Role:** Consumer/User (Ad Viewer & Reward Earner)  
 **Last Updated:** May 2026  
 **Audience:** Mobile and web users engaging with ads and earning rewards
@@ -27,7 +27,7 @@
 
 ### What You Can Do as a Consumer
 
-AdPlatform/DAADD lets you:
+DAADD lets you:
 
 - **View ads and earn rewards** — See sponsored content and get paid for engagement
 - **Claim QR-based rewards** — Use special codes to redeem offers at partner merchants
@@ -39,7 +39,7 @@ AdPlatform/DAADD lets you:
 
 ### Age Requirements
 
-To use AdPlatform/DAADD, you must be:
+To use DAADD, you must be:
 - **Minimum 13 years old** (with parental consent)
 - **18+ to claim certain rewards** (alcohol, mature products)
 
@@ -51,7 +51,7 @@ Age verification happens during signup and before accessing restricted content.
 
 ### 1. Register Your Account (Mobile)
 
-**In the AdPlatform mobile app:**
+**In the DAADD mobile app:**
 
 1. Tap **"Sign Up"**
 2. Enter your **email address** and **password**
@@ -90,7 +90,7 @@ Some campaigns require additional age verification (legal compliance for certain
 
 ```javascript
 // POST /api/v1/auth/verify-age
-const response = await fetch('https://adplatform.example.com/api/v1/auth/verify-age', {
+const response = await fetch('https://daadd.example.com/api/v1/auth/verify-age', {
   method: 'POST',
   headers: {
     'Authorization': `Bearer ${token}`,
@@ -111,12 +111,12 @@ const response = await fetch('https://adplatform.example.com/api/v1/auth/verify-
 // On web or mobile app with OAuth support
 const googleAuth = await signInWithGoogle({
   clientId: 'YOUR_GOOGLE_CLIENT_ID',
-  redirectUrl: 'https://adplatform.example.com/auth/callback'
+  redirectUrl: 'https://daadd.example.com/auth/callback'
 });
 
-// AdPlatform exchanges Google token for AdPlatform token
-const adplatformToken = googleAuth.token;
-localStorage.setItem('adplatform_token', adplatformToken);
+// DAADD exchanges Google token for DAADD token
+const daaddToken = googleAuth.token;
+localStorage.setItem('daadd_token', daaddToken);
 ```
 
 **Option B: Apple Login (iOS)**
@@ -132,7 +132,7 @@ const credential = await AppleAuthentication.signInAsync({
   ],
 });
 
-// Use credential.identityToken to get AdPlatform token
+// Use credential.identityToken to get DAADD token
 ```
 
 ### 4. Login to Existing Account
@@ -145,7 +145,7 @@ const credential = await AppleAuthentication.signInAsync({
 **Web:**
 ```javascript
 // POST /api/v1/auth/login
-const response = await fetch('https://adplatform.example.com/api/v1/auth/login', {
+const response = await fetch('https://daadd.example.com/api/v1/auth/login', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
@@ -155,7 +155,7 @@ const response = await fetch('https://adplatform.example.com/api/v1/auth/login',
 });
 
 const { token } = await response.json();
-localStorage.setItem('adplatform_token', token);
+localStorage.setItem('daadd_token', token);
 ```
 
 ### 5. Forgot Password
@@ -180,7 +180,7 @@ localStorage.setItem('adplatform_token', token);
 
 **Home Screen:**
 
-The AdPlatform mobile app shows ads in a **Featured Carousel** at the top:
+The DAADD mobile app shows ads in a **Featured Carousel** at the top:
 
 1. **Swipe left/right** to browse featured campaigns
 2. **Tap an ad card** to see full details
@@ -200,7 +200,7 @@ The AdPlatform mobile app shows ads in a **Featured Carousel** at the top:
 
 **Web Platform:**
 
-Visit `https://adplatform.example.com/ads` to browse all campaigns in a grid view.
+Visit `https://daadd.example.com/ads` to browse all campaigns in a grid view.
 
 ### Workflow 3: Engage with an Ad
 
@@ -229,7 +229,7 @@ When you **tap "View Ad"** on an ad card:
 
 ### Workflow 4: Fatigue & Ad Limits
 
-To keep your experience fresh, AdPlatform limits how often you see the **same ad**:
+To keep your experience fresh, DAADD limits how often you see the **same ad**:
 
 - **Maximum:** 5 views per user per ad, per 24 hours
 - **After limit:** That specific ad won't show in your feed again until 24 hours pass
@@ -250,16 +250,16 @@ To keep your experience fresh, AdPlatform limits how often you see the **same ad
 
 **Web:**
 
-1. Go to `https://adplatform.example.com/dashboard`
+1. Go to `https://daadd.example.com/dashboard`
 2. Click **"Rewards"** in the sidebar
 3. View **Total Balance** and **Available to Claim**
 
 **API endpoint:**
 
 ```javascript
-const response = await fetch('https://adplatform.example.com/api/v1/rewards/balance', {
+const response = await fetch('https://daadd.example.com/api/v1/rewards/balance', {
   headers: {
-    'Authorization': `Bearer ${localStorage.getItem('adplatform_token')}`
+    'Authorization': `Bearer ${localStorage.getItem('daadd_token')}`
   }
 });
 
@@ -295,10 +295,10 @@ Rewards automatically claim after **7 days** of earning.
 **API endpoint:**
 
 ```javascript
-const response = await fetch('https://adplatform.example.com/api/v1/rewards/claim', {
+const response = await fetch('https://daadd.example.com/api/v1/rewards/claim', {
   method: 'POST',
   headers: {
-    'Authorization': `Bearer ${localStorage.getItem('adplatform_token')}`,
+    'Authorization': `Bearer ${localStorage.getItem('daadd_token')}`,
     'Content-Type': 'application/json'
   },
   body: JSON.stringify({
@@ -342,14 +342,14 @@ console.log(`Claimed! New balance: $${new_balance}`);
 
 **Web:**
 
-Visit `https://adplatform.example.com/rewards/history` to see detailed transaction logs with dates, amounts, and descriptions.
+Visit `https://daadd.example.com/rewards/history` to see detailed transaction logs with dates, amounts, and descriptions.
 
 **API endpoint:**
 
 ```javascript
-const response = await fetch('https://adplatform.example.com/api/v1/rewards/history?page=1&limit=20', {
+const response = await fetch('https://daadd.example.com/api/v1/rewards/history?page=1&limit=20', {
   headers: {
-    'Authorization': `Bearer ${localStorage.getItem('adplatform_token')}`
+    'Authorization': `Bearer ${localStorage.getItem('daadd_token')}`
   }
 });
 
@@ -370,7 +370,7 @@ Some campaigns offer **physical rewards** via QR codes. You can:
 1. **Receive a QR code** — Advertiser sends you a unique code
 2. **Show code at store** — Scan at participating merchant
 3. **Claim reward** — Receive discount, free item, or cash
-4. **Earn platform reward** — You also get AdPlatform tokens for redeeming
+4. **Earn platform reward** — You also get DAADD tokens for redeeming
 
 ### Workflow: Redeem a QR Code
 
@@ -385,7 +385,7 @@ QR codes come from:
 **Step 2: Open QR Code (Mobile)**
 
 ```javascript
-// User taps a QR code in the AdPlatform app
+// User taps a QR code in the DAADD app
 // System opens QR reader
 // User points camera at code
 // System scans automatically
@@ -395,7 +395,7 @@ QR codes come from:
 
 ```javascript
 // POST /api/v1/redemptions/verify
-const response = await fetch('https://adplatform.example.com/api/v1/redemptions/verify', {
+const response = await fetch('https://daadd.example.com/api/v1/redemptions/verify', {
   method: 'POST',
   headers: {
     'Authorization': `Bearer ${token}`,
@@ -416,7 +416,7 @@ console.log(`You'll earn: $${reward}`);
 1. **Show QR code** to cashier (or scan if merchant has QR reader)
 2. **Receive discount/offer** (e.g., $10 off purchase)
 3. **Complete transaction** with merchant
-4. **Reward credited** to your AdPlatform account
+4. **Reward credited** to your DAADD account
 
 **Step 5: Approval (if needed)**
 
@@ -424,7 +424,7 @@ Some redemptions require **merchant approval**:
 
 1. Merchant scans your QR code at register
 2. You complete purchase
-3. Merchant approves in AdPlatform dashboard
+3. Merchant approves in DAADD dashboard
 4. Reward credited to your account (usually within 24 hours)
 
 ### One-Time Use Security
@@ -450,7 +450,7 @@ QR codes are **cryptographically signed** and **one-time use only**:
 
 **Web:**
 
-Visit `https://adplatform.example.com/redemptions/history`
+Visit `https://daadd.example.com/redemptions/history`
 
 ---
 
@@ -458,7 +458,7 @@ Visit `https://adplatform.example.com/redemptions/history`
 
 ### How Attribution Works
 
-AdPlatform tracks your journey **across devices** so advertisers can understand how you interact with their ads.
+DAADD tracks your journey **across devices** so advertisers can understand how you interact with their ads.
 
 **Example:**
 1. You see a Nike ad on mobile (impression)
@@ -466,11 +466,11 @@ AdPlatform tracks your journey **across devices** so advertisers can understand 
 3. You close the app and come back the next day on desktop
 4. You search for Nike shoes on desktop and buy them (conversion)
 
-AdPlatform attributes this entire journey to the original Nike ad, even though it spanned 2 devices and 1 day. This is called **attribution**.
+DAADD attributes this entire journey to the original Nike ad, even though it spanned 2 devices and 1 day. This is called **attribution**.
 
 ### Attribution Window
 
-By default, AdPlatform tracks interactions for **30 days** after you see an ad.
+By default, DAADD tracks interactions for **30 days** after you see an ad.
 
 **Example:**
 - Day 0: You see Airbnb ad on mobile
@@ -483,9 +483,9 @@ By default, AdPlatform tracks interactions for **30 days** after you see an ad.
 
 ### Device Identity
 
-AdPlatform links your devices through:
+DAADD links your devices through:
 
-1. **Login** — If you're logged in on both devices, AdPlatform knows it's you
+1. **Login** — If you're logged in on both devices, DAADD knows it's you
 2. **Device ID** — Unique identifier on each phone
 3. **IP Address** — Approximate location matching
 4. **Heuristics** — Similar click patterns, user-agent info
@@ -496,7 +496,7 @@ AdPlatform links your devices through:
 
 **Web:**
 
-Visit `https://adplatform.example.com/dashboard/attribution` to see:
+Visit `https://daadd.example.com/dashboard/attribution` to see:
 - Devices associated with your account
 - Attribution window
 - Sample journeys (anonymized)
@@ -504,9 +504,9 @@ Visit `https://adplatform.example.com/dashboard/attribution` to see:
 **API endpoint:**
 
 ```javascript
-const response = await fetch('https://adplatform.example.com/api/v1/attribution/profile', {
+const response = await fetch('https://daadd.example.com/api/v1/attribution/profile', {
   headers: {
-    'Authorization': `Bearer ${localStorage.getItem('adplatform_token')}`
+    'Authorization': `Bearer ${localStorage.getItem('daadd_token')}`
   }
 });
 
@@ -524,7 +524,7 @@ journeys.forEach(j => {
 
 ### What Data We Collect
 
-AdPlatform collects:
+DAADD collects:
 
 | Data | Purpose | Retention |
 |------|---------|-----------|
@@ -537,10 +537,10 @@ AdPlatform collects:
 
 ### What We Don't Collect
 
-AdPlatform **never**:
+DAADD **never**:
 - Sells your personal data to third parties
 - Stores passwords in plain text (hashed with bcrypt)
-- Tracks across non-AdPlatform sites (no cross-site tracking)
+- Tracks across non-DAADD sites (no cross-site tracking)
 - Collects health, financial, or sensitive data
 - Stores video/audio recordings of you
 
@@ -559,7 +559,7 @@ You can **pause ad recommendations** temporarily:
 
 ```javascript
 // PATCH /api/v1/users/:userId/settings
-const response = await fetch('https://adplatform.example.com/api/v1/users/user_123/settings', {
+const response = await fetch('https://daadd.example.com/api/v1/users/user_123/settings', {
   method: 'PATCH',
   headers: {
     'Authorization': `Bearer ${token}`,
@@ -579,12 +579,12 @@ const response = await fetch('https://adplatform.example.com/api/v1/users/user_1
 ### Getting the App
 
 **iOS:**
-- Visit App Store and search "AdPlatform"
+- Visit App Store and search "DAADD"
 - Tap **"Get"** and authenticate with Face ID/Apple ID
 - Launch and sign up
 
 **Android:**
-- Visit Google Play and search "AdPlatform"
+- Visit Google Play and search "DAADD"
 - Tap **"Install"**
 - Launch and sign up
 
@@ -622,7 +622,7 @@ const response = await fetch('https://adplatform.example.com/api/v1/users/user_1
 
 **iOS (Face ID/Touch ID):**
 
-1. After first login, iOS prompts: "Save password for AdPlatform?"
+1. After first login, iOS prompts: "Save password for DAADD?"
 2. Tap **"Save"**
 3. Next time, just tap the app and use Face ID/Touch ID
 
@@ -650,7 +650,7 @@ Features that require **online**:
 
 ### Accessing the Web App
 
-Visit `https://adplatform.example.com` and **log in** with your account.
+Visit `https://daadd.example.com` and **log in** with your account.
 
 **Key Pages:**
 
@@ -819,7 +819,7 @@ The web app works on:
 1. Earn at least $5.00 before withdrawing
 2. Verify bank details are correct (routing number, account number)
 3. Wait until next calendar month to withdraw again
-4. Complete any pending verification (email AdPlatform support)
+4. Complete any pending verification (email DAADD support)
 
 ### Issue: Ads Not Loading on Mobile
 
@@ -834,7 +834,7 @@ The web app works on:
 2. Go to **Settings** → **Privacy** and enable required permissions
 3. Force close app: (iOS: swipe up; Android: long-press and close)
 4. Reopen app and try again
-5. Update AdPlatform to latest version from App Store/Google Play
+5. Update DAADD to latest version from App Store/Google Play
 
 ---
 
@@ -844,13 +844,13 @@ The web app works on:
 - Tap **Profile** → **Help & Support** for FAQs and contact options
 
 **Email Support:**
-- support@adplatform.example.com (responds within 24 hours)
+- support@daadd.example.com (responds within 24 hours)
 
 **Live Chat:**
 - Available weekdays 9 AM - 5 PM UTC (tap **Help** in app)
 
 **Community:**
-- Join our Slack: https://adplatform-community.slack.com
+- Join our Slack: https://daadd-community.slack.com
 
 ---
 

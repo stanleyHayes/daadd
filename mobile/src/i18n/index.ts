@@ -9,7 +9,7 @@ import frTranslation from './locales/fr.json';
 import deTranslation from './locales/de.json';
 import ptTranslation from './locales/pt.json';
 
-export const LANGUAGE_STORAGE_KEY = 'adplatform-language';
+export const LANGUAGE_STORAGE_KEY = 'daadd-language';
 
 export const languages: Record<string, { name: string; flag: string }> = {
   en: { name: 'English', flag: '🇺🇸' },

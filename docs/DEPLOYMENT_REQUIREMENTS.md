@@ -1,4 +1,4 @@
-# 🚀 AdPlatform Deployment Requirements
+# 🚀 DAADD Deployment Requirements
 
 **Last Updated:** May 19, 2026  
 **Status:** Production-Ready
@@ -43,7 +43,7 @@
 
 ```bash
 # ===== DATABASE =====
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/adplatform?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/daadd?retryWrites=true&w=majority
 REDIS_HOST=redis.example.com      # or localhost for self-hosted
 REDIS_PORT=6379                   # default, change if different
 REDIS_PASSWORD=your_redis_password # if required
@@ -52,7 +52,7 @@ REDIS_URL=redis://:password@host:6379  # alternative single-var format
 # ===== SERVER =====
 NODE_ENV=production
 PORT=4000
-APP_NAME=AdPlatform
+APP_NAME=DAADD
 
 # ===== AUTHENTICATION =====
 JWT_SECRET=generate-a-long-random-string-here-min-32-chars
@@ -77,7 +77,7 @@ STORAGE_PROVIDER=cloudinary
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
-CLOUDINARY_UPLOAD_FOLDER=adplatform
+CLOUDINARY_UPLOAD_FOLDER=daadd
 
 # ===== OAUTH INTEGRATIONS =====
 GOOGLE_OAUTH_CLIENT_ID=xxxxx.apps.googleusercontent.com
@@ -116,7 +116,7 @@ STRIPE_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxx
 
 ```bash
 VITE_API_URL=https://api.yourdomain.com/api/v1
-VITE_APP_NAME=AdPlatform
+VITE_APP_NAME=DAADD
 ```
 
 ### Mobile (EAS Build config)
@@ -124,7 +124,7 @@ VITE_APP_NAME=AdPlatform
 ```json
 {
   "expo": {
-    "name": "AdPlatform",
+    "name": "DAADD",
     "build": {
       "production": {
         "env": {
@@ -204,7 +204,7 @@ echo "MONGODB_URI=..." > backend/.env
 # ... add all variables
 
 # Start with PM2
-pm2 start "npm run dev" --name "adplatform-api"
+pm2 start "npm run dev" --name "daadd-api"
 pm2 save
 pm2 startup
 
@@ -225,7 +225,7 @@ npm install -g heroku
 heroku login
 
 # Create app
-heroku create adplatform-api
+heroku create daadd-api
 
 # Set environment variables
 heroku config:set MONGODB_URI=...

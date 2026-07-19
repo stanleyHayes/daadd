@@ -71,7 +71,7 @@ export function EmptyState({
     >
       {/* Subtle watermark */}
       <span className="pointer-events-none absolute -bottom-3 -right-3 text-6xl sm:text-7xl font-black text-text-primary/[0.03] select-none tracking-tighter">
-        AdPlatform
+        DAADD
       </span>
 
       <div className="relative">

@@ -1,6 +1,6 @@
-# AdPlatform/DAADD — Technical Guide for Developers
+# DAADD — Technical Guide for Developers
 
-**Platform:** AdPlatform/DAADD (Two-Sided AdTech Platform)  
+**Platform:** DAADD (Two-Sided AdTech Platform)  
 **Role:** Developer (API Integration, Third-Party Tooling, Custom Implementations)  
 **Last Updated:** May 2026  
 **Audience:** Backend engineers, full-stack developers, platform integrators
@@ -34,11 +34,11 @@
 
 ```bash
 # Production
-API_BASE_URL=https://adplatform.example.com/api/v1
-WEBHOOK_DOMAIN=https://adplatform.example.com
+API_BASE_URL=https://daadd.example.com/api/v1
+WEBHOOK_DOMAIN=https://daadd.example.com
 
 # Staging (for testing)
-API_BASE_URL_STAGING=https://staging.adplatform.example.com/api/v1
+API_BASE_URL_STAGING=https://staging.daadd.example.com/api/v1
 
 # Local Development (if running locally)
 API_BASE_URL_LOCAL=http://localhost:4000/api/v1
@@ -58,7 +58,7 @@ X-Request-ID: <unique-id>  # Optional but recommended for debugging
 **Example:**
 
 ```bash
-curl -X GET https://adplatform.example.com/api/v1/campaigns \
+curl -X GET https://daadd.example.com/api/v1/campaigns \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." \
   -H "Content-Type: application/json" \
   -H "User-Agent: MyIntegration/1.0"
@@ -105,16 +105,16 @@ All responses follow a consistent envelope:
 
 ### 1. OAuth 2.0 Authorization Code Flow
 
-For third-party integrations (your app requests access to user's AdPlatform account):
+For third-party integrations (your app requests access to user's DAADD account):
 
-**Step 1: Redirect user to AdPlatform login**
+**Step 1: Redirect user to DAADD login**
 
 ```javascript
 const clientId = 'your_client_id';
-const redirectUri = 'https://yourapp.com/auth/adplatform/callback';
+const redirectUri = 'https://yourapp.com/auth/daadd/callback';
 const scope = 'campaigns:read campaigns:write analytics:read webhooks:write';
 
-const authUrl = `https://adplatform.example.com/oauth/authorize?` +
+const authUrl = `https://daadd.example.com/oauth/authorize?` +
   `client_id=${clientId}&` +
   `redirect_uri=${encodeURIComponent(redirectUri)}&` +
   `scope=${encodeURIComponent(scope)}&` +
@@ -128,14 +128,14 @@ window.location.href = authUrl;
 User is redirected back to your app with an authorization code:
 
 ```
-https://yourapp.com/auth/adplatform/callback?code=auth_code_123&state=random_state
+https://yourapp.com/auth/daadd/callback?code=auth_code_123&state=random_state
 ```
 
 **Step 3: Exchange code for access token**
 
 ```javascript
 // On your backend
-const response = await fetch('https://adplatform.example.com/api/v1/oauth/token', {
+const response = await fetch('https://daadd.example.com/api/v1/oauth/token', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
@@ -143,7 +143,7 @@ const response = await fetch('https://adplatform.example.com/api/v1/oauth/token'
     code: 'auth_code_123',
     client_id: 'your_client_id',
     client_secret: 'your_client_secret',
-    redirect_uri: 'https://yourapp.com/auth/adplatform/callback'
+    redirect_uri: 'https://yourapp.com/auth/daadd/callback'
   })
 });
 
@@ -155,7 +155,7 @@ const { access_token, refresh_token, expires_in } = await response.json();
 **Step 4: Use token to make API calls**
 
 ```javascript
-const response = await fetch('https://adplatform.example.com/api/v1/campaigns', {
+const response = await fetch('https://daadd.example.com/api/v1/campaigns', {
   headers: {
     'Authorization': `Bearer ${access_token}`
   }
@@ -164,13 +164,13 @@ const response = await fetch('https://adplatform.example.com/api/v1/campaigns', 
 
 ### 2. Service-to-Service Authentication
 
-If your backend needs to call AdPlatform API on behalf of your service (not a user):
+If your backend needs to call DAADD API on behalf of your service (not a user):
 
 **Use Client Credentials Flow:**
 
 ```javascript
 // Exchange credentials for a service token
-const response = await fetch('https://adplatform.example.com/api/v1/oauth/token', {
+const response = await fetch('https://daadd.example.com/api/v1/oauth/token', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
@@ -276,11 +276,11 @@ For safety, use ETags to prevent overwriting stale data:
 
 ```bash
 # Initial GET returns ETag
-curl -X GET https://adplatform.example.com/api/v1/campaigns/camp_456
+curl -X GET https://daadd.example.com/api/v1/campaigns/camp_456
 # Response header: ETag: "abc123"
 
 # Later, use ETag in If-Match
-curl -X PATCH https://adplatform.example.com/api/v1/campaigns/camp_456 \
+curl -X PATCH https://daadd.example.com/api/v1/campaigns/camp_456 \
   -H 'If-Match: "abc123"' \
   -d '{"name": "Updated"}'
 
@@ -613,7 +613,7 @@ POST /api/v1/webhooks
 
 ```json
 {
-  "url": "https://your-server.com/webhooks/adplatform",
+  "url": "https://your-server.com/webhooks/daadd",
   "secret": "your_webhook_secret_key",
   "events": [
     "campaign.anomaly_detected",
@@ -641,12 +641,12 @@ POST /api/v1/webhooks
 Your server receives **HTTPS POST** with signed payload:
 
 ```bash
-POST /webhooks/adplatform HTTP/1.1
+POST /webhooks/daadd HTTP/1.1
 Host: your-server.com
 Content-Type: application/json
-X-AdPlatform-Signature: sha256=abcdef1234567890
-X-AdPlatform-Timestamp: 1715953800
-X-AdPlatform-Event: campaign.budget_threshold
+X-DAADD-Signature: sha256=abcdef1234567890
+X-DAADD-Timestamp: 1715953800
+X-DAADD-Event: campaign.budget_threshold
 
 {
   "event": "campaign.budget_threshold",
@@ -676,9 +676,9 @@ function verifyWebhookSignature(payload, signature, secret) {
 }
 
 // In your webhook handler
-app.post('/webhooks/adplatform', (req, res) => {
-  const signature = req.headers['x-adplatform-signature'];
-  const timestamp = req.headers['x-adplatform-timestamp'];
+app.post('/webhooks/daadd', (req, res) => {
+  const signature = req.headers['x-daadd-signature'];
+  const timestamp = req.headers['x-daadd-timestamp'];
   
   // Verify signature
   if (!verifyWebhookSignature(req.body, signature, process.env.WEBHOOK_SECRET)) {
@@ -721,31 +721,31 @@ DELETE /api/v1/webhooks/wh_123
 
 ## OAuth Integration
 
-### Common Use Case: Integrate AdPlatform into Your Dashboard
+### Common Use Case: Integrate DAADD into Your Dashboard
 
-If you're building a dashboard tool and want to let users connect their AdPlatform accounts:
+If you're building a dashboard tool and want to let users connect their DAADD accounts:
 
 **Step 1: Register Your App**
 
-Contact AdPlatform to get:
+Contact DAADD to get:
 - `client_id`
 - `client_secret`
 - Approved redirect URIs
 
-**Step 2: Send User to AdPlatform Login**
+**Step 2: Send User to DAADD Login**
 
 ```javascript
 // In your web app
-function connectAdPlatform() {
+function connectDAADD() {
   const params = new URLSearchParams({
     client_id: 'your_client_id',
-    redirect_uri: 'https://yourdash.com/auth/adplatform/callback',
+    redirect_uri: 'https://yourdash.com/auth/daadd/callback',
     scope: 'campaigns:read analytics:read',
     response_type: 'code',
     state: generateRandomString()  // Security: prevent CSRF
   });
   
-  window.location.href = `https://adplatform.example.com/oauth/authorize?${params}`;
+  window.location.href = `https://daadd.example.com/oauth/authorize?${params}`;
 }
 ```
 
@@ -753,7 +753,7 @@ function connectAdPlatform() {
 
 ```javascript
 // Your callback endpoint
-app.get('/auth/adplatform/callback', async (req, res) => {
+app.get('/auth/daadd/callback', async (req, res) => {
   const { code, state } = req.query;
   
   // Verify state matches session (CSRF protection)
@@ -762,7 +762,7 @@ app.get('/auth/adplatform/callback', async (req, res) => {
   }
   
   // Exchange code for token
-  const tokenRes = await fetch('https://adplatform.example.com/api/v1/oauth/token', {
+  const tokenRes = await fetch('https://daadd.example.com/api/v1/oauth/token', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -770,14 +770,14 @@ app.get('/auth/adplatform/callback', async (req, res) => {
       code,
       client_id: process.env.ADPLATFORM_CLIENT_ID,
       client_secret: process.env.ADPLATFORM_CLIENT_SECRET,
-      redirect_uri: 'https://yourdash.com/auth/adplatform/callback'
+      redirect_uri: 'https://yourdash.com/auth/daadd/callback'
     })
   });
   
   const { access_token, refresh_token, expires_in } = await tokenRes.json();
   
   // Store tokens in session/database
-  req.session.adplatformToken = {
+  req.session.daaddToken = {
     access_token,
     refresh_token,
     expires_at: Date.now() + expires_in * 1000
@@ -791,9 +791,9 @@ app.get('/auth/adplatform/callback', async (req, res) => {
 
 ```javascript
 // Fetch campaigns
-const campaignRes = await fetch('https://adplatform.example.com/api/v1/campaigns', {
+const campaignRes = await fetch('https://daadd.example.com/api/v1/campaigns', {
   headers: {
-    'Authorization': `Bearer ${req.session.adplatformToken.access_token}`
+    'Authorization': `Bearer ${req.session.daaddToken.access_token}`
   }
 });
 
@@ -804,17 +804,17 @@ const campaigns = await campaignRes.json();
 
 ```javascript
 async function getValidToken(session) {
-  if (Date.now() < session.adplatformToken.expires_at) {
-    return session.adplatformToken.access_token;  // Still valid
+  if (Date.now() < session.daaddToken.expires_at) {
+    return session.daaddToken.access_token;  // Still valid
   }
   
   // Token expired; refresh it
-  const refreshRes = await fetch('https://adplatform.example.com/api/v1/oauth/token', {
+  const refreshRes = await fetch('https://daadd.example.com/api/v1/oauth/token', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       grant_type: 'refresh_token',
-      refresh_token: session.adplatformToken.refresh_token,
+      refresh_token: session.daaddToken.refresh_token,
       client_id: process.env.ADPLATFORM_CLIENT_ID,
       client_secret: process.env.ADPLATFORM_CLIENT_SECRET
     })
@@ -823,8 +823,8 @@ async function getValidToken(session) {
   const { access_token, expires_in } = await refreshRes.json();
   
   // Update session
-  session.adplatformToken.access_token = access_token;
-  session.adplatformToken.expires_at = Date.now() + expires_in * 1000;
+  session.daaddToken.access_token = access_token;
+  session.daaddToken.expires_at = Date.now() + expires_in * 1000;
   
   return access_token;
 }
@@ -836,7 +836,7 @@ async function getValidToken(session) {
 
 ### Server-Side Tracking (Recommended for Merchants)
 
-On your thank-you page after a purchase, POST to AdPlatform:
+On your thank-you page after a purchase, POST to DAADD:
 
 ```html
 <script>
@@ -845,7 +845,7 @@ On your thank-you page after a purchase, POST to AdPlatform:
   const userId = 'user_12345';     // Your customer ID (optional)
   const conversionValue = 99.99;   // Purchase amount
   
-  fetch(`https://adplatform.example.com/api/v1/pixel/${campaignId}?uid=${userId}&ev=conversion&val=${conversionValue}`, {
+  fetch(`https://daadd.example.com/api/v1/pixel/${campaignId}?uid=${userId}&ev=conversion&val=${conversionValue}`, {
     method: 'POST',
     mode: 'no-cors'  // Allow cross-domain
   });
@@ -857,16 +857,16 @@ On your thank-you page after a purchase, POST to AdPlatform:
 ```html
 <!-- Add to any page where you want to track conversions -->
 <script>
-  window.AdPlatformPixel = {
+  window.DAADDPixel = {
     track: function(campaignId, eventType, metadata) {
-      const url = `https://adplatform.example.com/api/v1/pixel/${campaignId}?ev=${eventType}`;
+      const url = `https://daadd.example.com/api/v1/pixel/${campaignId}?ev=${eventType}`;
       const img = new Image();
       img.src = url;
     }
   };
   
   // Track a purchase
-  AdPlatformPixel.track('camp_456', 'conversion', { value: 99.99 });
+  DAADDPixel.track('camp_456', 'conversion', { value: 99.99 });
 </script>
 ```
 
@@ -882,7 +882,7 @@ On your thank-you page after a purchase, POST to AdPlatform:
 **Example URL:**
 
 ```
-https://adplatform.example.com/api/v1/pixel/camp_456?uid=cust_123&ev=conversion&val=99.99&ref=yourstore.com
+https://daadd.example.com/api/v1/pixel/camp_456?uid=cust_123&ev=conversion&val=99.99&ref=yourstore.com
 ```
 
 ---
@@ -950,7 +950,7 @@ function sleep(ms) {
 
 // Usage
 const campaigns = await apiCallWithRetry(
-  'https://adplatform.example.com/api/v1/campaigns',
+  'https://daadd.example.com/api/v1/campaigns',
   {
     headers: {
       'Authorization': `Bearer ${token}`
@@ -964,7 +964,7 @@ const campaigns = await apiCallWithRetry(
 ```javascript
 async function createCampaign(data) {
   try {
-    const response = await fetch('https://adplatform.example.com/api/v1/campaigns', {
+    const response = await fetch('https://daadd.example.com/api/v1/campaigns', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -1034,7 +1034,7 @@ X-RateLimit-Reset: 1715953800  # Unix timestamp
 
 ```javascript
 async function checkRateLimit(token) {
-  const response = await fetch('https://adplatform.example.com/api/v1/rate-limit', {
+  const response = await fetch('https://daadd.example.com/api/v1/rate-limit', {
     headers: {
       'Authorization': `Bearer ${token}`
     }
@@ -1064,7 +1064,7 @@ async function syncCampaignsToDatabase() {
   
   while (hasMore) {
     const response = await fetch(
-      `https://adplatform.example.com/api/v1/campaigns?page=${page}&limit=100`,
+      `https://daadd.example.com/api/v1/campaigns?page=${page}&limit=100`,
       {
         headers: { 'Authorization': `Bearer ${token}` }
       }
@@ -1075,7 +1075,7 @@ async function syncCampaignsToDatabase() {
     // Save each campaign to your database
     for (const campaign of data) {
       await db.campaigns.upsert({
-        adplatform_campaign_id: campaign.campaign_id,
+        daadd_campaign_id: campaign.campaign_id,
         name: campaign.name,
         status: campaign.status,
         budget_total: campaign.budget_total,
@@ -1100,7 +1100,7 @@ async function sendDailyReport(campaignId) {
   const yesterday = new Date(Date.now() - 24*60*60*1000).toISOString().split('T')[0];
   
   const response = await fetch(
-    `https://adplatform.example.com/api/v1/analytics/dashboard/${campaignId}?start_date=${yesterday}&end_date=${yesterday}`,
+    `https://daadd.example.com/api/v1/analytics/dashboard/${campaignId}?start_date=${yesterday}&end_date=${yesterday}`,
     {
       headers: { 'Authorization': `Bearer ${token}` }
     }
@@ -1146,7 +1146,7 @@ const app = express();
 
 app.use(express.json());
 
-// Webhook secret from AdPlatform
+// Webhook secret from DAADD
 const WEBHOOK_SECRET = process.env.ADPLATFORM_WEBHOOK_SECRET;
 
 function verifySignature(payload, signature) {
@@ -1158,9 +1158,9 @@ function verifySignature(payload, signature) {
   return `sha256=${hash}` === signature;
 }
 
-app.post('/webhooks/adplatform', (req, res) => {
-  const signature = req.headers['x-adplatform-signature'];
-  const timestamp = req.headers['x-adplatform-timestamp'];
+app.post('/webhooks/daadd', (req, res) => {
+  const signature = req.headers['x-daadd-signature'];
+  const timestamp = req.headers['x-daadd-timestamp'];
   
   // Verify signature
   if (!verifySignature(req.body, signature)) {
@@ -1211,10 +1211,10 @@ app.listen(3001);
 export API_BASE_URL=http://localhost:4000/api/v1
 
 # Staging (for integration testing)
-export API_BASE_URL=https://staging.adplatform.example.com/api/v1
+export API_BASE_URL=https://staging.daadd.example.com/api/v1
 
 # Production
-export API_BASE_URL=https://adplatform.example.com/api/v1
+export API_BASE_URL=https://daadd.example.com/api/v1
 ```
 
 ### Debugging Headers
@@ -1222,7 +1222,7 @@ export API_BASE_URL=https://adplatform.example.com/api/v1
 Include diagnostic headers with requests:
 
 ```bash
-curl -X GET https://adplatform.example.com/api/v1/campaigns/camp_456 \
+curl -X GET https://daadd.example.com/api/v1/campaigns/camp_456 \
   -H "Authorization: Bearer ${TOKEN}" \
   -H "X-Request-ID: debug-12345" \
   -H "X-Debug: true"
@@ -1235,7 +1235,7 @@ The `X-Request-ID` appears in error responses and server logs, making it easier 
 Use a webhook testing service like Webhook.cool:
 
 1. Get a unique URL from webhook.cool
-2. Register it with AdPlatform: `POST /webhooks` with your test URL
+2. Register it with DAADD: `POST /webhooks` with your test URL
 3. Trigger an event (e.g., reach budget threshold)
 4. View webhook payload on webhook.cool
 
@@ -1310,10 +1310,10 @@ fetch = (function(originalFetch) {
 
 ## Support
 
-**API Docs:** https://adplatform.example.com/api/docs  
-**API Status:** https://status.adplatform.example.com  
-**Slack Community:** https://adplatform-community.slack.com  
-**Email:** api-support@adplatform.example.com
+**API Docs:** https://daadd.example.com/api/docs  
+**API Status:** https://status.daadd.example.com  
+**Slack Community:** https://daadd-community.slack.com  
+**Email:** api-support@daadd.example.com
 
 ---
 

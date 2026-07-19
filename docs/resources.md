@@ -1,4 +1,4 @@
-# AdPlatform / DAADD — Resources Guide
+# DAADD — Resources Guide
 
 Every external account, API key, platform, and local dependency needed to run this monorepo (backend + frontend + mobile) end-to-end. Split by "required to boot" vs "required for specific features" vs "production-only."
 
@@ -43,7 +43,7 @@ These **must** exist for `npm run dev` to start cleanly. Everything below is fre
 ### 1.5 JWT secret
 - **Required**: yes — generates and verifies auth tokens
 - Generate: `openssl rand -hex 64`
-- Backend env key: `JWT_SECRET` (change from the default `adplatform-jwt-secret-change-in-production`)
+- Backend env key: `JWT_SECRET` (change from the default `daadd-jwt-secret-change-in-production`)
 
 ---
 
@@ -67,7 +67,7 @@ Skip these if you're not using the feature — the app will still boot without t
 - **Setup**: https://cloudinary.com
   1. Create a free account and note your **cloud name**, **API key**, and **API secret**
   2. Set `STORAGE_PROVIDER=cloudinary` and fill `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`
-  3. (Optional) Set `CLOUDINARY_UPLOAD_FOLDER=adplatform` to group uploads
+  3. (Optional) Set `CLOUDINARY_UPLOAD_FOLDER=daadd` to group uploads
 - **Cost**: free tier covers generous storage/bandwidth for development and early production
 
 ### 2.3 Elasticsearch (analytics search)
@@ -123,9 +123,9 @@ Pick one stack — the apps are cleanly separable:
 # Core — required
 DATABASE_HOST=localhost
 DATABASE_PORT=3307
-DATABASE_NAME=adplatform
+DATABASE_NAME=daadd
 DATABASE_USER=root
-DATABASE_PASSWORD=adplatform_root_2024
+DATABASE_PASSWORD=daadd_root_2024
 REDIS_HOST=localhost
 REDIS_PORT=6380
 JWT_SECRET=<generate-with-openssl-rand-hex-64>
@@ -138,7 +138,7 @@ STORAGE_PROVIDER=cloudinary
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
-CLOUDINARY_UPLOAD_FOLDER=adplatform
+CLOUDINARY_UPLOAD_FOLDER=daadd
 
 # Optional
 GOOGLE_MAPS_API_KEY=                # server-side geocoding

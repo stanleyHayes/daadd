@@ -8,7 +8,7 @@ interface ThemeStore {
   setTheme: (theme: Theme) => void;
 }
 
-const STORAGE_KEY = 'adplatform-theme';
+const STORAGE_KEY = 'daadd-theme';
 
 const getInitialTheme = (): Theme => {
   const stored = localStorage.getItem(STORAGE_KEY) as Theme | null;

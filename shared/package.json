@@ -1,7 +1,7 @@
 {
-  "name": "@adplatform/shared",
+  "name": "@daadd/shared",
   "version": "1.0.0",
-  "description": "Shared types and utilities for the AdPlatform/DAADD AdTech platform",
+  "description": "Shared types and utilities for the DAADD AdTech platform",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {

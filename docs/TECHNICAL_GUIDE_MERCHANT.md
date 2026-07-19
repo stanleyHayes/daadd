@@ -1,6 +1,6 @@
-# AdPlatform/DAADD — Technical Guide for Merchants
+# DAADD — Technical Guide for Merchants
 
-**Platform:** AdPlatform/DAADD (Two-Sided AdTech Platform)  
+**Platform:** DAADD (Two-Sided AdTech Platform)  
 **Role:** Merchant (Redemption Management & Dynamic Control)  
 **Last Updated:** May 2026  
 **Audience:** Merchants managing customer redemptions and reward offers
@@ -25,13 +25,13 @@
 
 ## Getting Started
 
-### What Merchants Do on AdPlatform
+### What Merchants Do on DAADD
 
 As a Merchant, you:
 
 1. **Manage Offers** — Define discounts, rewards, and incentives for campaigns
 2. **Approve Redemptions** — Verify customer purchases and approve rewards
-3. **Track Sales** — See revenue generated from AdPlatform-attributed customers
+3. **Track Sales** — See revenue generated from DAADD-attributed customers
 4. **Control Inventory** — Pause redemptions if supplies are low
 5. **Monitor Performance** — Track conversion rates and customer satisfaction
 6. **Integrate Systems** — Connect your POS, e-commerce, or inventory systems
@@ -53,7 +53,7 @@ A merchant is typically the **brand** or **business** offering the product/servi
 
 ### Access Your Dashboard
 
-**URL:** `https://adplatform.example.com/dashboard/merchant`
+**URL:** `https://daadd.example.com/dashboard/merchant`
 
 **Key Sections:**
 
@@ -117,7 +117,7 @@ GET /api/v1/merchant/dashboard/metrics?period=today
 ### How Redemptions Work
 
 **Step 1: Customer Receives Offer**
-- Customer sees a AdPlatform campaign with an offer (e.g., "30% off Nike shoes")
+- Customer sees a DAADD campaign with an offer (e.g., "30% off Nike shoes")
 - They receive a unique QR code valid for 2 minutes
 
 **Step 2: Customer Visits Store**
@@ -136,17 +136,17 @@ GET /api/v1/merchant/dashboard/metrics?period=today
 **Step 5: You Approve Redemption**
 - Review purchase details
 - Confirm customer used the discount/reward
-- Tap **"Approve"** in AdPlatform dashboard
+- Tap **"Approve"** in DAADD dashboard
 
 **Step 6: Payment Settled**
-- AdPlatform deducts reward cost from advertiser's account
-- You receive payment (less AdPlatform fee)
+- DAADD deducts reward cost from advertiser's account
+- You receive payment (less DAADD fee)
 
 ### Verify a QR Code
 
 **Mobile App (POS):**
 
-1. Open AdPlatform Merchant app
+1. Open DAADD Merchant app
 2. Tap **"Scan QR"**
 3. Point camera at code
 4. System shows:
@@ -279,7 +279,7 @@ POST /api/v1/redemptions/red_001/approve
       "advertiser": "Nike",
       "advertiser_cost": 29.99,
       "merchant_payout": 28.49,
-      "adplatform_fee": 1.50,
+      "daadd_fee": 1.50,
       "settlement_date": "2026-05-24"
     }
   }
@@ -684,7 +684,7 @@ GET /api/v1/merchant/campaigns/camp_456/performance
 
 ### Integrate with Your POS System
 
-If you have a POS terminal (register), integrate AdPlatform redemptions:
+If you have a POS terminal (register), integrate DAADD redemptions:
 
 #### Option 1: QR Code Scanner
 
@@ -714,9 +714,9 @@ If you have a custom POS system, integrate via API:
 // Node.js example
 const axios = require('axios');
 
-async function verifyAdPlatformCode(code) {
+async function verifyDAADDCode(code) {
   const response = await axios.post(
-    'https://adplatform.example.com/api/v1/redemptions/verify-by-code',
+    'https://daadd.example.com/api/v1/redemptions/verify-by-code',
     { code },
     {
       headers: {
@@ -737,7 +737,7 @@ async function verifyAdPlatformCode(code) {
 }
 
 // In checkout flow
-const redemption = await verifyAdPlatformCode(customerProvidedCode);
+const redemption = await verifyDAADDCode(customerProvidedCode);
 applyDiscount(redemption.discount_amount);
 ```
 
@@ -751,7 +751,7 @@ Simple and fastest: use web dashboard to scan/approve on a tablet.
 
 ### Fraud Detection System
 
-AdPlatform automatically flags suspicious redemption patterns:
+DAADD automatically flags suspicious redemption patterns:
 
 ```bash
 GET /api/v1/redemptions/fraud-alerts
@@ -908,11 +908,11 @@ POST /api/v1/redemptions/report-fraud
 **Solution:**
 ```bash
 # Check redemption status
-curl -X GET https://adplatform.example.com/api/v1/redemptions/red_001 \
+curl -X GET https://daadd.example.com/api/v1/redemptions/red_001 \
   -H "Authorization: Bearer MERCHANT_TOKEN"
 
 # Force approve if legitimate
-curl -X POST https://adplatform.example.com/api/v1/redemptions/red_001/approve \
+curl -X POST https://daadd.example.com/api/v1/redemptions/red_001/approve \
   -H "Authorization: Bearer MERCHANT_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"notes": "Manual approval after review"}'
@@ -928,7 +928,7 @@ curl -X POST https://adplatform.example.com/api/v1/redemptions/red_001/approve \
 **Solution:**
 1. Review fraud alert details
 2. If legitimate, approve and add note
-3. If persistent, contact AdPlatform support to adjust fraud thresholds
+3. If persistent, contact DAADD support to adjust fraud thresholds
 
 ### Issue: Payment Not Received
 
@@ -941,11 +941,11 @@ curl -X POST https://adplatform.example.com/api/v1/redemptions/red_001/approve \
 **Solution:**
 ```bash
 # Check settlement status
-curl -X GET https://adplatform.example.com/api/v1/merchant/settlements \
+curl -X GET https://daadd.example.com/api/v1/merchant/settlements \
   -H "Authorization: Bearer MERCHANT_TOKEN"
 
 # View bank account on file
-curl -X GET https://adplatform.example.com/api/v1/merchant/payment-methods \
+curl -X GET https://daadd.example.com/api/v1/merchant/payment-methods \
   -H "Authorization: Bearer MERCHANT_TOKEN"
 ```
 
@@ -959,11 +959,11 @@ curl -X GET https://adplatform.example.com/api/v1/merchant/payment-methods \
 **Solution:**
 ```bash
 # Check all campaigns (including inactive)
-curl -X GET "https://adplatform.example.com/api/v1/merchant/campaigns?status=all" \
+curl -X GET "https://daadd.example.com/api/v1/merchant/campaigns?status=all" \
   -H "Authorization: Bearer MERCHANT_TOKEN"
 
 # Check campaign details
-curl -X GET https://adplatform.example.com/api/v1/merchant/campaigns/camp_456 \
+curl -X GET https://daadd.example.com/api/v1/merchant/campaigns/camp_456 \
   -H "Authorization: Bearer MERCHANT_TOKEN"
 ```
 
@@ -990,22 +990,22 @@ curl -X GET https://adplatform.example.com/api/v1/merchant/campaigns/camp_456 \
 1. **Be Quick** — Approve within 1 hour for best customer experience
 2. **Be Transparent** — Explain any denials clearly
 3. **Check Stock** — Ensure product is available before approval
-4. **Get Feedback** — Ask customers about their AdPlatform experience
+4. **Get Feedback** — Ask customers about their DAADD experience
 
 ### Compliance
 
 1. **Keep Records** — Export and archive redemption reports monthly
-2. **Track Revenue** — Reconcile AdPlatform payouts with your sales
+2. **Track Revenue** — Reconcile DAADD payouts with your sales
 3. **Honor Terms** — Follow agreed discount terms exactly
-4. **Report Issues** — Notify AdPlatform of fraud or system issues
+4. **Report Issues** — Notify DAADD of fraud or system issues
 
 ---
 
 ## Support
 
-**Merchant Docs:** https://adplatform.example.com/docs/merchant  
-**Integration Guide:** https://adplatform.example.com/guides/pos-integration  
-**Email Support:** merchant-support@adplatform.example.com  
+**Merchant Docs:** https://daadd.example.com/docs/merchant  
+**Integration Guide:** https://daadd.example.com/guides/pos-integration  
+**Email Support:** merchant-support@daadd.example.com  
 **Live Chat:** Available 9 AM - 6 PM UTC, 7 days a week
 
 ---

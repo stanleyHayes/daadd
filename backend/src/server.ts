@@ -6,7 +6,7 @@ import { seedDatabase } from './seed';
 import { scanAllActiveCampaigns } from './services/anomaly-detection.service';
 
 const PORT = process.env.PORT || 4000;
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/adplatform';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/daadd';
 
 async function startServer(): Promise<void> {
   try {

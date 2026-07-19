@@ -1,4 +1,4 @@
-# AdPlatform Next Features Roadmap (Q2-Q3 2026)
+# DAADD Next Features Roadmap (Q2-Q3 2026)
 
 ## 🎯 Strategic Priority
 
@@ -173,7 +173,7 @@ export function useMarkWinner() { /* ... */ }
 ### Why Now?
 - Google deprecating 3rd-party cookies (2025)
 - Meta, TikTok losing reach (iOS privacy)
-- AdPlatform's reward system = first-party data goldmine
+- DAADD's reward system = first-party data goldmine
 - Biggest competitive advantage (Google/Meta don't have this)
 
 ### What Users Get

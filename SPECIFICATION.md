@@ -1,8 +1,8 @@
-# FonAd/DAADD Technical Specification
+# DAADD Technical Specification
 
 ## 1. Overview
 
-**FonAd/DAADD** (Data-driven Ad Analytics & Decision Dashboard) is a two-sided AdTech platform for managing, analyzing, and optimizing advertising campaigns across multiple digital channels.
+**DAADD** (Data-driven Ad Analytics & Decision Dashboard) is a two-sided AdTech platform for managing, analyzing, and optimizing advertising campaigns across multiple digital channels.
 
 **Users:**
 - **Advertisers:** Create campaigns, connect platform accounts, monitor metrics, receive AI-driven optimization recommendations
@@ -22,7 +22,7 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    FonAd/DAADD Platform                     │
+│                    DAADD Platform                     │
 ├─────────────────────────────────────────────────────────────┤
 │
 ├─ Backend (Express.js + Node.js + MongoDB)
@@ -323,17 +323,17 @@ LINKEDIN_OAUTH_CLIENT_ID=<from LinkedIn>
 LINKEDIN_OAUTH_CLIENT_SECRET=<...>
 PINTEREST_OAUTH_CLIENT_ID=<from Pinterest>
 PINTEREST_OAUTH_CLIENT_SECRET=<...>
-CORS_ORIGINS=https://app.fonad.com,https://staging.fonad.com
-BACKEND_URL=https://api.fonad.com
-FRONTEND_URL=https://app.fonad.com
+CORS_ORIGINS=https://app.daadd.io,https://staging.daadd.io
+BACKEND_URL=https://api.daadd.io
+FRONTEND_URL=https://app.daadd.io
 STRIPE_SECRET_KEY=<if using Stripe>
 ANTHROPIC_API_KEY=<for AI Creative generation>
 ```
 
 **Frontend (.env):**
 ```
-VITE_API_URL=https://api.fonad.com/api/v1
-VITE_APP_NAME=FonAd
+VITE_API_URL=https://api.daadd.io/api/v1
+VITE_APP_NAME=DAADD
 ```
 
 ---

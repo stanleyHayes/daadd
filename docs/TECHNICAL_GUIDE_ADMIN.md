@@ -1,6 +1,6 @@
-# AdPlatform/DAADD — Technical Guide for Admins
+# DAADD — Technical Guide for Admins
 
-**Platform:** AdPlatform/DAADD (Two-Sided AdTech Platform)  
+**Platform:** DAADD (Two-Sided AdTech Platform)  
 **Role:** Admin (Platform Administration & Team Management)  
 **Last Updated:** May 2026  
 **Audience:** Platform administrators, team leads, account managers
@@ -29,7 +29,7 @@
 
 As an Admin, you have access to:
 
-**Dashboard:** `https://adplatform.example.com/dashboard/admin`
+**Dashboard:** `https://daadd.example.com/dashboard/admin`
 
 **Key sections:**
 1. **Users** — View all accounts, manage roles, suspend/activate
@@ -255,7 +255,7 @@ POST /api/v1/users/user_123/reset-password
 {
   "success": true,
   "data": {
-    "reset_link": "https://adplatform.example.com/auth/reset?token=abc123...",
+    "reset_link": "https://daadd.example.com/auth/reset?token=abc123...",
     "expires_in_hours": 24
   }
 }
@@ -361,7 +361,7 @@ POST /api/v1/teams/invite
     "email": "colleague@company.com",
     "role": "campaign_manager",
     "status": "pending",
-    "invite_url": "https://adplatform.example.com/auth/accept-invite?token=abc123",
+    "invite_url": "https://daadd.example.com/auth/accept-invite?token=abc123",
     "expires_at": "2026-05-24T10:30:00Z"
   }
 }
@@ -1080,18 +1080,18 @@ POST /api/v1/admin/security/2fa/enable
 **Solution:**
 ```bash
 # Check account status
-curl -X GET https://adplatform.example.com/api/v1/users/user_123 \
+curl -X GET https://daadd.example.com/api/v1/users/user_123 \
   -H "Authorization: Bearer ADMIN_TOKEN"
 
 # Check if suspended
 # If yes, activate:
-curl -X PATCH https://adplatform.example.com/api/v1/users/user_123 \
+curl -X PATCH https://daadd.example.com/api/v1/users/user_123 \
   -H "Authorization: Bearer ADMIN_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"status": "active"}'
 
 # Send password reset
-curl -X POST https://adplatform.example.com/api/v1/users/user_123/reset-password \
+curl -X POST https://daadd.example.com/api/v1/users/user_123/reset-password \
   -H "Authorization: Bearer ADMIN_TOKEN"
 ```
 
@@ -1106,7 +1106,7 @@ curl -X POST https://adplatform.example.com/api/v1/users/user_123/reset-password
 1. Verify email address is correct
 2. Resend invitation:
 ```bash
-curl -X POST https://adplatform.example.com/api/v1/teams/invites/inv_123/resend \
+curl -X POST https://daadd.example.com/api/v1/teams/invites/inv_123/resend \
   -H "Authorization: Bearer ADMIN_TOKEN"
 ```
 
@@ -1120,11 +1120,11 @@ curl -X POST https://adplatform.example.com/api/v1/teams/invites/inv_123/resend 
 **Solution:**
 ```bash
 # Force log sync
-curl -X POST https://adplatform.example.com/api/v1/admin/sync-logs \
+curl -X POST https://daadd.example.com/api/v1/admin/sync-logs \
   -H "Authorization: Bearer ADMIN_TOKEN"
 
 # Check with wider date range
-curl -X GET "https://adplatform.example.com/api/v1/audit-logs?days=90" \
+curl -X GET "https://daadd.example.com/api/v1/audit-logs?days=90" \
   -H "Authorization: Bearer ADMIN_TOKEN"
 ```
 
@@ -1138,11 +1138,11 @@ curl -X GET "https://adplatform.example.com/api/v1/audit-logs?days=90" \
 **Solution:**
 ```bash
 # Check API call patterns
-curl -X GET "https://adplatform.example.com/api/v1/billing/usage-details?period=hourly" \
+curl -X GET "https://daadd.example.com/api/v1/billing/usage-details?period=hourly" \
   -H "Authorization: Bearer ADMIN_TOKEN"
 
 # Identify top API consumers
-curl -X GET "https://adplatform.example.com/api/v1/admin/usage-by-endpoint" \
+curl -X GET "https://daadd.example.com/api/v1/admin/usage-by-endpoint" \
   -H "Authorization: Bearer ADMIN_TOKEN"
 
 # Temporarily rate-limit endpoints causing overage
@@ -1158,7 +1158,7 @@ curl -X GET "https://adplatform.example.com/api/v1/admin/usage-by-endpoint" \
 **Solution:**
 ```bash
 # Suspend account immediately
-curl -X PATCH https://adplatform.example.com/api/v1/users/user_bad \
+curl -X PATCH https://daadd.example.com/api/v1/users/user_bad \
   -H "Authorization: Bearer ADMIN_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -1167,11 +1167,11 @@ curl -X PATCH https://adplatform.example.com/api/v1/users/user_bad \
   }'
 
 # Review activity logs
-curl -X GET https://adplatform.example.com/api/v1/users/user_bad/activity?days=7 \
+curl -X GET https://daadd.example.com/api/v1/users/user_bad/activity?days=7 \
   -H "Authorization: Bearer ADMIN_TOKEN"
 
 # If legitimate, reactivate and enforce password reset
-curl -X POST https://adplatform.example.com/api/v1/users/user_bad/reset-password \
+curl -X POST https://daadd.example.com/api/v1/users/user_bad/reset-password \
   -H "Authorization: Bearer ADMIN_TOKEN"
 ```
 
@@ -1207,9 +1207,9 @@ curl -X POST https://adplatform.example.com/api/v1/users/user_bad/reset-password
 
 ## Support
 
-**Admin Docs:** https://adplatform.example.com/docs/admin  
-**Status Page:** https://status.adplatform.example.com  
-**Email Support:** admin-support@adplatform.example.com  
+**Admin Docs:** https://daadd.example.com/docs/admin  
+**Status Page:** https://status.daadd.example.com  
+**Email Support:** admin-support@daadd.example.com  
 **Slack Channel:** #platform-admins (internal)
 
 ---

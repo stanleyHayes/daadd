@@ -1,8 +1,8 @@
-# AdPlatform/DAADD Technical Specification
+# DAADD Technical Specification
 
 ## 1. Overview
 
-**AdPlatform/DAADD** (Data-driven Ad Analytics & Decision Dashboard) is a two-sided AdTech platform for managing, analyzing, and optimizing advertising campaigns across multiple digital channels.
+**DAADD** (Data-driven Ad Analytics & Decision Dashboard) is a two-sided AdTech platform for managing, analyzing, and optimizing advertising campaigns across multiple digital channels.
 
 **Users:**
 - **Advertisers:** Create campaigns, connect platform accounts, monitor metrics, receive AI-driven optimization recommendations
@@ -22,7 +22,7 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    AdPlatform/DAADD Platform                     │
+│                    DAADD Platform                     │
 ├─────────────────────────────────────────────────────────────┤
 │
 ├─ Backend (Express.js + Node.js + MongoDB)
@@ -324,17 +324,17 @@ LINKEDIN_OAUTH_CLIENT_ID=<from LinkedIn>
 LINKEDIN_OAUTH_CLIENT_SECRET=<...>
 PINTEREST_OAUTH_CLIENT_ID=<from Pinterest>
 PINTEREST_OAUTH_CLIENT_SECRET=<...>
-CORS_ORIGINS=https://app.adplatform.com,https://staging.adplatform.com
-BACKEND_URL=https://api.adplatform.com
-FRONTEND_URL=https://app.adplatform.com
+CORS_ORIGINS=https://app.daadd.com,https://staging.daadd.com
+BACKEND_URL=https://api.daadd.com
+FRONTEND_URL=https://app.daadd.com
 STRIPE_SECRET_KEY=<if using Stripe>
 ANTHROPIC_API_KEY=<for AI Creative generation>
 ```
 
 **Frontend (.env):**
 ```
-VITE_API_URL=https://api.adplatform.com/api/v1
-VITE_APP_NAME=AdPlatform
+VITE_API_URL=https://api.daadd.com/api/v1
+VITE_APP_NAME=DAADD
 ```
 
 ---

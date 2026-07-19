@@ -20,7 +20,7 @@ const sizes = {
 export function Watermark({
   className,
   icon,
-  text = 'AdPlatform',
+  text = 'DAADD',
   size = 'md',
   rotate = -12,
 }: WatermarkProps) {
@@ -53,7 +53,7 @@ function makeWatermarkPattern(text: string) {
 
 export function WatermarkPattern({
   className,
-  text = 'AdPlatform',
+  text = 'DAADD',
 }: {
   className?: string;
   text?: string;
@@ -80,7 +80,7 @@ export function WatermarkGrid({ className }: { className?: string }) {
 
 export function WatermarkBanner({
   className,
-  text = 'AdPlatform',
+  text = 'DAADD',
   align = 'right',
   icon,
 }: {

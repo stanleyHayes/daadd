@@ -12,8 +12,8 @@ import { Camera, User, Bell, Lock, Palette, Globe, Clock, Loader2 } from 'lucide
 import toast from 'react-hot-toast';
 import { PageTransition } from '@/components/ui/PageTransition';
 
-const STORAGE_KEY_NOTIFICATIONS = 'adplatform_notification_prefs';
-const STORAGE_KEY_PREFERENCES = 'adplatform_user_prefs';
+const STORAGE_KEY_NOTIFICATIONS = 'daadd_notification_prefs';
+const STORAGE_KEY_PREFERENCES = 'daadd_user_prefs';
 
 function loadFromStorage<T>(key: string, defaults: T): T {
  try {
@@ -193,7 +193,7 @@ export function SettingsPage() {
  {activeTab === 'preferences' && (
  <div className="space-y-6">
  <Card>
- <CardHeader title="Appearance" subtitle="Customize how AdPlatform looks" />
+ <CardHeader title="Appearance" subtitle="Customize how DAADD looks" />
  <div className="space-y-5">
  <div>
  <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">Theme</label>

@@ -1,6 +1,6 @@
 {
   "header": {
-    "logo": "AdPlatform",
+    "logo": "DAADD",
     "tagline": "Gerenciamento Inteligente de Anúncios",
     "nav": {
       "home": "Início",
@@ -19,7 +19,7 @@
       "cta": "Teste Gratuito"
     },
     "features": {
-      "title": "Por Que Escolher AdPlatform?",
+      "title": "Por Que Escolher DAADD?",
       "ai": {
         "title": "Otimização Alimentada por IA",
         "desc": "Ajustes automáticos de lances, direcionamento de audiência e otimização criativa com base em dados de desempenho em tempo real."
@@ -35,7 +35,7 @@
     }
   },
   "blog": {
-    "title": "Blog AdPlatform",
+    "title": "Blog DAADD",
     "subtitle": "Insights, atualizações e histórias do mundo da publicidade inteligente.",
     "allPosts": "Todos os Artigos",
     "noResults": "Nenhum artigo encontrado nesta categoria.",
@@ -49,7 +49,7 @@
     }
   },
   "footer": {
-    "copyright": "© 2026 AdPlatform. Todos os direitos reservados.",
+    "copyright": "© 2026 DAADD. Todos os direitos reservados.",
     "links": {
       "privacy": "Política de Privacidade",
       "terms": "Termos de Serviço",
@@ -90,7 +90,7 @@
       "signIn": "Entrar",
       "noAccount": "Não tem uma conta?",
       "createAccount": "Criar conta",
-      "createAccountSubtitle": "Junte-se à AdPlatform e comece a ganhar recompensas assistindo anúncios",
+      "createAccountSubtitle": "Junte-se à DAADD e comece a ganhar recompensas assistindo anúncios",
       "fullName": "Nome completo",
       "fullNamePlaceholder": "Digite seu nome completo",
       "createPasswordPlaceholder": "Crie uma senha",
@@ -190,7 +190,7 @@
         "language": "Idioma",
         "privacy": "Privacidade",
         "help": "Ajuda e suporte",
-        "about": "Sobre a AdPlatform"
+        "about": "Sobre a DAADD"
       },
       "theme": {
         "light": "Claro",
@@ -221,7 +221,7 @@
       "claimedButton": "Ótimo!",
       "claimError": "Não foi possível resgatar a recompensa. Tente novamente.",
       "ageVerifyError": "Código de verificação inválido ou expirado. Tente novamente.",
-      "shareMessage": "Confira este anúncio na AdPlatform: {{title}} - Ganhe ${{amount}}!",
+      "shareMessage": "Confira este anúncio na DAADD: {{title}} - Ganhe ${{amount}}!",
       "advertiserFallback": "Anunciante"
     },
     "ageGate": {

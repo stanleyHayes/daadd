@@ -55,7 +55,7 @@ export function Badge({
       <Text
         style={[
           typography.caption,
-          { fontFamily: 'EuclidA-Semibold', color: color || textColor },
+          { fontFamily: 'Outfit_600SemiBold', color: color || textColor },
           size === 'sm' && { fontSize: 9 },
         ]}
       >

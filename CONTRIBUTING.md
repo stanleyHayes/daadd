@@ -1,6 +1,6 @@
-# Contributing to FonAd/DAADD
+# Contributing to DAADD
 
-This document outlines the development workflow, testing standards, and code quality expectations for the FonAd/DAADD platform.
+This document outlines the development workflow, testing standards, and code quality expectations for the DAADD platform.
 
 ## Table of Contents
 

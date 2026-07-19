@@ -46,7 +46,7 @@ export function PrivacyPage() {
 
         <div className="prose-container space-y-10">
           <p className="text-gray-600 dark:text-slate-300 leading-relaxed">
-            AdPlatform ("we", "our", or "us") operates an intelligent advertising platform that connects advertisers with engaged audiences and rewards users for their attention. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our platform, website, and mobile applications.
+            DAADD ("we", "our", or "us") operates an intelligent advertising platform that connects advertisers with engaged audiences and rewards users for their attention. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our platform, website, and mobile applications.
           </p>
 
           {/* 1. Information We Collect */}
@@ -54,7 +54,7 @@ export function PrivacyPage() {
             <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">1. Information We Collect</h2>
             <h3 className="text-base font-semibold text-gray-800 dark:text-slate-200 mb-2">Account Information</h3>
             <p className="text-gray-600 dark:text-slate-300 leading-relaxed mb-4">
-              When you register for a AdPlatform account, we collect your name, email address, phone number (for age verification and two-factor authentication), and account type (advertiser or user). Advertisers additionally provide company name, billing address, and payment details.
+              When you register for a DAADD account, we collect your name, email address, phone number (for age verification and two-factor authentication), and account type (advertiser or user). Advertisers additionally provide company name, billing address, and payment details.
             </p>
             <h3 className="text-base font-semibold text-gray-800 dark:text-slate-200 mb-2">Usage & Engagement Data</h3>
             <p className="text-gray-600 dark:text-slate-300 leading-relaxed mb-4">
@@ -75,7 +75,7 @@ export function PrivacyPage() {
             <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">2. How We Use Your Information</h2>
             <p className="text-gray-600 dark:text-slate-300 leading-relaxed mb-4">We use the information we collect to:</p>
             <ul className="list-disc pl-6 space-y-2 text-gray-600 dark:text-slate-300">
-              <li>Operate and maintain the AdPlatform platform, including ad serving, reward distribution, and campaign management.</li>
+              <li>Operate and maintain the DAADD platform, including ad serving, reward distribution, and campaign management.</li>
               <li>Provide advertisers with campaign analytics, including geographic heatmaps, cross-device attribution, anomaly detection, competitive benchmarking, and AI-generated campaign narratives through our Ad Journey Storyteller.</li>
               <li>Power our AI optimization engine, which uses aggregated engagement patterns to recommend bid adjustments, audience targeting, and creative improvements.</li>
               <li>Process reward payouts and advertiser billing transactions.</li>
@@ -94,7 +94,7 @@ export function PrivacyPage() {
             <ul className="list-disc pl-6 space-y-2 text-gray-600 dark:text-slate-300">
               <li><strong>With Advertisers (Aggregated Only):</strong> Advertisers receive aggregated, anonymized analytics about campaign performance. They do not receive personally identifiable information about individual users who viewed their ads.</li>
               <li><strong>Service Providers:</strong> We work with trusted third parties for payment processing, cloud hosting, email delivery, and analytics. These providers are contractually bound to use your data only for the services they provide to us.</li>
-              <li><strong>Legal Requirements:</strong> We may disclose information when required by law, subpoena, or government request, or to protect the rights and safety of AdPlatform, our users, or the public.</li>
+              <li><strong>Legal Requirements:</strong> We may disclose information when required by law, subpoena, or government request, or to protect the rights and safety of DAADD, our users, or the public.</li>
               <li><strong>Business Transfers:</strong> In the event of a merger, acquisition, or sale of assets, user data may be transferred as part of the transaction. We will notify affected users in advance.</li>
             </ul>
           </section>
@@ -103,7 +103,7 @@ export function PrivacyPage() {
           <section id="cookies-tracking">
             <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">4. Cookies & Tracking</h2>
             <p className="text-gray-600 dark:text-slate-300 leading-relaxed mb-4">
-              AdPlatform uses cookies and similar tracking technologies to operate the platform and measure ad engagement. As an advertising platform, accurate engagement tracking is essential to our core service. We use:
+              DAADD uses cookies and similar tracking technologies to operate the platform and measure ad engagement. As an advertising platform, accurate engagement tracking is essential to our core service. We use:
             </p>
             <ul className="list-disc pl-6 space-y-2 text-gray-600 dark:text-slate-300">
               <li><strong>Essential Cookies:</strong> Required for authentication, session management, and platform security.</li>
@@ -126,7 +126,7 @@ export function PrivacyPage() {
               For users in the European Economic Area (EEA), United Kingdom, and Switzerland, we comply with the General Data Protection Regulation (GDPR). Our lawful bases for processing include:
             </p>
             <ul className="list-disc pl-6 space-y-2 text-gray-600 dark:text-slate-300">
-              <li><strong>Contract Performance:</strong> Processing necessary to provide the AdPlatform service, deliver ads, and process rewards.</li>
+              <li><strong>Contract Performance:</strong> Processing necessary to provide the DAADD service, deliver ads, and process rewards.</li>
               <li><strong>Legitimate Interest:</strong> Fraud detection, platform security, and aggregated analytics.</li>
               <li><strong>Consent:</strong> Marketing communications, non-essential cookies, and precise geolocation tracking.</li>
             </ul>
@@ -162,7 +162,7 @@ export function PrivacyPage() {
               <li><strong>Withdraw Consent:</strong> Where processing is based on consent, you may withdraw it at any time.</li>
             </ul>
             <p className="text-gray-600 dark:text-slate-300 leading-relaxed mt-4">
-              To exercise any of these rights, contact us at privacy@adplatform.com. We will respond within 30 days.
+              To exercise any of these rights, contact us at privacy@daadd.com. We will respond within 30 days.
             </p>
           </section>
 
@@ -170,7 +170,7 @@ export function PrivacyPage() {
           <section id="childrens-privacy">
             <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">8. Children's Privacy</h2>
             <p className="text-gray-600 dark:text-slate-300 leading-relaxed">
-              AdPlatform is not intended for children under the age of 16. We do not knowingly collect personal information from children. If we become aware that a child under 16 has provided us with personal data, we will delete that information promptly. If you believe a child has provided us with their data, please contact us at privacy@adplatform.com.
+              DAADD is not intended for children under the age of 16. We do not knowingly collect personal information from children. If we become aware that a child under 16 has provided us with personal data, we will delete that information promptly. If you believe a child has provided us with their data, please contact us at privacy@daadd.com.
             </p>
           </section>
 
@@ -178,7 +178,7 @@ export function PrivacyPage() {
           <section id="changes">
             <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">9. Changes to This Policy</h2>
             <p className="text-gray-600 dark:text-slate-300 leading-relaxed">
-              We may update this Privacy Policy from time to time to reflect changes in our practices, technology, or legal requirements. We will notify you of material changes by posting the updated policy on this page with a new "Last updated" date. For significant changes, we will also send a notification to your registered email address. Your continued use of AdPlatform after changes are posted constitutes acceptance of the updated policy.
+              We may update this Privacy Policy from time to time to reflect changes in our practices, technology, or legal requirements. We will notify you of material changes by posting the updated policy on this page with a new "Last updated" date. For significant changes, we will also send a notification to your registered email address. Your continued use of DAADD after changes are posted constitutes acceptance of the updated policy.
             </p>
           </section>
 
@@ -189,11 +189,11 @@ export function PrivacyPage() {
               If you have questions about this Privacy Policy or our data practices, please contact us:
             </p>
             <div className="bg-gray-50 dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 p-6 text-sm text-gray-600 dark:text-slate-300 space-y-1">
-              <p><strong className="text-gray-900 dark:text-white">AdPlatform Inc.</strong></p>
+              <p><strong className="text-gray-900 dark:text-white">DAADD Inc.</strong></p>
               <p>Attn: Data Protection Officer</p>
-              <p>Email: privacy@adplatform.com</p>
+              <p>Email: privacy@daadd.com</p>
               <p>Address: 100 Market Street, Suite 300, San Francisco, CA 94105</p>
-              <p>EU Representative: AdPlatform EU Ltd., Dublin, Ireland</p>
+              <p>EU Representative: DAADD EU Ltd., Dublin, Ireland</p>
             </div>
           </section>
         </div>

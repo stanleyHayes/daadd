@@ -34,7 +34,7 @@ const team = [
 ];
 
 const milestones = [
-  { year: '2024', title: 'The Beginning', desc: 'AdPlatform founded with a mission to make advertising rewarding for everyone.' },
+  { year: '2024', title: 'The Beginning', desc: 'DAADD founded with a mission to make advertising rewarding for everyone.' },
   { year: '2024', title: 'Beta Launch', desc: 'First 1,000 advertisers onboarded. AI optimization engine goes live.' },
   { year: '2025', title: 'Global Expansion', desc: 'Expanded to 50+ countries. Cross-device attribution launched.' },
   { year: '2025', title: 'AI Creative Suite', desc: 'Introduced AI-powered creative generation and A/B testing tools.' },
@@ -82,7 +82,7 @@ export function AboutPage() {
               transition={{ delay: 0.1 }}
               className="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight"
             >
-              About AdPlatform
+              About DAADD
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -128,7 +128,7 @@ export function AboutPage() {
               >
                 <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Our Mission</h2>
                 <p className="text-gray-600 dark:text-slate-400 leading-relaxed mb-4">
-                  AdPlatform was born from a simple idea: advertising doesn't have to be intrusive, and attention has real value. We created a two-sided platform that empowers advertisers with AI-driven campaign management while rewarding users who choose to engage with content that interests them.
+                  DAADD was born from a simple idea: advertising doesn't have to be intrusive, and attention has real value. We created a two-sided platform that empowers advertisers with AI-driven campaign management while rewarding users who choose to engage with content that interests them.
                 </p>
                 <p className="text-gray-600 dark:text-slate-400 leading-relaxed">
                   Our platform combines advanced analytics — geographic heatmaps, cross-device attribution, anomaly detection, and competitive benchmarking — with a unique Ad Journey Storyteller that transforms raw data into compelling campaign narratives.
@@ -252,7 +252,7 @@ export function AboutPage() {
         {/* CTA */}
         <section className="relative py-20 bg-primary-600 text-white text-center overflow-hidden">
           <div className="relative max-w-3xl mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-4">Join the AdPlatform Community</h2>
+            <h2 className="text-3xl font-bold mb-4">Join the DAADD Community</h2>
             <p className="text-primary-100 mb-8 max-w-xl mx-auto">
               Whether you're an advertiser looking for smarter campaigns or a user who wants to earn from ads, we've got you covered.
             </p>

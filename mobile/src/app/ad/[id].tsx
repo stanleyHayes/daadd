@@ -169,7 +169,7 @@ export default function AdDetailScreen() {
           title: ad.title,
           amount: ad.rewardAmount.toFixed(2),
         }),
-        url: `adplatform://ad/${ad.id}`,
+        url: `daadd://ad/${ad.id}`,
       });
     } catch {
       // Share cancelled

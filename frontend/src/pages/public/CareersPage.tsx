@@ -75,10 +75,10 @@ export function CareersPage() {
  </div>
  </section>
 
- {/* Why AdPlatform */}
+ {/* Why DAADD */}
  <section className="py-16">
  <div className="max-w-5xl mx-auto px-4">
- <h2 className="text-2xl font-bold text-gray-900 dark:text-white text-center mb-10">Why AdPlatform?</h2>
+ <h2 className="text-2xl font-bold text-gray-900 dark:text-white text-center mb-10">Why DAADD?</h2>
  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
  {perks.map((perk) => {
  const Icon = perk.icon;
@@ -138,14 +138,14 @@ export function CareersPage() {
  <div className="max-w-3xl mx-auto px-4">
  <h2 className="text-2xl font-bold mb-3">Don't see your role?</h2>
  <p className="text-primary-100 mb-6">
- We are always looking for talented people. Send us your resume and tell us how you would contribute to AdPlatform.
+ We are always looking for talented people. Send us your resume and tell us how you would contribute to DAADD.
  </p>
  <a
- href="mailto:careers@adplatform.com"
+ href="mailto:careers@daadd.com"
  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white text-primary-700 font-medium hover:bg-gray-100 active:scale-[0.98] transition-all"
  >
  <Mail className="h-5 w-5" />
- careers@adplatform.com
+ careers@daadd.com
  </a>
  </div>
  </section>

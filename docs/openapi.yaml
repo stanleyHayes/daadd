@@ -1,15 +1,15 @@
 openapi: 3.0.3
 info:
-  title: FonAd / DAADD API
+  title: DAADD API
   version: 1.0.0
   description: |
-    FonAd (DAADD) is a full-featured digital advertising and analytics platform.
+    DAADD is a full-featured digital advertising and analytics platform.
     It provides campaign management, real-time event tracking, AI-driven optimization,
     anomaly detection, cross-device attribution, benchmarking, storytelling reports,
     viewer reward programs, team collaboration, and notification services.
   contact:
-    name: FonAd Engineering
-    email: engineering@fonad.io
+    name: DAADD Engineering
+    email: engineering@daadd.io
 
 servers:
   - url: http://localhost:4000/api/v1

@@ -1,6 +1,6 @@
 {
   "header": {
-    "logo": "AdPlatform",
+    "logo": "DAADD",
     "tagline": "Intelligente Anzeigenverwaltung",
     "nav": {
       "home": "Startseite",
@@ -19,7 +19,7 @@
       "cta": "Kostenlose Testversion"
     },
     "features": {
-      "title": "Warum AdPlatform Wählen?",
+      "title": "Warum DAADD Wählen?",
       "ai": {
         "title": "KI-gestützte Optimierung",
         "desc": "Automatische Gebotsanpassungen, Zielgruppenausrichtung und kreative Optimierung basierend auf Echtzeitleistungsdaten."
@@ -35,7 +35,7 @@
     }
   },
   "blog": {
-    "title": "AdPlatform Blog",
+    "title": "DAADD Blog",
     "subtitle": "Einblicke, Updates und Geschichten aus der Welt der intelligenten Werbung.",
     "allPosts": "Alle Artikel",
     "noResults": "Keine Artikel in dieser Kategorie gefunden.",
@@ -49,7 +49,7 @@
     }
   },
   "footer": {
-    "copyright": "© 2026 AdPlatform. Alle Rechte vorbehalten.",
+    "copyright": "© 2026 DAADD. Alle Rechte vorbehalten.",
     "links": {
       "privacy": "Datenschutzrichtlinie",
       "terms": "Nutzungsbedingungen",
@@ -90,7 +90,7 @@
       "signIn": "Anmelden",
       "noAccount": "Noch kein Konto?",
       "createAccount": "Konto erstellen",
-      "createAccountSubtitle": "Tritt AdPlatform bei und verdiene Prämien durch das Ansehen von Anzeigen",
+      "createAccountSubtitle": "Tritt DAADD bei und verdiene Prämien durch das Ansehen von Anzeigen",
       "fullName": "Vollständiger Name",
       "fullNamePlaceholder": "Gib deinen vollständigen Namen ein",
       "createPasswordPlaceholder": "Erstelle ein Passwort",
@@ -190,7 +190,7 @@
         "language": "Sprache",
         "privacy": "Datenschutz",
         "help": "Hilfe & Support",
-        "about": "Über AdPlatform"
+        "about": "Über DAADD"
       },
       "theme": {
         "light": "Hell",
@@ -221,7 +221,7 @@
       "claimedButton": "Super!",
       "claimError": "Prämie konnte nicht eingefordert werden. Bitte versuche es erneut.",
       "ageVerifyError": "Ungültiger oder abgelaufener Bestätigungscode. Bitte versuche es erneut.",
-      "shareMessage": "Schau dir diese Anzeige auf AdPlatform an: {{title}} - Verdiene ${{amount}}!",
+      "shareMessage": "Schau dir diese Anzeige auf DAADD an: {{title}} - Verdiene ${{amount}}!",
       "advertiserFallback": "Werbetreibender"
     },
     "ageGate": {

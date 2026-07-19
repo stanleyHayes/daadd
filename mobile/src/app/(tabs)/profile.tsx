@@ -507,7 +507,7 @@ export default function ProfileScreen() {
             },
           ]}
         >
-          AdPlatform v1.0.0
+          DAADD v1.0.0
         </Text>
       </ScrollView>
 
