@@ -125,6 +125,11 @@ export function TopBar() {
  <header className="sticky top-0 z-40 h-[72px] flex items-center">
  <div className="ml-16 mr-4 md:mx-6 flex-1">
  <div className="flex items-center justify-between h-14 px-4 bg-card-bg/80 dark:bg-slate-950/80 backdrop-blur-xl border border-border-color dark:border-slate-800 rounded-2xl shadow-sm">
+ {/* Mobile/tablet: current page title (breadcrumbs are hidden below lg) */}
+ <span className="lg:hidden min-w-0 truncate text-base font-semibold text-text-primary">
+ {breadcrumbs[breadcrumbs.length - 1]?.label || 'Dashboard'}
+ </span>
+
  {/* Left: Breadcrumb */}
  <nav className="hidden lg:flex items-center gap-1.5 text-sm">
  {breadcrumbs.slice(0, 3).map((crumb, i) => (
