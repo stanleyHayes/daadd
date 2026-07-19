@@ -25,9 +25,13 @@ function sanitizeUser(user: InstanceType<typeof User>) {
   };
 }
 
+// Roles a user may pick for themselves at sign-up. Privileged roles are
+// assigned by admins, never taken from the request body.
+const SELF_SERVICE_ROLES = ['advertiser', 'end_user'] as const;
+
 router.post('/register', async (req: Request, res: Response) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
     if (!name || !email || !password) {
       res.status(400).json({ success: false, message: 'Name, email and password are required' });
       return;
@@ -44,13 +48,14 @@ router.post('/register', async (req: Request, res: Response) => {
     }
 
     const passwordHash = bcrypt.hashSync(password, 10);
+    const requestedRole = (SELF_SERVICE_ROLES as readonly string[]).includes(role)
+      ? role
+      : 'end_user';
     const user = await User.create({
       name,
       email: email.toLowerCase(),
       password_hash: passwordHash,
-      // Self-registration always lands on end_user; privileged roles are
-      // assigned by admins, never taken from the request body.
-      role: 'end_user',
+      role: requestedRole,
       avatar_url: `https://i.pravatar.cc/150?u=${email.toLowerCase()}`,
     });
 

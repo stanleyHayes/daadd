@@ -51,6 +51,22 @@ describe('auth routes', () => {
       expect(res.status).toBe(400);
       expect(res.body.success).toBe(false);
     });
+
+    it('honors a self-service role from the request body', async () => {
+      const res = await request
+        .post(`${AUTH}/register`)
+        .send({ ...baseUser, role: 'advertiser' });
+
+      expect(res.status).toBe(201);
+      expect(res.body.data.user.role).toBe('advertiser');
+    });
+
+    it('falls back to end_user for privileged or unknown roles', async () => {
+      const res = await request.post(`${AUTH}/register`).send({ ...baseUser, role: 'admin' });
+
+      expect(res.status).toBe(201);
+      expect(res.body.data.user.role).toBe('end_user');
+    });
   });
 
   describe('POST /login', () => {
@@ -276,7 +292,7 @@ describe('auth routes', () => {
   });
 
   describe('registration hardening', () => {
-    it('ignores a role passed in the body and always creates an end_user', async () => {
+    it('ignores a privileged role passed in the body and creates an end_user', async () => {
       const res = await request
         .post(`${AUTH}/register`)
         .send({ ...baseUser, role: 'admin' });
