@@ -282,7 +282,10 @@ export function TopBar() {
  icon={LifeBuoy}
  label="Support"
  description="Get help & resources"
- onClick={() => setUserMenuOpen(false)}
+ onClick={() => {
+ setUserMenuOpen(false);
+ navigate('/contact');
+ }}
  />
  </div>
 

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 
-import { Star, Send, Loader2, MessageSquareText } from 'lucide-react';
+import { Star, Send, Loader2, MessageSquareText, ImagePlus, Gift, X } from 'lucide-react';
 import { useReviews, useReviewSummary, useSubmitReview } from '@/hooks/useReviews';
 import { useAuthStore } from '@/stores/auth.store';
 import { formatDate } from '@/lib/utils';
@@ -39,6 +39,7 @@ interface Review {
   created_at: string;
   rating: number;
   comment?: string;
+  photo_url?: string;
 }
 
 function ReviewCard({ review }: { review: Review }) {
@@ -76,6 +77,14 @@ function ReviewCard({ review }: { review: Review }) {
       {review.comment && (
         <p className="text-sm text-text-secondary mt-2">{review.comment}</p>
       )}
+      {review.photo_url && (
+        <img
+          src={review.photo_url}
+          alt="Reviewer's photo"
+          loading="lazy"
+          className="mt-3 max-h-56 rounded-lg border border-border-color object-cover"
+        />
+      )}
     </div>
   );
 }
@@ -89,19 +98,25 @@ export function ReviewsSection({ campaignId }: ReviewsSectionProps) {
   const [showForm, setShowForm] = useState(false);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
+  const [photo, setPhoto] = useState<File | null>(null);
+  const photoPreview = photo ? URL.createObjectURL(photo) : null;
+
+  const resetForm = () => {
+    setRating(0);
+    setComment('');
+    setPhoto(null);
+    setShowForm(false);
+  };
 
   const handleSubmit = async () => {
     if (!rating) return;
-
     await submitReview.mutateAsync({
       campaign_id: campaignId,
       rating,
       comment: comment || undefined,
+      photo,
     });
-
-    setRating(0);
-    setComment('');
-    setShowForm(false);
+    resetForm();
   };
 
   return (
@@ -164,6 +179,42 @@ export function ReviewsSection({ campaignId }: ReviewsSectionProps) {
                 rows={4}
               />
             </div>
+            <div>
+              <label className="block text-sm font-medium text-text-primary mb-2">
+                Photo (optional)
+              </label>
+              {photoPreview ? (
+                <div className="relative inline-block">
+                  <img
+                    src={photoPreview}
+                    alt="Your review"
+                    className="h-28 w-28 rounded-lg object-cover border border-border-color"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setPhoto(null)}
+                    className="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-danger-600 text-white flex items-center justify-center shadow"
+                    aria-label="Remove photo"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              ) : (
+                <label className="flex w-fit cursor-pointer items-center gap-2 rounded-lg border border-dashed border-border-color px-4 py-2.5 text-sm text-text-secondary hover:border-primary-400 hover:text-text-primary transition-colors">
+                  <ImagePlus className="h-4 w-4" />
+                  Add a photo of the place
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => setPhoto(e.target.files?.[0] || null)}
+                  />
+                </label>
+              )}
+            </div>
+            <div className="flex items-center gap-1.5 text-xs font-medium text-secondary-600 dark:text-secondary-400">
+              <Gift className="h-3.5 w-3.5" /> Earn 3 tokens for reviewing — +2 more with a photo.
+            </div>
             <div className="flex items-center gap-2">
               <Button
                 onClick={handleSubmit}
@@ -179,11 +230,7 @@ export function ReviewsSection({ campaignId }: ReviewsSectionProps) {
                 Submit Review
               </Button>
               <button
-                onClick={() => {
-                  setShowForm(false);
-                  setRating(0);
-                  setComment('');
-                }}
+                onClick={resetForm}
                 className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary"
               >
                 Cancel

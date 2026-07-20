@@ -6,6 +6,9 @@ export interface IReview extends Document {
   user: Types.ObjectId;
   rating: number;
   comment: string;
+  // A photo of the place/experience (Cloudinary URL); reviewing with a photo
+  // earns bonus reward tokens (see routes/reviews.ts).
+  photo_url?: string;
   created_at: Date;
 }
 
@@ -14,6 +17,7 @@ const ReviewSchema = new Schema<IReview>({
   user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   rating: { type: Number, required: true, min: 1, max: 5 },
   comment: { type: String, default: '' },
+  photo_url: { type: String, default: '' },
   created_at: { type: Date, default: Date.now },
 });
 

@@ -78,11 +78,15 @@ export function useSubmitReview() {
       campaign_id: string;
       rating: number;
       comment?: string;
-      expectation?: string;
-      reality?: string;
-      redemption_id?: string;
+      photo?: File | null;
     }) => {
-      const res = await api.post('/reviews', data);
+      const form = new FormData();
+      form.append('campaign_id', data.campaign_id);
+      form.append('rating', String(data.rating));
+      if (data.comment) form.append('comment', data.comment);
+      if (data.photo) form.append('photo', data.photo);
+      // Let axios set the multipart boundary (the client default is JSON).
+      const res = await api.post('/reviews', form, { headers: { 'Content-Type': undefined } });
       return res.data;
     },
     onSuccess: (_, variables) => {
