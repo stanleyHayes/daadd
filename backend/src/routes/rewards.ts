@@ -159,16 +159,23 @@ router.post('/claim/:adId', authMiddleware, async (req: Request, res: Response) 
       throw err;
     }
 
-    // Persist the advanced streak. The reward is already committed, so a
-    // persistence failure must not fail the claim — but it must not be swallowed
-    // silently either, or streak continuity would corrupt undetectably.
+    // Keep the reward and the streak consistent. The reward is already written,
+    // so if the streak write fails, roll the reward back rather than leave the
+    // two out of sync — a stale last_reward_date would silently reset the streak
+    // on the next claim. This is the env-safe alternative to a replica-set
+    // transaction (the test Mongo is standalone).
     if (user) {
       user.streak_count = streak.streak_count;
       user.last_reward_date = streak.last_reward_date;
       try {
         await user.save();
       } catch (streakErr) {
-        console.error('Failed to persist streak after reward claim:', streakErr);
+        console.error('Streak persist failed; rolling back reward:', streakErr);
+        await Reward.deleteOne({ _id: reward._id }).catch(() => {});
+        res
+          .status(500)
+          .json({ success: false, message: 'Could not record reward, please try again' });
+        return;
       }
     }
 

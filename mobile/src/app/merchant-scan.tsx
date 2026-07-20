@@ -1,9 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
   TextInput,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { Ionicons } from '@expo/vector-icons';
@@ -16,6 +17,7 @@ import {
   ConfirmResult,
   extractApiError,
 } from '@/hooks/useRedemption';
+import { useCampaigns } from '@/hooks/useDashboard';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { useColors } from '@/hooks/useColors';
@@ -34,6 +36,20 @@ export default function MerchantScanScreen() {
   const scanRedemption = useScanRedemption();
   const validateRedemption = useValidateRedemption();
   const confirmRedemption = useConfirmRedemption();
+
+  // The merchant's active campaigns — lets them choose which one a sale counts
+  // toward when they run more than one at once (the server defaults to the
+  // most recent otherwise).
+  const activeCampaignsQuery = useCampaigns({ status: 'active' });
+  const activeCampaigns = activeCampaignsQuery.data?.data ?? [];
+  const [selectedCampaignId, setSelectedCampaignId] = useState<string | undefined>();
+
+  useEffect(() => {
+    const list = activeCampaignsQuery.data?.data ?? [];
+    if (list.length && !list.some((c) => c.id === selectedCampaignId)) {
+      setSelectedCampaignId(list[0].id);
+    }
+  }, [activeCampaignsQuery.data, selectedCampaignId]);
 
   const [step, setStep] = useState<Step>('scan');
   const [scanResult, setScanResult] = useState<ScanResult | null>(null);
@@ -94,6 +110,7 @@ export default function MerchantScanScreen() {
       const result = await validateRedemption.mutateAsync({
         redemption_id: scanResult.redemption_id,
         purchase_amount: parsedAmount,
+        campaign_id: selectedCampaignId,
       });
       setValidateResult(result);
       setStep('summary');
@@ -292,6 +309,59 @@ export default function MerchantScanScreen() {
               </Text>
             </Text>
           </Card>
+
+          {activeCampaigns.length >= 2 && (
+            <>
+              <Text
+                style={[
+                  typography.labelMedium,
+                  { color: colors.text.primary, marginBottom: spacing.xs },
+                ]}
+              >
+                {t('mobile.merchantScan.countTowardCampaign')}
+              </Text>
+              <View style={{ gap: spacing.xs, marginBottom: spacing.md }}>
+                {activeCampaigns.map((campaign) => {
+                  const selected = campaign.id === selectedCampaignId;
+                  return (
+                    <TouchableOpacity
+                      key={campaign.id}
+                      onPress={() => setSelectedCampaignId(campaign.id)}
+                      activeOpacity={0.7}
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        gap: spacing.sm,
+                        paddingVertical: spacing.sm,
+                        paddingHorizontal: spacing.md,
+                        borderRadius: borderRadius.md,
+                        borderWidth: 1.5,
+                        borderColor: selected ? colors.primary : colors.border,
+                        backgroundColor: selected
+                          ? colors.primary + '10'
+                          : colors.surfaceSecondary,
+                      }}
+                    >
+                      <Ionicons
+                        name={selected ? 'radio-button-on' : 'radio-button-off'}
+                        size={20}
+                        color={selected ? colors.primary : colors.text.tertiary}
+                      />
+                      <Text
+                        style={[
+                          typography.bodyMedium,
+                          { color: colors.text.primary, flex: 1 },
+                        ]}
+                        numberOfLines={1}
+                      >
+                        {campaign.name}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            </>
+          )}
 
           <Text
             style={[

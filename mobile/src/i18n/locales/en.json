@@ -257,6 +257,7 @@
       "qrExpired": "This QR code is expired, invalid, or already used.",
       "redeeming": "Redeeming",
       "tokens": "{{count}} tokens",
+      "countTowardCampaign": "Count toward campaign",
       "purchaseAmount": "Purchase amount ($)",
       "continue": "Continue",
       "validateError": "Failed to validate redemption. Please try again.",

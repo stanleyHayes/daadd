@@ -55,6 +55,9 @@ export function useValidateRedemption() {
     mutationFn: async (payload: {
       redemption_id: string;
       purchase_amount: number;
+      // Optional: which of the merchant's active campaigns this sale counts
+      // toward. Server verifies ownership and falls back when omitted/invalid.
+      campaign_id?: string;
     }): Promise<ValidateResult> => {
       const res = await api.post('/redemption/validate', payload);
       return res.data.data;

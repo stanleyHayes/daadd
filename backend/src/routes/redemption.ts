@@ -177,7 +177,7 @@ router.post('/scan', authMiddleware, requireMerchant, async (req: Request, res: 
 
 router.post('/validate', authMiddleware, requireMerchant, async (req: Request, res: Response) => {
   try {
-    const { redemption_id, purchase_amount } = req.body;
+    const { redemption_id, purchase_amount, campaign_id } = req.body;
     if (!redemption_id || typeof purchase_amount !== 'number' || purchase_amount <= 0) {
       res
         .status(400)
@@ -205,20 +205,33 @@ router.post('/validate', authMiddleware, requireMerchant, async (req: Request, r
       return;
     }
 
-    // Attribution and discount rate are decided server-side from the VALIDATING
-    // MERCHANT's own active campaign — never a customer-supplied value — so a
-    // customer cannot point a redemption at an arbitrary campaign to inflate
-    // their discount or poison another advertiser's metrics. Falls back to the
-    // global default rate when the merchant has no active campaign.
+    // Attribution and discount rate are decided server-side from a campaign the
+    // VALIDATING MERCHANT owns — never a customer-supplied value — so a customer
+    // cannot point a redemption at an arbitrary campaign to inflate their
+    // discount or poison another advertiser's metrics. The merchant may name
+    // which of their active campaigns this sale counts toward; absent a valid
+    // owned choice we default to their most-recent active campaign, and fall
+    // back to the global default rate when they have no active campaign at all.
     let discountRate = MAX_DISCOUNT_PCT;
     let campaignId: Types.ObjectId | undefined;
-    const merchantCampaign = await Campaign.findOne({
-      owner: req.user!.userId,
-      status: 'active',
-    })
-      .select('discount_percentage')
-      .sort({ _id: -1 })
-      .lean();
+    const chosenCampaign =
+      campaign_id && Types.ObjectId.isValid(String(campaign_id))
+        ? new Types.ObjectId(String(campaign_id))
+        : null;
+    const merchantCampaign =
+      (chosenCampaign
+        ? await Campaign.findOne({
+            _id: chosenCampaign,
+            owner: req.user!.userId,
+            status: 'active',
+          })
+            .select('discount_percentage')
+            .lean()
+        : null) ||
+      (await Campaign.findOne({ owner: req.user!.userId, status: 'active' })
+        .select('discount_percentage')
+        .sort({ _id: -1 })
+        .lean());
     if (merchantCampaign) {
       campaignId = merchantCampaign._id as Types.ObjectId;
       if (typeof merchantCampaign.discount_percentage === 'number') {
