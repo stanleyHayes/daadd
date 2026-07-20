@@ -11,6 +11,10 @@ export interface ICampaign extends Document {
   budget_total: number;
   budget_spent: number;
   reward_value: number;
+  // Percent of a customer's purchase shared back as the max redemption discount
+  // for this campaign (0–100). Drives the discount applied at redemption instead
+  // of a fixed price — see routes/redemption.ts.
+  discount_percentage: number;
   currency: string;
   start_date: Date;
   end_date: Date;
@@ -44,6 +48,7 @@ const CampaignSchema = new Schema<ICampaign>(
     budget_total: { type: Number, default: 0, min: 0 },
     budget_spent: { type: Number, default: 0, min: 0 },
     reward_value: { type: Number, default: 0, min: 0 },
+    discount_percentage: { type: Number, default: 15, min: 0, max: 100 },
     currency: { type: String, default: 'USD' },
     start_date: { type: Date, default: Date.now },
     end_date: { type: Date, default: Date.now },

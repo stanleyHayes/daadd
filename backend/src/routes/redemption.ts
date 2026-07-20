@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import crypto from 'crypto';
 import { Types } from 'mongoose';
-import { Redemption, Reward, User, Notification } from '../models';
+import { Redemption, Reward, User, Notification, Campaign } from '../models';
 import { authMiddleware, JWT_SECRET } from '../middleware/auth';
 import { success } from '../utils/response';
 
@@ -76,6 +76,8 @@ router.post('/qr', authMiddleware, async (req: Request, res: Response) => {
       nonce,
       status: 'pending',
       expires_at: expiresAt,
+      // Campaign attribution is decided server-side at validate time from the
+      // merchant's own campaign — never from a customer-supplied value.
     });
 
     const payload = JSON.stringify({
@@ -203,8 +205,29 @@ router.post('/validate', authMiddleware, requireMerchant, async (req: Request, r
       return;
     }
 
+    // Attribution and discount rate are decided server-side from the VALIDATING
+    // MERCHANT's own active campaign — never a customer-supplied value — so a
+    // customer cannot point a redemption at an arbitrary campaign to inflate
+    // their discount or poison another advertiser's metrics. Falls back to the
+    // global default rate when the merchant has no active campaign.
+    let discountRate = MAX_DISCOUNT_PCT;
+    let campaignId: Types.ObjectId | undefined;
+    const merchantCampaign = await Campaign.findOne({
+      owner: req.user!.userId,
+      status: 'active',
+    })
+      .select('discount_percentage')
+      .sort({ _id: -1 })
+      .lean();
+    if (merchantCampaign) {
+      campaignId = merchantCampaign._id as Types.ObjectId;
+      if (typeof merchantCampaign.discount_percentage === 'number') {
+        discountRate = merchantCampaign.discount_percentage / 100;
+      }
+    }
+
     const discount = round2(
-      Math.min(redemption.tokens * TOKEN_VALUE, purchase_amount * MAX_DISCOUNT_PCT)
+      Math.min(redemption.tokens * TOKEN_VALUE, purchase_amount * discountRate)
     );
     const tokensUsed = Math.ceil(discount / TOKEN_VALUE);
     const finalAmount = round2(purchase_amount - discount);
@@ -218,6 +241,7 @@ router.post('/validate', authMiddleware, requireMerchant, async (req: Request, r
           purchase_amount,
           discount_amount: discount,
           final_amount: finalAmount,
+          ...(campaignId ? { campaign_id: campaignId } : {}),
         },
       },
       { new: true }

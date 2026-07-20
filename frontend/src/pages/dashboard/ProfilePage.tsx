@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import { EmptyState } from '@/components/ui/EmptyState';
+import { StreakCard, Leaderboard } from '@/components/rewards/Leaderboard';
 import { useAuthStore } from '@/stores/auth.store';
 import { useThemeStore } from '@/stores/theme.store';
 import { useRewards, useRewardBalance } from '@/hooks/useRewards';
@@ -288,7 +289,9 @@ export function ProfilePage() {
 
         {/* Rewards & History */}
         {activeTab === 'rewards' && (
-          <Card>
+          <div className="space-y-6">
+            <StreakCard />
+            <Card>
             <CardHeader title="Reward History" subtitle="All rewards you have earned from viewing ads" />
             {rewardsLoading ? (
               <div className="py-12 text-center text-text-muted">Loading rewards...</div>
@@ -306,7 +309,11 @@ export function ProfilePage() {
                   <tbody>
                     {rewards.map((reward) => (
                       <tr key={reward.id} className="border-b border-border-color dark:border-slate-800/50 last:border-0">
-                        <td className="py-3 px-4 text-text-primary font-medium">{reward.ad_title}</td>
+                        <td className="py-3 px-4 text-text-primary font-medium">
+                          {reward.ad_title ||
+                            reward.note ||
+                            (reward.amount < 0 ? 'Redemption' : 'Reward')}
+                        </td>
                         <td className="py-3 px-4 text-text-primary">${reward.amount.toFixed(2)}</td>
                         <td className="py-3 px-4">
                           <span className={cn('inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium', statusStyles[reward.status] || 'bg-gray-100 text-gray-700')}>
@@ -332,7 +339,9 @@ export function ProfilePage() {
                 onAction={() => navigate('/ads')}
               />
             )}
-          </Card>
+            </Card>
+            <Leaderboard />
+          </div>
         )}
 
         {/* Settings */}

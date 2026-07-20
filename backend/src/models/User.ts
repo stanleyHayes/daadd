@@ -19,6 +19,10 @@ export interface IUser extends Document {
   email_verified: boolean;
   advertiser_approval: AdvertiserApproval;
   billing_ready: boolean;
+  // Engagement streak: consecutive days the user earned a reward. An active
+  // streak grants a token bonus on new rewards (see utils/streak.ts).
+  streak_count: number;
+  last_reward_date?: Date;
   push_tokens?: {
     token: string;
     platform: string;
@@ -53,6 +57,9 @@ const UserSchema = new Schema<IUser>({
     default: 'pending',
   },
   billing_ready: { type: Boolean, default: false },
+  // Engagement streak (gamification).
+  streak_count: { type: Number, default: 0 },
+  last_reward_date: { type: Date },
   push_tokens: {
     type: [
       {

@@ -30,7 +30,7 @@ export function CampaignCreatePage() {
 
   const [formData, setFormData] = useState({
     name: '', description: '', industry: '', start_date: '', end_date: '',
-    budget: 0, reward_value: 0, age_min: 18, age_max: 65,
+    budget: 0, reward_value: 0, discount_percentage: 15, age_min: 18, age_max: 65,
     regions: [] as string[], devices: ['desktop', 'mobile'] as string[], languages: ['en'] as string[],
     localized: false, creatives: [] as { name: string; type: string; size: number; preview?: string }[],
     age_restricted: false, ai_enabled: true,
@@ -154,6 +154,7 @@ export function CampaignCreatePage() {
                   <div className="grid grid-cols-2 gap-4">
                     <Input label="Budget ($)" type="number" placeholder="5000" value={formData.budget || ''} onChange={(e) => updateField('budget', Number(e.target.value))} />
                     <Input label="Reward Value ($)" type="number" placeholder="0.50" value={formData.reward_value || ''} onChange={(e) => updateField('reward_value', Number(e.target.value))} />
+                    <Input label="Discount Shared (%)" type="number" placeholder="15" value={formData.discount_percentage || ''} onChange={(e) => updateField('discount_percentage', Math.min(100, Math.max(0, Number(e.target.value))))} hint="Percent of a customer's purchase shared back as their discount at redemption." />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">Age Range</label>
@@ -309,7 +310,7 @@ export function CampaignCreatePage() {
                     <div className="space-y-4">
                       <h3 className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider">Budget & Targeting</h3>
                       <div className="space-y-2">
-                        {[['Budget', `$${formData.budget.toLocaleString()}`], ['Reward', `$${formData.reward_value}`], ['Age Range', `${formData.age_min} - ${formData.age_max}`], ['Devices', formData.devices.join(', ')], ['Creatives', `${formData.creatives.length} files`]].map(([label, val]) => (
+                        {[['Budget', `$${formData.budget.toLocaleString()}`], ['Reward', `$${formData.reward_value}`], ['Discount Shared', `${formData.discount_percentage}%`], ['Age Range', `${formData.age_min} - ${formData.age_max}`], ['Devices', formData.devices.join(', ')], ['Creatives', `${formData.creatives.length} files`]].map(([label, val]) => (
                           <div key={label} className="flex justify-between"><span className="text-sm text-gray-500 dark:text-slate-400">{label}</span><span className="text-sm font-medium text-gray-900 dark:text-white capitalize">{val}</span></div>
                         ))}
                       </div>

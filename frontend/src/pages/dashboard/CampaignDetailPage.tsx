@@ -14,7 +14,7 @@ import { BudgetPacingIndicator } from '@/components/budget/BudgetPacingIndicator
 import { useCampaign, useToggleAI } from '@/hooks/useCampaigns';
 import { useDashboardMetrics, useTimeSeries } from '@/hooks/useAnalytics';
 import { cn, formatCurrency, formatNumber, formatPercentage, formatDate } from '@/lib/utils';
-import { Eye, MousePointerClick, DollarSign, TrendingUp, Calendar, BarChart3, Map, Brain, Users, Sparkles, ArrowLeft, AlertTriangle } from 'lucide-react';
+import { Eye, MousePointerClick, DollarSign, TrendingUp, Calendar, BarChart3, Map, Brain, Users, Sparkles, ArrowLeft, AlertTriangle, Wallet, ShoppingBag, Ticket, PiggyBank } from 'lucide-react';
 import { PageTransition } from '@/components/ui/PageTransition';
 import { Skeleton, SkeletonText, SkeletonMetric, SkeletonCard } from '@/components/ui/Skeleton';
 import { hasPermission } from '@/lib/rbac';
@@ -147,7 +147,19 @@ export function CampaignDetailPage() {
               <MetricsCard icon={<TrendingUp className="h-5 w-5" />} label="CTR" value={formatPercentage(metrics.avgCTR)} change={metrics.ctrChange} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
               <MetricsCard icon={<DollarSign className="h-5 w-5" />} label="CPC" value={formatCurrency(metrics.cpc || 0)} change={metrics.cpcChange || 0} iconColor="text-warning-600" iconBg="bg-warning-50 dark:bg-warning-900/30" />
             </div>
-          ) : (
+          ) : null}
+
+          {/* Money: real revenue / purchases / discount / profit from redemptions (recs #1 & #2) */}
+          {metrics && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <MetricsCard icon={<Wallet className="h-5 w-5" />} label="Revenue" value={formatCurrency(metrics.revenue || 0)} iconColor="text-emerald-600" iconBg="bg-emerald-50 dark:bg-emerald-900/30" />
+              <MetricsCard icon={<ShoppingBag className="h-5 w-5" />} label="Purchases" value={formatNumber(metrics.purchases || 0)} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
+              <MetricsCard icon={<Ticket className="h-5 w-5" />} label={`Discount Used (${metrics.discountPercentage ?? 15}% shared)`} value={formatCurrency(metrics.discountUsed || 0)} iconColor="text-secondary-600" iconBg="bg-secondary-50 dark:bg-secondary-900/30" />
+              <MetricsCard icon={<PiggyBank className="h-5 w-5" />} label="Profit" value={formatCurrency(metrics.profit || 0)} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
+            </div>
+          )}
+
+          {!metrics && (
             <Card>
               <EmptyState
                 icon={<BarChart3 className="h-12 w-12" />}

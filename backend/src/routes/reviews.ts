@@ -11,6 +11,10 @@ const router = Router();
 // Reviewing earns reward tokens; adding a photo of the place earns a bonus.
 const REVIEW_REWARD_TOKENS = 3;
 const REVIEW_PHOTO_BONUS_TOKENS = 2;
+// Reward ledger amounts are DOLLARS everywhere (see redemption/balance), so a
+// token count must be converted to money before crediting.
+const TOKEN_VALUE = parseFloat(process.env.TOKEN_VALUE || '0.05');
+const round2 = (n: number) => Math.round(n * 100) / 100;
 
 const reviewPhotoUpload = multer({
   storage: multer.memoryStorage(),
@@ -140,19 +144,28 @@ router.post(
         throw err;
       }
 
-      // Reward the reviewer with tokens (bonus for including a photo).
+      // Reward the reviewer with tokens (bonus for including a photo). The
+      // review row is already committed, so a reward failure must not 400 the
+      // request (which would strand the review behind a 409 on retry) — grant it
+      // best-effort and surface any failure for repair.
       const rewardTokens = REVIEW_REWARD_TOKENS + (photoUrl ? REVIEW_PHOTO_BONUS_TOKENS : 0);
-      await Reward.create({
-        user_id: req.user!.userId,
-        amount: rewardTokens,
-        status: 'approved',
-        type: 'review_reward',
-        note: photoUrl ? 'Review with photo' : 'Review',
-      });
+      let rewardGranted = 0;
+      try {
+        await Reward.create({
+          user_id: req.user!.userId,
+          amount: round2(rewardTokens * TOKEN_VALUE),
+          status: 'approved',
+          type: 'review_reward',
+          note: photoUrl ? 'Review with photo' : 'Review',
+        });
+        rewardGranted = rewardTokens;
+      } catch (rewardErr) {
+        console.error('Failed to grant review reward:', rewardErr);
+      }
 
       res
         .status(201)
-        .json(success({ ...review.toObject(), reward_tokens: rewardTokens }, 'Review created'));
+        .json(success({ ...review.toObject(), reward_tokens: rewardGranted }, 'Review created'));
     } catch (err: any) {
       res.status(400).json({ success: false, message: err.message || 'Failed to create review' });
     }

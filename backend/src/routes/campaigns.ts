@@ -123,6 +123,12 @@ function normalizeCampaignBody(body: any): any {
     if (body[key] !== undefined) normalized[key] = body[key];
   }
 
+  // Discount shared with clients (0–100%); clamp defensively.
+  if (body.discount_percentage !== undefined) {
+    const pct = Number(body.discount_percentage);
+    if (!Number.isNaN(pct)) normalized.discount_percentage = Math.min(100, Math.max(0, pct));
+  }
+
   if (body.status !== undefined && CAMPAIGN_STATUSES.includes(body.status)) {
     normalized.status = body.status;
   }

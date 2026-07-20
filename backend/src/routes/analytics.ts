@@ -1,12 +1,52 @@
 import { Router, Request, Response } from 'express';
 import { Types } from 'mongoose';
 import PDFDocument from 'pdfkit';
-import { Campaign } from '../models';
+import { Campaign, Redemption } from '../models';
 import { authMiddleware } from '../middleware/auth';
 import { success } from '../utils/response';
 import { seededRandom } from '../utils/seeded';
 
 const router = Router();
+
+const round2 = (n: number) => Math.round(n * 100) / 100;
+
+/**
+ * Real money metrics for a campaign, aggregated from its attributed
+ * redemptions (recommendations #1 & #2): revenue (customer spend), how many
+ * purchases, discount given vs used, ad spend, and profit.
+ */
+async function campaignMoneyMetrics(campaignId: string, budgetSpent: number) {
+  const agg = await Redemption.aggregate([
+    {
+      // Only settled (completed) redemptions count as realized revenue — a
+      // validated-but-unconfirmed or rolled-back redemption is not a sale.
+      $match: {
+        campaign_id: new Types.ObjectId(campaignId),
+        status: 'completed',
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        revenue: { $sum: '$purchase_amount' },
+        discountUsed: { $sum: '$discount_amount' },
+        purchases: { $sum: 1 },
+      },
+    },
+  ]);
+  const row = agg[0] || {};
+  const revenue = round2(row.revenue || 0);
+  const discountUsed = round2(row.discountUsed || 0);
+  const spend = round2(budgetSpent || 0);
+  return {
+    revenue,
+    purchases: row.purchases || 0,
+    discountUsed,
+    spend,
+    // Advertiser's net: sales revenue minus ad spend minus discounts funded.
+    profit: round2(revenue - spend - discountUsed),
+  };
+}
 
 /**
  * Validate the optional start_date / end_date ISO query filters. The metric
@@ -107,6 +147,7 @@ router.get('/dashboard/:campaignId', authMiddleware, async (req: Request, res: R
 
     const impressions = Math.floor((campaign.budget_total || 0) * 2.5);
     const clicks = Math.floor(impressions * 0.068);
+    const money = await campaignMoneyMetrics(campaignId, campaign.budget_spent || 0);
 
     res.json(success({
       totalCampaigns: 1,
@@ -121,6 +162,12 @@ router.get('/dashboard/:campaignId', authMiddleware, async (req: Request, res: R
       spendChange: -1,
       bounceRate: 32,
       bounceRateChange: -1,
+      // Real money metrics from attributed redemptions (recs #1 & #2).
+      revenue: money.revenue,
+      purchases: money.purchases,
+      discountUsed: money.discountUsed,
+      profit: money.profit,
+      discountPercentage: campaign.discount_percentage ?? 15,
     }));
   } catch (err: any) {
     res.status(500).json({ success: false, message: err.message || 'Failed to fetch campaign metrics' });

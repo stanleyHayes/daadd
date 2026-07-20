@@ -103,6 +103,12 @@ export interface DashboardMetrics {
   cpcChange?: number;
   cpa?: number;
   cpaChange?: number;
+  // Real money metrics from attributed redemptions (recs #1 & #2).
+  revenue?: number;
+  purchases?: number;
+  discountUsed?: number;
+  profit?: number;
+  discountPercentage?: number;
 }
 
 export interface TimeSeriesPoint {
@@ -259,6 +265,10 @@ export interface Reward {
   status: RewardStatus;
   earned_at: string;
   claimed_at?: string;
+  // Non-ad rewards (review credits, redemption debits) carry a type/note but no
+  // ad_title; used to label the reward history correctly.
+  type?: string;
+  note?: string;
 }
 
 // ---- Team ----
