@@ -7,16 +7,20 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import { Stack, useLocalSearchParams } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import * as ImagePicker from 'expo-image-picker';
 import {
   useConversation,
   useSendMessage,
   useStartConversation,
   useChatSocket,
+  useTyping,
   ChatMessage,
+  ChatImage,
 } from '@/hooks/useMessages';
 import { useAuthStore } from '@/stores/auth.store';
 import { useColors } from '@/hooks/useColors';
@@ -41,18 +45,35 @@ export default function ChatThreadScreen() {
   const isCompose = params.id === 'new';
   const [activeId, setActiveId] = useState<string | undefined>(isCompose ? undefined : params.id);
   const [draft, setDraft] = useState('');
+  const [image, setImage] = useState<ChatImage | null>(null);
 
   const { data: messages = [] } = useConversation(activeId);
   const sendMessage = useSendMessage(activeId ?? '');
   const startConversation = useStartConversation();
   useChatSocket();
+  const { isCounterpartTyping, notifyTyping } = useTyping(activeId);
 
   const busy = sendMessage.isPending || startConversation.isPending;
   const title = params.title || params.advertiserName || t('mobile.chat.title');
 
+  const pickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      quality: 0.7,
+    });
+    if (!result.canceled && result.assets[0]) {
+      const asset = result.assets[0];
+      setImage({
+        uri: asset.uri,
+        name: asset.fileName || `photo-${asset.uri.split('/').pop()}`,
+        type: asset.mimeType || 'image/jpeg',
+      });
+    }
+  };
+
   const handleSend = async () => {
     const text = draft.trim();
-    if (!text || busy) return;
+    if ((!text && !image) || busy) return;
     try {
       if (!activeId) {
         if (!params.advertiserId) return;
@@ -61,12 +82,14 @@ export default function ChatThreadScreen() {
           body: text,
           ad_id: params.adId,
           campaign_id: params.campaignId,
+          image: image ?? undefined,
         });
         setActiveId(result.conversation_id);
       } else {
-        await sendMessage.mutateAsync(text);
+        await sendMessage.mutateAsync({ body: text, image: image ?? undefined });
       }
       setDraft('');
+      setImage(null);
     } catch {
       // Surface via the disabled state; a toast could be added later.
     }
@@ -90,7 +113,16 @@ export default function ChatThreadScreen() {
             paddingVertical: spacing.sm,
           }}
         >
-          <Text style={[typography.bodyMedium, { color: mine ? '#FFF' : colors.text.primary }]}>{item.body}</Text>
+          {!!item.image_url && (
+            <Image
+              source={{ uri: item.image_url }}
+              style={{ width: 200, height: 200, borderRadius: borderRadius.md, marginBottom: item.body ? spacing.xs : 0 }}
+              resizeMode="cover"
+            />
+          )}
+          {!!item.body && (
+            <Text style={[typography.bodyMedium, { color: mine ? '#FFF' : colors.text.primary }]}>{item.body}</Text>
+          )}
           <Text style={[typography.caption, { color: mine ? 'rgba(255,255,255,0.7)' : colors.text.tertiary, marginTop: 2, textAlign: 'right' }]}>
             {new Date(item.created_at).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}
           </Text>
@@ -122,11 +154,18 @@ export default function ChatThreadScreen() {
           }
         />
 
+        {isCounterpartTyping && (
+          <Text
+            style={[
+              typography.caption,
+              { paddingHorizontal: spacing.md, paddingBottom: spacing.xs, color: colors.text.tertiary, fontStyle: 'italic' },
+            ]}
+          >
+            {t('mobile.chat.typing')}
+          </Text>
+        )}
         <View
           style={{
-            flexDirection: 'row',
-            alignItems: 'flex-end',
-            gap: spacing.sm,
             paddingHorizontal: spacing.md,
             paddingTop: spacing.sm,
             paddingBottom: Math.max(spacing.sm, insets.bottom),
@@ -135,40 +174,79 @@ export default function ChatThreadScreen() {
             backgroundColor: colors.surface,
           }}
         >
-          <TextInput
-            value={draft}
-            onChangeText={setDraft}
-            placeholder={t('mobile.chat.inputPlaceholder')}
-            placeholderTextColor={colors.text.tertiary}
-            multiline
-            style={[
-              typography.bodyMedium,
-              {
-                flex: 1,
-                maxHeight: 120,
-                color: colors.text.primary,
+          {image && (
+            <View style={{ width: 64, marginBottom: spacing.sm }}>
+              <Image source={{ uri: image.uri }} style={{ width: 64, height: 64, borderRadius: borderRadius.md }} />
+              <TouchableOpacity
+                onPress={() => setImage(null)}
+                style={{
+                  position: 'absolute',
+                  top: -6,
+                  right: -6,
+                  width: 20,
+                  height: 20,
+                  borderRadius: 10,
+                  backgroundColor: colors.text.primary,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Ionicons name="close" size={12} color={colors.background} />
+              </TouchableOpacity>
+            </View>
+          )}
+          <View style={{ flexDirection: 'row', alignItems: 'flex-end', gap: spacing.sm }}>
+            <TouchableOpacity
+              onPress={pickImage}
+              style={{
+                width: 44,
+                height: 44,
+                borderRadius: 22,
                 backgroundColor: colors.surfaceSecondary,
-                borderRadius: borderRadius.lg,
-                paddingHorizontal: spacing.md,
-                paddingVertical: spacing.sm,
-              },
-            ]}
-          />
-          <TouchableOpacity
-            onPress={handleSend}
-            disabled={!draft.trim() || busy}
-            style={{
-              width: 44,
-              height: 44,
-              borderRadius: 22,
-              backgroundColor: colors.primary,
-              justifyContent: 'center',
-              alignItems: 'center',
-              opacity: !draft.trim() || busy ? 0.5 : 1,
-            }}
-          >
-            <Ionicons name="send" size={18} color="#FFF" />
-          </TouchableOpacity>
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Ionicons name="image-outline" size={20} color={colors.text.secondary} />
+            </TouchableOpacity>
+            <TextInput
+              value={draft}
+              onChangeText={(txt) => {
+                setDraft(txt);
+                notifyTyping();
+              }}
+              placeholder={t('mobile.chat.inputPlaceholder')}
+              placeholderTextColor={colors.text.tertiary}
+              multiline
+              style={[
+                typography.bodyMedium,
+                {
+                  flex: 1,
+                  maxHeight: 120,
+                  color: colors.text.primary,
+                  backgroundColor: colors.surfaceSecondary,
+                  borderRadius: borderRadius.lg,
+                  paddingHorizontal: spacing.md,
+                  paddingVertical: spacing.sm,
+                },
+              ]}
+            />
+            <TouchableOpacity
+              onPress={handleSend}
+              disabled={(!draft.trim() && !image) || busy}
+              style={{
+                width: 44,
+                height: 44,
+                borderRadius: 22,
+                backgroundColor: colors.primary,
+                justifyContent: 'center',
+                alignItems: 'center',
+                opacity: (!draft.trim() && !image) || busy ? 0.5 : 1,
+              }}
+            >
+              <Ionicons name="send" size={18} color="#FFF" />
+            </TouchableOpacity>
+          </View>
         </View>
       </KeyboardAvoidingView>
     </View>

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import api from '@/lib/api';
 import { getSocket } from '@/lib/socket';
@@ -9,6 +9,7 @@ export interface ChatMessage {
   conversation_id: string;
   sender_id: string;
   body: string;
+  image_url?: string;
   created_at: string;
 }
 
@@ -50,19 +51,40 @@ export function useConversation(conversationId: string | undefined) {
   });
 }
 
+export interface OutgoingMessage {
+  body?: string;
+  image?: File;
+}
+
 export function useStartConversation() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (payload: {
       advertiser_id: string;
-      body: string;
+      body?: string;
       ad_id?: string;
       campaign_id?: string;
+      image?: File;
     }) => {
-      const res = await api.post<ApiResponse<{ conversation_id: string; message: ChatMessage }>>(
-        '/messages/conversations',
-        payload
-      );
+      let res;
+      if (payload.image) {
+        const fd = new FormData();
+        fd.append('advertiser_id', payload.advertiser_id);
+        if (payload.body) fd.append('body', payload.body);
+        if (payload.ad_id) fd.append('ad_id', payload.ad_id);
+        if (payload.campaign_id) fd.append('campaign_id', payload.campaign_id);
+        fd.append('photo', payload.image);
+        res = await api.post<ApiResponse<{ conversation_id: string; message: ChatMessage }>>(
+          '/messages/conversations',
+          fd,
+          { headers: { 'Content-Type': undefined } }
+        );
+      } else {
+        res = await api.post<ApiResponse<{ conversation_id: string; message: ChatMessage }>>(
+          '/messages/conversations',
+          payload
+        );
+      }
       return res.data.data;
     },
     onSuccess: () => {
@@ -74,11 +96,23 @@ export function useStartConversation() {
 export function useSendMessage(conversationId: string) {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (body: string) => {
-      const res = await api.post<ApiResponse<ChatMessage>>(
-        `/messages/conversations/${conversationId}`,
-        { body }
-      );
+    mutationFn: async (arg: OutgoingMessage) => {
+      let res;
+      if (arg.image) {
+        const fd = new FormData();
+        if (arg.body) fd.append('body', arg.body);
+        fd.append('photo', arg.image);
+        res = await api.post<ApiResponse<ChatMessage>>(
+          `/messages/conversations/${conversationId}`,
+          fd,
+          { headers: { 'Content-Type': undefined } }
+        );
+      } else {
+        res = await api.post<ApiResponse<ChatMessage>>(
+          `/messages/conversations/${conversationId}`,
+          { body: arg.body }
+        );
+      }
       return res.data.data;
     },
     onSuccess: () => {
@@ -86,6 +120,41 @@ export function useSendMessage(conversationId: string) {
       queryClient.invalidateQueries({ queryKey: ['conversations'] });
     },
   });
+}
+
+/** Emit + receive real-time "typing" pings for the open conversation. */
+export function useTyping(conversationId: string | undefined) {
+  const [isCounterpartTyping, setTyping] = useState(false);
+  const lastEmit = useRef(0);
+
+  useEffect(() => {
+    const socket = getSocket();
+    if (!socket || !conversationId) return;
+    let clearTimer: ReturnType<typeof setTimeout>;
+    const onTyping = (p: { conversationId: string }) => {
+      if (p.conversationId !== conversationId) return;
+      setTyping(true);
+      clearTimeout(clearTimer);
+      clearTimer = setTimeout(() => setTyping(false), 3000);
+    };
+    socket.on('typing', onTyping);
+    return () => {
+      socket.off('typing', onTyping);
+      clearTimeout(clearTimer);
+      setTyping(false);
+    };
+  }, [conversationId]);
+
+  const notifyTyping = useCallback(() => {
+    const socket = getSocket();
+    if (!socket || !conversationId) return;
+    const now = Date.now();
+    if (now - lastEmit.current < 1500) return; // throttle keystroke pings
+    lastEmit.current = now;
+    socket.emit('typing', { conversationId });
+  }, [conversationId]);
+
+  return { isCounterpartTyping, notifyTyping };
 }
 
 /**

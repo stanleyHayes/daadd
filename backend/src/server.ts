@@ -6,6 +6,7 @@ import { Server } from 'socket.io';
 
 import app from './app';
 import { JWT_SECRET } from './middleware/auth';
+import { Conversation } from './models';
 import { seedDatabase } from './seed';
 import { scanAllActiveCampaigns } from './services/anomaly-detection.service';
 
@@ -84,6 +85,27 @@ async function startServer(): Promise<void> {
     });
     io.on('connection', (socket) => {
       socket.join(`user:${socket.data.userId}`);
+
+      // Relay a "typing" ping to the OTHER participant of the conversation.
+      // The sender is verified as a participant; the client throttles emits.
+      socket.on('typing', async (payload: { conversationId?: string }) => {
+        try {
+          const conversationId = payload?.conversationId;
+          if (!conversationId) return;
+          const conv = await Conversation.findById(conversationId)
+            .select('customer_id advertiser_id')
+            .lean();
+          if (!conv) return;
+          const uid = socket.data.userId as string;
+          const isParticipant =
+            String(conv.customer_id) === uid || String(conv.advertiser_id) === uid;
+          if (!isParticipant) return;
+          const otherId = String(conv.customer_id) === uid ? conv.advertiser_id : conv.customer_id;
+          io.to(`user:${String(otherId)}`).emit('typing', { conversationId: String(conversationId) });
+        } catch {
+          /* best-effort */
+        }
+      });
     });
     // Message routes emit real-time events via req.app.get('io').
     app.set('io', io);

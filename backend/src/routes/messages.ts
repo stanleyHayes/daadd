@@ -1,11 +1,25 @@
 import { Router, Request, Response } from 'express';
 import { Types } from 'mongoose';
 import type { Server } from 'socket.io';
+import multer from 'multer';
 import { Conversation, Message, User, Ad, Campaign } from '../models';
 import { authMiddleware } from '../middleware/auth';
+import { uploadCreative } from '../services/storage.service';
+import { sendPushToUser } from '../services/push.service';
 import { success, paginated } from '../utils/response';
 
 const router = Router();
+
+// Optional image attachment per message (memory buffer -> Cloudinary/store).
+// Restricted to raster images (SVG excluded — it can carry script).
+const chatUpload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 10 * 1024 * 1024 },
+  fileFilter: (_req, file, cb) => {
+    if (/^image\/(jpe?g|png|gif|webp|heic|heif)$/.test(file.mimetype)) cb(null, true);
+    else cb(new Error('Only image uploads are allowed'));
+  },
+});
 
 // Users that may be messaged as a "company" (i.e. not other customers).
 const isCompanyRole = (role?: string) => !!role && role !== 'end_user';
@@ -25,8 +39,27 @@ function serializeMessage(m: any) {
     conversation_id: String(m.conversation_id),
     sender_id: String(m.sender_id),
     body: m.body,
+    image_url: m.image_url || '',
     created_at: m.created_at,
   };
+}
+
+/** Best-effort push to the participant who did NOT send the message. */
+function notifyRecipient(conversation: any, senderId: string, message: any): void {
+  const recipientId =
+    String(conversation.customer_id) === senderId ? conversation.advertiser_id : conversation.customer_id;
+  User.findById(senderId)
+    .select('name')
+    .lean()
+    .then((sender) => {
+      const preview = message.body ? String(message.body).slice(0, 120) : '📷 Photo';
+      return sendPushToUser(String(recipientId), {
+        title: sender?.name || 'New message',
+        body: preview,
+        data: { type: 'message', conversationId: String(conversation._id) },
+      });
+    })
+    .catch(() => {});
 }
 
 /** The caller's role within a conversation, or null if they are not a participant. */
@@ -51,7 +84,7 @@ function emitMessage(req: Request, conversation: any, message: any) {
  * first message. Idempotent per (customer, advertiser) — the unique index makes
  * "one thread per company" true even under concurrent starts.
  */
-router.post('/conversations', authMiddleware, async (req: Request, res: Response) => {
+router.post('/conversations', authMiddleware, chatUpload.single('photo'), async (req: Request, res: Response) => {
   try {
     const userId = req.user!.userId;
     const { advertiser_id, ad_id, campaign_id, body } = req.body;
@@ -66,8 +99,8 @@ router.post('/conversations', authMiddleware, async (req: Request, res: Response
       return;
     }
     const text = typeof body === 'string' ? body.trim() : '';
-    if (!text) {
-      res.status(400).json({ success: false, message: 'Message body is required' });
+    if (!text && !req.file) {
+      res.status(400).json({ success: false, message: 'Message body or image is required' });
       return;
     }
 
@@ -127,18 +160,30 @@ router.post('/conversations', authMiddleware, async (req: Request, res: Response
       }
     }
 
+    let imageUrl = '';
+    if (req.file) {
+      const stored = await uploadCreative({
+        buffer: req.file.buffer,
+        originalname: req.file.originalname,
+        mimetype: req.file.mimetype,
+      });
+      imageUrl = stored.url;
+    }
+
     const message = await Message.create({
       conversation_id: conversation!._id,
       sender_id: new Types.ObjectId(userId),
       body: text,
+      image_url: imageUrl,
     });
 
-    conversation!.last_message = text;
+    conversation!.last_message = text || '📷 Photo';
     conversation!.last_message_at = message.created_at;
     conversation!.customer_last_read = message.created_at; // sender has read their own message
     await conversation!.save();
 
     emitMessage(req, conversation, message);
+    notifyRecipient(conversation, userId, message);
 
     res.status(201).json(
       success({ conversation_id: String(conversation!._id), message: serializeMessage(message) }, 'Conversation started')
@@ -248,7 +293,7 @@ router.get('/conversations/:id', authMiddleware, async (req: Request, res: Respo
 });
 
 /** Reply in an existing thread. */
-router.post('/conversations/:id', authMiddleware, async (req: Request, res: Response) => {
+router.post('/conversations/:id', authMiddleware, chatUpload.single('photo'), async (req: Request, res: Response) => {
   try {
     const userId = req.user!.userId;
     const convId = toObjectId(req.params.id);
@@ -257,8 +302,8 @@ router.post('/conversations/:id', authMiddleware, async (req: Request, res: Resp
       return;
     }
     const text = typeof req.body.body === 'string' ? req.body.body.trim() : '';
-    if (!text) {
-      res.status(400).json({ success: false, message: 'Message body is required' });
+    if (!text && !req.file) {
+      res.status(400).json({ success: false, message: 'Message body or image is required' });
       return;
     }
     const conversation = await Conversation.findById(convId);
@@ -272,18 +317,30 @@ router.post('/conversations/:id', authMiddleware, async (req: Request, res: Resp
       return;
     }
 
+    let imageUrl = '';
+    if (req.file) {
+      const stored = await uploadCreative({
+        buffer: req.file.buffer,
+        originalname: req.file.originalname,
+        mimetype: req.file.mimetype,
+      });
+      imageUrl = stored.url;
+    }
+
     const message = await Message.create({
       conversation_id: conversation._id,
       sender_id: new Types.ObjectId(userId),
       body: text,
+      image_url: imageUrl,
     });
 
-    conversation.last_message = text;
+    conversation.last_message = text || '📷 Photo';
     conversation.last_message_at = message.created_at;
     conversation.set(slot === 'customer' ? 'customer_last_read' : 'advertiser_last_read', message.created_at);
     await conversation.save();
 
     emitMessage(req, conversation, message);
+    notifyRecipient(conversation, userId, message);
 
     res.status(201).json(success(serializeMessage(message), 'Message sent'));
   } catch (err: any) {

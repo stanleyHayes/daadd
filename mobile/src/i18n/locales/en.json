@@ -233,7 +233,8 @@
       "emptyTitle": "No messages yet",
       "emptyMessage": "Enquiries you send or receive show up here.",
       "startPrompt": "Send a message to start the conversation.",
-      "inputPlaceholder": "Type a message…"
+      "inputPlaceholder": "Type a message…",
+      "typing": "typing…"
     },
     "ageGate": {
       "title": "Age Verification Required",

@@ -8,9 +8,10 @@ import {
   useSendMessage,
   useStartConversation,
   useChatSocket,
+  useTyping,
 } from '@/hooks/useMessages';
 import { EmptyState } from '@/components/ui/EmptyState';
-import { MessageSquare, Send, ArrowLeft } from 'lucide-react';
+import { MessageSquare, Send, ArrowLeft, ImagePlus, X } from 'lucide-react';
 
 export interface ComposeTarget {
   advertiserId: string;
@@ -38,11 +39,14 @@ export function MessagesView({ compose }: { compose?: ComposeTarget }) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [composing, setComposing] = useState<ComposeTarget | null>(compose ?? null);
   const [draft, setDraft] = useState('');
+  const [image, setImage] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const activeId = composing ? null : selectedId;
   const { data: messages = [] } = useConversation(activeId ?? undefined);
   const sendMessage = useSendMessage(activeId ?? '');
   const startConversation = useStartConversation();
+  const { isCounterpartTyping, notifyTyping } = useTyping(activeId ?? undefined);
 
   const activeConversation = conversations.find((c) => c.id === activeId);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -60,20 +64,26 @@ export function MessagesView({ compose }: { compose?: ComposeTarget }) {
 
   const handleSend = async () => {
     const text = draft.trim();
-    if (!text || busy) return;
-    if (composing) {
-      const result = await startConversation.mutateAsync({
-        advertiser_id: composing.advertiserId,
-        body: text,
-        ad_id: composing.adId,
-        campaign_id: composing.campaignId,
-      });
+    if ((!text && !image) || busy) return;
+    try {
+      if (composing) {
+        const result = await startConversation.mutateAsync({
+          advertiser_id: composing.advertiserId,
+          body: text,
+          ad_id: composing.adId,
+          campaign_id: composing.campaignId,
+          image: image ?? undefined,
+        });
+        setComposing(null);
+        setSelectedId(result.conversation_id);
+      } else if (activeId) {
+        await sendMessage.mutateAsync({ body: text, image: image ?? undefined });
+      }
       setDraft('');
-      setComposing(null);
-      setSelectedId(result.conversation_id);
-    } else if (activeId) {
-      await sendMessage.mutateAsync(text);
-      setDraft('');
+      setImage(null);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    } catch {
+      /* keep the draft so the user can retry */
     }
   };
 
@@ -198,7 +208,14 @@ export function MessagesView({ compose }: { compose?: ComposeTarget }) {
                           : 'bg-bg-secondary text-text-primary rounded-bl-sm'
                       )}
                     >
-                      <p className="whitespace-pre-wrap break-words">{m.body}</p>
+                      {m.image_url && (
+                        <img
+                          src={m.image_url}
+                          alt="attachment"
+                          className="mb-1 max-h-60 max-w-full rounded-lg object-cover"
+                        />
+                      )}
+                      {m.body && <p className="whitespace-pre-wrap break-words">{m.body}</p>}
                       <p className={cn('mt-1 text-[10px]', mine ? 'text-white/70' : 'text-text-muted')}>
                         {timeLabel(m.created_at)}
                       </p>
@@ -206,30 +223,74 @@ export function MessagesView({ compose }: { compose?: ComposeTarget }) {
                   </div>
                 );
               })}
+              {isCounterpartTyping && (
+                <p className="px-1 text-xs italic text-text-muted">typing…</p>
+              )}
             </div>
 
-            <div className="flex items-end gap-2 border-t border-border-color p-3">
-              <textarea
-                value={draft}
-                onChange={(e) => setDraft(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    handleSend();
-                  }
-                }}
-                rows={1}
-                placeholder="Type a message…"
-                className="flex-1 resize-none rounded-xl border border-border-color bg-bg-secondary px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
-              />
-              <button
-                onClick={handleSend}
-                disabled={!draft.trim() || busy}
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-600 text-white transition-colors hover:bg-primary-700 disabled:opacity-50"
-                aria-label="Send"
-              >
-                <Send className="h-4 w-4" />
-              </button>
+            <div className="border-t border-border-color p-3">
+              {image && (
+                <div className="relative mb-2 inline-block">
+                  <img
+                    src={URL.createObjectURL(image)}
+                    alt=""
+                    className="h-16 w-16 rounded-lg object-cover"
+                  />
+                  <button
+                    onClick={() => {
+                      setImage(null);
+                      if (fileInputRef.current) fileInputRef.current.value = '';
+                    }}
+                    className="absolute -right-1.5 -top-1.5 rounded-full bg-slate-800 p-0.5 text-white"
+                    aria-label="Remove image"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </div>
+              )}
+              <div className="flex items-end gap-2">
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    const f = e.target.files?.[0];
+                    if (f) setImage(f);
+                  }}
+                />
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border-color text-text-secondary transition-colors hover:bg-bg-secondary"
+                  aria-label="Attach image"
+                >
+                  <ImagePlus className="h-4 w-4" />
+                </button>
+                <textarea
+                  value={draft}
+                  onChange={(e) => {
+                    setDraft(e.target.value);
+                    notifyTyping();
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                      e.preventDefault();
+                      handleSend();
+                    }
+                  }}
+                  rows={1}
+                  placeholder="Type a message…"
+                  className="flex-1 resize-none rounded-xl border border-border-color bg-bg-secondary px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
+                />
+                <button
+                  onClick={handleSend}
+                  disabled={(!draft.trim() && !image) || busy}
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-600 text-white transition-colors hover:bg-primary-700 disabled:opacity-50"
+                  aria-label="Send"
+                >
+                  <Send className="h-4 w-4" />
+                </button>
+              </div>
             </div>
           </>
         ) : (
