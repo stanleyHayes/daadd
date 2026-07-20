@@ -22,12 +22,13 @@ interface PublicAd {
   campaign?: {
     id: string;
     name: string;
-    description: string;
-    startDate: string;
-    endDate: string;
-    status: string;
-    budget: number;
-    spent: number;
+    // Promotion duration + per-campaign advertiser contact details.
+    start_date?: string;
+    end_date?: string;
+    location?: string;
+    contact_phone?: string;
+    contact_email?: string;
+    contact_website?: string;
   };
 }
 

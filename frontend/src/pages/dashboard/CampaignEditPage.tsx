@@ -28,6 +28,10 @@ export function CampaignEditPage() {
     industry: '',
     budget_total: 0,
     reward_value: 0,
+    location: '',
+    contact_phone: '',
+    contact_email: '',
+    contact_website: '',
     age_min: 18,
     age_max: 65,
     regions: [] as string[],
@@ -45,6 +49,10 @@ export function CampaignEditPage() {
         industry: campaign.industry || '',
         budget_total: campaign.budget_total || 0,
         reward_value: campaign.reward_value || 0,
+        location: campaign.location || '',
+        contact_phone: campaign.contact_phone || '',
+        contact_email: campaign.contact_email || '',
+        contact_website: campaign.contact_website || '',
         age_min: campaign.age_min || 18,
         age_max: campaign.age_max || 65,
         regions: campaign.targeting_config?.regions || [],
@@ -90,6 +98,10 @@ export function CampaignEditPage() {
           industry: formData.industry as import('@/types').Industry,
           budget_total: formData.budget_total,
           reward_value: formData.reward_value,
+          location: formData.location,
+          contact_phone: formData.contact_phone,
+          contact_email: formData.contact_email,
+          contact_website: formData.contact_website,
           is_age_restricted: formData.age_restricted,
           targeting_config: {
             regions: formData.regions,
@@ -266,6 +278,17 @@ export function CampaignEditPage() {
                         onChange={(e) => updateField('reward_value', parseFloat(e.target.value))}
                         placeholder="0.00"
                       />
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className="text-sm font-semibold text-text-primary mb-1">Business & contact</p>
+                    <p className="text-xs text-text-secondary mb-3">Shown on this campaign's adverts so customers can find and reach you.</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <Input label="Location" placeholder="123 High St, Accra" value={formData.location} onChange={(e) => updateField('location', e.target.value)} />
+                      <Input label="Contact Phone" type="tel" placeholder="+233 20 000 0000" value={formData.contact_phone} onChange={(e) => updateField('contact_phone', e.target.value)} />
+                      <Input label="Contact Email" type="email" placeholder="hello@company.com" value={formData.contact_email} onChange={(e) => updateField('contact_email', e.target.value)} />
+                      <Input label="Website" placeholder="company.com" value={formData.contact_website} onChange={(e) => updateField('contact_website', e.target.value)} />
                     </div>
                   </div>
 

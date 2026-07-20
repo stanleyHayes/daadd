@@ -19,6 +19,7 @@ import attributionRoutes from './attribution';
 import eventRoutes from './events';
 import adminRoutes from './admin';
 import billingRoutes from './billing';
+import messageRoutes from './messages';
 
 const router = Router();
 
@@ -42,5 +43,6 @@ router.use('/attribution', attributionRoutes);
 router.use('/events', eventRoutes);
 router.use('/admin', adminRoutes);
 router.use('/billing', billingRoutes);
+router.use('/messages', messageRoutes);
 
 export default router;

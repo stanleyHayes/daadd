@@ -63,12 +63,20 @@ export interface Advertiser {
 export interface Campaign {
   id: string;
   name: string;
-  description: string;
-  startDate: string;
-  endDate: string;
-  status: 'active' | 'paused' | 'completed';
-  budget: number;
-  spent: number;
+  description?: string;
+  startDate?: string;
+  endDate?: string;
+  status?: 'active' | 'paused' | 'completed';
+  budget?: number;
+  spent?: number;
+  // Promotion duration + per-campaign advertiser contact details, as returned
+  // by the ad-detail endpoint (snake_case passthrough).
+  start_date?: string;
+  end_date?: string;
+  location?: string;
+  contact_phone?: string;
+  contact_email?: string;
+  contact_website?: string;
 }
 
 export interface Reward {

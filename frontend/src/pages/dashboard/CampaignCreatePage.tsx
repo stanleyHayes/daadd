@@ -31,6 +31,7 @@ export function CampaignCreatePage() {
   const [formData, setFormData] = useState({
     name: '', description: '', industry: '', start_date: '', end_date: '',
     budget: 0, reward_value: 0, discount_percentage: 15, age_min: 18, age_max: 65,
+    location: '', contact_phone: '', contact_email: '', contact_website: '',
     regions: [] as string[], devices: ['desktop', 'mobile'] as string[], languages: ['en'] as string[],
     localized: false, creatives: [] as { name: string; type: string; size: number; preview?: string }[],
     age_restricted: false, ai_enabled: true,
@@ -155,6 +156,16 @@ export function CampaignCreatePage() {
                     <Input label="Budget ($)" type="number" placeholder="5000" value={formData.budget || ''} onChange={(e) => updateField('budget', Number(e.target.value))} />
                     <Input label="Reward Value ($)" type="number" placeholder="0.50" value={formData.reward_value || ''} onChange={(e) => updateField('reward_value', Number(e.target.value))} />
                     <Input label="Discount Shared (%)" type="number" placeholder="15" value={formData.discount_percentage || ''} onChange={(e) => updateField('discount_percentage', Math.min(100, Math.max(0, Number(e.target.value))))} hint="Percent of a customer's purchase shared back as their discount at redemption." />
+                  </div>
+                  <div className="pt-2">
+                    <p className="text-sm font-semibold text-text-primary mb-1">Business & contact</p>
+                    <p className="text-xs text-text-secondary mb-3">Shown on this campaign's adverts so customers can find and reach you.</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <Input label="Location" placeholder="123 High St, Accra" value={formData.location} onChange={(e) => updateField('location', e.target.value)} />
+                      <Input label="Contact Phone" type="tel" placeholder="+233 20 000 0000" value={formData.contact_phone} onChange={(e) => updateField('contact_phone', e.target.value)} />
+                      <Input label="Contact Email" type="email" placeholder="hello@company.com" value={formData.contact_email} onChange={(e) => updateField('contact_email', e.target.value)} />
+                      <Input label="Website" placeholder="company.com" value={formData.contact_website} onChange={(e) => updateField('contact_website', e.target.value)} />
+                    </div>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">Age Range</label>

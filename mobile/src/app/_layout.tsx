@@ -125,6 +125,28 @@ function RootLayoutInner() {
             animation: 'fade_from_bottom',
           }}
         />
+        <Stack.Screen
+          name="chat/index"
+          options={{
+            headerShown: true,
+            headerTitle: t('mobile.chat.title'),
+            headerBackTitle: t('mobile.common.back'),
+            headerTintColor: colors.primary,
+            headerStyle: { backgroundColor: colors.surface },
+            headerShadowVisible: false,
+          }}
+        />
+        <Stack.Screen
+          name="chat/[id]"
+          options={{
+            headerShown: true,
+            headerTitle: '',
+            headerBackTitle: t('mobile.common.back'),
+            headerTintColor: colors.primary,
+            headerStyle: { backgroundColor: colors.surface },
+            headerShadowVisible: false,
+          }}
+        />
       </Stack>
     </>
   );

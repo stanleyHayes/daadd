@@ -16,3 +16,5 @@ export { PlatformAccount, IPlatformAccount } from './PlatformAccount';
 export { AdView, IAdView } from './AdView';
 export { DeviceEvent, IDeviceEvent, DeviceType, DeviceEventType } from './DeviceEvent';
 export { Event, IEvent } from './Event';
+export { Conversation, IConversation } from './Conversation';
+export { Message, IMessage } from './Message';

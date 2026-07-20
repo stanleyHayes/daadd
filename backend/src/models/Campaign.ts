@@ -15,6 +15,11 @@ export interface ICampaign extends Document {
   // for this campaign (0–100). Drives the discount applied at redemption instead
   // of a fixed price — see routes/redemption.ts.
   discount_percentage: number;
+  // Advertiser contact details shown on this campaign's adverts (per-campaign).
+  location?: string;
+  contact_phone?: string;
+  contact_email?: string;
+  contact_website?: string;
   currency: string;
   start_date: Date;
   end_date: Date;
@@ -49,6 +54,10 @@ const CampaignSchema = new Schema<ICampaign>(
     budget_spent: { type: Number, default: 0, min: 0 },
     reward_value: { type: Number, default: 0, min: 0 },
     discount_percentage: { type: Number, default: 15, min: 0, max: 100 },
+    location: { type: String, default: '', trim: true },
+    contact_phone: { type: String, default: '', trim: true },
+    contact_email: { type: String, default: '', trim: true },
+    contact_website: { type: String, default: '', trim: true },
     currency: { type: String, default: 'USD' },
     start_date: { type: Date, default: Date.now },
     end_date: { type: Date, default: Date.now },

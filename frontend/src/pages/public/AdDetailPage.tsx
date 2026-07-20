@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/Card';
 import { Badge, type BadgeVariant } from '@/components/ui/Badge';
 import { RewardClaimButton } from '@/components/ads/RewardClaimButton';
@@ -9,7 +9,7 @@ import { ReviewsSection } from '@/components/ads/ReviewsSection';
 import { useClaimReward } from '@/hooks/useRewards';
 import { usePublicAd, useRelatedAds } from '@/hooks/usePublicAds';
 import { useAuthStore } from '@/stores/auth.store';
-import { Eye, Play, ArrowLeft, AlertTriangle, Star, Gift, Building2, Calendar, Shield } from 'lucide-react';
+import { Eye, Play, ArrowLeft, AlertTriangle, Star, Gift, Building2, Calendar, Shield, MapPin, Phone, Mail, Globe, MessageSquare, Clock } from 'lucide-react';
 import { WatermarkBanner } from '@/components/ui/Watermark';
 import { INDUSTRY_COLOR_MAP } from '@/lib/constants';
 import toast from 'react-hot-toast';
@@ -18,6 +18,7 @@ import { Skeleton, SkeletonText, SkeletonCard } from '@/components/ui/Skeleton';
 
 export function AdDetailPage() {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const claimReward = useClaimReward();
   const [showAgeVerification, setShowAgeVerification] = useState(false);
@@ -42,6 +43,29 @@ export function AdDetailPage() {
     if (!ad) return;
     setShowAgeVerification(false);
     await claimReward.mutateAsync(ad.id);
+  };
+
+  const handleMessageCompany = () => {
+    if (!ad) return;
+    if (!isAuthenticated) {
+      toast.error('Please log in to message the company');
+      navigate('/login');
+      return;
+    }
+    if (!ad.advertiser?.id) {
+      toast.error('This company is not reachable right now');
+      return;
+    }
+    navigate('/messages', {
+      state: {
+        compose: {
+          advertiserId: ad.advertiser.id,
+          advertiserName: ad.advertiser.name,
+          adId: ad.id,
+          campaignId: ad.campaign?.id,
+        },
+      },
+    });
   };
 
   if (isLoading) {
@@ -226,6 +250,67 @@ export function AdDetailPage() {
                     <span className="text-text-primary font-medium">{ad.advertiser?.name || 'Advertiser'}</span>
                   </div>
                 </div>
+              </Card>
+
+              {/* Business & contact (per-campaign) + message the company */}
+              <Card className="border-border-color">
+                <h3 className="text-sm font-semibold text-text-primary mb-4 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-secondary-500" />
+                  Business & Contact
+                </h3>
+                <div className="space-y-3 text-sm">
+                  {ad.campaign?.location && (
+                    <div className="flex items-start gap-2.5">
+                      <MapPin className="h-4 w-4 text-text-muted mt-0.5 shrink-0" />
+                      <span className="text-text-primary">{ad.campaign.location}</span>
+                    </div>
+                  )}
+                  {(ad.campaign?.start_date || ad.campaign?.end_date) && (
+                    <div className="flex items-start gap-2.5">
+                      <Clock className="h-4 w-4 text-text-muted mt-0.5 shrink-0" />
+                      <span className="text-text-secondary">
+                        {ad.campaign?.start_date ? new Date(ad.campaign.start_date).toLocaleDateString() : '—'}
+                        {' – '}
+                        {ad.campaign?.end_date ? new Date(ad.campaign.end_date).toLocaleDateString() : '—'}
+                      </span>
+                    </div>
+                  )}
+                  {ad.campaign?.contact_phone && (
+                    <a href={`tel:${ad.campaign.contact_phone}`} className="flex items-center gap-2.5 text-primary-700 hover:text-primary-800 dark:text-secondary-400">
+                      <Phone className="h-4 w-4 shrink-0" />
+                      <span>{ad.campaign.contact_phone}</span>
+                    </a>
+                  )}
+                  {ad.campaign?.contact_email && (
+                    <a href={`mailto:${ad.campaign.contact_email}`} className="flex items-center gap-2.5 text-primary-700 hover:text-primary-800 dark:text-secondary-400">
+                      <Mail className="h-4 w-4 shrink-0" />
+                      <span className="truncate">{ad.campaign.contact_email}</span>
+                    </a>
+                  )}
+                  {ad.campaign?.contact_website && (
+                    <a
+                      href={ad.campaign.contact_website.startsWith('http') ? ad.campaign.contact_website : `https://${ad.campaign.contact_website}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center gap-2.5 text-primary-700 hover:text-primary-800 dark:text-secondary-400"
+                    >
+                      <Globe className="h-4 w-4 shrink-0" />
+                      <span className="truncate">{ad.campaign.contact_website.replace(/^https?:\/\//, '')}</span>
+                    </a>
+                  )}
+                  {!ad.campaign?.location &&
+                    !ad.campaign?.contact_phone &&
+                    !ad.campaign?.contact_email &&
+                    !ad.campaign?.contact_website && (
+                      <p className="text-text-muted">No contact details provided for this promotion.</p>
+                    )}
+                </div>
+                <button
+                  onClick={handleMessageCompany}
+                  className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-700"
+                >
+                  <MessageSquare className="h-4 w-4" /> Message company
+                </button>
               </Card>
             </div>
           </div>

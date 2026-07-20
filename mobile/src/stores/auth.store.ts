@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { User } from '@/types';
 import { setToken, setRefreshToken, getToken, clearAuth } from '@/lib/storage';
+import { disconnectSocket } from '@/lib/socket';
 
 interface AuthState {
   user: User | null;
@@ -30,6 +31,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
 
   logout: async () => {
+    disconnectSocket();
     await clearAuth();
     set({ user: null, token: null, isAuthenticated: false });
   },

@@ -38,6 +38,10 @@ function serializeCampaign(c: any) {
     budget_total: c.budget_total ?? 0,
     budget_spent: c.budget_spent ?? 0,
     reward_value: c.reward_value ?? 0,
+    location: c.location ?? '',
+    contact_phone: c.contact_phone ?? '',
+    contact_email: c.contact_email ?? '',
+    contact_website: c.contact_website ?? '',
     start_date: c.start_date,
     end_date: c.end_date,
     targeting_config: c.targeting_config ?? null,
@@ -119,6 +123,11 @@ function normalizeCampaignBody(body: any): any {
     'end_date',
     'language',
     'platform_ids',
+    // Per-campaign advertiser contact details shown on adverts.
+    'location',
+    'contact_phone',
+    'contact_email',
+    'contact_website',
   ]) {
     if (body[key] !== undefined) normalized[key] = body[key];
   }

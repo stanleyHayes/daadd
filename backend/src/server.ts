@@ -1,7 +1,11 @@
 import 'dotenv/config';
+import http from 'http';
 import mongoose from 'mongoose';
+import jwt from 'jsonwebtoken';
+import { Server } from 'socket.io';
 
 import app from './app';
+import { JWT_SECRET } from './middleware/auth';
 import { seedDatabase } from './seed';
 import { scanAllActiveCampaigns } from './services/anomaly-detection.service';
 
@@ -44,7 +48,47 @@ async function startServer(): Promise<void> {
       await seedDatabase();
     }
 
-    app.listen(PORT, () => {
+    // Share one HTTP server between Express and Socket.io (real-time chat).
+    const httpServer = http.createServer(app);
+
+    const trimmedOrigins = process.env.CORS_ORIGINS?.split(',')
+      .map((o) => o.trim())
+      .filter(Boolean);
+    const socketOrigins =
+      trimmedOrigins && trimmedOrigins.length
+        ? trimmedOrigins
+        : process.env.NODE_ENV === 'production'
+          ? false
+          : ['http://localhost:3000'];
+    const io = new Server(httpServer, {
+      cors: { origin: socketOrigins, credentials: true },
+    });
+    // Authenticate every socket with the same JWT as the REST API; reject
+    // missing / expired / refresh tokens. Each socket joins its personal room
+    // so message handlers can push to `user:<id>`.
+    io.use((socket, next) => {
+      const headerToken = (socket.handshake.headers.authorization || '').replace(/^Bearer /, '');
+      const token = (socket.handshake.auth?.token as string | undefined) || headerToken;
+      if (!token) return next(new Error('Unauthorized'));
+      try {
+        const decoded = jwt.verify(token, JWT_SECRET, { algorithms: ['HS256'] }) as {
+          userId?: string;
+          type?: string;
+        };
+        if (!decoded.userId || decoded.type === 'refresh') return next(new Error('Unauthorized'));
+        socket.data.userId = decoded.userId;
+        next();
+      } catch {
+        next(new Error('Unauthorized'));
+      }
+    });
+    io.on('connection', (socket) => {
+      socket.join(`user:${socket.data.userId}`);
+    });
+    // Message routes emit real-time events via req.app.get('io').
+    app.set('io', io);
+
+    httpServer.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
 

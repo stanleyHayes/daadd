@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "commonjs",
+    "module": "preserve",
     "lib": ["ES2022"],
     "outDir": "./dist",
     "rootDir": "./src",
@@ -19,7 +19,7 @@
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "types": ["node", "jest"]
   },
   "include": ["src/**/*"],

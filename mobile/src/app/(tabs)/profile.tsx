@@ -105,6 +105,13 @@ export default function ProfileScreen() {
       onPress: () => router.push('/notifications' as Href),
     },
     {
+      id: 'messages',
+      icon: 'chatbubbles-outline' as const,
+      label: t('mobile.profile.items.messages'),
+      color: colors.primary,
+      onPress: () => router.push('/chat' as Href),
+    },
+    {
       id: 'merchant-scan',
       icon: 'qr-code-outline' as const,
       label: t('mobile.profile.items.merchantScan'),

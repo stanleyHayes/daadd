@@ -69,6 +69,11 @@ export interface Campaign {
   reward_value: number;
   start_date: string;
   end_date: string;
+  // Per-campaign advertiser contact details shown on adverts.
+  location?: string;
+  contact_phone?: string;
+  contact_email?: string;
+  contact_website?: string;
   targeting_config: TargetingConfig | null;
   creatives: Creative[];
   ai_optimization_enabled: boolean;

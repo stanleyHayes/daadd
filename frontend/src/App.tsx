@@ -36,6 +36,7 @@ import { ContactPage } from '@/pages/public/ContactPage';
 import { PartnersPage } from '@/pages/public/PartnersPage';
 import { PartnerDetailPage } from '@/pages/public/PartnerDetailPage';
 import { NotFoundPage } from '@/pages/public/NotFoundPage';
+import { MessagesPage } from '@/pages/MessagesPage';
 
 // Dashboard Pages
 import { DashboardHome } from '@/pages/dashboard/DashboardHome';
@@ -101,6 +102,13 @@ function App() {
             <Route path="*" element={<NotFoundPage />} />
           </Route>
 
+          {/* Customer messaging — authed, inside the public shell */}
+          <Route element={<ProtectedRoute />}>
+            <Route element={<PublicLayout />}>
+              <Route path="/messages" element={<MessagesPage />} />
+            </Route>
+          </Route>
+
           {/* Auth Routes (no layout wrapper) */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
@@ -136,6 +144,7 @@ function App() {
               <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
                 <Route path="/dashboard/admin/advertisers" element={<AdminAdvertisersPage />} />
               </Route>
+              <Route path="/dashboard/messages" element={<MessagesPage />} />
               <Route path="/dashboard/profile" element={<ProfilePage />} />
               <Route path="/dashboard/settings" element={<SettingsPage />} />
               <Route path="*" element={<NotFoundPage />} />

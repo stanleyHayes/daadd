@@ -186,6 +186,7 @@
       "items": {
         "appearance": "Appearance",
         "notifications": "Notifications",
+        "messages": "Messages",
         "merchantScan": "Merchant: Scan Customer QR",
         "language": "Language",
         "privacy": "Privacy",
@@ -222,7 +223,17 @@
       "claimError": "Failed to claim reward. Please try again.",
       "ageVerifyError": "Invalid or expired verification code. Please try again.",
       "shareMessage": "Check out this ad on SmartDeals: {{title}} - Earn ${{amount}}!",
-      "advertiserFallback": "Advertiser"
+      "advertiserFallback": "Advertiser",
+      "businessTitle": "Business & contact",
+      "messageCompany": "Message company",
+      "noContact": "No contact details provided for this promotion."
+    },
+    "chat": {
+      "title": "Messages",
+      "emptyTitle": "No messages yet",
+      "emptyMessage": "Enquiries you send or receive show up here.",
+      "startPrompt": "Send a message to start the conversation.",
+      "inputPlaceholder": "Type a message…"
     },
     "ageGate": {
       "title": "Age Verification Required",

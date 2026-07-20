@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Share,
   Alert,
+  Linking,
 } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -18,7 +19,7 @@ import Animated, {
   withTiming,
   withDelay,
 } from 'react-native-reanimated';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, router, type Href } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -111,6 +112,23 @@ export default function AdDetailScreen() {
 
   const industry = getIndustryById(ad.industry);
 
+  // Per-campaign advertiser contact details (from the ad-detail endpoint).
+  const cLocation = ad.campaign?.location;
+  const cPhone = ad.campaign?.contact_phone;
+  const cEmail = ad.campaign?.contact_email;
+  const cWebsite = ad.campaign?.contact_website;
+  const cWebsiteUrl = cWebsite
+    ? cWebsite.startsWith('http')
+      ? cWebsite
+      : `https://${cWebsite}`
+    : undefined;
+  const cPromo =
+    ad.campaign?.start_date || ad.campaign?.end_date
+      ? `${ad.campaign?.start_date ? new Date(ad.campaign.start_date).toLocaleDateString() : '—'} – ${
+          ad.campaign?.end_date ? new Date(ad.campaign.end_date).toLocaleDateString() : '—'
+        }`
+      : null;
+
   const handleClaimReward = async (verified = ageVerified) => {
     if (ad.isAgeRestricted && !verified) {
       setAgeVerifyError(null);
@@ -174,6 +192,17 @@ export default function AdDetailScreen() {
     } catch {
       // Share cancelled
     }
+  };
+
+  const handleMessageCompany = () => {
+    if (!ad.advertiser?.id) return;
+    const query = [
+      `advertiserId=${encodeURIComponent(ad.advertiser.id)}`,
+      `advertiserName=${encodeURIComponent(ad.advertiser.name)}`,
+      `adId=${encodeURIComponent(ad.id)}`,
+      ...(ad.campaign?.id ? [`campaignId=${encodeURIComponent(ad.campaign.id)}`] : []),
+    ].join('&');
+    router.push(`/chat/new?${query}` as Href);
   };
 
   const renderStars = (rating: number) => {
@@ -458,6 +487,66 @@ export default function AdDetailScreen() {
           </View>
         </FadeIn>
 
+        {/* Business & contact + Message company */}
+        <FadeIn delay={150}>
+          <View style={{ paddingHorizontal: spacing.md, marginBottom: spacing.md }}>
+            <Card>
+              <Text style={[typography.headingSmall, { color: colors.text.primary, marginBottom: spacing.sm }]}>
+                {t('mobile.adDetail.businessTitle')}
+              </Text>
+              {!!cLocation && <ContactRow icon="location-outline" text={cLocation} colors={colors} />}
+              {!!cPromo && <ContactRow icon="calendar-outline" text={cPromo} colors={colors} />}
+              {!!cPhone && (
+                <ContactRow
+                  icon="call-outline"
+                  text={cPhone}
+                  colors={colors}
+                  onPress={() => Linking.openURL(`tel:${cPhone}`)}
+                />
+              )}
+              {!!cEmail && (
+                <ContactRow
+                  icon="mail-outline"
+                  text={cEmail}
+                  colors={colors}
+                  onPress={() => Linking.openURL(`mailto:${cEmail}`)}
+                />
+              )}
+              {!!cWebsiteUrl && (
+                <ContactRow
+                  icon="globe-outline"
+                  text={cWebsite!.replace(/^https?:\/\//, '')}
+                  colors={colors}
+                  onPress={() => Linking.openURL(cWebsiteUrl)}
+                />
+              )}
+              {!cLocation && !cPhone && !cEmail && !cWebsite && (
+                <Text style={[typography.bodySmall, { color: colors.text.tertiary }]}>
+                  {t('mobile.adDetail.noContact')}
+                </Text>
+              )}
+              <TouchableOpacity
+                onPress={handleMessageCompany}
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: spacing.sm,
+                  marginTop: spacing.md,
+                  paddingVertical: spacing.sm,
+                  borderRadius: borderRadius.md,
+                  backgroundColor: colors.primary,
+                }}
+              >
+                <Ionicons name="chatbubble-ellipses-outline" size={18} color="#FFF" />
+                <Text style={[typography.bodyMedium, { color: '#FFF', fontFamily: fontFamily.semibold }]}>
+                  {t('mobile.adDetail.messageCompany')}
+                </Text>
+              </TouchableOpacity>
+            </Card>
+          </View>
+        </FadeIn>
+
         {/* Share Button */}
         <FadeIn delay={200}>
           <View
@@ -691,5 +780,33 @@ export default function AdDetailScreen() {
         errorMessage={ageVerifyError}
       />
     </View>
+  );
+}
+
+function ContactRow({
+  icon,
+  text,
+  colors,
+  onPress,
+}: {
+  icon: keyof typeof Ionicons.glyphMap;
+  text: string;
+  colors: ReturnType<typeof useColors>;
+  onPress?: () => void;
+}) {
+  const Wrapper: any = onPress ? TouchableOpacity : View;
+  return (
+    <Wrapper
+      {...(onPress ? { onPress, activeOpacity: 0.7 } : {})}
+      style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm, paddingVertical: spacing.xs }}
+    >
+      <Ionicons name={icon} size={16} color={onPress ? colors.primary : colors.text.tertiary} />
+      <Text
+        numberOfLines={1}
+        style={[typography.bodyMedium, { color: onPress ? colors.primary : colors.text.secondary, flex: 1 }]}
+      >
+        {text}
+      </Text>
+    </Wrapper>
   );
 }

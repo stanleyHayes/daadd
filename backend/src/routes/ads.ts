@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { Types } from 'mongoose';
 import jwt from 'jsonwebtoken';
-import { Ad } from '../models';
+import { Ad, Campaign } from '../models';
 import { success, paginated } from '../utils/response';
 import { escapeRegExp } from '../utils/regex';
 import { JWT_SECRET, JwtPayload } from '../middleware/auth';
@@ -21,6 +21,10 @@ function optionalAuth(req: Request): JwtPayload | null {
 }
 
 function serializeAd(ad: any) {
+  // `campaign` is only attached (with its owner populated) on the detail route;
+  // list routes leave it undefined and fall back to the lightweight card.
+  const campaign = ad.campaign && typeof ad.campaign === 'object' ? ad.campaign : null;
+  const owner = campaign?.owner && typeof campaign.owner === 'object' ? campaign.owner : null;
   return {
     id: ad._id?.toString() || ad.id,
     title: ad.title,
@@ -28,9 +32,10 @@ function serializeAd(ad: any) {
     creativeUrl: ad.creative_url || ad.image_url || ad.media_url || '',
     creativeType: ad.creative_type || (ad.media_url ? 'video' : 'image'),
     advertiser: ad.advertiser || {
-      id: '',
-      name: ad.brand || ad.advertiser_name || 'Advertiser',
-      logo: '',
+      // owner id is the chat target ("Message company").
+      id: owner?._id ? String(owner._id) : '',
+      name: ad.brand || owner?.name || ad.advertiser_name || 'Advertiser',
+      logo: owner?.avatar_url || '',
       verified: true,
     },
     industry: ad.industry,
@@ -43,7 +48,19 @@ function serializeAd(ad: any) {
     reviewCount: ad.review_count ?? 0,
     viewCount: ad.view_count ?? 0,
     createdAt: ad.created_at || ad.createdAt,
-    campaign: ad.campaign,
+    // Promotion duration + per-campaign advertiser contact details.
+    campaign: campaign
+      ? {
+          id: String(campaign._id),
+          name: campaign.name,
+          start_date: campaign.start_date,
+          end_date: campaign.end_date,
+          location: campaign.location || '',
+          contact_phone: campaign.contact_phone || '',
+          contact_email: campaign.contact_email || '',
+          contact_website: campaign.contact_website || '',
+        }
+      : ad.campaign,
   };
 }
 
@@ -146,7 +163,12 @@ router.get('/:id', async (req: Request, res: Response) => {
       res.status(404).json({ success: false, message: 'Ad not found' });
       return;
     }
-    res.json(success(serializeAd(ad)));
+    // Join the campaign (promo dates + per-campaign contact details) and its
+    // owner (the advertiser — the chat target + name/logo) for the detail view.
+    const campaign = ad.campaign_id
+      ? await Campaign.findById(ad.campaign_id).populate('owner', 'name avatar_url').lean()
+      : null;
+    res.json(success(serializeAd({ ...ad, campaign })));
   } catch (err: any) {
     res.status(500).json({ success: false, message: err.message || 'Failed to fetch ad' });
   }
