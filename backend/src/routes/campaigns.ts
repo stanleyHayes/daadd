@@ -50,6 +50,9 @@ function serializeCampaign(c: any) {
     contact_phone: c.contact_phone ?? '',
     contact_email: c.contact_email ?? '',
     contact_website: c.contact_website ?? '',
+    business_logo: c.business_logo ?? '',
+    business_category: c.business_category ?? '',
+    opening_hours: c.opening_hours ?? '',
     start_date: c.start_date,
     end_date: c.end_date,
     targeting_config: c.targeting_config ?? null,
@@ -183,6 +186,9 @@ function normalizeCampaignBody(body: any): any {
     'contact_phone',
     'contact_email',
     'contact_website',
+    'business_logo',
+    'business_category',
+    'opening_hours',
   ]) {
     if (body[key] !== undefined) normalized[key] = body[key];
   }

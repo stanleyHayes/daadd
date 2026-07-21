@@ -21,6 +21,7 @@ import adminRoutes from './admin';
 import billingRoutes from './billing';
 import messageRoutes from './messages';
 import outletRoutes from './outlets';
+import supportRoutes from './support';
 
 const router = Router();
 
@@ -46,5 +47,6 @@ router.use('/admin', adminRoutes);
 router.use('/billing', billingRoutes);
 router.use('/messages', messageRoutes);
 router.use('/outlets', outletRoutes);
+router.use('/support', supportRoutes);
 
 export default router;

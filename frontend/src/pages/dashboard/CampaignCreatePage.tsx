@@ -32,6 +32,7 @@ export function CampaignCreatePage() {
     name: '', description: '', industry: '', start_date: '', end_date: '',
     budget: 0, reward_value: 0, discount_percentage: 15, age_min: 18, age_max: 65,
     location: '', contact_phone: '', contact_email: '', contact_website: '',
+    business_logo: '', business_category: '', opening_hours: '',
     consumer_share_pct: 5, max_tokens: 0,
     reward_per_view: 1, reward_per_click: 2, reward_per_review: 3, reward_per_photo: 2,
     regions: [] as string[], devices: ['desktop', 'mobile'] as string[], languages: ['en'] as string[],
@@ -181,6 +182,9 @@ export function CampaignCreatePage() {
                       <Input label="Contact Phone" type="tel" placeholder="+233 20 000 0000" value={formData.contact_phone} onChange={(e) => updateField('contact_phone', e.target.value)} />
                       <Input label="Contact Email" type="email" placeholder="hello@company.com" value={formData.contact_email} onChange={(e) => updateField('contact_email', e.target.value)} />
                       <Input label="Website" placeholder="company.com" value={formData.contact_website} onChange={(e) => updateField('contact_website', e.target.value)} />
+                      <Input label="Business category" placeholder="Coffee shop" value={formData.business_category} onChange={(e) => updateField('business_category', e.target.value)} />
+                      <Input label="Opening hours" placeholder="Mon–Sat 9am–7pm" value={formData.opening_hours} onChange={(e) => updateField('opening_hours', e.target.value)} />
+                      <Input label="Business logo URL" placeholder="https://…/logo.png" value={formData.business_logo} onChange={(e) => updateField('business_logo', e.target.value)} hint="Shown on your adverts; defaults to your profile avatar." />
                     </div>
                   </div>
                   <div>

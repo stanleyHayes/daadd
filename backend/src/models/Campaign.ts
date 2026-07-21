@@ -34,6 +34,9 @@ export interface ICampaign extends Document {
   contact_phone?: string;
   contact_email?: string;
   contact_website?: string;
+  business_logo?: string;
+  business_category?: string;
+  opening_hours?: string;
   currency: string;
   start_date: Date;
   end_date: Date;
@@ -80,6 +83,9 @@ const CampaignSchema = new Schema<ICampaign>(
     contact_phone: { type: String, default: '', trim: true },
     contact_email: { type: String, default: '', trim: true },
     contact_website: { type: String, default: '', trim: true },
+    business_logo: { type: String, default: '', trim: true },
+    business_category: { type: String, default: '', trim: true },
+    opening_hours: { type: String, default: '', trim: true },
     currency: { type: String, default: 'USD' },
     start_date: { type: Date, default: Date.now },
     end_date: { type: Date, default: Date.now },

@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { Types } from 'mongoose';
 import jwt from 'jsonwebtoken';
-import { Ad, Campaign } from '../models';
+import { Ad, Campaign, Outlet } from '../models';
 import { success, paginated } from '../utils/response';
 import { escapeRegExp } from '../utils/regex';
 import { tokensForInteraction, TOKEN_VALUE } from '../utils/reward-economics';
@@ -36,8 +36,13 @@ function serializeAd(ad: any) {
       // owner id is the chat target ("Message company").
       id: owner?._id ? String(owner._id) : '',
       name: ad.brand || owner?.name || ad.advertiser_name || 'Advertiser',
-      logo: owner?.avatar_url || '',
+      // A campaign-specific logo wins; otherwise fall back to the owner avatar.
+      logo: campaign?.business_logo || owner?.avatar_url || '',
+      category: campaign?.business_category || ad.industry || '',
+      opening_hours: campaign?.opening_hours || '',
       verified: true,
+      // Branches the customer can visit (V2 Area 10).
+      branches: Array.isArray(ad.branches) ? ad.branches : [],
     },
     industry: ad.industry,
     rewardAmount: ad.reward_amount ?? 0,
@@ -185,7 +190,30 @@ router.get('/:id', async (req: Request, res: Response) => {
     const campaign = ad.campaign_id
       ? await Campaign.findById(ad.campaign_id).populate('owner', 'name avatar_url').lean()
       : null;
-    res.json(success(serializeAd({ ...ad, campaign })));
+    // The advertiser's branches, so customers know where they can visit.
+    const ownerId = (campaign as any)?.owner?._id;
+    const branches = ownerId
+      ? await Outlet.find({ owner: ownerId, is_active: true })
+          .select('name address city phone opening_hours')
+          .sort({ name: 1 })
+          .lean()
+      : [];
+    res.json(
+      success(
+        serializeAd({
+          ...ad,
+          campaign,
+          branches: branches.map((b) => ({
+            id: String(b._id),
+            name: b.name,
+            address: b.address || '',
+            city: b.city || '',
+            phone: b.phone || '',
+            opening_hours: b.opening_hours || '',
+          })),
+        })
+      )
+    );
   } catch (err: any) {
     res.status(500).json({ success: false, message: err.message || 'Failed to fetch ad' });
   }

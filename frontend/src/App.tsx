@@ -33,6 +33,7 @@ import { PrivacyPage } from '@/pages/public/PrivacyPage';
 import { TermsPage } from '@/pages/public/TermsPage';
 import { CookiePolicyPage } from '@/pages/public/CookiePolicyPage';
 import { ContactPage } from '@/pages/public/ContactPage';
+import { SupportPage } from '@/pages/public/SupportPage';
 import { PartnersPage } from '@/pages/public/PartnersPage';
 import { PartnerDetailPage } from '@/pages/public/PartnerDetailPage';
 import { NotFoundPage } from '@/pages/public/NotFoundPage';
@@ -99,6 +100,7 @@ function App() {
             <Route path="/terms" element={<TermsPage />} />
             <Route path="/cookies" element={<CookiePolicyPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/support" element={<SupportPage />} />
             <Route path="/partners" element={<PartnersPage />} />
             <Route path="/partners/:slug" element={<PartnerDetailPage />} />
             <Route path="*" element={<NotFoundPage />} />

@@ -20,3 +20,4 @@ export { Conversation, IConversation } from './Conversation';
 export { Message, IMessage } from './Message';
 export { Outlet, IOutlet } from './Outlet';
 export { PlatformSetting, IPlatformSetting } from './PlatformSetting';
+export { SupportTicket, ISupportTicket, SupportCategory, SupportStatus } from './SupportTicket';

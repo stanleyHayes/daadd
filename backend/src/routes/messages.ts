@@ -40,6 +40,7 @@ function serializeMessage(m: any) {
     sender_id: String(m.sender_id),
     body: m.body,
     image_url: m.image_url || '',
+    read_at: m.read_at || null,
     created_at: m.created_at,
   };
 }
@@ -282,9 +283,26 @@ router.get('/conversations/:id', authMiddleware, async (req: Request, res: Respo
       .lean();
     const messages = found.reverse().map(serializeMessage);
 
-    // Mark read for the caller.
-    conversation.set(slot === 'customer' ? 'customer_last_read' : 'advertiser_last_read', new Date());
+    // Mark read for the caller...
+    const readAt = new Date();
+    conversation.set(slot === 'customer' ? 'customer_last_read' : 'advertiser_last_read', readAt);
     await conversation.save();
+
+    // ...and stamp per-message read receipts on the counterpart's messages so
+    // the SENDER can see exactly what has been read (V2 Area 11).
+    const marked = await Message.updateMany(
+      { conversation_id: convId, sender_id: { $ne: new Types.ObjectId(userId) }, read_at: null },
+      { $set: { read_at: readAt } }
+    );
+    if (marked.modifiedCount > 0) {
+      const io = req.app.get('io') as Server | undefined;
+      const senderId =
+        slot === 'customer' ? conversation.advertiser_id : conversation.customer_id;
+      io?.to(`user:${String(senderId)}`).emit('message:read', {
+        conversationId: String(conversation._id),
+        read_at: readAt,
+      });
+    }
 
     res.json(paginated(messages, total, pageNum, limitNum));
   } catch (err: any) {

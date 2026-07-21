@@ -284,7 +284,7 @@ export function TopBar() {
  description="Get help & resources"
  onClick={() => {
  setUserMenuOpen(false);
- navigate('/contact');
+ navigate('/support');
  }}
  />
  </div>
