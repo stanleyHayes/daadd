@@ -262,7 +262,10 @@
       "generateQR": "Generate QR",
       "generateError": "Failed to generate QR code. Please try again.",
       "tokensValue": "{{count}} tokens (${{amount}})",
-      "showToMerchant": "Show this to the merchant. Tokens are only deducted after merchant approval."
+      "showToMerchant": "Show this to the merchant. Tokens are only deducted after merchant approval.",
+      "selectOutlet": "Which branch are you at?",
+      "searchOutlet": "Search by branch, brand or city",
+      "purchaseAmountOptional": "Purchase amount (optional)"
     },
     "merchantScan": {
       "title": "Scan Customer QR",
@@ -292,7 +295,14 @@
       },
       "approvedTitle": "Redemption Approved",
       "approvedMessage": "{{tokens}} tokens (${{discount}}) deducted. Customer's new balance: ${{balance}}.",
-      "approveRedemption": "Approve Redemption"
+      "approveRedemption": "Approve Redemption",
+      "itemsTitle": "Items purchased (optional)",
+      "itemName": "Item",
+      "itemQty": "Qty",
+      "itemPrice": "Unit price",
+      "addItem": "Add item",
+      "itemsTotal": "Items total",
+      "receipt": "Receipt"
     },
     "notifications": {
       "title": "Notifications",

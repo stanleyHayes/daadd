@@ -1,7 +1,8 @@
 import { Router, Request, Response } from 'express';
 import { Types } from 'mongoose';
-import { Outlet } from '../models';
+import { Outlet, User } from '../models';
 import { authMiddleware } from '../middleware/auth';
+import { escapeRegExp } from '../utils/regex';
 import { success } from '../utils/response';
 
 const router = Router();
@@ -39,6 +40,40 @@ function normalizeOutletBody(body: any): Record<string, unknown> {
   }
   return normalized;
 }
+
+/**
+ * Public: search active outlets by name/city/address so a customer can pick
+ * the branch they are standing in before generating a redemption QR.
+ */
+router.get('/search', async (req: Request, res: Response) => {
+  try {
+    const { q } = req.query as Record<string, string | undefined>;
+    const filter: Record<string, any> = { is_active: true };
+    if (q && q.trim()) {
+      const rx = new RegExp(escapeRegExp(q.trim()), 'i');
+      filter.$or = [{ name: rx }, { city: rx }, { address: rx }];
+    }
+    const outlets = await Outlet.find(filter).sort({ name: 1 }).limit(50).lean();
+
+    // Attach the owning business name so the customer can recognise the brand.
+    const ownerIds = outlets.map((o) => o.owner);
+    const owners = ownerIds.length
+      ? await User.find({ _id: { $in: ownerIds } }).select('name').lean()
+      : [];
+    const ownerById = new Map(owners.map((u) => [String(u._id), u]));
+
+    res.json(
+      success(
+        outlets.map((o) => ({
+          ...serializeOutlet(o),
+          business: ownerById.get(String(o.owner))?.name || 'Merchant',
+        }))
+      )
+    );
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message || 'Failed to search outlets' });
+  }
+});
 
 /**
  * Public: active outlets for a given advertiser — used by the customer app to

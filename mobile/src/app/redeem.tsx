@@ -4,13 +4,16 @@ import {
   Text,
   ScrollView,
   TextInput,
+  TouchableOpacity,
 } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import { Ionicons } from '@expo/vector-icons';
 import { useRewardBalance } from '@/hooks/useRewards';
 import {
   useGenerateRedemptionQR,
+  useOutletSearch,
   RedemptionQR,
+  OutletOption,
   extractApiError,
 } from '@/hooks/useRedemption';
 import { Button } from '@/components/ui/Button';
@@ -34,6 +37,13 @@ export default function RedeemScreen() {
   const [activeQR, setActiveQR] = useState<RedemptionQR | null>(null);
   const [now, setNow] = useState(() => Date.now());
   const [error, setError] = useState<string | null>(null);
+
+  // Which branch the customer is standing in + their bill (both optional —
+  // the merchant confirms the amount at the till).
+  const [outletQuery, setOutletQuery] = useState('');
+  const [selectedOutlet, setSelectedOutlet] = useState<OutletOption | null>(null);
+  const [amountInput, setAmountInput] = useState('');
+  const { data: outletResults = [] } = useOutletSearch(outletQuery);
 
   const maxTokens = Math.floor((balance?.balance ?? 0) / TOKEN_VALUE);
 
@@ -65,7 +75,14 @@ export default function RedeemScreen() {
     if (!isValidTokens) return;
     setError(null);
     try {
-      const result = await generateQR.mutateAsync(parsedTokens);
+      const parsedAmount = parseFloat(amountInput);
+      const result = await generateQR.mutateAsync({
+        tokens: parsedTokens,
+        ...(selectedOutlet ? { outlet_id: selectedOutlet.id } : {}),
+        ...(!Number.isNaN(parsedAmount) && parsedAmount > 0
+          ? { purchase_amount: parsedAmount }
+          : {}),
+      });
       setActiveQR(result);
       setNow(Date.now());
     } catch (err) {
@@ -161,6 +178,126 @@ export default function RedeemScreen() {
               </View>
             </Card>
           )}
+
+          {/* Which branch are you in? */}
+          <Text
+            style={[
+              typography.labelMedium,
+              { color: colors.text.primary, marginBottom: spacing.xs },
+            ]}
+          >
+            {t('mobile.redeem.selectOutlet')}
+          </Text>
+          {selectedOutlet ? (
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: spacing.sm,
+                backgroundColor: colors.primary + '10',
+                borderRadius: borderRadius.md,
+                padding: spacing.md,
+                marginBottom: spacing.md,
+              }}
+            >
+              <Ionicons name="storefront-outline" size={20} color={colors.primary} />
+              <View style={{ flex: 1, minWidth: 0 }}>
+                <Text
+                  numberOfLines={1}
+                  style={[typography.bodyMedium, { color: colors.text.primary, fontFamily: fontFamily.semibold }]}
+                >
+                  {selectedOutlet.name}
+                </Text>
+                <Text numberOfLines={1} style={[typography.caption, { color: colors.text.secondary }]}>
+                  {selectedOutlet.business}
+                  {selectedOutlet.city ? ` · ${selectedOutlet.city}` : ''}
+                </Text>
+              </View>
+              <TouchableOpacity onPress={() => setSelectedOutlet(null)}>
+                <Ionicons name="close-circle" size={20} color={colors.text.tertiary} />
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <View style={{ marginBottom: spacing.md }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  backgroundColor: colors.surfaceSecondary,
+                  borderWidth: 1.5,
+                  borderColor: colors.border,
+                  borderRadius: borderRadius.md,
+                  paddingHorizontal: spacing.md,
+                }}
+              >
+                <Ionicons name="search" size={18} color={colors.text.secondary} style={{ marginRight: spacing.sm }} />
+                <TextInput
+                  value={outletQuery}
+                  onChangeText={setOutletQuery}
+                  placeholder={t('mobile.redeem.searchOutlet')}
+                  placeholderTextColor={colors.text.tertiary}
+                  style={[
+                    typography.bodyMedium,
+                    { flex: 1, color: colors.text.primary, paddingVertical: spacing.md },
+                  ]}
+                />
+              </View>
+              {outletResults.slice(0, 5).map((o) => (
+                <TouchableOpacity
+                  key={o.id}
+                  onPress={() => setSelectedOutlet(o)}
+                  style={{
+                    paddingVertical: spacing.sm,
+                    borderBottomWidth: 1,
+                    borderBottomColor: colors.borderLight,
+                  }}
+                >
+                  <Text numberOfLines={1} style={[typography.bodyMedium, { color: colors.text.primary }]}>
+                    {o.name}
+                  </Text>
+                  <Text numberOfLines={1} style={[typography.caption, { color: colors.text.secondary }]}>
+                    {o.business}
+                    {o.city ? ` · ${o.city}` : ''}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          )}
+
+          {/* Optional bill amount — the merchant confirms it at the till */}
+          <Text
+            style={[
+              typography.labelMedium,
+              { color: colors.text.primary, marginBottom: spacing.xs },
+            ]}
+          >
+            {t('mobile.redeem.purchaseAmountOptional')}
+          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              backgroundColor: colors.surfaceSecondary,
+              borderWidth: 1.5,
+              borderColor: colors.border,
+              borderRadius: borderRadius.md,
+              paddingHorizontal: spacing.md,
+              marginBottom: spacing.md,
+            }}
+          >
+            <Text style={[typography.bodyMedium, { color: colors.text.secondary, marginRight: spacing.xs }]}>$</Text>
+            <TextInput
+              value={amountInput}
+              onChangeText={(text) => setAmountInput(text.replace(/[^0-9.]/g, ''))}
+              placeholder="0.00"
+              placeholderTextColor={colors.text.tertiary}
+              keyboardType="decimal-pad"
+              style={[
+                typography.bodyMedium,
+                { flex: 1, color: colors.text.primary, paddingVertical: spacing.md },
+              ]}
+            />
+          </View>
 
           {/* Token Input */}
           <Text

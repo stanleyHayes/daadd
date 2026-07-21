@@ -58,6 +58,28 @@ export default function MerchantScanScreen() {
   const [amountInput, setAmountInput] = useState('');
   const [error, setError] = useState<string | null>(null);
 
+  // Itemised basket (optional). When the cashier itemises, the bill is derived
+  // from the lines unless they typed an explicit total.
+  const [items, setItems] = useState<{ name: string; quantity: number; unit_price: number }[]>([]);
+  const [itemName, setItemName] = useState('');
+  const [itemQty, setItemQty] = useState('1');
+  const [itemPrice, setItemPrice] = useState('');
+
+  const itemsTotal = items.reduce((n, it) => n + it.quantity * it.unit_price, 0);
+
+  const addItem = () => {
+    const price = parseFloat(itemPrice);
+    const qty = parseInt(itemQty, 10);
+    if (!itemName.trim() || Number.isNaN(price) || price < 0) return;
+    setItems((prev) => [
+      ...prev,
+      { name: itemName.trim(), quantity: Number.isNaN(qty) || qty < 1 ? 1 : qty, unit_price: price },
+    ]);
+    setItemName('');
+    setItemQty('1');
+    setItemPrice('');
+  };
+
   const reset = () => {
     processingRef.current = false;
     setStep('scan');
@@ -65,6 +87,10 @@ export default function MerchantScanScreen() {
     setValidateResult(null);
     setConfirmResult(null);
     setAmountInput('');
+    setItems([]);
+    setItemName('');
+    setItemQty('1');
+    setItemPrice('');
     setError(null);
   };
 
@@ -100,8 +126,10 @@ export default function MerchantScanScreen() {
   };
 
   const parsedAmount = parseFloat(amountInput);
-  const isValidAmount =
-    amountInput !== '' && !Number.isNaN(parsedAmount) && parsedAmount > 0;
+  const hasTypedAmount = amountInput !== '' && !Number.isNaN(parsedAmount) && parsedAmount > 0;
+  // A typed total wins; otherwise the itemised lines make up the bill.
+  const effectiveAmount = hasTypedAmount ? parsedAmount : itemsTotal;
+  const isValidAmount = effectiveAmount > 0;
 
   const handleValidate = async () => {
     if (!scanResult || !isValidAmount) return;
@@ -109,8 +137,9 @@ export default function MerchantScanScreen() {
     try {
       const result = await validateRedemption.mutateAsync({
         redemption_id: scanResult.redemption_id,
-        purchase_amount: parsedAmount,
+        purchase_amount: effectiveAmount,
         campaign_id: selectedCampaignId,
+        ...(items.length ? { items } : {}),
       });
       setValidateResult(result);
       setStep('summary');
@@ -411,6 +440,112 @@ export default function MerchantScanScreen() {
             />
           </View>
 
+          {/* Itemised basket (optional) */}
+          <Text
+            style={[
+              typography.labelMedium,
+              { color: colors.text.primary, marginBottom: spacing.xs },
+            ]}
+          >
+            {t('mobile.merchantScan.itemsTitle')}
+          </Text>
+          {items.map((line, i) => (
+            <View
+              key={`${line.name}-${i}`}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                paddingVertical: spacing.xs,
+                borderBottomWidth: 1,
+                borderBottomColor: colors.borderLight,
+              }}
+            >
+              <Text style={[typography.bodyMedium, { color: colors.text.primary, flex: 1 }]} numberOfLines={1}>
+                {line.quantity} × {line.name}
+              </Text>
+              <Text style={[typography.bodyMedium, { color: colors.text.secondary, marginRight: spacing.sm }]}>
+                ${(line.quantity * line.unit_price).toFixed(2)}
+              </Text>
+              <TouchableOpacity onPress={() => setItems((prev) => prev.filter((_, idx) => idx !== i))}>
+                <Ionicons name="close-circle-outline" size={18} color={colors.text.tertiary} />
+              </TouchableOpacity>
+            </View>
+          ))}
+
+          <View style={{ flexDirection: 'row', gap: spacing.xs, marginTop: spacing.sm, marginBottom: spacing.xs }}>
+            <TextInput
+              value={itemName}
+              onChangeText={setItemName}
+              placeholder={t('mobile.merchantScan.itemName')}
+              placeholderTextColor={colors.text.tertiary}
+              style={[
+                typography.bodyMedium,
+                {
+                  flex: 2,
+                  color: colors.text.primary,
+                  backgroundColor: colors.surfaceSecondary,
+                  borderRadius: borderRadius.md,
+                  paddingHorizontal: spacing.sm,
+                  paddingVertical: spacing.sm,
+                },
+              ]}
+            />
+            <TextInput
+              value={itemQty}
+              onChangeText={(x) => setItemQty(x.replace(/[^0-9]/g, ''))}
+              placeholder={t('mobile.merchantScan.itemQty')}
+              placeholderTextColor={colors.text.tertiary}
+              keyboardType="number-pad"
+              style={[
+                typography.bodyMedium,
+                {
+                  width: 56,
+                  textAlign: 'center',
+                  color: colors.text.primary,
+                  backgroundColor: colors.surfaceSecondary,
+                  borderRadius: borderRadius.md,
+                  paddingVertical: spacing.sm,
+                },
+              ]}
+            />
+            <TextInput
+              value={itemPrice}
+              onChangeText={(x) => setItemPrice(x.replace(/[^0-9.]/g, ''))}
+              placeholder={t('mobile.merchantScan.itemPrice')}
+              placeholderTextColor={colors.text.tertiary}
+              keyboardType="decimal-pad"
+              style={[
+                typography.bodyMedium,
+                {
+                  flex: 1,
+                  color: colors.text.primary,
+                  backgroundColor: colors.surfaceSecondary,
+                  borderRadius: borderRadius.md,
+                  paddingHorizontal: spacing.sm,
+                  paddingVertical: spacing.sm,
+                },
+              ]}
+            />
+            <TouchableOpacity
+              onPress={addItem}
+              style={{
+                width: 44,
+                borderRadius: borderRadius.md,
+                backgroundColor: colors.primary,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Ionicons name="add" size={20} color="#FFF" />
+            </TouchableOpacity>
+          </View>
+
+          {items.length > 0 && (
+            <Text style={[typography.bodySmall, { color: colors.text.secondary, marginBottom: spacing.md }]}>
+              {t('mobile.merchantScan.itemsTotal')}: ${itemsTotal.toFixed(2)}
+            </Text>
+          )}
+
           {error && (
             <Text
               style={[
@@ -483,6 +618,13 @@ export default function MerchantScanScreen() {
               colors={colors}
               bold
             />
+            {!!validateResult.receipt_no && (
+              <SummaryRow
+                label={t('mobile.merchantScan.receipt')}
+                value={validateResult.receipt_no}
+                colors={colors}
+              />
+            )}
           </Card>
 
           {error && (

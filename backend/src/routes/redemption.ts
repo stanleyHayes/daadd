@@ -109,9 +109,66 @@ router.get('/history', authMiddleware, async (req: Request, res: Response) => {
   }
 });
 
+/**
+ * Digital receipt for a redemption — readable by BOTH participants (the
+ * customer who redeemed and the merchant who served them), nobody else.
+ */
+router.get('/:id/receipt', authMiddleware, async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id as string;
+    if (!Types.ObjectId.isValid(id)) {
+      res.status(400).json({ success: false, message: 'Invalid redemption id' });
+      return;
+    }
+    const r = await Redemption.findById(id).lean();
+    if (!r) {
+      res.status(404).json({ success: false, message: 'Redemption not found' });
+      return;
+    }
+    const uid = req.user!.userId;
+    if (String(r.user_id) !== uid && String(r.merchant_id) !== uid) {
+      res.status(403).json({ success: false, message: 'Not a participant in this transaction' });
+      return;
+    }
+
+    const [customer, merchant, outlet, campaign] = await Promise.all([
+      User.findById(r.user_id).select('name').lean(),
+      r.merchant_id ? User.findById(r.merchant_id).select('name').lean() : null,
+      r.outlet_id ? Outlet.findById(r.outlet_id).select('name address city phone').lean() : null,
+      r.campaign_id ? Campaign.findById(r.campaign_id).select('name').lean() : null,
+    ]);
+
+    res.json(
+      success({
+        receipt_no: r.receipt_no || '',
+        status: r.status,
+        date: r.used_at || r.created_at,
+        customer_name: customer?.name || 'Customer',
+        merchant_name: merchant?.name || 'Merchant',
+        campaign: campaign?.name || '',
+        outlet: outlet
+          ? {
+              name: outlet.name,
+              address: outlet.address || '',
+              city: outlet.city || '',
+              phone: outlet.phone || '',
+            }
+          : null,
+        items: r.items || [],
+        purchase_amount: r.purchase_amount ?? 0,
+        discount_amount: r.discount_amount ?? 0,
+        final_amount: r.final_amount ?? 0,
+        tokens_used: Math.ceil((r.discount_amount || 0) / TOKEN_VALUE),
+      })
+    );
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message || 'Failed to fetch receipt' });
+  }
+});
+
 router.post('/qr', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const { tokens } = req.body;
+    const { tokens, outlet_id, purchase_amount } = req.body;
     if (!Number.isInteger(tokens) || tokens <= 0) {
       res.status(400).json({ success: false, message: 'Tokens must be a positive integer' });
       return;
@@ -128,6 +185,16 @@ router.post('/qr', authMiddleware, async (req: Request, res: Response) => {
       return;
     }
 
+    // Customer-declared context: which branch they're standing in and,
+    // optionally, their bill. Both are ADVISORY — the validating merchant
+    // confirms the amount and the outlet is re-checked against that merchant.
+    const outletId =
+      outlet_id && Types.ObjectId.isValid(String(outlet_id))
+        ? new Types.ObjectId(String(outlet_id))
+        : undefined;
+    const declaredAmount =
+      typeof purchase_amount === 'number' && purchase_amount > 0 ? round2(purchase_amount) : undefined;
+
     const nonce = crypto.randomUUID();
     const expiresAt = new Date(Date.now() + QR_EXPIRY_SECONDS * 1000);
     const redemption = await Redemption.create({
@@ -136,6 +203,8 @@ router.post('/qr', authMiddleware, async (req: Request, res: Response) => {
       nonce,
       status: 'pending',
       expires_at: expiresAt,
+      ...(outletId ? { outlet_id: outletId } : {}),
+      ...(declaredAmount !== undefined ? { purchase_amount: declaredAmount } : {}),
       // Campaign attribution is decided server-side at validate time from the
       // merchant's own campaign — never from a customer-supplied value.
     });
@@ -237,11 +306,31 @@ router.post('/scan', authMiddleware, requireMerchant, async (req: Request, res: 
 
 router.post('/validate', authMiddleware, requireMerchant, async (req: Request, res: Response) => {
   try {
-    const { redemption_id, purchase_amount, campaign_id } = req.body;
-    if (!redemption_id || typeof purchase_amount !== 'number' || purchase_amount <= 0) {
-      res
-        .status(400)
-        .json({ success: false, message: 'redemption_id and a positive purchase_amount are required' });
+    const { redemption_id, purchase_amount, campaign_id, items } = req.body;
+
+    // Sanitise the cashier's line items. When the merchant itemises the sale we
+    // can derive the bill from it, so an explicit total becomes optional.
+    const lineItems = Array.isArray(items)
+      ? items
+          .map((it: any) => ({
+            name: typeof it?.name === 'string' ? it.name.trim() : '',
+            quantity: Number(it?.quantity) > 0 ? Number(it.quantity) : 1,
+            unit_price: Number(it?.unit_price) >= 0 ? round2(Number(it.unit_price)) : 0,
+          }))
+          .filter((it: { name: string }) => !!it.name)
+          .slice(0, 100)
+      : [];
+    const itemsTotal = round2(
+      lineItems.reduce((n: number, it: any) => n + it.quantity * it.unit_price, 0)
+    );
+    const billAmount =
+      typeof purchase_amount === 'number' && purchase_amount > 0 ? purchase_amount : itemsTotal;
+
+    if (!redemption_id || !(billAmount > 0)) {
+      res.status(400).json({
+        success: false,
+        message: 'redemption_id and a positive purchase_amount (or itemised items) are required',
+      });
       return;
     }
 
@@ -299,11 +388,29 @@ router.post('/validate', authMiddleware, requireMerchant, async (req: Request, r
       }
     }
 
+    // The customer picked the branch at QR time; confirm it really belongs to
+    // this merchant, otherwise drop it rather than mis-attribute a location.
+    let outletId: Types.ObjectId | undefined;
+    if (redemption.outlet_id) {
+      const owned = await Outlet.findOne({
+        _id: redemption.outlet_id,
+        owner: req.user!.userId,
+      })
+        .select('_id')
+        .lean();
+      if (owned) outletId = owned._id as Types.ObjectId;
+    }
+
     const discount = round2(
-      Math.min(redemption.tokens * TOKEN_VALUE, purchase_amount * discountRate)
+      Math.min(redemption.tokens * TOKEN_VALUE, billAmount * discountRate)
     );
     const tokensUsed = Math.ceil(discount / TOKEN_VALUE);
-    const finalAmount = round2(purchase_amount - discount);
+    const finalAmount = round2(billAmount - discount);
+    const receiptNo = `SD-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}-${String(
+      redemption._id
+    )
+      .slice(-6)
+      .toUpperCase()}`;
 
     // Atomic transition: only one concurrent validate can move scanned → validated.
     const validated = await Redemption.findOneAndUpdate(
@@ -311,11 +418,16 @@ router.post('/validate', authMiddleware, requireMerchant, async (req: Request, r
       {
         $set: {
           status: 'validated',
-          purchase_amount,
+          purchase_amount: billAmount,
           discount_amount: discount,
           final_amount: finalAmount,
+          items: lineItems,
+          receipt_no: receiptNo,
           ...(campaignId ? { campaign_id: campaignId } : {}),
+          ...(outletId ? { outlet_id: outletId } : {}),
         },
+        // A branch the customer named but this merchant doesn't own is cleared.
+        ...(outletId ? {} : { $unset: { outlet_id: 1 } }),
       },
       { new: true }
     );
@@ -329,10 +441,12 @@ router.post('/validate', authMiddleware, requireMerchant, async (req: Request, r
     res.json(
       success({
         redemption_id: String(redemption._id),
-        purchase_amount: purchase_amount,
+        purchase_amount: billAmount,
         discount,
         final_amount: finalAmount,
         tokens_used: tokensUsed,
+        items: lineItems,
+        receipt_no: receiptNo,
         customer_name: customer?.name || 'Customer',
       })
     );
