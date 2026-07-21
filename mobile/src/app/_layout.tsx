@@ -126,6 +126,17 @@ function RootLayoutInner() {
           }}
         />
         <Stack.Screen
+          name="token-calculator"
+          options={{
+            headerShown: true,
+            headerTitle: t('mobile.tokenCalc.title'),
+            headerBackTitle: t('mobile.common.back'),
+            headerTintColor: colors.primary,
+            headerStyle: { backgroundColor: colors.surface },
+            headerShadowVisible: false,
+          }}
+        />
+        <Stack.Screen
           name="purchases"
           options={{
             headerShown: true,

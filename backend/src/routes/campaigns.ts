@@ -38,6 +38,14 @@ function serializeCampaign(c: any) {
     budget_total: c.budget_total ?? 0,
     budget_spent: c.budget_spent ?? 0,
     reward_value: c.reward_value ?? 0,
+    consumer_share_pct: c.consumer_share_pct ?? 0,
+    max_tokens: c.max_tokens ?? 0,
+    tokens_issued: c.tokens_issued ?? 0,
+    tokens_remaining: c.max_tokens > 0 ? Math.max(0, (c.max_tokens || 0) - (c.tokens_issued || 0)) : null,
+    reward_per_view: c.reward_per_view ?? 0,
+    reward_per_click: c.reward_per_click ?? 0,
+    reward_per_review: c.reward_per_review ?? 0,
+    reward_per_photo: c.reward_per_photo ?? 0,
     location: c.location ?? '',
     contact_phone: c.contact_phone ?? '',
     contact_email: c.contact_email ?? '',
@@ -55,6 +63,53 @@ function serializeCampaign(c: any) {
     updated_at: c.updated_at,
   };
 }
+
+/**
+ * Top up a campaign's advertising budget and/or reward-token pool (Area 7).
+ * Clears the low-budget warning flag so the advertiser is alerted again next
+ * time, and can optionally resume a campaign that auto-paused when exhausted.
+ */
+router.post('/:id/top-up', authMiddleware, async (req: Request, res: Response) => {
+  try {
+    const campaign = await findManageableCampaign(req.params.id as string, req.user!);
+    if (!campaign) {
+      res.status(404).json({ success: false, message: 'Campaign not found' });
+      return;
+    }
+
+    const addBudget = Math.max(0, Number(req.body?.budget) || 0);
+    const addTokens = Math.max(0, Math.floor(Number(req.body?.tokens) || 0));
+    if (addBudget <= 0 && addTokens <= 0) {
+      res
+        .status(400)
+        .json({ success: false, message: 'Provide a positive budget and/or tokens to add' });
+      return;
+    }
+
+    const update: Record<string, any> = {
+      $inc: {
+        ...(addBudget > 0 ? { budget_total: addBudget } : {}),
+        ...(addTokens > 0 ? { max_tokens: addTokens } : {}),
+      },
+      $set: { budget_alert_sent: false },
+    };
+
+    // Resuming counts as "running ads", so it must pass the advertiser gate.
+    if (req.body?.resume === true && campaign.status === 'paused') {
+      const blocked = await runAdsBlockReason(req.user!.userId);
+      if (blocked) {
+        res.status(403).json({ success: false, message: blocked });
+        return;
+      }
+      update.$set.status = 'active';
+    }
+
+    const updated = await Campaign.findByIdAndUpdate(campaign._id, update, { new: true });
+    res.json(success(serializeCampaign(updated), 'Campaign topped up'));
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message || 'Failed to top up campaign' });
+  }
+});
 
 function toObjectId(id: string | string[]): Types.ObjectId | null {
   if (typeof id !== 'string') return null;
@@ -136,6 +191,25 @@ function normalizeCampaignBody(body: any): any {
   if (body.discount_percentage !== undefined) {
     const pct = Number(body.discount_percentage);
     if (!Number.isNaN(pct)) normalized.discount_percentage = Math.min(100, Math.max(0, pct));
+  }
+  // Share of that discount passed to consumers as tokens (0–100%).
+  if (body.consumer_share_pct !== undefined) {
+    const pct = Number(body.consumer_share_pct);
+    if (!Number.isNaN(pct)) normalized.consumer_share_pct = Math.min(100, Math.max(0, pct));
+  }
+  // Reward pool + per-interaction grants (whole tokens, never negative).
+  // `tokens_issued` is deliberately NOT writable — only the claim path moves it.
+  for (const key of [
+    'max_tokens',
+    'reward_per_view',
+    'reward_per_click',
+    'reward_per_review',
+    'reward_per_photo',
+  ]) {
+    if (body[key] !== undefined) {
+      const n = Number(body[key]);
+      if (!Number.isNaN(n)) normalized[key] = Math.max(0, Math.floor(n));
+    }
   }
 
   if (body.status !== undefined && CAMPAIGN_STATUSES.includes(body.status)) {

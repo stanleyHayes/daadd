@@ -15,6 +15,20 @@ export interface ICampaign extends Document {
   // for this campaign (0–100). Drives the discount applied at redemption instead
   // of a fixed price — see routes/redemption.ts.
   discount_percentage: number;
+  // --- Reward economics (V2 Area 5) ---
+  // Share of `discount_percentage` passed to consumers as reward tokens.
+  // e.g. a 20% promo with a 5% consumer share -> customers earn tokens worth 5%.
+  consumer_share_pct: number;
+  // Campaign token cap (0 = uncapped) and the running total issued so far.
+  max_tokens: number;
+  tokens_issued: number;
+  // Tokens granted per interaction; 0 falls back to the ad's legacy reward.
+  reward_per_view: number;
+  reward_per_click: number;
+  reward_per_review: number;
+  reward_per_photo: number;
+  // Set once we've warned the advertiser that the pool is nearly exhausted.
+  budget_alert_sent: boolean;
   // Advertiser contact details shown on this campaign's adverts (per-campaign).
   location?: string;
   contact_phone?: string;
@@ -54,6 +68,14 @@ const CampaignSchema = new Schema<ICampaign>(
     budget_spent: { type: Number, default: 0, min: 0 },
     reward_value: { type: Number, default: 0, min: 0 },
     discount_percentage: { type: Number, default: 15, min: 0, max: 100 },
+    consumer_share_pct: { type: Number, default: 0, min: 0, max: 100 },
+    max_tokens: { type: Number, default: 0, min: 0 },
+    tokens_issued: { type: Number, default: 0, min: 0 },
+    reward_per_view: { type: Number, default: 0, min: 0 },
+    reward_per_click: { type: Number, default: 0, min: 0 },
+    reward_per_review: { type: Number, default: 0, min: 0 },
+    reward_per_photo: { type: Number, default: 0, min: 0 },
+    budget_alert_sent: { type: Boolean, default: false },
     location: { type: String, default: '', trim: true },
     contact_phone: { type: String, default: '', trim: true },
     contact_email: { type: String, default: '', trim: true },

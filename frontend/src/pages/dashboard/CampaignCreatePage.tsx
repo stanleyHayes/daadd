@@ -32,6 +32,8 @@ export function CampaignCreatePage() {
     name: '', description: '', industry: '', start_date: '', end_date: '',
     budget: 0, reward_value: 0, discount_percentage: 15, age_min: 18, age_max: 65,
     location: '', contact_phone: '', contact_email: '', contact_website: '',
+    consumer_share_pct: 5, max_tokens: 0,
+    reward_per_view: 1, reward_per_click: 2, reward_per_review: 3, reward_per_photo: 2,
     regions: [] as string[], devices: ['desktop', 'mobile'] as string[], languages: ['en'] as string[],
     localized: false, creatives: [] as { name: string; type: string; size: number; preview?: string }[],
     age_restricted: false, ai_enabled: true,
@@ -156,6 +158,20 @@ export function CampaignCreatePage() {
                     <Input label="Budget ($)" type="number" placeholder="5000" value={formData.budget || ''} onChange={(e) => updateField('budget', Number(e.target.value))} />
                     <Input label="Reward Value ($)" type="number" placeholder="0.50" value={formData.reward_value || ''} onChange={(e) => updateField('reward_value', Number(e.target.value))} />
                     <Input label="Discount Shared (%)" type="number" placeholder="15" value={formData.discount_percentage || ''} onChange={(e) => updateField('discount_percentage', Math.min(100, Math.max(0, Number(e.target.value))))} hint="Percent of a customer's purchase shared back as their discount at redemption." />
+                  </div>
+                  <div className="pt-2">
+                    <p className="text-sm font-semibold text-text-primary mb-1">Reward economics</p>
+                    <p className="text-xs text-text-secondary mb-3">
+                      How much of your discount is shared with consumers as tokens, and how many tokens each interaction earns. The campaign pauses automatically once the token pool is spent.
+                    </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <Input label="Shared with consumers (%)" type="number" placeholder="5" value={formData.consumer_share_pct || ''} onChange={(e) => updateField('consumer_share_pct', Math.min(100, Math.max(0, Number(e.target.value))))} hint="Portion of the discount handed back as reward tokens." />
+                      <Input label="Max tokens (0 = uncapped)" type="number" placeholder="0" value={formData.max_tokens || ''} onChange={(e) => updateField('max_tokens', Math.max(0, Number(e.target.value)))} hint="Total reward tokens this campaign may issue." />
+                      <Input label="Tokens per view" type="number" placeholder="1" value={formData.reward_per_view || ''} onChange={(e) => updateField('reward_per_view', Math.max(0, Number(e.target.value)))} />
+                      <Input label="Tokens per click" type="number" placeholder="2" value={formData.reward_per_click || ''} onChange={(e) => updateField('reward_per_click', Math.max(0, Number(e.target.value)))} />
+                      <Input label="Tokens per review" type="number" placeholder="3" value={formData.reward_per_review || ''} onChange={(e) => updateField('reward_per_review', Math.max(0, Number(e.target.value)))} />
+                      <Input label="Tokens per photo" type="number" placeholder="2" value={formData.reward_per_photo || ''} onChange={(e) => updateField('reward_per_photo', Math.max(0, Number(e.target.value)))} />
+                    </div>
                   </div>
                   <div className="pt-2">
                     <p className="text-sm font-semibold text-text-primary mb-1">Business & contact</p>

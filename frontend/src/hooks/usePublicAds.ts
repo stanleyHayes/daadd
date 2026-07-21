@@ -19,6 +19,17 @@ interface PublicAd {
   reviewCount: number;
   viewCount: number;
   createdAt: string;
+  // What this campaign pays per interaction (V2 Area 12).
+  rewards?: {
+    token_value: number;
+    per_view: number;
+    per_click: number;
+    per_review: number;
+    per_photo: number;
+    max_tokens: number;
+    tokens_issued: number;
+    tokens_remaining: number | null;
+  } | null;
   campaign?: {
     id: string;
     name: string;

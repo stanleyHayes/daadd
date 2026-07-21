@@ -487,6 +487,45 @@ export default function AdDetailScreen() {
           </View>
         </FadeIn>
 
+        {/* What you can earn from this campaign (Area 12) */}
+        {!!ad.rewards && (
+          <FadeIn delay={130}>
+            <View style={{ paddingHorizontal: spacing.md, marginBottom: spacing.md }}>
+              <Card>
+                <Text style={[typography.headingSmall, { color: colors.text.primary, marginBottom: spacing.sm }]}>
+                  {t('mobile.adDetail.rewardsTitle')}
+                </Text>
+                {[
+                  { label: t('mobile.tokenCalc.perView'), value: ad.rewards.per_view },
+                  { label: t('mobile.tokenCalc.perClick'), value: ad.rewards.per_click },
+                  { label: t('mobile.tokenCalc.perReview'), value: ad.rewards.per_review },
+                  { label: t('mobile.tokenCalc.perPhoto'), value: ad.rewards.per_photo },
+                ]
+                  .filter((row) => row.value > 0)
+                  .map((row) => (
+                    <View
+                      key={row.label}
+                      style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: spacing.xs }}
+                    >
+                      <Text style={[typography.bodyMedium, { color: colors.text.secondary }]}>{row.label}</Text>
+                      <Text style={[typography.bodyMedium, { color: colors.accent, fontFamily: fontFamily.semibold }]}>
+                        +{row.value} {t('mobile.tokenCalc.tokens')}
+                      </Text>
+                    </View>
+                  ))}
+                {ad.rewards.max_tokens > 0 && (
+                  <Text style={[typography.caption, { color: colors.text.tertiary, marginTop: spacing.xs }]}>
+                    {t('mobile.adDetail.rewardPool', {
+                      remaining: ad.rewards.tokens_remaining ?? 0,
+                      total: ad.rewards.max_tokens,
+                    })}
+                  </Text>
+                )}
+              </Card>
+            </View>
+          </FadeIn>
+        )}
+
         {/* Business & contact + Message company */}
         <FadeIn delay={150}>
           <View style={{ paddingHorizontal: spacing.md, marginBottom: spacing.md }}>

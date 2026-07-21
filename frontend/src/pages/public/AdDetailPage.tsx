@@ -252,6 +252,39 @@ export function AdDetailPage() {
                 </div>
               </Card>
 
+              {/* What the consumer can earn from this campaign (Area 12) */}
+              {ad.rewards && (
+                <Card className="border-border-color">
+                  <h3 className="text-sm font-semibold text-text-primary mb-4 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-secondary-500" />
+                    What You Can Earn
+                  </h3>
+                  <div className="space-y-2 text-sm">
+                    {[
+                      { label: 'Per view', value: ad.rewards.per_view },
+                      { label: 'Per click', value: ad.rewards.per_click },
+                      { label: 'Per review', value: ad.rewards.per_review },
+                      { label: 'Per photo', value: ad.rewards.per_photo },
+                    ]
+                      .filter((row) => row.value > 0)
+                      .map((row) => (
+                        <div key={row.label} className="flex justify-between py-1.5 border-b border-border-color last:border-0">
+                          <span className="text-text-secondary">{row.label}</span>
+                          <span className="font-semibold text-secondary-600">+{row.value} tokens</span>
+                        </div>
+                      ))}
+                  </div>
+                  {ad.rewards.max_tokens > 0 && (
+                    <p className="mt-3 text-xs text-text-muted">
+                      {ad.rewards.tokens_remaining ?? 0} of {ad.rewards.max_tokens} campaign tokens remaining
+                    </p>
+                  )}
+                  <p className="mt-1 text-xs text-text-muted">
+                    1 token ≈ ${ad.rewards.token_value.toFixed(2)}
+                  </p>
+                </Card>
+              )}
+
               {/* Business & contact (per-campaign) + message the company */}
               <Card className="border-border-color">
                 <h3 className="text-sm font-semibold text-text-primary mb-4 flex items-center gap-2">

@@ -192,7 +192,8 @@
         "language": "Language",
         "privacy": "Privacy",
         "help": "Help & Support",
-        "about": "About SmartDeals"
+        "about": "About SmartDeals",
+        "tokenCalculator": "Token Calculator"
       },
       "theme": {
         "light": "Light",
@@ -227,7 +228,9 @@
       "advertiserFallback": "Advertiser",
       "businessTitle": "Business & contact",
       "messageCompany": "Message company",
-      "noContact": "No contact details provided for this promotion."
+      "noContact": "No contact details provided for this promotion.",
+      "rewardsTitle": "What you can earn",
+      "rewardPool": "{{remaining}} of {{total}} campaign tokens remaining"
     },
     "chat": {
       "title": "Messages",
@@ -446,6 +449,21 @@
         "clicksConversions": "{{clicks}} clicks · {{conversions}} conversions",
         "conversions": "{{count}} conversions"
       }
+    },
+    "tokenCalc": {
+      "title": "Token Calculator",
+      "tokenValue": "Current token value",
+      "token": "token",
+      "tokens": "tokens",
+      "tokensEach": "tokens each",
+      "yourTokens": "Your tokens",
+      "estimateTitle": "Estimate your earnings",
+      "perView": "Ads viewed",
+      "perClick": "Ads clicked",
+      "perReview": "Reviews written",
+      "perPhoto": "Photos uploaded",
+      "estimatedTotal": "Estimated total",
+      "disclaimer": "Estimates use the average rate across live campaigns. Each campaign sets its own rewards."
     }
   }
 }

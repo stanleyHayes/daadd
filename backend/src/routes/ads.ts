@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import { Ad, Campaign } from '../models';
 import { success, paginated } from '../utils/response';
 import { escapeRegExp } from '../utils/regex';
+import { tokensForInteraction, TOKEN_VALUE } from '../utils/reward-economics';
 import { JWT_SECRET, JwtPayload } from '../middleware/auth';
 import { fatigueService } from '../services/fatigue.service';
 
@@ -48,6 +49,22 @@ function serializeAd(ad: any) {
     reviewCount: ad.review_count ?? 0,
     viewCount: ad.view_count ?? 0,
     createdAt: ad.created_at || ad.createdAt,
+    // What the consumer can earn from this campaign before engaging (Area 12).
+    rewards: campaign
+      ? {
+          token_value: TOKEN_VALUE,
+          per_view: tokensForInteraction(campaign, 'view', ad.reward_amount || 0),
+          per_click: tokensForInteraction(campaign, 'click'),
+          per_review: tokensForInteraction(campaign, 'review'),
+          per_photo: tokensForInteraction(campaign, 'photo'),
+          max_tokens: campaign.max_tokens || 0,
+          tokens_issued: campaign.tokens_issued || 0,
+          tokens_remaining:
+            campaign.max_tokens > 0
+              ? Math.max(0, (campaign.max_tokens || 0) - (campaign.tokens_issued || 0))
+              : null,
+        }
+      : null,
     // Promotion duration + per-campaign advertiser contact details.
     campaign: campaign
       ? {
