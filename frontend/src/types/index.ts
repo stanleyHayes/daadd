@@ -1,5 +1,5 @@
 // ---- User & Auth ----
-export type UserRole = 'admin' | 'advertiser' | 'campaign_manager' | 'analyst' | 'end_user';
+export type UserRole = 'admin' | 'advertiser' | 'campaign_manager' | 'analyst' | 'end_user' | 'merchant';
 
 export type AdvertiserApproval = 'pending' | 'approved' | 'rejected';
 
@@ -111,9 +111,43 @@ export interface DashboardMetrics {
   // Real money metrics from attributed redemptions (recs #1 & #2).
   revenue?: number;
   purchases?: number;
+  customersAcquired?: number;
   discountUsed?: number;
+  discountsIssued?: number;
   profit?: number;
+  roas?: number;
+  roi?: number;
+  budgetTotal?: number;
+  budgetRemaining?: number;
   discountPercentage?: number;
+}
+
+/** Merchant performance dashboard (GET /analytics/merchant). */
+export interface MerchantMetrics {
+  visits: number;
+  redemptions: number;
+  customers: number;
+  revenue: number;
+  discountsGiven: number;
+  discountsRedeemed: number;
+  avgCustomerSpend: number;
+  avgDiscountPerCustomer: number;
+  repeatCustomerRate: number;
+  satisfaction: number;
+  reviewCount: number;
+}
+
+/** A branch/outlet belonging to an advertiser. */
+export interface Outlet {
+  id: string;
+  owner: string;
+  name: string;
+  address: string;
+  city: string;
+  phone: string;
+  opening_hours: string;
+  is_active: boolean;
+  created_at: string;
 }
 
 export interface TimeSeriesPoint {

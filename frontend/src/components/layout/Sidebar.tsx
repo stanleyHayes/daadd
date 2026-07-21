@@ -17,6 +17,8 @@ import {
   BookOpen,
   Users,
   MessageSquare,
+  Store,
+  MapPin,
   Settings,
   User,
   Plug,
@@ -67,6 +69,8 @@ const allNavGroups: NavGroup[] = [
     title: 'Workspace',
     items: [
       { key: 'messages', href: '/dashboard/messages', label: 'Messages', icon: MessageSquare },
+      { key: 'merchant', href: '/dashboard/merchant', label: 'Merchant Performance', icon: Store },
+      { key: 'outlets', href: '/dashboard/outlets', label: 'Outlets', icon: MapPin },
       { key: 'team', href: '/dashboard/team', label: 'Team', icon: Users },
       { key: 'platform-accounts', href: '/dashboard/platform-accounts', label: 'Ad Accounts', icon: Plug },
       { key: 'profile', href: '/dashboard/profile', label: 'My Profile', icon: User },

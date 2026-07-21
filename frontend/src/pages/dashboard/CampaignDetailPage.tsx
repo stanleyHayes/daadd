@@ -159,6 +159,17 @@ export function CampaignDetailPage() {
             </div>
           )}
 
+          {/* Campaign financial performance: acquisition, discount exposure and return */}
+          {metrics && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+              <MetricsCard icon={<Users className="h-5 w-5" />} label="Customers Acquired" value={formatNumber(metrics.customersAcquired || 0)} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
+              <MetricsCard icon={<Ticket className="h-5 w-5" />} label="Discounts Issued" value={formatCurrency(metrics.discountsIssued || 0)} iconColor="text-secondary-600" iconBg="bg-secondary-50 dark:bg-secondary-900/30" />
+              <MetricsCard icon={<Wallet className="h-5 w-5" />} label="Budget Remaining" value={formatCurrency(metrics.budgetRemaining || 0)} iconColor="text-emerald-600" iconBg="bg-emerald-50 dark:bg-emerald-900/30" />
+              <MetricsCard icon={<TrendingUp className="h-5 w-5" />} label="ROAS" value={`${(metrics.roas || 0).toFixed(2)}x`} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
+              <MetricsCard icon={<PiggyBank className="h-5 w-5" />} label="ROI" value={formatPercentage(metrics.roi || 0)} iconColor="text-warning-600" iconBg="bg-warning-50 dark:bg-warning-900/30" />
+            </div>
+          )}
+
           {!metrics && (
             <Card>
               <EmptyState

@@ -55,6 +55,8 @@ import { ProfilePage } from '@/pages/dashboard/ProfilePage';
 import { SettingsPage } from '@/pages/dashboard/SettingsPage';
 import { PlatformAccountsPage } from '@/pages/dashboard/PlatformAccountsPage';
 import { AdminAdvertisersPage } from '@/pages/dashboard/AdminAdvertisersPage';
+import { MerchantDashboardPage } from '@/pages/dashboard/MerchantDashboardPage';
+import { OutletsPage } from '@/pages/dashboard/OutletsPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -145,6 +147,10 @@ function App() {
                 <Route path="/dashboard/admin/advertisers" element={<AdminAdvertisersPage />} />
               </Route>
               <Route path="/dashboard/messages" element={<MessagesPage />} />
+              <Route element={<ProtectedRoute allowedRoles={['admin', 'advertiser', 'merchant']} />}>
+                <Route path="/dashboard/merchant" element={<MerchantDashboardPage />} />
+                <Route path="/dashboard/outlets" element={<OutletsPage />} />
+              </Route>
               <Route path="/dashboard/profile" element={<ProfilePage />} />
               <Route path="/dashboard/settings" element={<SettingsPage />} />
               <Route path="*" element={<NotFoundPage />} />

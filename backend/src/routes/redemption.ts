@@ -1,9 +1,9 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import crypto from 'crypto';
 import { Types } from 'mongoose';
-import { Redemption, Reward, User, Notification, Campaign } from '../models';
+import { Redemption, Reward, User, Notification, Campaign, Outlet } from '../models';
 import { authMiddleware, JWT_SECRET } from '../middleware/auth';
-import { success } from '../utils/response';
+import { success, paginated } from '../utils/response';
 
 const router = Router();
 
@@ -48,6 +48,66 @@ async function getSpendableBalance(userId: string): Promise<number> {
   ]);
   return result[0]?.balance || 0;
 }
+
+/**
+ * The signed-in customer's purchase history (Area 3): where they shopped, what
+ * they spent, the discount received, tokens redeemed and the items bought.
+ * `user_id` is a Mixed field historically written as a string — match both.
+ */
+router.get('/history', authMiddleware, async (req: Request, res: Response) => {
+  try {
+    const userId = req.user!.userId;
+    const { page = '1', limit = '20' } = req.query as Record<string, string | undefined>;
+    const pageNum = Math.max(1, parseInt(page || '1', 10));
+    const limitNum = Math.max(1, Math.min(100, parseInt(limit || '20', 10)));
+
+    const filter: Record<string, any> = {
+      user_id: { $in: [userId, new Types.ObjectId(userId)] },
+      status: 'completed',
+    };
+    const total = await Redemption.countDocuments(filter);
+    const rows = await Redemption.find(filter)
+      .sort({ used_at: -1, created_at: -1 })
+      .skip((pageNum - 1) * limitNum)
+      .limit(limitNum)
+      .lean();
+
+    // Resolve merchant / outlet / campaign labels in one query each.
+    // `.filter(Boolean)` doesn't narrow away `undefined` in TS — cast for the $in.
+    const merchantIds = rows.map((r) => r.merchant_id).filter(Boolean) as any[];
+    const outletIds = rows.map((r) => r.outlet_id).filter(Boolean) as any[];
+    const campaignIds = rows.map((r) => r.campaign_id).filter(Boolean) as any[];
+    const [merchants, outlets, campaigns] = await Promise.all([
+      merchantIds.length ? User.find({ _id: { $in: merchantIds } }).select('name').lean() : [],
+      outletIds.length ? Outlet.find({ _id: { $in: outletIds } }).select('name city address').lean() : [],
+      campaignIds.length ? Campaign.find({ _id: { $in: campaignIds } }).select('name').lean() : [],
+    ]);
+    const merchantById = new Map(merchants.map((m) => [String(m._id), m]));
+    const outletById = new Map(outlets.map((o) => [String(o._id), o]));
+    const campaignById = new Map(campaigns.map((c) => [String(c._id), c]));
+
+    const history = rows.map((r) => {
+      const outlet = r.outlet_id ? outletById.get(String(r.outlet_id)) : undefined;
+      return {
+        id: String(r._id),
+        merchant: merchantById.get(String(r.merchant_id))?.name || 'Merchant',
+        campaign: campaignById.get(String(r.campaign_id))?.name || '',
+        outlet: outlet ? { name: outlet.name, city: outlet.city || '', address: outlet.address || '' } : null,
+        purchase_amount: r.purchase_amount ?? 0,
+        discount_amount: r.discount_amount ?? 0,
+        final_amount: r.final_amount ?? 0,
+        tokens: r.tokens,
+        items: r.items || [],
+        receipt_no: r.receipt_no || '',
+        date: r.used_at || r.created_at,
+      };
+    });
+
+    res.json(paginated(history, total, pageNum, limitNum));
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message || 'Failed to fetch purchase history' });
+  }
+});
 
 router.post('/qr', authMiddleware, async (req: Request, res: Response) => {
   try {

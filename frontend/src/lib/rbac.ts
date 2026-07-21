@@ -2,10 +2,12 @@ import type { UserRole } from '@/types';
 
 // Define which sidebar nav keys each role can see
 export const ROLE_NAV_ITEMS: Record<UserRole, string[]> = {
-  admin: ['dashboard', 'campaigns', 'analytics', 'heatmaps', 'ai-optimization', 'anomalies', 'benchmarking', 'storyteller', 'team', 'platform-accounts', 'admin-advertisers', 'messages', 'profile', 'settings'],
-  advertiser: ['dashboard', 'campaigns', 'analytics', 'heatmaps', 'ai-optimization', 'anomalies', 'benchmarking', 'storyteller', 'team', 'platform-accounts', 'messages', 'profile', 'settings'],
+  admin: ['dashboard', 'campaigns', 'analytics', 'heatmaps', 'ai-optimization', 'anomalies', 'benchmarking', 'storyteller', 'team', 'platform-accounts', 'admin-advertisers', 'messages', 'merchant', 'outlets', 'profile', 'settings'],
+  advertiser: ['dashboard', 'campaigns', 'analytics', 'heatmaps', 'ai-optimization', 'anomalies', 'benchmarking', 'storyteller', 'team', 'platform-accounts', 'messages', 'merchant', 'outlets', 'profile', 'settings'],
   campaign_manager: ['dashboard', 'campaigns', 'analytics', 'heatmaps', 'messages', 'profile', 'settings'],
   analyst: ['dashboard', 'analytics', 'heatmaps', 'benchmarking', 'storyteller', 'profile', 'settings'],
+  // Merchants only need their own performance view, branches and enquiries.
+  merchant: ['merchant', 'outlets', 'messages', 'profile', 'settings'],
   end_user: ['profile', 'settings'],
 };
 

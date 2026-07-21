@@ -18,3 +18,4 @@ export { DeviceEvent, IDeviceEvent, DeviceType, DeviceEventType } from './Device
 export { Event, IEvent } from './Event';
 export { Conversation, IConversation } from './Conversation';
 export { Message, IMessage } from './Message';
+export { Outlet, IOutlet } from './Outlet';

@@ -20,6 +20,7 @@ import eventRoutes from './events';
 import adminRoutes from './admin';
 import billingRoutes from './billing';
 import messageRoutes from './messages';
+import outletRoutes from './outlets';
 
 const router = Router();
 
@@ -44,5 +45,6 @@ router.use('/events', eventRoutes);
 router.use('/admin', adminRoutes);
 router.use('/billing', billingRoutes);
 router.use('/messages', messageRoutes);
+router.use('/outlets', outletRoutes);
 
 export default router;

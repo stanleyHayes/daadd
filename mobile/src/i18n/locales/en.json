@@ -187,6 +187,7 @@
         "appearance": "Appearance",
         "notifications": "Notifications",
         "messages": "Messages",
+        "purchases": "Purchase History",
         "merchantScan": "Merchant: Scan Customer QR",
         "language": "Language",
         "privacy": "Privacy",
@@ -235,6 +236,13 @@
       "startPrompt": "Send a message to start the conversation.",
       "inputPlaceholder": "Type a message…",
       "typing": "typing…"
+    },
+    "purchases": {
+      "title": "Purchase History",
+      "tokens": "tokens",
+      "receipt": "Receipt",
+      "emptyTitle": "No purchases yet",
+      "emptyMessage": "Redeem tokens at a merchant and your purchases will appear here."
     },
     "ageGate": {
       "title": "Age Verification Required",

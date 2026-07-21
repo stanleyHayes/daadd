@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { Types } from 'mongoose';
 import PDFDocument from 'pdfkit';
-import { Campaign, Redemption } from '../models';
+import { Campaign, Redemption, Review } from '../models';
 import { authMiddleware } from '../middleware/auth';
 import { success } from '../utils/response';
 import { seededRandom } from '../utils/seeded';
@@ -9,6 +9,7 @@ import { seededRandom } from '../utils/seeded';
 const router = Router();
 
 const round2 = (n: number) => Math.round(n * 100) / 100;
+const TOKEN_VALUE = parseFloat(process.env.TOKEN_VALUE || '0.05');
 
 /**
  * Real money metrics for a campaign, aggregated from its attributed
@@ -30,6 +31,11 @@ async function campaignMoneyMetrics(campaignId: string, budgetSpent: number) {
         _id: null,
         revenue: { $sum: '$purchase_amount' },
         discountUsed: { $sum: '$discount_amount' },
+        // Face value the customer PRESENTED at the counter (tokens they chose
+        // to spend). The applied discount can be lower when the percentage cap
+        // binds — hence "issued" vs "redeemed" are two distinct figures.
+        discountsIssued: { $sum: { $multiply: ['$tokens', TOKEN_VALUE] } },
+        customers: { $addToSet: '$user_id' },
         purchases: { $sum: 1 },
       },
     },
@@ -37,14 +43,24 @@ async function campaignMoneyMetrics(campaignId: string, budgetSpent: number) {
   const row = agg[0] || {};
   const revenue = round2(row.revenue || 0);
   const discountUsed = round2(row.discountUsed || 0);
+  const discountsIssued = round2(row.discountsIssued || 0);
   const spend = round2(budgetSpent || 0);
+  // Advertiser's net: sales revenue minus ad spend minus discounts funded.
+  const profit = round2(revenue - spend - discountUsed);
+  const totalCost = spend + discountUsed;
   return {
     revenue,
     purchases: row.purchases || 0,
+    // Distinct people who actually transacted — not the redemption count.
+    customersAcquired: Array.isArray(row.customers) ? row.customers.length : 0,
     discountUsed,
+    discountsIssued,
     spend,
-    // Advertiser's net: sales revenue minus ad spend minus discounts funded.
-    profit: round2(revenue - spend - discountUsed),
+    profit,
+    // Revenue per advertising dollar.
+    roas: spend > 0 ? round2(revenue / spend) : 0,
+    // Net return on total campaign cost (ad spend + discounts funded), as a %.
+    roi: totalCost > 0 ? round2((profit / totalCost) * 100) : 0,
   };
 }
 
@@ -103,6 +119,71 @@ function generateExportSeries(campaignId: string, days = 14) {
   }
   return data;
 }
+
+/**
+ * Merchant performance dashboard: the business value the platform generated
+ * for the signed-in merchant. `merchant_id` is a Mixed field historically
+ * written as a string, so match both representations.
+ */
+router.get('/merchant', authMiddleware, async (req: Request, res: Response) => {
+  try {
+    const userId = req.user!.userId;
+    const merchantMatch = { $in: [userId, new Types.ObjectId(userId)] as any[] };
+
+    // One row per customer so repeat-rate and per-customer averages are exact.
+    const perCustomer = await Redemption.aggregate([
+      { $match: { merchant_id: merchantMatch, status: 'completed' } },
+      {
+        $group: {
+          _id: '$user_id',
+          visits: { $sum: 1 },
+          spend: { $sum: '$purchase_amount' },
+          discountRedeemed: { $sum: '$discount_amount' },
+          discountIssued: { $sum: { $multiply: ['$tokens', TOKEN_VALUE] } },
+        },
+      },
+    ]);
+
+    const customers = perCustomer.length;
+    const redemptions = perCustomer.reduce((n, c) => n + (c.visits || 0), 0);
+    const revenue = perCustomer.reduce((n, c) => n + (c.spend || 0), 0);
+    const discountsRedeemed = perCustomer.reduce((n, c) => n + (c.discountRedeemed || 0), 0);
+    const discountsGiven = perCustomer.reduce((n, c) => n + (c.discountIssued || 0), 0);
+    const repeatCustomers = perCustomer.filter((c) => (c.visits || 0) > 1).length;
+
+    // Satisfaction = average review rating across this merchant's campaigns.
+    const myCampaigns = await Campaign.find({ owner: userId }).select('_id').lean();
+    const campaignIds = myCampaigns.map((c) => c._id);
+    let satisfaction = 0;
+    let reviewCount = 0;
+    if (campaignIds.length) {
+      const ratingAgg = await Review.aggregate([
+        { $match: { campaign_id: { $in: campaignIds } } },
+        { $group: { _id: null, avg: { $avg: '$rating' }, count: { $sum: 1 } } },
+      ]);
+      satisfaction = round2(ratingAgg[0]?.avg || 0);
+      reviewCount = ratingAgg[0]?.count || 0;
+    }
+
+    res.json(
+      success({
+        visits: redemptions,
+        redemptions,
+        customers,
+        revenue: round2(revenue),
+        discountsGiven: round2(discountsGiven),
+        discountsRedeemed: round2(discountsRedeemed),
+        avgCustomerSpend: customers > 0 ? round2(revenue / customers) : 0,
+        avgDiscountPerCustomer: customers > 0 ? round2(discountsRedeemed / customers) : 0,
+        repeatCustomerRate: customers > 0 ? round2((repeatCustomers / customers) * 100) : 0,
+        satisfaction,
+        reviewCount,
+      })
+    );
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message || 'Failed to fetch merchant metrics' });
+  }
+});
 
 router.get('/dashboard', authMiddleware, async (req: Request, res: Response) => {
   try {
@@ -165,8 +246,14 @@ router.get('/dashboard/:campaignId', authMiddleware, async (req: Request, res: R
       // Real money metrics from attributed redemptions (recs #1 & #2).
       revenue: money.revenue,
       purchases: money.purchases,
+      customersAcquired: money.customersAcquired,
       discountUsed: money.discountUsed,
+      discountsIssued: money.discountsIssued,
       profit: money.profit,
+      roas: money.roas,
+      roi: money.roi,
+      budgetTotal: round2(campaign.budget_total || 0),
+      budgetRemaining: round2((campaign.budget_total || 0) - (campaign.budget_spent || 0)),
       discountPercentage: campaign.discount_percentage ?? 15,
     }));
   } catch (err: any) {
