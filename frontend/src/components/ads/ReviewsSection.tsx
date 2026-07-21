@@ -4,7 +4,7 @@ import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 
 import { Star, Send, Loader2, MessageSquareText, ImagePlus, Gift, X } from 'lucide-react';
-import { useReviews, useReviewSummary, useSubmitReview } from '@/hooks/useReviews';
+import { useReviews, useReviewSummary, useSubmitReview, useSubmitExpectations } from '@/hooks/useReviews';
 import { useAuthStore } from '@/stores/auth.store';
 import { formatDate } from '@/lib/utils';
 import { SkeletonList } from '@/components/ui/Skeleton';
@@ -101,15 +101,38 @@ export function ReviewsSection({ campaignId }: ReviewsSectionProps) {
   const [photo, setPhoto] = useState<File | null>(null);
   const photoPreview = photo ? URL.createObjectURL(photo) : null;
 
+  const [video, setVideo] = useState<File | null>(null);
+
   // After-visit detail ratings (V2 Area 9).
   const [satisfaction, setSatisfaction] = useState(0);
   const [productRating, setProductRating] = useState(0);
   const [serviceRating, setServiceRating] = useState(0);
 
+  // Before-visit expectations, so the visit can be compared against them.
+  const submitExpectations = useSubmitExpectations();
+  const [showExpectations, setShowExpectations] = useState(false);
+  const [expExperience, setExpExperience] = useState(0);
+  const [expService, setExpService] = useState(0);
+  const [expProduct, setExpProduct] = useState(0);
+  const [plannedPurchase, setPlannedPurchase] = useState('');
+
+  const handleSubmitExpectations = async () => {
+    if (!expExperience && !expService && !expProduct && !plannedPurchase.trim()) return;
+    await submitExpectations.mutateAsync({
+      campaign_id: campaignId,
+      experience: expExperience || undefined,
+      service: expService || undefined,
+      product: expProduct || undefined,
+      planned_purchase: plannedPurchase || undefined,
+    });
+    setShowExpectations(false);
+  };
+
   const resetForm = () => {
     setRating(0);
     setComment('');
     setPhoto(null);
+    setVideo(null);
     setSatisfaction(0);
     setProductRating(0);
     setServiceRating(0);
@@ -123,6 +146,7 @@ export function ReviewsSection({ campaignId }: ReviewsSectionProps) {
       rating,
       comment: comment || undefined,
       photo,
+      video,
       satisfaction: satisfaction || undefined,
       product_rating: productRating || undefined,
       service_rating: serviceRating || undefined,
@@ -168,6 +192,61 @@ export function ReviewsSection({ campaignId }: ReviewsSectionProps) {
           </Button>
         )}
       </div>
+
+      {/* Before you visit: capture expectations to compare against later */}
+      {isAuthenticated && !showForm && (
+        <div className="mb-6">
+          <button
+            onClick={() => setShowExpectations((v) => !v)}
+            className="text-sm font-medium text-primary-700 hover:text-primary-800 dark:text-secondary-400"
+          >
+            {showExpectations ? 'Hide' : 'Planning a visit? Record what you expect →'}
+          </button>
+
+          {showExpectations && (
+            <Card className="mt-3 bg-bg-secondary border border-border-color">
+              <p className="text-sm text-text-secondary mb-4">
+                Tell us what you're expecting. After your visit you can compare it with how it
+                actually went.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                  <label className="block text-sm font-medium text-text-primary mb-2">
+                    Experience
+                  </label>
+                  <StarRating rating={expExperience} onRate={setExpExperience} />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-text-primary mb-2">Service</label>
+                  <StarRating rating={expService} onRate={setExpService} />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-text-primary mb-2">Product</label>
+                  <StarRating rating={expProduct} onRate={setExpProduct} />
+                </div>
+              </div>
+              <div className="mt-4">
+                <label className="block text-sm font-medium text-text-primary mb-2">
+                  What are you planning to buy? (Optional)
+                </label>
+                <input
+                  value={plannedPurchase}
+                  onChange={(e) => setPlannedPurchase(e.target.value)}
+                  placeholder="e.g. Two flat whites and a pastry"
+                  className="w-full px-3 py-2 border border-border-color rounded-lg bg-card-bg text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary-500"
+                />
+              </div>
+              <Button
+                onClick={handleSubmitExpectations}
+                loading={submitExpectations.isPending}
+                className="mt-4"
+              >
+                Save expectations
+              </Button>
+            </Card>
+          )}
+        </div>
+      )}
 
       {showForm && isAuthenticated && (
         <Card className="mb-6 bg-bg-secondary border border-border-color">
@@ -242,8 +321,37 @@ export function ReviewsSection({ campaignId }: ReviewsSectionProps) {
                 </label>
               )}
             </div>
+
+            {/* Optional video of the visit */}
+            <div>
+              {video ? (
+                <div className="flex items-center gap-2 text-sm text-text-secondary">
+                  <span className="truncate">{video.name}</span>
+                  <button
+                    onClick={() => setVideo(null)}
+                    className="text-text-muted hover:text-danger-600"
+                    aria-label="Remove video"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              ) : (
+                <label className="flex w-fit cursor-pointer items-center gap-2 rounded-lg border border-dashed border-border-color px-4 py-2.5 text-sm text-text-secondary hover:border-primary-400 hover:text-text-primary transition-colors">
+                  <ImagePlus className="h-4 w-4" />
+                  Add a video (optional)
+                  <input
+                    type="file"
+                    accept="video/*"
+                    className="hidden"
+                    onChange={(e) => setVideo(e.target.files?.[0] || null)}
+                  />
+                </label>
+              )}
+            </div>
+
             <div className="flex items-center gap-1.5 text-xs font-medium text-secondary-600 dark:text-secondary-400">
-              <Gift className="h-3.5 w-3.5" /> Earn 3 tokens for reviewing — +2 more with a photo.
+              <Gift className="h-3.5 w-3.5" /> Earn 3 tokens for reviewing — +2 more once your photo
+              or video is approved.
             </div>
             <div className="flex items-center gap-2">
               <Button

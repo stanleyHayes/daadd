@@ -32,6 +32,27 @@ export function useReviewSummary(campaignId: string) {
   });
 }
 
+/** Record BEFORE-visit expectations to compare against the actual visit. */
+export function useSubmitExpectations() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (data: {
+      campaign_id: string;
+      experience?: number;
+      service?: number;
+      product?: number;
+      planned_purchase?: string;
+    }) => {
+      const res = await api.post('/reviews/expectations', data);
+      return res.data.data;
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['reviews', variables.campaign_id] });
+    },
+  });
+}
+
 export function useSubmitReview() {
   const queryClient = useQueryClient();
 
@@ -40,6 +61,11 @@ export function useSubmitReview() {
       campaign_id: string;
       rating: number;
       comment?: string;
+      // After-visit reality ratings (V2 Area 9).
+      satisfaction?: number;
+      product_rating?: number;
+      service_rating?: number;
+      reality_experience?: number;
     }) => {
       const res = await api.post('/reviews', data);
       return res.data.data;

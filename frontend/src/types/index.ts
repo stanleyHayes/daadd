@@ -69,11 +69,23 @@ export interface Campaign {
   reward_value: number;
   start_date: string;
   end_date: string;
-  // Per-campaign advertiser contact details shown on adverts.
+  // Per-campaign advertiser business info shown on adverts.
   location?: string;
   contact_phone?: string;
   contact_email?: string;
   contact_website?: string;
+  business_logo?: string;
+  business_category?: string;
+  opening_hours?: string;
+  // Reward economics (V2 Area 5) — drives per-interaction token grants.
+  consumer_share_pct?: number;
+  max_tokens?: number;
+  tokens_issued?: number;
+  tokens_remaining?: number | null;
+  reward_per_view?: number;
+  reward_per_click?: number;
+  reward_per_review?: number;
+  reward_per_photo?: number;
   targeting_config: TargetingConfig | null;
   creatives: Creative[];
   ai_optimization_enabled: boolean;

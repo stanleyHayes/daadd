@@ -26,7 +26,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { format } from 'date-fns';
 import { useAd } from '@/hooks/useAds';
 import { useClaimReward } from '@/hooks/useRewards';
-import { useReviews, useReviewSummary } from '@/hooks/useReviews';
+import { useReviews, useReviewSummary, useSubmitExpectations } from '@/hooks/useReviews';
 import api from '@/lib/api';
 import { AgeGate } from '@/components/AgeGate';
 import { Badge } from '@/components/ui/Badge';
@@ -55,6 +55,12 @@ export default function AdDetailScreen() {
   const { data: reviewSummary } = useReviewSummary(id ?? '');
   const claimReward = useClaimReward();
   const colors = useColors();
+  const submitExpectations = useSubmitExpectations();
+  const [expectationsOpen, setExpectationsOpen] = useState(false);
+  const [expExperience, setExpExperience] = useState(0);
+  const [expService, setExpService] = useState(0);
+  const [expProduct, setExpProduct] = useState(0);
+  const [expSaved, setExpSaved] = useState(false);
   const [showAgeGate, setShowAgeGate] = useState(false);
   const [ageVerified, setAgeVerified] = useState(false);
   const [ageVerifying, setAgeVerifying] = useState(false);
@@ -619,6 +625,91 @@ export default function AdDetailScreen() {
                 {t('mobile.adDetail.shareAd')}
               </Text>
             </TouchableOpacity>
+          </View>
+        </FadeIn>
+
+        {/* Before you visit: record expectations (V2 Area 9) */}
+        <FadeIn delay={250}>
+          <View style={{ paddingHorizontal: spacing.md, marginBottom: spacing.md }}>
+            <Card>
+              <TouchableOpacity
+                onPress={() => setExpectationsOpen((v) => !v)}
+                style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm }}
+              >
+                <Ionicons name="bulb-outline" size={20} color={colors.primary} />
+                <Text style={[typography.bodyMedium, { color: colors.text.primary, flex: 1, fontFamily: fontFamily.semibold }]}>
+                  {expSaved
+                    ? t('mobile.adDetail.expectationsSaved')
+                    : t('mobile.adDetail.expectationsTitle')}
+                </Text>
+                <Ionicons
+                  name={expectationsOpen ? 'chevron-up' : 'chevron-down'}
+                  size={18}
+                  color={colors.text.tertiary}
+                />
+              </TouchableOpacity>
+
+              {expectationsOpen && !expSaved && (
+                <View style={{ marginTop: spacing.md }}>
+                  <Text style={[typography.bodySmall, { color: colors.text.secondary, marginBottom: spacing.sm }]}>
+                    {t('mobile.adDetail.expectationsHint')}
+                  </Text>
+
+                  {[
+                    { label: t('mobile.adDetail.expExperience'), value: expExperience, set: setExpExperience },
+                    { label: t('mobile.adDetail.expService'), value: expService, set: setExpService },
+                    { label: t('mobile.adDetail.expProduct'), value: expProduct, set: setExpProduct },
+                  ].map((row) => (
+                    <View
+                      key={row.label}
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        paddingVertical: spacing.xs,
+                      }}
+                    >
+                      <Text style={[typography.bodyMedium, { color: colors.text.secondary }]}>
+                        {row.label}
+                      </Text>
+                      <View style={{ flexDirection: 'row', gap: 4 }}>
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <TouchableOpacity key={star} onPress={() => row.set(star)}>
+                            <Ionicons
+                              name={star <= row.value ? 'star' : 'star-outline'}
+                              size={20}
+                              color={star <= row.value ? colors.warning : colors.text.tertiary}
+                            />
+                          </TouchableOpacity>
+                        ))}
+                      </View>
+                    </View>
+                  ))}
+
+                  <Button
+                    title={t('mobile.adDetail.saveExpectations')}
+                    onPress={async () => {
+                      if (!expExperience && !expService && !expProduct) return;
+                      try {
+                        await submitExpectations.mutateAsync({
+                          campaign_id: ad.id,
+                          experience: expExperience || undefined,
+                          service: expService || undefined,
+                          product: expProduct || undefined,
+                        });
+                        setExpSaved(true);
+                        setExpectationsOpen(false);
+                      } catch {
+                        // Surfaced by the disabled state; a toast could follow.
+                      }
+                    }}
+                    loading={submitExpectations.isPending}
+                    disabled={!expExperience && !expService && !expProduct}
+                    style={{ marginTop: spacing.md }}
+                  />
+                </View>
+              )}
+            </Card>
           </View>
         </FadeIn>
 

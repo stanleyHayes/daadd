@@ -23,6 +23,8 @@ import {
   User,
   Plug,
   UserCheck,
+  ShieldCheck,
+  Sparkles,
   ChevronLeft,
   ChevronRight,
   Zap,
@@ -81,6 +83,8 @@ const allNavGroups: NavGroup[] = [
     title: 'Admin',
     items: [
       { key: 'admin-advertisers', href: '/dashboard/admin/advertisers', label: 'Advertiser Approvals', icon: UserCheck },
+      { key: 'admin-moderation', href: '/dashboard/admin/moderation', label: 'Review Moderation', icon: ShieldCheck },
+      { key: 'admin-loyalty', href: '/dashboard/admin/loyalty', label: 'Loyalty & VIP', icon: Sparkles },
     ],
   },
 ];

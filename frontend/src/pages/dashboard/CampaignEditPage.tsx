@@ -32,6 +32,15 @@ export function CampaignEditPage() {
     contact_phone: '',
     contact_email: '',
     contact_website: '',
+    business_logo: '',
+    business_category: '',
+    opening_hours: '',
+    consumer_share_pct: 0,
+    max_tokens: 0,
+    reward_per_view: 0,
+    reward_per_click: 0,
+    reward_per_review: 0,
+    reward_per_photo: 0,
     age_min: 18,
     age_max: 65,
     regions: [] as string[],
@@ -53,6 +62,15 @@ export function CampaignEditPage() {
         contact_phone: campaign.contact_phone || '',
         contact_email: campaign.contact_email || '',
         contact_website: campaign.contact_website || '',
+        business_logo: campaign.business_logo || '',
+        business_category: campaign.business_category || '',
+        opening_hours: campaign.opening_hours || '',
+        consumer_share_pct: campaign.consumer_share_pct || 0,
+        max_tokens: campaign.max_tokens || 0,
+        reward_per_view: campaign.reward_per_view || 0,
+        reward_per_click: campaign.reward_per_click || 0,
+        reward_per_review: campaign.reward_per_review || 0,
+        reward_per_photo: campaign.reward_per_photo || 0,
         age_min: campaign.age_min || 18,
         age_max: campaign.age_max || 65,
         regions: campaign.targeting_config?.regions || [],
@@ -102,6 +120,15 @@ export function CampaignEditPage() {
           contact_phone: formData.contact_phone,
           contact_email: formData.contact_email,
           contact_website: formData.contact_website,
+          business_logo: formData.business_logo,
+          business_category: formData.business_category,
+          opening_hours: formData.opening_hours,
+          consumer_share_pct: formData.consumer_share_pct,
+          max_tokens: formData.max_tokens,
+          reward_per_view: formData.reward_per_view,
+          reward_per_click: formData.reward_per_click,
+          reward_per_review: formData.reward_per_review,
+          reward_per_photo: formData.reward_per_photo,
           is_age_restricted: formData.age_restricted,
           targeting_config: {
             regions: formData.regions,
@@ -289,6 +316,24 @@ export function CampaignEditPage() {
                       <Input label="Contact Phone" type="tel" placeholder="+233 20 000 0000" value={formData.contact_phone} onChange={(e) => updateField('contact_phone', e.target.value)} />
                       <Input label="Contact Email" type="email" placeholder="hello@company.com" value={formData.contact_email} onChange={(e) => updateField('contact_email', e.target.value)} />
                       <Input label="Website" placeholder="company.com" value={formData.contact_website} onChange={(e) => updateField('contact_website', e.target.value)} />
+                      <Input label="Business category" placeholder="Coffee shop" value={formData.business_category} onChange={(e) => updateField('business_category', e.target.value)} />
+                      <Input label="Opening hours" placeholder="Mon–Sat 9am–7pm" value={formData.opening_hours} onChange={(e) => updateField('opening_hours', e.target.value)} />
+                      <Input label="Business logo URL" placeholder="https://…/logo.png" value={formData.business_logo} onChange={(e) => updateField('business_logo', e.target.value)} hint="Defaults to your profile avatar." />
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className="text-sm font-semibold text-text-primary mb-1">Reward economics</p>
+                    <p className="text-xs text-text-secondary mb-3">
+                      The campaign pauses automatically once the token pool is spent — top it up from the campaign page.
+                    </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <Input label="Shared with consumers (%)" type="number" value={formData.consumer_share_pct} onChange={(e) => updateField('consumer_share_pct', Math.min(100, Math.max(0, Number(e.target.value))))} hint="Portion of the discount handed back as tokens." />
+                      <Input label="Max tokens (0 = uncapped)" type="number" value={formData.max_tokens} onChange={(e) => updateField('max_tokens', Math.max(0, Number(e.target.value)))} />
+                      <Input label="Tokens per view" type="number" value={formData.reward_per_view} onChange={(e) => updateField('reward_per_view', Math.max(0, Number(e.target.value)))} />
+                      <Input label="Tokens per click" type="number" value={formData.reward_per_click} onChange={(e) => updateField('reward_per_click', Math.max(0, Number(e.target.value)))} />
+                      <Input label="Tokens per review" type="number" value={formData.reward_per_review} onChange={(e) => updateField('reward_per_review', Math.max(0, Number(e.target.value)))} />
+                      <Input label="Tokens per photo" type="number" value={formData.reward_per_photo} onChange={(e) => updateField('reward_per_photo', Math.max(0, Number(e.target.value)))} />
                     </div>
                   </div>
 

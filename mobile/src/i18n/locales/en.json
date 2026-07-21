@@ -230,7 +230,14 @@
       "messageCompany": "Message company",
       "noContact": "No contact details provided for this promotion.",
       "rewardsTitle": "What you can earn",
-      "rewardPool": "{{remaining}} of {{total}} campaign tokens remaining"
+      "rewardPool": "{{remaining}} of {{total}} campaign tokens remaining",
+      "expectationsTitle": "Planning a visit? Record what you expect",
+      "expectationsSaved": "Expectations saved — tell us how it went after your visit",
+      "expectationsHint": "After your visit you can compare this with how it actually went.",
+      "expExperience": "Experience",
+      "expService": "Service",
+      "expProduct": "Product",
+      "saveExpectations": "Save expectations"
     },
     "chat": {
       "title": "Messages",
