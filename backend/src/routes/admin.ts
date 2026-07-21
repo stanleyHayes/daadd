@@ -1,8 +1,9 @@
 import { Router, Request, Response } from 'express';
 import { Types } from 'mongoose';
-import { User } from '../models';
+import { User, PlatformSetting } from '../models';
 import { authMiddleware, requireRole } from '../middleware/auth';
 import { success } from '../utils/response';
+import { getVipCriteria, DEFAULT_VIP_CRITERIA, VIP_CRITERIA_KEY } from '../utils/vip';
 
 const router = Router();
 
@@ -24,6 +25,44 @@ function serializeAdvertiser(u: InstanceType<typeof User>) {
 }
 
 // GET /admin/advertisers?status=pending|approved|rejected — review queue.
+/**
+ * VIP qualification criteria (V2 Area 8) — administrator-configurable.
+ * A 0 on any minimum disables that particular requirement.
+ */
+router.get('/vip-criteria', async (_req: Request, res: Response) => {
+  try {
+    res.json(success({ criteria: await getVipCriteria(), defaults: DEFAULT_VIP_CRITERIA }));
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message || 'Failed to fetch VIP criteria' });
+  }
+});
+
+router.put('/vip-criteria', async (req: Request, res: Response) => {
+  try {
+    const current = await getVipCriteria();
+    const next = { ...current };
+    for (const key of [
+      'min_merchant_visits',
+      'min_purchases',
+      'min_reviews',
+      'min_engagement_score',
+    ] as const) {
+      if (req.body?.[key] !== undefined) {
+        const n = Number(req.body[key]);
+        if (!Number.isNaN(n)) next[key] = Math.max(0, Math.floor(n));
+      }
+    }
+    await PlatformSetting.findOneAndUpdate(
+      { key: VIP_CRITERIA_KEY },
+      { $set: { value: next } },
+      { upsert: true, new: true }
+    );
+    res.json(success({ criteria: next }, 'VIP criteria updated'));
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message || 'Failed to update VIP criteria' });
+  }
+});
+
 router.get('/advertisers', async (req: Request, res: Response) => {
   try {
     const status = String(req.query.status || 'pending');

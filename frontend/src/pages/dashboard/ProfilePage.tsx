@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import { EmptyState } from '@/components/ui/EmptyState';
-import { StreakCard, Leaderboard } from '@/components/rewards/Leaderboard';
+import { StreakCard, VipCard, Leaderboard } from '@/components/rewards/Leaderboard';
 import { useAuthStore } from '@/stores/auth.store';
 import { useThemeStore } from '@/stores/theme.store';
 import { useRewards, useRewardBalance } from '@/hooks/useRewards';
@@ -291,6 +291,7 @@ export function ProfilePage() {
         {activeTab === 'rewards' && (
           <div className="space-y-6">
             <StreakCard />
+            <VipCard />
             <Card>
             <CardHeader title="Reward History" subtitle="All rewards you have earned from viewing ads" />
             {rewardsLoading ? (

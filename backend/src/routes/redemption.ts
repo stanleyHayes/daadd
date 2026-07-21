@@ -4,6 +4,7 @@ import { Types } from 'mongoose';
 import { Redemption, Reward, User, Notification, Campaign, Outlet } from '../models';
 import { authMiddleware, JWT_SECRET } from '../middleware/auth';
 import { success, paginated } from '../utils/response';
+import { bumpStreak } from '../utils/streak';
 
 const router = Router();
 
@@ -516,6 +517,18 @@ router.post('/confirm', authMiddleware, requireMerchant, async (req: Request, re
       type: 'redemption',
       note: `Redemption ${redemption._id}: ${tokensUsed} tokens, $${discount} discount`,
     });
+
+    // Merchant-visit streak (V2 Area 8) — best-effort, never fails the sale.
+    try {
+      const customer = await User.findById(String(redemption.user_id)).select('streaks');
+      if (customer) {
+        bumpStreak(customer as any, 'merchant');
+        customer.markModified('streaks');
+        await customer.save();
+      }
+    } catch (streakErr) {
+      console.error('Failed to bump merchant streak:', streakErr);
+    }
 
     await Notification.create({
       user_id: new Types.ObjectId(String(redemption.user_id)),

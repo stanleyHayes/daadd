@@ -23,6 +23,12 @@ export interface IUser extends Document {
   // streak grants a token bonus on new rewards (see utils/streak.ts).
   streak_count: number;
   last_reward_date?: Date;
+  // Independent streaks per activity type (daily / ad / merchant / review).
+  // `streak_count` above remains the headline daily streak for compatibility.
+  streaks?: Record<string, { count?: number; last_at?: Date }>;
+  // VIP loyalty tier (V2 Area 8) — auto-qualified from engagement metrics.
+  vip_tier: 'none' | 'vip';
+  vip_since?: Date;
   push_tokens?: {
     token: string;
     platform: string;
@@ -60,6 +66,9 @@ const UserSchema = new Schema<IUser>({
   // Engagement streak (gamification).
   streak_count: { type: Number, default: 0 },
   last_reward_date: { type: Date },
+  streaks: { type: Schema.Types.Mixed, default: {} },
+  vip_tier: { type: String, enum: ['none', 'vip'], default: 'none' },
+  vip_since: { type: Date },
   push_tokens: {
     type: [
       {

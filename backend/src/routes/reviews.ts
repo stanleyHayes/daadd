@@ -1,7 +1,8 @@
 import { Router, Request, Response } from 'express';
 import { Types } from 'mongoose';
 import multer from 'multer';
-import { Review, Reward } from '../models';
+import { Review, Reward, User } from '../models';
+import { bumpStreak } from '../utils/streak';
 import { authMiddleware } from '../middleware/auth';
 import { uploadCreative } from '../services/storage.service';
 import { success, paginated } from '../utils/response';
@@ -161,6 +162,18 @@ router.post(
         rewardGranted = rewardTokens;
       } catch (rewardErr) {
         console.error('Failed to grant review reward:', rewardErr);
+      }
+
+      // Review-submission streak (V2 Area 8) — best-effort.
+      try {
+        const author = await User.findById(req.user!.userId).select('streaks');
+        if (author) {
+          bumpStreak(author as any, 'review');
+          author.markModified('streaks');
+          await author.save();
+        }
+      } catch (streakErr) {
+        console.error('Failed to bump review streak:', streakErr);
       }
 
       res
