@@ -70,6 +70,31 @@ export function useReviewSummary(campaignId: string) {
   return { summary: data?.data, isLoading, error };
 }
 
+/** Record BEFORE-visit expectations so they can be compared with reality. */
+export function useSubmitExpectations() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (data: {
+      campaign_id: string;
+      experience?: number;
+      service?: number;
+      product?: number;
+      planned_purchase?: string;
+    }) => {
+      const res = await api.post('/reviews/expectations', data);
+      return res.data;
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['reviews', variables.campaign_id] });
+      toast.success('Expectations saved — tell us how it went after your visit!');
+    },
+    onError: (error: Error) => {
+      toast.error(error.message);
+    },
+  });
+}
+
 export function useSubmitReview() {
   const queryClient = useQueryClient();
 
@@ -79,12 +104,22 @@ export function useSubmitReview() {
       rating: number;
       comment?: string;
       photo?: File | null;
+      video?: File | null;
+      // After-visit reality ratings (V2 Area 9).
+      satisfaction?: number;
+      product_rating?: number;
+      service_rating?: number;
+      reality_experience?: number;
     }) => {
       const form = new FormData();
       form.append('campaign_id', data.campaign_id);
       form.append('rating', String(data.rating));
       if (data.comment) form.append('comment', data.comment);
       if (data.photo) form.append('photo', data.photo);
+      if (data.video) form.append('video', data.video);
+      for (const key of ['satisfaction', 'product_rating', 'service_rating', 'reality_experience'] as const) {
+        if (data[key]) form.append(key, String(data[key]));
+      }
       // Let axios set the multipart boundary (the client default is JSON).
       const res = await api.post('/reviews', form, { headers: { 'Content-Type': undefined } });
       return res.data;

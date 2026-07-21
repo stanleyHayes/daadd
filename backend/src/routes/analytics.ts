@@ -158,7 +158,8 @@ router.get('/merchant', authMiddleware, async (req: Request, res: Response) => {
     let reviewCount = 0;
     if (campaignIds.length) {
       const ratingAgg = await Review.aggregate([
-        { $match: { campaign_id: { $in: campaignIds } } },
+        // Exclude expectation-only rows (rating 0) from satisfaction.
+        { $match: { campaign_id: { $in: campaignIds }, rating: { $gt: 0 } } },
         { $group: { _id: null, avg: { $avg: '$rating' }, count: { $sum: 1 } } },
       ]);
       satisfaction = round2(ratingAgg[0]?.avg || 0);

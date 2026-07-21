@@ -101,10 +101,18 @@ export function ReviewsSection({ campaignId }: ReviewsSectionProps) {
   const [photo, setPhoto] = useState<File | null>(null);
   const photoPreview = photo ? URL.createObjectURL(photo) : null;
 
+  // After-visit detail ratings (V2 Area 9).
+  const [satisfaction, setSatisfaction] = useState(0);
+  const [productRating, setProductRating] = useState(0);
+  const [serviceRating, setServiceRating] = useState(0);
+
   const resetForm = () => {
     setRating(0);
     setComment('');
     setPhoto(null);
+    setSatisfaction(0);
+    setProductRating(0);
+    setServiceRating(0);
     setShowForm(false);
   };
 
@@ -115,6 +123,9 @@ export function ReviewsSection({ campaignId }: ReviewsSectionProps) {
       rating,
       comment: comment || undefined,
       photo,
+      satisfaction: satisfaction || undefined,
+      product_rating: productRating || undefined,
+      service_rating: serviceRating || undefined,
     });
     resetForm();
   };
@@ -167,6 +178,25 @@ export function ReviewsSection({ campaignId }: ReviewsSectionProps) {
               </label>
               <StarRating rating={rating} onRate={setRating} />
             </div>
+
+            {/* Break the visit down so advertisers see what actually landed */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div>
+                <label className="block text-sm font-medium text-text-primary mb-2">
+                  Satisfaction
+                </label>
+                <StarRating rating={satisfaction} onRate={setSatisfaction} />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-text-primary mb-2">Product</label>
+                <StarRating rating={productRating} onRate={setProductRating} />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-text-primary mb-2">Service</label>
+                <StarRating rating={serviceRating} onRate={setServiceRating} />
+              </div>
+            </div>
+
             <div>
               <label className="block text-sm font-medium text-text-primary mb-2">
                 Comment (Optional)
