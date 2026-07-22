@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams, Link } from 'react-router-dom';
 import { Card, CardHeader } from '@/components/ui/Card';
 import { EmptyState } from '@/components/ui/EmptyState';
@@ -21,16 +22,18 @@ import { hasPermission } from '@/lib/rbac';
 import { useAuthStore } from '@/stores/auth.store';
 import toast from 'react-hot-toast';
 
+// Labels come from `dashboard.campaignDetail.tabs`, keyed by `key`.
 const tabs = [
-  { key: 'overview', label: 'Overview', icon: <BarChart3 className="h-4 w-4" /> },
-  { key: 'analytics', label: 'Analytics', icon: <TrendingUp className="h-4 w-4" /> },
-  { key: 'creatives', label: 'Creatives', icon: <Sparkles className="h-4 w-4" /> },
-  { key: 'heatmap', label: 'Heatmap', icon: <Map className="h-4 w-4" /> },
-  { key: 'ai', label: 'AI Insights', icon: <Brain className="h-4 w-4" /> },
-  { key: 'team', label: 'Team', icon: <Users className="h-4 w-4" /> },
+  { key: 'overview', icon: <BarChart3 className="h-4 w-4" /> },
+  { key: 'analytics', icon: <TrendingUp className="h-4 w-4" /> },
+  { key: 'creatives', icon: <Sparkles className="h-4 w-4" /> },
+  { key: 'heatmap', icon: <Map className="h-4 w-4" /> },
+  { key: 'ai', icon: <Brain className="h-4 w-4" /> },
+  { key: 'team', icon: <Users className="h-4 w-4" /> },
 ];
 
 export function CampaignDetailPage() {
+  const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const { data: campaign, isLoading, error } = useCampaign(id || '');
   const { data: metrics } = useDashboardMetrics(id);
@@ -42,10 +45,9 @@ export function CampaignDetailPage() {
   const canToggleAI = hasPermission(userRole, 'CAMPAIGN_TOGGLE_AI');
 
   // Filter tabs based on role
-  const visibleTabs = tabs.filter((tab) => {
-    if (tab.key === 'ai' && !canToggleAI) return false;
-    return true;
-  });
+  const visibleTabs = tabs
+    .filter((tab) => tab.key !== 'ai' || canToggleAI)
+    .map((tab) => ({ ...tab, label: t(`dashboard.campaignDetail.tabs.${tab.key}`) }));
 
   if (isLoading) {
     return (
@@ -82,9 +84,9 @@ export function CampaignDetailPage() {
       <PageTransition>
         <div className="max-w-7xl mx-auto text-center py-16">
           <AlertTriangle className="h-10 w-10 text-danger-500 mx-auto mb-3" />
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Campaign Not Found</h2>
-          <p className="text-sm text-gray-500 dark:text-slate-400 mb-6">The campaign could not be loaded.</p>
-          <Link to="/dashboard/campaigns" className="text-primary-600 hover:text-primary-700 text-sm font-medium">Back to campaigns</Link>
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{t('dashboard.campaignDetail.notFound')}</h2>
+          <p className="text-sm text-gray-500 dark:text-slate-400 mb-6">{t('dashboard.campaignDetail.notFoundDesc')}</p>
+          <Link to="/dashboard/campaigns" className="text-primary-600 hover:text-primary-700 text-sm font-medium">{t('dashboard.campaignDetail.backToCampaigns')}</Link>
         </div>
       </PageTransition>
     );
@@ -97,7 +99,7 @@ export function CampaignDetailPage() {
       await toggleAI.mutateAsync({ id: c.id, enabled: !c.ai_optimization_enabled, mode: c.ai_mode });
       toast.success(`AI optimization ${c.ai_optimization_enabled ? 'disabled' : 'enabled'}`);
     } catch {
-      toast.error('Failed to update AI optimization');
+      toast.error(t('dashboard.campaignDetail.toggleAiFailed'));
     }
   };
 
@@ -105,7 +107,7 @@ export function CampaignDetailPage() {
     <PageTransition>
     <div className="max-w-7xl mx-auto space-y-6">
       <Link to="/dashboard/campaigns" className="inline-flex items-center gap-1 text-sm text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-white transition-colors">
-        <ArrowLeft className="h-4 w-4" /> Back to campaigns
+        <ArrowLeft className="h-4 w-4" /> {t('dashboard.campaignDetail.backToCampaigns')}
       </Link>
       <Card>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -126,7 +128,7 @@ export function CampaignDetailPage() {
 
         <div className="mt-6 space-y-4">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-gray-700 dark:text-slate-300">Budget Progress</span>
+            <span className="text-sm font-medium text-gray-700 dark:text-slate-300">{t('dashboard.campaignDetail.budgetProgress')}</span>
           </div>
           <BudgetPacingIndicator
             budgetSpent={c.budget_spent}
@@ -142,31 +144,31 @@ export function CampaignDetailPage() {
         <div className="space-y-6">
           {metrics ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <MetricsCard icon={<Eye className="h-5 w-5" />} label="Impressions" value={formatNumber(metrics.totalImpressions)} change={metrics.impressionChange} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
-              <MetricsCard icon={<MousePointerClick className="h-5 w-5" />} label="Clicks" value={formatNumber(metrics.totalClicks || 0)} change={metrics.clickChange || 0} iconColor="text-secondary-600" iconBg="bg-secondary-50 dark:bg-secondary-900/30" />
-              <MetricsCard icon={<TrendingUp className="h-5 w-5" />} label="CTR" value={formatPercentage(metrics.avgCTR)} change={metrics.ctrChange} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
-              <MetricsCard icon={<DollarSign className="h-5 w-5" />} label="CPC" value={formatCurrency(metrics.cpc || 0)} change={metrics.cpcChange || 0} iconColor="text-warning-600" iconBg="bg-warning-50 dark:bg-warning-900/30" />
+              <MetricsCard icon={<Eye className="h-5 w-5" />} label={t('dashboard.metrics.impressions')} value={formatNumber(metrics.totalImpressions)} change={metrics.impressionChange} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
+              <MetricsCard icon={<MousePointerClick className="h-5 w-5" />} label={t('dashboard.metrics.clicks')} value={formatNumber(metrics.totalClicks || 0)} change={metrics.clickChange || 0} iconColor="text-secondary-600" iconBg="bg-secondary-50 dark:bg-secondary-900/30" />
+              <MetricsCard icon={<TrendingUp className="h-5 w-5" />} label={t('dashboard.metrics.ctr')} value={formatPercentage(metrics.avgCTR)} change={metrics.ctrChange} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
+              <MetricsCard icon={<DollarSign className="h-5 w-5" />} label={t('dashboard.metrics.cpc')} value={formatCurrency(metrics.cpc || 0)} change={metrics.cpcChange || 0} iconColor="text-warning-600" iconBg="bg-warning-50 dark:bg-warning-900/30" />
             </div>
           ) : null}
 
           {/* Money: real revenue / purchases / discount / profit from redemptions (recs #1 & #2) */}
           {metrics && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <MetricsCard icon={<Wallet className="h-5 w-5" />} label="Revenue" value={formatCurrency(metrics.revenue || 0)} iconColor="text-emerald-600" iconBg="bg-emerald-50 dark:bg-emerald-900/30" />
-              <MetricsCard icon={<ShoppingBag className="h-5 w-5" />} label="Purchases" value={formatNumber(metrics.purchases || 0)} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
+              <MetricsCard icon={<Wallet className="h-5 w-5" />} label={t('dashboard.metrics.revenue')} value={formatCurrency(metrics.revenue || 0)} iconColor="text-emerald-600" iconBg="bg-emerald-50 dark:bg-emerald-900/30" />
+              <MetricsCard icon={<ShoppingBag className="h-5 w-5" />} label={t('dashboard.metrics.purchases')} value={formatNumber(metrics.purchases || 0)} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
               <MetricsCard icon={<Ticket className="h-5 w-5" />} label={`Discount Used (${metrics.discountPercentage ?? 15}% shared)`} value={formatCurrency(metrics.discountUsed || 0)} iconColor="text-secondary-600" iconBg="bg-secondary-50 dark:bg-secondary-900/30" />
-              <MetricsCard icon={<PiggyBank className="h-5 w-5" />} label="Profit" value={formatCurrency(metrics.profit || 0)} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
+              <MetricsCard icon={<PiggyBank className="h-5 w-5" />} label={t('dashboard.metrics.profit')} value={formatCurrency(metrics.profit || 0)} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
             </div>
           )}
 
           {/* Campaign financial performance: acquisition, discount exposure and return */}
           {metrics && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-              <MetricsCard icon={<Users className="h-5 w-5" />} label="Customers Acquired" value={formatNumber(metrics.customersAcquired || 0)} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
-              <MetricsCard icon={<Ticket className="h-5 w-5" />} label="Discounts Issued" value={formatCurrency(metrics.discountsIssued || 0)} iconColor="text-secondary-600" iconBg="bg-secondary-50 dark:bg-secondary-900/30" />
-              <MetricsCard icon={<Wallet className="h-5 w-5" />} label="Budget Remaining" value={formatCurrency(metrics.budgetRemaining || 0)} iconColor="text-emerald-600" iconBg="bg-emerald-50 dark:bg-emerald-900/30" />
-              <MetricsCard icon={<TrendingUp className="h-5 w-5" />} label="ROAS" value={`${(metrics.roas || 0).toFixed(2)}x`} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
-              <MetricsCard icon={<PiggyBank className="h-5 w-5" />} label="ROI" value={formatPercentage(metrics.roi || 0)} iconColor="text-warning-600" iconBg="bg-warning-50 dark:bg-warning-900/30" />
+              <MetricsCard icon={<Users className="h-5 w-5" />} label={t('dashboard.metrics.customersAcquired')} value={formatNumber(metrics.customersAcquired || 0)} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
+              <MetricsCard icon={<Ticket className="h-5 w-5" />} label={t('dashboard.metrics.discountsIssued')} value={formatCurrency(metrics.discountsIssued || 0)} iconColor="text-secondary-600" iconBg="bg-secondary-50 dark:bg-secondary-900/30" />
+              <MetricsCard icon={<Wallet className="h-5 w-5" />} label={t('dashboard.metrics.budgetRemaining')} value={formatCurrency(metrics.budgetRemaining || 0)} iconColor="text-emerald-600" iconBg="bg-emerald-50 dark:bg-emerald-900/30" />
+              <MetricsCard icon={<TrendingUp className="h-5 w-5" />} label={t('dashboard.metrics.roas')} value={`${(metrics.roas || 0).toFixed(2)}x`} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
+              <MetricsCard icon={<PiggyBank className="h-5 w-5" />} label={t('dashboard.metrics.roi')} value={formatPercentage(metrics.roi || 0)} iconColor="text-warning-600" iconBg="bg-warning-50 dark:bg-warning-900/30" />
             </div>
           )}
 
@@ -174,24 +176,24 @@ export function CampaignDetailPage() {
             <Card>
               <EmptyState
                 icon={<BarChart3 className="h-12 w-12" />}
-                title="No Metrics Yet"
-                description="Campaign metrics will appear here once events are tracked and data is collected."
+                title={t('dashboard.campaignDetail.noMetricsTitle')}
+                description={t('dashboard.campaignDetail.noMetricsDesc')}
                 size="sm"
               />
             </Card>
           )}
 
           <Card>
-            <CardHeader title="Performance Over Time" />
+            <CardHeader title={t('dashboard.campaignDetail.perfTitle')} />
             {tsLoading ? (
               <Skeleton variant="card" className="h-48" />
             ) : timeSeriesData && timeSeriesData.length > 0 ? (
               <TimeSeriesChart
                 data={timeSeriesData}
                 lines={[
-                  { dataKey: 'impressions', color: '#2563EB', name: 'Impressions' },
-                  { dataKey: 'clicks', color: '#7C3AED', name: 'Clicks' },
-                  { dataKey: 'conversions', color: '#10B981', name: 'Conversions' },
+                  { dataKey: 'impressions', color: '#2563EB', name: t('dashboard.metrics.impressions') },
+                  { dataKey: 'clicks', color: '#7C3AED', name: t('dashboard.metrics.clicks') },
+                  { dataKey: 'conversions', color: '#10B981', name: t('dashboard.metrics.conversions') },
                 ]}
                 xKey="date"
                 height={280}
@@ -199,18 +201,18 @@ export function CampaignDetailPage() {
             ) : (
               <EmptyState
                 icon={<TrendingUp className="h-12 w-12" />}
-                title="No Performance Data"
-                description="Performance trends will display here once your campaign starts receiving impressions and clicks."
+                title={t('dashboard.campaignDetail.noPerfTitle')}
+                description={t('dashboard.campaignDetail.noPerfDesc')}
                 size="md"
               />
             )}
           </Card>
 
           <Card>
-            <CardHeader title="Campaign Info" />
+            <CardHeader title={t('dashboard.campaignDetail.info')} />
             <div className="grid grid-cols-2 gap-y-4 gap-x-8">
               <div>
-                <p className="text-xs text-gray-500 dark:text-slate-400 uppercase font-medium">Description</p>
+                <p className="text-xs text-gray-500 dark:text-slate-400 uppercase font-medium">{t('dashboard.common.description')}</p>
                 <p className="text-sm text-gray-900 dark:text-slate-200 mt-1">{c.description || 'No description'}</p>
               </div>
               <div>
@@ -221,7 +223,7 @@ export function CampaignDetailPage() {
                     <button
                       onClick={handleToggleAI}
                       disabled={toggleAI.isPending}
-                      title="Toggle AI optimization"
+                      title={t('dashboard.campaignDetail.toggleAi')}
                       className={cn('w-9 h-5 rounded-full relative cursor-pointer transition-colors disabled:opacity-50', c.ai_optimization_enabled ? 'bg-primary-600' : 'bg-gray-300 dark:bg-slate-600')}
                     >
                       <div className={cn('absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform', c.ai_optimization_enabled ? 'translate-x-4' : 'translate-x-0.5')} />
@@ -230,7 +232,7 @@ export function CampaignDetailPage() {
                 </div>
               </div>
               <div>
-                <p className="text-xs text-gray-500 dark:text-slate-400 uppercase font-medium">Reward Value</p>
+                <p className="text-xs text-gray-500 dark:text-slate-400 uppercase font-medium">{t('dashboard.campaignDetail.rewardValue')}</p>
                 <p className="text-sm text-gray-900 dark:text-slate-200 mt-1">{formatCurrency(c.reward_value)} per view</p>
               </div>
             </div>
@@ -240,10 +242,10 @@ export function CampaignDetailPage() {
 
       {activeTab === 'analytics' && (
         <Card>
-          <CardHeader title="Detailed Analytics" subtitle="View comprehensive analytics on the Analytics page" />
-          <p className="text-gray-500 dark:text-slate-400 text-sm">Detailed campaign analytics are available on the dedicated Analytics page with advanced filtering and export options.</p>
+          <CardHeader title={t('dashboard.campaignDetail.analyticsTitle')} subtitle={t('dashboard.campaignDetail.analyticsSubtitle')} />
+          <p className="text-gray-500 dark:text-slate-400 text-sm">{t('dashboard.campaignDetail.analyticsBody')}</p>
           <Link to="/dashboard/analytics" className="inline-flex items-center gap-1 text-sm text-primary-600 hover:text-primary-700 font-medium mt-4">
-            Go to Analytics <TrendingUp className="h-3.5 w-3.5" />
+            {t('dashboard.campaignDetail.goAnalytics')} <TrendingUp className="h-3.5 w-3.5" />
           </Link>
         </Card>
       )}
@@ -263,30 +265,30 @@ export function CampaignDetailPage() {
 
       {activeTab === 'heatmap' && (
         <Card>
-          <CardHeader title="Geographic Heatmap" subtitle="View engagement heatmap on the Heatmaps page" />
-          <p className="text-gray-500 dark:text-slate-400 text-sm">Geographic engagement data is available on the dedicated Heatmaps page.</p>
+          <CardHeader title={t('dashboard.campaignDetail.heatmapTitle')} subtitle={t('dashboard.campaignDetail.heatmapSubtitle')} />
+          <p className="text-gray-500 dark:text-slate-400 text-sm">{t('dashboard.campaignDetail.heatmapBody')}</p>
           <Link to="/dashboard/heatmaps" className="inline-flex items-center gap-1 text-sm text-primary-600 hover:text-primary-700 font-medium mt-4">
-            Go to Heatmaps <Map className="h-3.5 w-3.5" />
+            {t('dashboard.campaignDetail.goHeatmaps')} <Map className="h-3.5 w-3.5" />
           </Link>
         </Card>
       )}
 
       {activeTab === 'ai' && (
         <Card>
-          <CardHeader title="AI Optimization" subtitle="View AI recommendations on the AI Optimization page" />
-          <p className="text-gray-500 dark:text-slate-400 text-sm">AI-powered recommendations and audit logs are available on the dedicated AI Optimization page.</p>
+          <CardHeader title={t('dashboard.campaignDetail.aiTitle')} subtitle={t('dashboard.campaignDetail.aiSubtitle')} />
+          <p className="text-gray-500 dark:text-slate-400 text-sm">{t('dashboard.campaignDetail.aiBody')}</p>
           <Link to="/dashboard/ai-optimization" className="inline-flex items-center gap-1 text-sm text-primary-600 hover:text-primary-700 font-medium mt-4">
-            Go to AI Optimization <Brain className="h-3.5 w-3.5" />
+            {t('dashboard.campaignDetail.goAi')} <Brain className="h-3.5 w-3.5" />
           </Link>
         </Card>
       )}
 
       {activeTab === 'team' && (
         <Card>
-          <CardHeader title="Team" subtitle="Manage team on the Team page" />
-          <p className="text-gray-500 dark:text-slate-400 text-sm">Team management features are available on the dedicated Team page.</p>
+          <CardHeader title={t('dashboard.campaignDetail.tabs.team')} subtitle={t('dashboard.campaignDetail.teamSubtitle')} />
+          <p className="text-gray-500 dark:text-slate-400 text-sm">{t('dashboard.campaignDetail.teamBody')}</p>
           <Link to="/dashboard/team" className="inline-flex items-center gap-1 text-sm text-primary-600 hover:text-primary-700 font-medium mt-4">
-            Go to Team <Users className="h-3.5 w-3.5" />
+            {t('dashboard.campaignDetail.goTeam')} <Users className="h-3.5 w-3.5" />
           </Link>
         </Card>
       )}

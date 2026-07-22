@@ -765,7 +765,13 @@
       "createdToast": "Kampanjen har skapats!",
       "createFailedToast": "Det gick inte att skapa kampanjen",
       "draftToast": "Kampanjen sparades som utkast",
-      "draftFailedToast": "Det gick inte att spara utkastet"
+      "draftFailedToast": "Det gick inte att spara utkastet",
+      "steps": {
+        "basic": "Grunduppgifter",
+        "budget": "Budget och målgrupp",
+        "creatives": "Annonsmaterial",
+        "review": "Granska och starta"
+      }
     },
     "campaignEdit": {
       "title": "Redigera kampanj",
@@ -786,7 +792,12 @@
       "regions": "Regioner",
       "saveChanges": "Spara ändringar",
       "updatedToast": "Kampanjen har uppdaterats",
-      "updateFailedToast": "Det gick inte att uppdatera kampanjen"
+      "updateFailedToast": "Det gick inte att uppdatera kampanjen",
+      "steps": {
+        "basic": "Grunduppgifter",
+        "budget": "Budget och målgrupp",
+        "review": "Granska och spara"
+      }
     },
     "campaignDetail": {
       "notFound": "Kampanjen hittades inte",

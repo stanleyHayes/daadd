@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { languages } from '@/i18n/config';
 import { Card, CardHeader, CardFooter } from '@/components/ui/Card';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Input } from '@/components/ui/Input';
@@ -24,11 +26,12 @@ function loadFromStorage<T>(key: string, defaults: T): T {
  }
 }
 
+// Labels come from `dashboard.settings.tabs`, keyed by `key`.
 const tabs = [
- { key: 'profile', label: 'Profile', icon: User },
- { key: 'preferences', label: 'Preferences', icon: Palette },
- { key: 'notifications', label: 'Notifications', icon: Bell },
- { key: 'security', label: 'Security', icon: Lock },
+ { key: 'profile', icon: User },
+ { key: 'preferences', icon: Palette },
+ { key: 'notifications', icon: Bell },
+ { key: 'security', icon: Lock },
 ];
 
 function Toggle({ checked, onChange }: { checked: boolean; onChange: () => void }) {
@@ -65,6 +68,7 @@ const defaultPreferences = {
 };
 
 export function SettingsPage() {
+  const { t, i18n } = useTranslation();
  const user = useAuthStore((s) => s.user);
  const { theme, setTheme } = useThemeStore();
  const [activeTab, setActiveTab] = useState('profile');
@@ -95,34 +99,36 @@ export function SettingsPage() {
 
  const savePreferences = () => {
  localStorage.setItem(STORAGE_KEY_PREFERENCES, JSON.stringify(preferences));
- toast.success('Preferences saved');
+ // The picker only stored a string before; actually switch the UI language.
+ if (preferences.language !== i18n.resolvedLanguage) i18n.changeLanguage(preferences.language);
+ toast.success(t('dashboard.settings.preferencesSaved'));
  };
 
  const handleSaveProfile = async () => {
  if (!user) return;
  try {
  await updateProfileMutation.mutateAsync({ name: profileForm.name });
- toast.success('Profile updated');
+ toast.success(t('dashboard.profile.updated'));
  } catch {
- toast.error('Failed to update profile');
+ toast.error(t('dashboard.profile.updateFailed'));
  }
  };
 
  const handleChangePassword = async () => {
  if (passwordForm.new !== passwordForm.confirm) {
- toast.error('Passwords do not match');
+ toast.error(t('dashboard.profile.passwordsMismatch'));
  return;
  }
  if (passwordForm.new.length < 8) {
- toast.error('Password must be at least 8 characters');
+ toast.error(t('dashboard.profile.passwordMin8'));
  return;
  }
  try {
  await changePasswordMutation.mutateAsync({ currentPassword: passwordForm.current, newPassword: passwordForm.new });
- toast.success('Password changed');
+ toast.success(t('dashboard.profile.passwordChanged'));
  setPasswordForm({ current: '', new: '', confirm: '' });
  } catch {
- toast.error('Failed to change password. Check your current password.');
+ toast.error(t('dashboard.profile.passwordFailed'));
  }
  };
 
@@ -130,8 +136,8 @@ export function SettingsPage() {
  <PageTransition>
  <div className="max-w-7xl mx-auto space-y-6">
  <PageHeader
- title="Settings"
- subtitle="Manage your account, preferences, and security"
+ title={t('dashboard.settings.title')}
+ subtitle={t('dashboard.settings.subtitle')}
  />
 
  {/* Tab bar */}
@@ -150,7 +156,7 @@ export function SettingsPage() {
  )}
  >
  <Icon className="h-4 w-4" />
- <span className="hidden sm:inline">{tab.label}</span>
+ <span className="hidden sm:inline">{t(`dashboard.settings.tabs.${tab.key}`)}</span>
  </button>
  );
  })}
@@ -160,7 +166,7 @@ export function SettingsPage() {
  {activeTab === 'profile' && (
  <div className="space-y-6">
  <Card>
- <CardHeader title="Profile Information" subtitle="Update your personal details" />
+ <CardHeader title={t('dashboard.settings.infoTitle')} subtitle={t('dashboard.settings.infoSubtitle')} />
  <div className="flex items-center gap-6 mb-6">
  <div className="relative">
  <div className="w-20 h-20 rounded-full bg-primary-500 flex items-center justify-center text-white text-2xl font-bold">
@@ -177,12 +183,12 @@ export function SettingsPage() {
  </div>
  </div>
  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
- <Input label="Full Name" value={profileForm.name} onChange={(e) => setProfileForm({ ...profileForm, name: e.target.value })} />
- <Input label="Email" type="email" value={profileForm.email} disabled hint="Email address cannot be changed" />
+ <Input label={t('dashboard.settings.fullName')} value={profileForm.name} onChange={(e) => setProfileForm({ ...profileForm, name: e.target.value })} />
+ <Input label={t('dashboard.common.email')} type="email" value={profileForm.email} disabled hint={t('dashboard.settings.emailImmutable')} />
  </div>
  <CardFooter>
  <Button onClick={handleSaveProfile} disabled={updateProfileMutation.isPending}>
- {updateProfileMutation.isPending ? <><Loader2 className="h-4 w-4 animate-spin mr-2" /> Saving...</> : 'Save Changes'}
+ {updateProfileMutation.isPending ? <><Loader2 className="h-4 w-4 animate-spin mr-2" /> {t('dashboard.common.saving')}</> : 'Save Changes'}
  </Button>
  </CardFooter>
  </Card>
@@ -193,10 +199,10 @@ export function SettingsPage() {
  {activeTab === 'preferences' && (
  <div className="space-y-6">
  <Card>
- <CardHeader title="Appearance" subtitle="Customize how SmartAdDeals looks" />
+ <CardHeader title={t('dashboard.settings.appearanceTitle')} subtitle={t('dashboard.settings.appearanceSubtitle')} />
  <div className="space-y-5">
  <div>
- <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">Theme</label>
+ <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">{t('dashboard.settings.theme')}</label>
  <div className="flex gap-3">
  {(['light', 'dark'] as const).map((t) => (
  <button
@@ -219,15 +225,15 @@ export function SettingsPage() {
  </div>
  <div className="flex items-center justify-between py-2">
  <div>
- <p className="text-sm font-medium text-gray-900 dark:text-white">Enable Animations</p>
- <p className="text-xs text-gray-500 dark:text-slate-400">Smooth transitions and micro-interactions</p>
+ <p className="text-sm font-medium text-gray-900 dark:text-white">{t('dashboard.settings.animations')}</p>
+ <p className="text-xs text-gray-500 dark:text-slate-400">{t('dashboard.settings.animationsHint')}</p>
  </div>
  <Toggle checked={preferences.animationsEnabled} onChange={() => setPreferences({ ...preferences, animationsEnabled: !preferences.animationsEnabled })} />
  </div>
  <div className="flex items-center justify-between py-2">
  <div>
- <p className="text-sm font-medium text-gray-900 dark:text-white">Compact Numbers</p>
- <p className="text-xs text-gray-500 dark:text-slate-400">Show 1.2K instead of 1,200</p>
+ <p className="text-sm font-medium text-gray-900 dark:text-white">{t('dashboard.settings.compactNumbers')}</p>
+ <p className="text-xs text-gray-500 dark:text-slate-400">{t('dashboard.settings.compactNumbersHint')}</p>
  </div>
  <Toggle checked={preferences.compactNumbers} onChange={() => setPreferences({ ...preferences, compactNumbers: !preferences.compactNumbers })} />
  </div>
@@ -235,26 +241,17 @@ export function SettingsPage() {
  </Card>
 
  <Card>
- <CardHeader title="Regional Settings" subtitle="Configure locale and formats" />
+ <CardHeader title={t('dashboard.settings.regionalTitle')} subtitle={t('dashboard.settings.regionalSubtitle')} />
  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
  <Select
- label="Language"
+ label={t('dashboard.settings.language')}
  leftIcon={<Globe className="h-3.5 w-3.5" />}
- options={[
- { value: 'en', label: 'English' },
- { value: 'es', label: 'Español' },
- { value: 'fr', label: 'Français' },
- { value: 'de', label: 'Deutsch' },
- { value: 'pt', label: 'Português' },
- { value: 'zh', label: '中文' },
- { value: 'ja', label: '日本語' },
- { value: 'ar', label: 'العربية' },
- ]}
+ options={Object.entries(languages).map(([code, { name }]) => ({ value: code, label: name }))}
  value={preferences.language}
  onChange={(v) => setPreferences({ ...preferences, language: v })}
  />
  <Select
- label="Timezone"
+ label={t('dashboard.settings.timezone')}
  leftIcon={<Clock className="h-3.5 w-3.5" />}
  options={[
  { value: 'America/New_York', label: 'Eastern Time (ET)' },
@@ -272,7 +269,7 @@ export function SettingsPage() {
  onChange={(v) => setPreferences({ ...preferences, timezone: v })}
  />
  <Select
- label="Currency"
+ label={t('dashboard.settings.currency')}
  options={[
  { value: 'USD', label: 'USD ($)' },
  { value: 'EUR', label: 'EUR (€)' },
@@ -285,7 +282,7 @@ export function SettingsPage() {
  onChange={(v) => setPreferences({ ...preferences, currency: v })}
  />
  <Select
- label="Date Format"
+ label={t('dashboard.settings.dateFormat')}
  options={[
  { value: 'MMM d, yyyy', label: 'Mar 15, 2026' },
  { value: 'dd/MM/yyyy', label: '15/03/2026' },
@@ -297,29 +294,29 @@ export function SettingsPage() {
  />
  </div>
  <CardFooter>
- <Button onClick={savePreferences}>Save Preferences</Button>
+ <Button onClick={savePreferences}>{t('dashboard.settings.savePreferences')}</Button>
  </CardFooter>
  </Card>
 
  <Card>
- <CardHeader title="Dashboard" subtitle="Customize your dashboard experience" />
+ <CardHeader title={t('dashboard.settings.dashboardTitle')} subtitle={t('dashboard.settings.dashboardSubtitle')} />
  <div className="space-y-4">
  <div className="flex items-center justify-between py-2">
  <div>
- <p className="text-sm font-medium text-gray-900 dark:text-white">Auto-refresh Dashboard</p>
- <p className="text-xs text-gray-500 dark:text-slate-400">Keep metrics up to date automatically</p>
+ <p className="text-sm font-medium text-gray-900 dark:text-white">{t('dashboard.settings.autoRefresh')}</p>
+ <p className="text-xs text-gray-500 dark:text-slate-400">{t('dashboard.settings.autoRefreshHint')}</p>
  </div>
  <Toggle checked={preferences.autoRefreshDashboard} onChange={() => setPreferences({ ...preferences, autoRefreshDashboard: !preferences.autoRefreshDashboard })} />
  </div>
  {preferences.autoRefreshDashboard && (
  <div className="w-48">
  <Select
- label="Refresh Interval"
+ label={t('dashboard.settings.refreshInterval')}
  options={[
- { value: '15', label: 'Every 15 seconds' },
- { value: '30', label: 'Every 30 seconds' },
- { value: '60', label: 'Every 1 minute' },
- { value: '300', label: 'Every 5 minutes' },
+ { value: '15', label: t('dashboard.settings.intervals.s15') },
+ { value: '30', label: t('dashboard.settings.intervals.s30') },
+ { value: '60', label: t('dashboard.settings.intervals.m1') },
+ { value: '300', label: t('dashboard.settings.intervals.m5') },
  ]}
  value={preferences.refreshInterval}
  onChange={(v) => setPreferences({ ...preferences, refreshInterval: v })}
@@ -335,18 +332,18 @@ export function SettingsPage() {
  {activeTab === 'notifications' && (
  <div className="space-y-6">
  <Card>
- <CardHeader title="Campaign Alerts" subtitle="Stay informed about your campaigns" />
+ <CardHeader title={t('dashboard.settings.campaignAlerts')} subtitle={t('dashboard.settings.campaignAlertsSubtitle')} />
  <div className="space-y-1 divide-y divide-gray-100 dark:divide-slate-700">
  {[
- { key: 'anomaly', label: 'Anomaly Alerts', desc: 'CTR drops, traffic spikes, and bot detection' },
- { key: 'ai_recommendations', label: 'AI Recommendations', desc: 'When AI generates optimization suggestions' },
- { key: 'budget_alerts', label: 'Budget Alerts', desc: 'When campaigns reach 80% or 100% budget' },
- { key: 'campaign_status', label: 'Campaign Status Changes', desc: 'Paused, completed, or suspended campaigns' },
+ { key: 'anomaly', i18n: 'anomaly' },
+ { key: 'ai_recommendations', i18n: 'ai' },
+ { key: 'budget_alerts', i18n: 'budget' },
+ { key: 'campaign_status', i18n: 'campaignStatus' },
  ].map((item) => (
  <div key={item.key} className="flex items-center justify-between py-3">
  <div>
- <p className="text-sm font-medium text-gray-900 dark:text-white">{item.label}</p>
- <p className="text-xs text-gray-500 dark:text-slate-400">{item.desc}</p>
+ <p className="text-sm font-medium text-gray-900 dark:text-white">{t(`dashboard.settings.alerts.${item.i18n}`)}</p>
+ <p className="text-xs text-gray-500 dark:text-slate-400">{t(`dashboard.settings.alerts.${item.i18n}Desc`)}</p>
  </div>
  <Toggle checked={notifications[item.key as keyof typeof notifications]} onChange={() => toggleNotif(item.key)} />
  </div>
@@ -355,18 +352,18 @@ export function SettingsPage() {
  </Card>
 
  <Card>
- <CardHeader title="General Notifications" subtitle="Other notification preferences" />
+ <CardHeader title={t('dashboard.settings.generalNotifications')} subtitle={t('dashboard.settings.generalNotificationsSubtitle')} />
  <div className="space-y-1 divide-y divide-gray-100 dark:divide-slate-700">
  {[
- { key: 'email', label: 'Email Notifications', desc: 'Receive important updates via email' },
- { key: 'team', label: 'Team Activity', desc: 'Updates about team member actions' },
- { key: 'weekly', label: 'Weekly Reports', desc: 'Performance summary every Monday' },
- { key: 'reward_earned', label: 'Reward Earned', desc: 'When users earn rewards from your ads' },
+ { key: 'email', i18n: 'email' },
+ { key: 'team', i18n: 'team' },
+ { key: 'weekly', i18n: 'weekly' },
+ { key: 'reward_earned', i18n: 'reward' },
  ].map((item) => (
  <div key={item.key} className="flex items-center justify-between py-3">
  <div>
- <p className="text-sm font-medium text-gray-900 dark:text-white">{item.label}</p>
- <p className="text-xs text-gray-500 dark:text-slate-400">{item.desc}</p>
+ <p className="text-sm font-medium text-gray-900 dark:text-white">{t(`dashboard.settings.alerts.${item.i18n}`)}</p>
+ <p className="text-xs text-gray-500 dark:text-slate-400">{t(`dashboard.settings.alerts.${item.i18n}Desc`)}</p>
  </div>
  <Toggle checked={notifications[item.key as keyof typeof notifications]} onChange={() => toggleNotif(item.key)} />
  </div>
@@ -380,31 +377,31 @@ export function SettingsPage() {
  {activeTab === 'security' && (
  <div className="space-y-6">
  <Card>
- <CardHeader title="Change Password" subtitle="Update your password regularly for security" />
+ <CardHeader title={t('dashboard.settings.passwordTitle')} subtitle={t('dashboard.settings.passwordSubtitle')} />
  <div className="space-y-4 max-w-md">
- <Input label="Current Password" type="password" value={passwordForm.current} onChange={(e) => setPasswordForm({ ...passwordForm, current: e.target.value })} />
- <Input label="New Password" type="password" value={passwordForm.new} onChange={(e) => setPasswordForm({ ...passwordForm, new: e.target.value })} />
- <Input label="Confirm New Password" type="password" value={passwordForm.confirm} onChange={(e) => setPasswordForm({ ...passwordForm, confirm: e.target.value })} />
+ <Input label={t('dashboard.settings.currentPassword')} type="password" value={passwordForm.current} onChange={(e) => setPasswordForm({ ...passwordForm, current: e.target.value })} />
+ <Input label={t('dashboard.settings.newPassword')} type="password" value={passwordForm.new} onChange={(e) => setPasswordForm({ ...passwordForm, new: e.target.value })} />
+ <Input label={t('dashboard.settings.confirmNewPassword')} type="password" value={passwordForm.confirm} onChange={(e) => setPasswordForm({ ...passwordForm, confirm: e.target.value })} />
  </div>
  <CardFooter>
  <Button
  onClick={handleChangePassword}
  disabled={changePasswordMutation.isPending || !passwordForm.current || !passwordForm.new || !passwordForm.confirm}
  >
- {changePasswordMutation.isPending ? <><Loader2 className="h-4 w-4 animate-spin mr-2" /> Changing...</> : 'Change Password'}
+ {changePasswordMutation.isPending ? <><Loader2 className="h-4 w-4 animate-spin mr-2" /> {t('dashboard.settings.changing')}</> : 'Change Password'}
  </Button>
  </CardFooter>
  </Card>
 
  <Card>
- <CardHeader title="Danger Zone" />
+ <CardHeader title={t('dashboard.settings.dangerZone')} />
  <div className="flex items-center justify-between p-4 rounded-lg border border-danger-200 dark:border-danger-800 bg-danger-50 dark:bg-danger-900/10">
  <div>
- <p className="text-sm font-medium text-danger-700 dark:text-danger-400">Delete Account</p>
- <p className="text-xs text-danger-600 dark:text-danger-500">Permanently delete your account and all data</p>
+ <p className="text-sm font-medium text-danger-700 dark:text-danger-400">{t('dashboard.settings.deleteAccount')}</p>
+ <p className="text-xs text-danger-600 dark:text-danger-500">{t('dashboard.settings.deleteAccountHint')}</p>
  </div>
- <Button variant="danger" size="sm" onClick={() => toast.error('Account deletion requires email confirmation')}>
- Delete Account
+ <Button variant="danger" size="sm" onClick={() => toast.error(t('dashboard.settings.deleteRequiresEmail'))}>
+ {t('dashboard.settings.deleteAccount')}
  </Button>
  </div>
  </Card>

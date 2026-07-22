@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { PageTransition } from '@/components/ui/PageTransition';
 import { PageHeader } from '@/components/layout/PageHeader';
@@ -32,11 +33,12 @@ import {
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
+// Labels come from `dashboard.profile.tabs`, keyed by `key`.
 const tabs = [
-  { key: 'overview', label: 'Overview', icon: User },
-  { key: 'rewards', label: 'Rewards & History', icon: History },
-  { key: 'settings', label: 'Settings', icon: Palette },
-  { key: 'security', label: 'Security', icon: Lock },
+  { key: 'overview', icon: User },
+  { key: 'rewards', icon: History },
+  { key: 'settings', icon: Palette },
+  { key: 'security', icon: Lock },
 ];
 
 const statusStyles: Record<string, string> = {
@@ -47,6 +49,7 @@ const statusStyles: Record<string, string> = {
 };
 
 export function ProfilePage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const user = useAuthStore((s) => s.user);
   const logout = useAuthStore((s) => s.logout);
@@ -96,19 +99,19 @@ export function ProfilePage() {
         preferences,
       });
       if (preferences.theme !== theme) setTheme(preferences.theme as 'light' | 'dark');
-      toast.success('Profile updated');
+      toast.success(t('dashboard.profile.updated'));
     } catch {
-      toast.error('Failed to update profile');
+      toast.error(t('dashboard.profile.updateFailed'));
     }
   };
 
   const handleChangePassword = async () => {
     if (passwordForm.new !== passwordForm.confirm) {
-      toast.error('Passwords do not match');
+      toast.error(t('dashboard.profile.passwordsMismatch'));
       return;
     }
     if (passwordForm.new.length < 8) {
-      toast.error('Password must be at least 8 characters');
+      toast.error(t('dashboard.profile.passwordMin8'));
       return;
     }
     try {
@@ -116,10 +119,10 @@ export function ProfilePage() {
         currentPassword: passwordForm.current,
         newPassword: passwordForm.new,
       });
-      toast.success('Password changed');
+      toast.success(t('dashboard.profile.passwordChanged'));
       setPasswordForm({ current: '', new: '', confirm: '' });
     } catch {
-      toast.error('Failed to change password. Check your current password.');
+      toast.error(t('dashboard.profile.passwordFailed'));
     }
   };
 
@@ -132,8 +135,8 @@ export function ProfilePage() {
     <PageTransition>
       <div className="max-w-7xl mx-auto space-y-6">
         <PageHeader
-          title="My Profile"
-          subtitle="Manage your account, track ads you have viewed, and control your rewards."
+          title={t('dashboard.profile.title')}
+          subtitle={t('dashboard.profile.subtitle')}
         />
 
         {/* User hero card */}
@@ -170,7 +173,7 @@ export function ProfilePage() {
                 className="bg-transparent border-white/30 text-white hover:bg-white/10 hover:text-white focus:ring-white/40"
                 onClick={() => setActiveTab('settings')}
               >
-                Edit Profile
+                {t('dashboard.profile.edit')}
               </Button>
             </div>
           </div>
@@ -179,25 +182,25 @@ export function ProfilePage() {
           <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-border-color dark:divide-slate-800">
             <div className="p-5 text-center">
               <div className="flex items-center justify-center gap-2 text-text-muted text-xs mb-1">
-                <Eye className="h-3.5 w-3.5" /> Ads Viewed
+                <Eye className="h-3.5 w-3.5" /> {t('dashboard.profile.adsViewed')}
               </div>
               <p className="text-2xl font-bold text-text-primary">{adsViewed}</p>
             </div>
             <div className="p-5 text-center">
               <div className="flex items-center justify-center gap-2 text-text-muted text-xs mb-1">
-                <Coins className="h-3.5 w-3.5" /> Total Earned
+                <Coins className="h-3.5 w-3.5" /> {t('dashboard.profile.totalEarned')}
               </div>
               <p className="text-2xl font-bold text-text-primary">${totalEarned.toFixed(2)}</p>
             </div>
             <div className="p-5 text-center">
               <div className="flex items-center justify-center gap-2 text-text-muted text-xs mb-1">
-                <Wallet className="h-3.5 w-3.5" /> Balance
+                <Wallet className="h-3.5 w-3.5" /> {t('dashboard.profile.balance')}
               </div>
               <p className="text-2xl font-bold text-text-primary">${(balance?.balance || 0).toFixed(2)}</p>
             </div>
             <div className="p-5 text-center">
               <div className="flex items-center justify-center gap-2 text-text-muted text-xs mb-1">
-                <Clock className="h-3.5 w-3.5" /> Pending
+                <Clock className="h-3.5 w-3.5" /> {t('dashboard.profile.pending')}
               </div>
               <p className="text-2xl font-bold text-text-primary">${pendingAmount.toFixed(2)}</p>
             </div>
@@ -220,7 +223,7 @@ export function ProfilePage() {
                 )}
               >
                 <Icon className="h-4 w-4" />
-                <span className="hidden sm:inline">{tab.label}</span>
+                <span className="hidden sm:inline">{t(`dashboard.profile.tabs.${tab.key}`)}</span>
               </button>
             );
           })}
@@ -230,10 +233,10 @@ export function ProfilePage() {
         {activeTab === 'overview' && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <Card className="lg:col-span-2">
-              <CardHeader title="Recent Activity" subtitle="Your latest ad views, rewards, and account updates" />
+              <CardHeader title={t('dashboard.profile.activityTitle')} subtitle={t('dashboard.profile.activitySubtitle')} />
               <div className="space-y-3">
                 {notificationsLoading ? (
-                  <div className="py-8 text-center text-text-muted">Loading activity...</div>
+                  <div className="py-8 text-center text-text-muted">{t('dashboard.profile.loadingActivity')}</div>
                 ) : notifications && notifications.length > 0 ? (
                   notifications.slice(0, 6).map((n) => (
                     <div
@@ -258,9 +261,9 @@ export function ProfilePage() {
                     size="sm"
                     variant="plain"
                     icon={<Bell />}
-                    title="No activity yet"
-                    description="Your ad views, rewards, and account updates will show up here."
-                    actionLabel="Browse Ads"
+                    title={t('dashboard.profile.activityEmpty')}
+                    description={t('dashboard.profile.activityEmptyDesc')}
+                    actionLabel={t('dashboard.profile.browseAds')}
                     onAction={() => navigate('/ads')}
                   />
                 )}
@@ -268,19 +271,19 @@ export function ProfilePage() {
             </Card>
 
             <Card>
-              <CardHeader title="Quick Actions" subtitle="Shortcuts to common tasks" />
+              <CardHeader title={t('dashboard.profile.quickActions')} subtitle={t('dashboard.profile.quickActionsSubtitle')} />
               <div className="space-y-2">
                 <Button variant="outline" className="w-full justify-start gap-2" onClick={() => navigate('/ads')}>
-                  <Eye className="h-4 w-4" /> Browse Ads
+                  <Eye className="h-4 w-4" /> {t('dashboard.profile.browseAds')}
                 </Button>
                 <Button variant="outline" className="w-full justify-start gap-2" onClick={() => setActiveTab('rewards')}>
-                  <History className="h-4 w-4" /> View Reward History
+                  <History className="h-4 w-4" /> {t('dashboard.profile.viewRewardHistory')}
                 </Button>
                 <Button variant="outline" className="w-full justify-start gap-2" onClick={() => setActiveTab('settings')}>
-                  <Palette className="h-4 w-4" /> Edit Preferences
+                  <Palette className="h-4 w-4" /> {t('dashboard.profile.editPreferences')}
                 </Button>
                 <Button variant="outline" className="w-full justify-start gap-2 text-danger-600" onClick={handleLogout}>
-                  <LogOut className="h-4 w-4" /> Log Out
+                  <LogOut className="h-4 w-4" /> {t('dashboard.profile.logOut')}
                 </Button>
               </div>
             </Card>
@@ -293,18 +296,18 @@ export function ProfilePage() {
             <StreakCard />
             <VipCard />
             <Card>
-            <CardHeader title="Reward History" subtitle="All rewards you have earned from viewing ads" />
+            <CardHeader title={t('dashboard.profile.rewardsTitle')} subtitle={t('dashboard.profile.rewardsSubtitle')} />
             {rewardsLoading ? (
-              <div className="py-12 text-center text-text-muted">Loading rewards...</div>
+              <div className="py-12 text-center text-text-muted">{t('dashboard.profile.loadingRewards')}</div>
             ) : rewards && rewards.length > 0 ? (
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-border-color dark:border-slate-800 text-left text-text-muted">
                       <th className="py-3 px-4 font-medium">Ad</th>
-                      <th className="py-3 px-4 font-medium">Amount</th>
-                      <th className="py-3 px-4 font-medium">Status</th>
-                      <th className="py-3 px-4 font-medium">Date</th>
+                      <th className="py-3 px-4 font-medium">{t('dashboard.common.amount')}</th>
+                      <th className="py-3 px-4 font-medium">{t('dashboard.common.status')}</th>
+                      <th className="py-3 px-4 font-medium">{t('dashboard.common.date')}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -334,9 +337,9 @@ export function ProfilePage() {
               <EmptyState
                 variant="plain"
                 icon={<Coins />}
-                title="No rewards yet"
-                description="Start browsing ads to earn your first reward. Every view counts."
-                actionLabel="Browse Ads"
+                title={t('dashboard.profile.rewardsEmpty')}
+                description={t('dashboard.profile.rewardsEmptyDesc')}
+                actionLabel={t('dashboard.profile.browseAds')}
                 onAction={() => navigate('/ads')}
               />
             )}
@@ -349,25 +352,25 @@ export function ProfilePage() {
         {activeTab === 'settings' && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card>
-              <CardHeader title="Profile Information" subtitle="Update your name and avatar" />
+              <CardHeader title={t('dashboard.profile.infoTitle')} subtitle={t('dashboard.profile.infoSubtitle')} />
               <div className="space-y-4">
                 <Input
-                  label="Full Name"
+                  label={t('dashboard.profile.fullName')}
                   value={profileForm.name}
                   onChange={(e) => setProfileForm({ ...profileForm, name: e.target.value })}
                 />
                 <Input
-                  label="Avatar URL"
+                  label={t('dashboard.profile.avatarUrl')}
                   value={profileForm.avatar_url}
                   onChange={(e) => setProfileForm({ ...profileForm, avatar_url: e.target.value })}
                   placeholder="https://..."
                 />
-                <Input label="Email" type="email" value={user.email} disabled />
+                <Input label={t('dashboard.common.email')} type="email" value={user.email} disabled />
               </div>
               <CardFooter>
                 <Button onClick={handleSaveProfile} disabled={updateProfileMutation.isPending}>
                   {updateProfileMutation.isPending ? (
-                    <><Loader2 className="h-4 w-4 animate-spin mr-2" /> Saving...</>
+                    <><Loader2 className="h-4 w-4 animate-spin mr-2" /> {t('dashboard.common.saving')}</>
                   ) : (
                     'Save Changes'
                   )}
@@ -376,10 +379,10 @@ export function ProfilePage() {
             </Card>
 
             <Card>
-              <CardHeader title="Preferences" subtitle="Customize your experience" />
+              <CardHeader title={t('dashboard.profile.preferencesTitle')} subtitle={t('dashboard.profile.preferencesSubtitle')} />
               <div className="space-y-5">
                 <div>
-                  <label className="block text-sm font-medium text-text-secondary mb-2">Theme</label>
+                  <label className="block text-sm font-medium text-text-secondary mb-2">{t('dashboard.profile.theme')}</label>
                   <Select
                     options={[
                       { value: 'light', label: 'Light' },
@@ -391,7 +394,7 @@ export function ProfilePage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-text-secondary mb-2">Language</label>
+                  <label className="block text-sm font-medium text-text-secondary mb-2">{t('dashboard.profile.language')}</label>
                   <Select
                     options={[
                       { value: 'en', label: 'English' },
@@ -408,7 +411,7 @@ export function ProfilePage() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Bell className="h-4 w-4 text-text-muted" />
-                    <span className="text-sm text-text-primary">Email notifications</span>
+                    <span className="text-sm text-text-primary">{t('dashboard.profile.emailNotifications')}</span>
                   </div>
                   <button
                     onClick={() => setPreferences({ ...preferences, email_notifications: !preferences.email_notifications })}
@@ -426,7 +429,7 @@ export function ProfilePage() {
               </div>
               <CardFooter>
                 <Button variant="outline" onClick={handleSaveProfile} disabled={updateProfileMutation.isPending}>
-                  Save Preferences
+                  {t('dashboard.profile.savePreferences')}
                 </Button>
               </CardFooter>
             </Card>
@@ -437,22 +440,22 @@ export function ProfilePage() {
         {activeTab === 'security' && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card>
-              <CardHeader title="Change Password" subtitle="Update your password to keep your account secure" />
+              <CardHeader title={t('dashboard.profile.passwordTitle')} subtitle={t('dashboard.profile.passwordSubtitle')} />
               <div className="space-y-4">
                 <Input
-                  label="Current Password"
+                  label={t('dashboard.profile.currentPassword')}
                   type="password"
                   value={passwordForm.current}
                   onChange={(e) => setPasswordForm({ ...passwordForm, current: e.target.value })}
                 />
                 <Input
-                  label="New Password"
+                  label={t('dashboard.profile.newPassword')}
                   type="password"
                   value={passwordForm.new}
                   onChange={(e) => setPasswordForm({ ...passwordForm, new: e.target.value })}
                 />
                 <Input
-                  label="Confirm New Password"
+                  label={t('dashboard.profile.confirmNewPassword')}
                   type="password"
                   value={passwordForm.confirm}
                   onChange={(e) => setPasswordForm({ ...passwordForm, confirm: e.target.value })}
@@ -461,7 +464,7 @@ export function ProfilePage() {
               <CardFooter>
                 <Button onClick={handleChangePassword} disabled={changePasswordMutation.isPending}>
                   {changePasswordMutation.isPending ? (
-                    <><Loader2 className="h-4 w-4 animate-spin mr-2" /> Updating...</>
+                    <><Loader2 className="h-4 w-4 animate-spin mr-2" /> {t('dashboard.profile.updating')}</>
                   ) : (
                     'Update Password'
                   )}
@@ -470,12 +473,12 @@ export function ProfilePage() {
             </Card>
 
             <Card>
-              <CardHeader title="Session" subtitle="Sign out of your account on this device" />
+              <CardHeader title={t('dashboard.profile.sessionTitle')} subtitle={t('dashboard.profile.sessionSubtitle')} />
               <p className="text-sm text-text-secondary mb-4">
-                Logging out will end your current session and require you to sign in again.
+                {t('dashboard.profile.sessionBody')}
               </p>
               <Button variant="danger" className="gap-2" onClick={handleLogout}>
-                <LogOut className="h-4 w-4" /> Log Out
+                <LogOut className="h-4 w-4" /> {t('dashboard.profile.logOut')}
               </Button>
             </Card>
           </div>

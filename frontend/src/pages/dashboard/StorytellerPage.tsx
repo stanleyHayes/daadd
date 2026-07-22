@@ -122,7 +122,7 @@ export function StorytellerPage() {
             <div>
               <h3 className="font-semibold text-primary-800 dark:text-primary-300">{t('dashboard.storyteller.preliminaryTitle')}</h3>
               <p className="text-sm text-primary-700 dark:text-primary-400 mt-1">
-                Your campaign is less than 24 hours old. Full story chapters will be available once more data is collected. Here's what we know so far...
+                {t('dashboard.storyteller.preliminaryDesc')}
               </p>
             </div>
           </div>
@@ -145,7 +145,7 @@ export function StorytellerPage() {
               <EmptyState
                 icon={<Sparkles className="h-12 w-12" />}
                 title={t('dashboard.storyteller.noStoryTitle')}
-                description="Generate an AI-powered narrative of your campaign's performance. Stories are created once campaigns have collected sufficient performance data."
+                description="{t('dashboard.storyteller.noStoryDesc')}"
                 size="md"
               />
             </Card>

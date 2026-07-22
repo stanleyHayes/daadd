@@ -117,7 +117,7 @@ export function HeatmapPage() {
                   </div>
                   <div>
                     <p className="text-2xl font-bold text-gray-900 dark:text-white">{formatNumber(heatmapData?.total_views || 0)}</p>
-                    <p className="text-xs text-gray-500 dark:text-slate-400">Total Views</p>
+                    <p className="text-xs text-gray-500 dark:text-slate-400">{t('dashboard.heatmap.totalViews')}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -135,7 +135,7 @@ export function HeatmapPage() {
                   </div>
                   <div>
                     <p className="text-2xl font-bold text-gray-900 dark:text-white">{heatmapData?.active_regions || 0}</p>
-                    <p className="text-xs text-gray-500 dark:text-slate-400">Active Regions</p>
+                    <p className="text-xs text-gray-500 dark:text-slate-400">{t('dashboard.heatmap.activeRegions')}</p>
                   </div>
                 </div>
               </div>

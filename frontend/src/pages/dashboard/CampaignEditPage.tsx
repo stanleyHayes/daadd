@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Card } from '@/components/ui/Card';
@@ -12,9 +13,11 @@ import { useCampaign, useUpdateCampaign } from '@/hooks/useCampaigns';
 import { Loader, Check, ChevronLeft, ChevronRight, Save, Info } from 'lucide-react';
 import toast from 'react-hot-toast';
 
-const steps = ['Basic Info', 'Budget & Targeting', 'Review & Save'];
+// i18n keys under `dashboard.campaignEdit.steps`
+const steps = ['basic', 'budget', 'review'] as const;
 
 export function CampaignEditPage() {
+  const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { data: campaign, isLoading } = useCampaign(id!);
@@ -141,10 +144,10 @@ export function CampaignEditPage() {
           language: formData.languages[0],
         },
       });
-      toast.success('Campaign updated successfully');
+      toast.success(t('dashboard.campaignEdit.updatedToast'));
       navigate(`/dashboard/campaigns/${id}`);
     } catch {
-      toast.error('Failed to update campaign');
+      toast.error(t('dashboard.campaignEdit.updateFailedToast'));
     }
   };
 
@@ -173,9 +176,9 @@ export function CampaignEditPage() {
     return (
       <PageTransition>
         <Card className="p-6 text-center">
-          <p className="text-gray-600">Campaign not found</p>
+          <p className="text-gray-600">{t('dashboard.campaignEdit.notFound')}</p>
           <Button onClick={() => navigate('/dashboard/campaigns')} className="mt-4">
-            Back to Campaigns
+            {t('dashboard.campaignEdit.backToCampaigns')}
           </Button>
         </Card>
       </PageTransition>
@@ -186,13 +189,13 @@ export function CampaignEditPage() {
     <PageTransition>
       <div className="max-w-7xl mx-auto space-y-6">
         <PageHeader
-          title="Edit Campaign"
-          subtitle="Update campaign details"
+          title={t('dashboard.campaignEdit.title')}
+          subtitle={t('dashboard.campaignEdit.subtitle')}
           action={
             <button
               onClick={() => navigate(`/dashboard/campaigns/${id}`)}
               className="p-2 hover:bg-white/10 rounded-lg transition text-white"
-              aria-label="Back to campaign"
+              aria-label="{t('dashboard.campaignEdit.backToCampaign')}"
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
@@ -221,7 +224,7 @@ export function CampaignEditPage() {
                     i === currentStep ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-slate-400'
                   )}
                 >
-                  {step}
+                  {t(`dashboard.campaignEdit.steps.${step}`)}
                 </span>
               </div>
               {i < steps.length - 1 && (
@@ -247,33 +250,33 @@ export function CampaignEditPage() {
             >
               {currentStep === 0 && (
                 <div className="space-y-4">
-                  <h2 className="text-xl font-semibold">Basic Information</h2>
+                  <h2 className="text-xl font-semibold">{t('dashboard.campaignEdit.basicInfo')}</h2>
                   <div>
-                    <label className="block text-sm font-medium mb-2">Campaign Name</label>
+                    <label className="block text-sm font-medium mb-2">{t('dashboard.campaignCreate.name')}</label>
                     <Input
                       value={formData.name}
                       onChange={(e) => updateField('name', e.target.value)}
-                      placeholder="e.g., Summer Sale 2026"
+                      placeholder={t('dashboard.campaignEdit.namePlaceholder')}
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2">Description</label>
+                    <label className="block text-sm font-medium mb-2">{t('dashboard.common.description')}</label>
                     <textarea
                       value={formData.description}
                       onChange={(e) => updateField('description', e.target.value)}
-                      placeholder="Describe your campaign..."
+                      placeholder={t('dashboard.campaignEdit.descPlaceholder')}
                       rows={4}
                       className="block w-full rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-2 text-sm dark:text-white placeholder:text-gray-400 dark:placeholder:text-slate-500 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 focus:outline-none resize-y"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2">Industry</label>
+                    <label className="block text-sm font-medium mb-2">{t('dashboard.common.industry')}</label>
                     <select
                       value={formData.industry}
                       onChange={(e) => updateField('industry', e.target.value)}
                       className="block w-full rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-2 text-sm dark:text-white focus:border-primary-500 focus:ring-1 focus:ring-primary-500 focus:outline-none"
                     >
-                      <option value="">Select an industry</option>
+                      <option value="">{t('dashboard.campaignCreate.selectIndustry')}</option>
                       {INDUSTRIES.map((ind) => (
                         <option key={ind.value} value={ind.value}>
                           {ind.label}
@@ -286,10 +289,10 @@ export function CampaignEditPage() {
 
               {currentStep === 1 && (
                 <div className="space-y-4">
-                  <h2 className="text-xl font-semibold">Budget & Targeting</h2>
+                  <h2 className="text-xl font-semibold">{t('dashboard.campaignCreate.stepBudget')}</h2>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium mb-2">Total Budget ($)</label>
+                      <label className="block text-sm font-medium mb-2">{t('dashboard.campaignEdit.totalBudget')}</label>
                       <Input
                         type="number"
                         value={formData.budget_total}
@@ -298,7 +301,7 @@ export function CampaignEditPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">Reward Value ($)</label>
+                      <label className="block text-sm font-medium mb-2">{t('dashboard.campaignCreate.rewardValue')}</label>
                       <Input
                         type="number"
                         value={formData.reward_value}
@@ -309,36 +312,36 @@ export function CampaignEditPage() {
                   </div>
 
                   <div>
-                    <p className="text-sm font-semibold text-text-primary mb-1">Business & contact</p>
-                    <p className="text-xs text-text-secondary mb-3">Shown on this campaign's adverts so customers can find and reach you.</p>
+                    <p className="text-sm font-semibold text-text-primary mb-1">{t('dashboard.campaignCreate.business')}</p>
+                    <p className="text-xs text-text-secondary mb-3">{t('dashboard.campaignCreate.businessHint')}</p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <Input label="Location" placeholder="123 High St, Accra" value={formData.location} onChange={(e) => updateField('location', e.target.value)} />
-                      <Input label="Contact Phone" type="tel" placeholder="+233 20 000 0000" value={formData.contact_phone} onChange={(e) => updateField('contact_phone', e.target.value)} />
-                      <Input label="Contact Email" type="email" placeholder="hello@company.com" value={formData.contact_email} onChange={(e) => updateField('contact_email', e.target.value)} />
-                      <Input label="Website" placeholder="company.com" value={formData.contact_website} onChange={(e) => updateField('contact_website', e.target.value)} />
-                      <Input label="Business category" placeholder="Coffee shop" value={formData.business_category} onChange={(e) => updateField('business_category', e.target.value)} />
-                      <Input label="Opening hours" placeholder="Mon–Sat 9am–7pm" value={formData.opening_hours} onChange={(e) => updateField('opening_hours', e.target.value)} />
-                      <Input label="Business logo URL" placeholder="https://…/logo.png" value={formData.business_logo} onChange={(e) => updateField('business_logo', e.target.value)} hint="Defaults to your profile avatar." />
+                      <Input label={t('dashboard.campaignCreate.location')} placeholder="123 High St, Accra" value={formData.location} onChange={(e) => updateField('location', e.target.value)} />
+                      <Input label={t('dashboard.campaignCreate.contactPhone')} type="tel" placeholder="+233 20 000 0000" value={formData.contact_phone} onChange={(e) => updateField('contact_phone', e.target.value)} />
+                      <Input label={t('dashboard.campaignCreate.contactEmail')} type="email" placeholder="hello@company.com" value={formData.contact_email} onChange={(e) => updateField('contact_email', e.target.value)} />
+                      <Input label={t('dashboard.campaignCreate.website')} placeholder="company.com" value={formData.contact_website} onChange={(e) => updateField('contact_website', e.target.value)} />
+                      <Input label={t('dashboard.campaignCreate.businessCategory')} placeholder="Coffee shop" value={formData.business_category} onChange={(e) => updateField('business_category', e.target.value)} />
+                      <Input label={t('dashboard.campaignCreate.openingHours')} placeholder="Mon–Sat 9am–7pm" value={formData.opening_hours} onChange={(e) => updateField('opening_hours', e.target.value)} />
+                      <Input label={t('dashboard.campaignCreate.logoUrl')} placeholder="https://…/logo.png" value={formData.business_logo} onChange={(e) => updateField('business_logo', e.target.value)} hint={t('dashboard.campaignEdit.logoHint')} />
                     </div>
                   </div>
 
                   <div>
-                    <p className="text-sm font-semibold text-text-primary mb-1">Reward economics</p>
+                    <p className="text-sm font-semibold text-text-primary mb-1">{t('dashboard.campaignCreate.rewardEconomics')}</p>
                     <p className="text-xs text-text-secondary mb-3">
-                      The campaign pauses automatically once the token pool is spent — top it up from the campaign page.
+                      {t('dashboard.campaignEdit.economicsHint')}
                     </p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <Input label="Shared with consumers (%)" type="number" value={formData.consumer_share_pct} onChange={(e) => updateField('consumer_share_pct', Math.min(100, Math.max(0, Number(e.target.value))))} hint="Portion of the discount handed back as tokens." />
-                      <Input label="Max tokens (0 = uncapped)" type="number" value={formData.max_tokens} onChange={(e) => updateField('max_tokens', Math.max(0, Number(e.target.value)))} />
-                      <Input label="Tokens per view" type="number" value={formData.reward_per_view} onChange={(e) => updateField('reward_per_view', Math.max(0, Number(e.target.value)))} />
-                      <Input label="Tokens per click" type="number" value={formData.reward_per_click} onChange={(e) => updateField('reward_per_click', Math.max(0, Number(e.target.value)))} />
-                      <Input label="Tokens per review" type="number" value={formData.reward_per_review} onChange={(e) => updateField('reward_per_review', Math.max(0, Number(e.target.value)))} />
-                      <Input label="Tokens per photo" type="number" value={formData.reward_per_photo} onChange={(e) => updateField('reward_per_photo', Math.max(0, Number(e.target.value)))} />
+                      <Input label={t('dashboard.campaignCreate.consumerShare')} type="number" value={formData.consumer_share_pct} onChange={(e) => updateField('consumer_share_pct', Math.min(100, Math.max(0, Number(e.target.value))))} hint={t('dashboard.campaignEdit.consumerShareHint')} />
+                      <Input label={t('dashboard.campaignCreate.maxTokens')} type="number" value={formData.max_tokens} onChange={(e) => updateField('max_tokens', Math.max(0, Number(e.target.value)))} />
+                      <Input label={t('dashboard.campaignCreate.perView')} type="number" value={formData.reward_per_view} onChange={(e) => updateField('reward_per_view', Math.max(0, Number(e.target.value)))} />
+                      <Input label={t('dashboard.campaignCreate.perClick')} type="number" value={formData.reward_per_click} onChange={(e) => updateField('reward_per_click', Math.max(0, Number(e.target.value)))} />
+                      <Input label={t('dashboard.campaignCreate.perReview')} type="number" value={formData.reward_per_review} onChange={(e) => updateField('reward_per_review', Math.max(0, Number(e.target.value)))} />
+                      <Input label={t('dashboard.campaignCreate.perPhoto')} type="number" value={formData.reward_per_photo} onChange={(e) => updateField('reward_per_photo', Math.max(0, Number(e.target.value)))} />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium mb-3">Target Devices</label>
+                    <label className="block text-sm font-medium mb-3">{t('dashboard.campaignCreate.devices')}</label>
                     <div className="flex flex-wrap gap-2">
                       {DEVICE_TYPES.map((device) => (
                         <button
@@ -358,7 +361,7 @@ export function CampaignEditPage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium mb-3">Languages</label>
+                    <label className="block text-sm font-medium mb-3">{t('dashboard.campaignCreate.languages')}</label>
                     <div className="flex flex-wrap gap-2">
                       {LANGUAGES.map((lang) => (
                         <button
@@ -378,7 +381,7 @@ export function CampaignEditPage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium mb-3">Target Regions</label>
+                    <label className="block text-sm font-medium mb-3">{t('dashboard.campaignCreate.regions')}</label>
                     <div className="flex flex-wrap gap-2">
                       {REGIONS.map((region) => (
                         <button
@@ -400,7 +403,7 @@ export function CampaignEditPage() {
                   <div className="flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
                     <Info className="h-5 w-5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
                     <p className="text-sm text-blue-700 dark:text-blue-300">
-                      Adjust targeting to reach different audiences
+                      {t('dashboard.campaignEdit.targetingHint')}
                     </p>
                   </div>
                 </div>
@@ -408,26 +411,26 @@ export function CampaignEditPage() {
 
               {currentStep === 2 && (
                 <div className="space-y-4">
-                  <h2 className="text-xl font-semibold">Review Changes</h2>
+                  <h2 className="text-xl font-semibold">{t('dashboard.campaignEdit.reviewChanges')}</h2>
                   <div className="space-y-3">
                     <div className="flex justify-between items-start border-b pb-3">
-                      <span className="font-medium text-gray-600 dark:text-slate-400">Campaign Name</span>
+                      <span className="font-medium text-gray-600 dark:text-slate-400">{t('dashboard.campaignCreate.name')}</span>
                       <span className="text-gray-900 dark:text-white">{formData.name}</span>
                     </div>
                     <div className="flex justify-between items-start border-b pb-3">
-                      <span className="font-medium text-gray-600 dark:text-slate-400">Budget</span>
+                      <span className="font-medium text-gray-600 dark:text-slate-400">{t('dashboard.common.budget')}</span>
                       <span className="text-gray-900 dark:text-white">${formData.budget_total.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between items-start border-b pb-3">
-                      <span className="font-medium text-gray-600 dark:text-slate-400">Industry</span>
+                      <span className="font-medium text-gray-600 dark:text-slate-400">{t('dashboard.common.industry')}</span>
                       <span className="text-gray-900 dark:text-white">{formData.industry}</span>
                     </div>
                     <div className="flex justify-between items-start border-b pb-3">
-                      <span className="font-medium text-gray-600 dark:text-slate-400">Devices</span>
+                      <span className="font-medium text-gray-600 dark:text-slate-400">{t('dashboard.campaignEdit.devices')}</span>
                       <span className="text-gray-900 dark:text-white text-right">{formData.devices.join(', ')}</span>
                     </div>
                     <div className="flex justify-between items-start">
-                      <span className="font-medium text-gray-600 dark:text-slate-400">Regions</span>
+                      <span className="font-medium text-gray-600 dark:text-slate-400">{t('dashboard.campaignEdit.regions')}</span>
                       <span className="text-gray-900 dark:text-white text-right">
                         {formData.regions.length > 0 ? formData.regions.join(', ') : 'All'}
                       </span>
@@ -447,7 +450,7 @@ export function CampaignEditPage() {
             className="flex items-center gap-2"
           >
             <ChevronLeft className="h-4 w-4" />
-            Previous
+            {t('dashboard.common.previous')}
           </Button>
 
           <div className="flex gap-3">
@@ -458,7 +461,7 @@ export function CampaignEditPage() {
                 className="flex items-center gap-2"
               >
                 <Save className="h-4 w-4" />
-                Save Changes
+                {t('dashboard.campaignEdit.saveChanges')}
               </Button>
             ) : (
               <Button
@@ -466,7 +469,7 @@ export function CampaignEditPage() {
                 disabled={!canProceed()}
                 className="flex items-center gap-2"
               >
-                Next
+                {t('dashboard.common.next')}
                 <ChevronRight className="h-4 w-4" />
               </Button>
             )}

@@ -188,7 +188,7 @@ export function AIOptimizationPage() {
       ) : (
         <>
           <div>
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Recommendations</h2>
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t('dashboard.ai.recommendations')}</h2>
             {recs.filter((r) => r.status === 'pending').length === 0 ? (
               <Card>
                 <div className="text-center py-12">
@@ -217,7 +217,7 @@ export function AIOptimizationPage() {
                             Apply
                           </Button>
                           <Button variant="ghost" size="sm" onClick={() => handleDismiss(rec.id)} icon={<X className="h-3.5 w-3.5" />}>
-                            Dismiss
+                            {t('dashboard.common.dismiss')}
                           </Button>
                         </div>
                       </div>

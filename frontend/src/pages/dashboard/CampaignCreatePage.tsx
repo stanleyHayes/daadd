@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Card } from '@/components/ui/Card';
@@ -15,9 +16,11 @@ import { AICreativeGenerator } from '@/components/ai/AICreativeGenerator';
 import { Upload, X, Image, Video, Check, ChevronLeft, ChevronRight, Rocket, Save, Info, Sparkles, ShieldAlert } from 'lucide-react';
 import toast from 'react-hot-toast';
 
-const steps = ['Basic Info', 'Budget & Targeting', 'Creatives', 'Review & Launch'];
+// i18n keys under `dashboard.campaignCreate.steps`
+const steps = ['basic', 'budget', 'creatives', 'review'] as const;
 
 export function CampaignCreatePage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const createMutation = useCreateCampaign();
   const user = useAuthStore((s) => s.user);
@@ -93,13 +96,13 @@ export function CampaignCreatePage() {
 
   const handleLaunch = async () => {
     if (mustVerify) {
-      toast.error('Finish onboarding to launch campaigns.');
+      toast.error(t('dashboard.campaignCreate.onboardingToast'));
       navigate('/dashboard');
       return;
     }
-    try { await createMutation.mutateAsync(formData as never); toast.success('Campaign created successfully!'); navigate('/dashboard/campaigns'); } catch { toast.error('Failed to create campaign'); }
+    try { await createMutation.mutateAsync(formData as never); toast.success(t('dashboard.campaignCreate.createdToast')); navigate('/dashboard/campaigns'); } catch { toast.error(t('dashboard.campaignCreate.createFailedToast')); }
   };
-  const handleSaveDraft = async () => { try { await createMutation.mutateAsync({ ...formData, status: 'draft' } as never); toast.success('Campaign saved as draft'); navigate('/dashboard/campaigns'); } catch { toast.error('Failed to save draft'); } };
+  const handleSaveDraft = async () => { try { await createMutation.mutateAsync({ ...formData, status: 'draft' } as never); toast.success(t('dashboard.campaignCreate.draftToast')); navigate('/dashboard/campaigns'); } catch { toast.error(t('dashboard.campaignCreate.draftFailedToast')); } };
 
   const goToStep = (step: number) => {
     setDirection(step > currentStep ? 1 : -1);
@@ -116,8 +119,8 @@ export function CampaignCreatePage() {
     <PageTransition>
       <div className="max-w-7xl mx-auto space-y-6">
         <PageHeader
-          title="Create Campaign"
-          subtitle="Set up a new advertising campaign"
+          title={t('dashboard.campaignCreate.title')}
+          subtitle={t('dashboard.campaignCreate.subtitle')}
         />
 
         <div className="flex items-center justify-between px-4">
@@ -127,7 +130,7 @@ export function CampaignCreatePage() {
                 <div className={cn('w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors',
                   i < currentStep ? 'bg-accent-500 text-white' : i === currentStep ? 'bg-primary-600 text-white' : 'bg-gray-200 dark:bg-slate-700 text-gray-500 dark:text-slate-400'
                 )}>{i < currentStep ? <Check className="h-4 w-4" /> : i + 1}</div>
-                <span className={cn('text-sm font-medium hidden sm:inline', i === currentStep ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-slate-400')}>{step}</span>
+                <span className={cn('text-sm font-medium hidden sm:inline', i === currentStep ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-slate-400')}>{t(`dashboard.campaignCreate.steps.${step}`)}</span>
               </div>
               {i < steps.length - 1 && <div className={cn('flex-1 h-0.5 mx-4', i < currentStep ? 'bg-accent-500' : 'bg-gray-200 dark:bg-slate-700')} />}
             </React.Fragment>
@@ -140,15 +143,15 @@ export function CampaignCreatePage() {
 
               {currentStep === 0 && (
                 <div className="space-y-5">
-                  <Input label="Campaign Name" placeholder="Enter campaign name" value={formData.name} onChange={(e) => updateField('name', e.target.value)} />
+                  <Input label={t('dashboard.campaignCreate.name')} placeholder={t('dashboard.campaignCreate.namePlaceholder')} value={formData.name} onChange={(e) => updateField('name', e.target.value)} />
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">Description</label>
-                    <textarea className="block w-full rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 dark:text-white px-3 py-2 text-sm placeholder:text-gray-400 dark:placeholder:text-slate-500 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 focus:outline-none" rows={4} placeholder="Describe your campaign objectives..." value={formData.description} onChange={(e) => updateField('description', e.target.value)} />
+                    <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">{t('dashboard.common.description')}</label>
+                    <textarea className="block w-full rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 dark:text-white px-3 py-2 text-sm placeholder:text-gray-400 dark:placeholder:text-slate-500 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 focus:outline-none" rows={4} placeholder={t('dashboard.campaignCreate.descPlaceholder')} value={formData.description} onChange={(e) => updateField('description', e.target.value)} />
                   </div>
-                  <Select label="Industry" options={INDUSTRIES.map((i) => ({ value: i.value, label: i.label }))} placeholder="Select an industry" value={formData.industry} onChange={(v) => updateField('industry', v)} />
+                  <Select label={t('dashboard.common.industry')} options={INDUSTRIES.map((i) => ({ value: i.value, label: i.label }))} placeholder={t('dashboard.campaignCreate.selectIndustry')} value={formData.industry} onChange={(v) => updateField('industry', v)} />
                   <div className="grid grid-cols-2 gap-4">
-                    <Input label="Start Date" type="date" value={formData.start_date} onChange={(e) => updateField('start_date', e.target.value)} />
-                    <Input label="End Date" type="date" value={formData.end_date} onChange={(e) => updateField('end_date', e.target.value)} />
+                    <Input label={t('dashboard.campaignCreate.startDate')} type="date" value={formData.start_date} onChange={(e) => updateField('start_date', e.target.value)} />
+                    <Input label={t('dashboard.campaignCreate.endDate')} type="date" value={formData.end_date} onChange={(e) => updateField('end_date', e.target.value)} />
                   </div>
                 </div>
               )}
@@ -156,46 +159,46 @@ export function CampaignCreatePage() {
               {currentStep === 1 && (
                 <div className="space-y-6">
                   <div className="grid grid-cols-2 gap-4">
-                    <Input label="Budget ($)" type="number" placeholder="5000" value={formData.budget || ''} onChange={(e) => updateField('budget', Number(e.target.value))} />
-                    <Input label="Reward Value ($)" type="number" placeholder="0.50" value={formData.reward_value || ''} onChange={(e) => updateField('reward_value', Number(e.target.value))} />
-                    <Input label="Discount Shared (%)" type="number" placeholder="15" value={formData.discount_percentage || ''} onChange={(e) => updateField('discount_percentage', Math.min(100, Math.max(0, Number(e.target.value))))} hint="Percent of a customer's purchase shared back as their discount at redemption." />
+                    <Input label={t('dashboard.campaignCreate.budget')} type="number" placeholder="5000" value={formData.budget || ''} onChange={(e) => updateField('budget', Number(e.target.value))} />
+                    <Input label={t('dashboard.campaignCreate.rewardValue')} type="number" placeholder="0.50" value={formData.reward_value || ''} onChange={(e) => updateField('reward_value', Number(e.target.value))} />
+                    <Input label={t('dashboard.campaignCreate.discountShared')} type="number" placeholder="15" value={formData.discount_percentage || ''} onChange={(e) => updateField('discount_percentage', Math.min(100, Math.max(0, Number(e.target.value))))} hint={t('dashboard.campaignCreate.discountSharedHint')} />
                   </div>
                   <div className="pt-2">
-                    <p className="text-sm font-semibold text-text-primary mb-1">Reward economics</p>
+                    <p className="text-sm font-semibold text-text-primary mb-1">{t('dashboard.campaignCreate.rewardEconomics')}</p>
                     <p className="text-xs text-text-secondary mb-3">
-                      How much of your discount is shared with consumers as tokens, and how many tokens each interaction earns. The campaign pauses automatically once the token pool is spent.
+                      {t('dashboard.campaignCreate.rewardEconomicsHint')}
                     </p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <Input label="Shared with consumers (%)" type="number" placeholder="5" value={formData.consumer_share_pct || ''} onChange={(e) => updateField('consumer_share_pct', Math.min(100, Math.max(0, Number(e.target.value))))} hint="Portion of the discount handed back as reward tokens." />
-                      <Input label="Max tokens (0 = uncapped)" type="number" placeholder="0" value={formData.max_tokens || ''} onChange={(e) => updateField('max_tokens', Math.max(0, Number(e.target.value)))} hint="Total reward tokens this campaign may issue." />
-                      <Input label="Tokens per view" type="number" placeholder="1" value={formData.reward_per_view || ''} onChange={(e) => updateField('reward_per_view', Math.max(0, Number(e.target.value)))} />
-                      <Input label="Tokens per click" type="number" placeholder="2" value={formData.reward_per_click || ''} onChange={(e) => updateField('reward_per_click', Math.max(0, Number(e.target.value)))} />
-                      <Input label="Tokens per review" type="number" placeholder="3" value={formData.reward_per_review || ''} onChange={(e) => updateField('reward_per_review', Math.max(0, Number(e.target.value)))} />
-                      <Input label="Tokens per photo" type="number" placeholder="2" value={formData.reward_per_photo || ''} onChange={(e) => updateField('reward_per_photo', Math.max(0, Number(e.target.value)))} />
+                      <Input label={t('dashboard.campaignCreate.consumerShare')} type="number" placeholder="5" value={formData.consumer_share_pct || ''} onChange={(e) => updateField('consumer_share_pct', Math.min(100, Math.max(0, Number(e.target.value))))} hint={t('dashboard.campaignCreate.consumerShareHint')} />
+                      <Input label={t('dashboard.campaignCreate.maxTokens')} type="number" placeholder="0" value={formData.max_tokens || ''} onChange={(e) => updateField('max_tokens', Math.max(0, Number(e.target.value)))} hint={t('dashboard.campaignCreate.maxTokensHint')} />
+                      <Input label={t('dashboard.campaignCreate.perView')} type="number" placeholder="1" value={formData.reward_per_view || ''} onChange={(e) => updateField('reward_per_view', Math.max(0, Number(e.target.value)))} />
+                      <Input label={t('dashboard.campaignCreate.perClick')} type="number" placeholder="2" value={formData.reward_per_click || ''} onChange={(e) => updateField('reward_per_click', Math.max(0, Number(e.target.value)))} />
+                      <Input label={t('dashboard.campaignCreate.perReview')} type="number" placeholder="3" value={formData.reward_per_review || ''} onChange={(e) => updateField('reward_per_review', Math.max(0, Number(e.target.value)))} />
+                      <Input label={t('dashboard.campaignCreate.perPhoto')} type="number" placeholder="2" value={formData.reward_per_photo || ''} onChange={(e) => updateField('reward_per_photo', Math.max(0, Number(e.target.value)))} />
                     </div>
                   </div>
                   <div className="pt-2">
-                    <p className="text-sm font-semibold text-text-primary mb-1">Business & contact</p>
-                    <p className="text-xs text-text-secondary mb-3">Shown on this campaign's adverts so customers can find and reach you.</p>
+                    <p className="text-sm font-semibold text-text-primary mb-1">{t('dashboard.campaignCreate.business')}</p>
+                    <p className="text-xs text-text-secondary mb-3">{t('dashboard.campaignCreate.businessHint')}</p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <Input label="Location" placeholder="123 High St, Accra" value={formData.location} onChange={(e) => updateField('location', e.target.value)} />
-                      <Input label="Contact Phone" type="tel" placeholder="+233 20 000 0000" value={formData.contact_phone} onChange={(e) => updateField('contact_phone', e.target.value)} />
-                      <Input label="Contact Email" type="email" placeholder="hello@company.com" value={formData.contact_email} onChange={(e) => updateField('contact_email', e.target.value)} />
-                      <Input label="Website" placeholder="company.com" value={formData.contact_website} onChange={(e) => updateField('contact_website', e.target.value)} />
-                      <Input label="Business category" placeholder="Coffee shop" value={formData.business_category} onChange={(e) => updateField('business_category', e.target.value)} />
-                      <Input label="Opening hours" placeholder="Mon–Sat 9am–7pm" value={formData.opening_hours} onChange={(e) => updateField('opening_hours', e.target.value)} />
-                      <Input label="Business logo URL" placeholder="https://…/logo.png" value={formData.business_logo} onChange={(e) => updateField('business_logo', e.target.value)} hint="Shown on your adverts; defaults to your profile avatar." />
+                      <Input label={t('dashboard.campaignCreate.location')} placeholder="123 High St, Accra" value={formData.location} onChange={(e) => updateField('location', e.target.value)} />
+                      <Input label={t('dashboard.campaignCreate.contactPhone')} type="tel" placeholder="+233 20 000 0000" value={formData.contact_phone} onChange={(e) => updateField('contact_phone', e.target.value)} />
+                      <Input label={t('dashboard.campaignCreate.contactEmail')} type="email" placeholder="hello@company.com" value={formData.contact_email} onChange={(e) => updateField('contact_email', e.target.value)} />
+                      <Input label={t('dashboard.campaignCreate.website')} placeholder="company.com" value={formData.contact_website} onChange={(e) => updateField('contact_website', e.target.value)} />
+                      <Input label={t('dashboard.campaignCreate.businessCategory')} placeholder="Coffee shop" value={formData.business_category} onChange={(e) => updateField('business_category', e.target.value)} />
+                      <Input label={t('dashboard.campaignCreate.openingHours')} placeholder="Mon–Sat 9am–7pm" value={formData.opening_hours} onChange={(e) => updateField('opening_hours', e.target.value)} />
+                      <Input label={t('dashboard.campaignCreate.logoUrl')} placeholder="https://…/logo.png" value={formData.business_logo} onChange={(e) => updateField('business_logo', e.target.value)} hint={t('dashboard.campaignCreate.logoHint')} />
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">Age Range</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">{t('dashboard.campaignCreate.ageRange')}</label>
                     <div className="grid grid-cols-2 gap-4">
-                      <Input label="Minimum" type="number" min={13} max={100} value={formData.age_min} onChange={(e) => updateField('age_min', Number(e.target.value))} />
-                      <Input label="Maximum" type="number" min={13} max={100} value={formData.age_max} onChange={(e) => updateField('age_max', Number(e.target.value))} />
+                      <Input label={t('dashboard.campaignCreate.min')} type="number" min={13} max={100} value={formData.age_min} onChange={(e) => updateField('age_min', Number(e.target.value))} />
+                      <Input label={t('dashboard.campaignCreate.max')} type="number" min={13} max={100} value={formData.age_max} onChange={(e) => updateField('age_max', Number(e.target.value))} />
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">Target Regions</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">{t('dashboard.campaignCreate.regions')}</label>
                     <div className="flex flex-wrap gap-2">
                       {REGIONS.map((r) => (
                         <button key={r.value} type="button" onClick={() => toggleArrayItem('regions', r.value)} className={cn('px-3 py-1.5 rounded-lg border text-sm font-medium transition-colors', formData.regions.includes(r.value) ? 'bg-primary-50 dark:bg-primary-900/20 border-primary-300 dark:border-primary-700 text-primary-700 dark:text-primary-400' : 'border-gray-300 dark:border-slate-600 text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-700')}>{r.label}</button>
@@ -203,7 +206,7 @@ export function CampaignCreatePage() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">Target Devices</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">{t('dashboard.campaignCreate.devices')}</label>
                     <div className="flex gap-4">
                       {DEVICE_TYPES.map((d) => (
                         <label key={d.value} className="flex items-center gap-2">
@@ -214,7 +217,7 @@ export function CampaignCreatePage() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">Languages</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">{t('dashboard.campaignCreate.languages')}</label>
                     <div className="flex flex-wrap gap-2">
                       {LANGUAGES.map((l) => (
                         <button key={l.value} type="button" onClick={() => toggleArrayItem('languages', l.value)} className={cn('px-3 py-1.5 rounded-lg border text-sm font-medium transition-colors', formData.languages.includes(l.value) ? 'bg-primary-50 dark:bg-primary-900/20 border-primary-300 dark:border-primary-700 text-primary-700 dark:text-primary-400' : 'border-gray-300 dark:border-slate-600 text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-700')}>{l.label}</button>
@@ -224,10 +227,10 @@ export function CampaignCreatePage() {
                   <div className="flex items-center gap-3 p-4 rounded-lg border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800">
                     <input type="checkbox" checked={formData.localized} onChange={(e) => updateField('localized', e.target.checked)} disabled={formData.budget < 500} className="rounded border-gray-300 dark:border-slate-600 text-primary-600 focus:ring-primary-500 disabled:opacity-50 dark:bg-slate-700" />
                     <div className="flex-1">
-                      <p className="text-sm font-medium text-gray-700 dark:text-slate-300">Enable Localized Targeting</p>
-                      <p className="text-xs text-gray-500 dark:text-slate-400">Target users based on precise location data</p>
+                      <p className="text-sm font-medium text-gray-700 dark:text-slate-300">{t('dashboard.campaignCreate.localizedTargeting')}</p>
+                      <p className="text-xs text-gray-500 dark:text-slate-400">{t('dashboard.campaignCreate.localizedTargetingHint')}</p>
                     </div>
-                    {formData.budget < 500 && <div className="flex items-center gap-1 text-xs text-warning-600"><Info className="h-3.5 w-3.5" />Min $500 budget</div>}
+                    {formData.budget < 500 && <div className="flex items-center gap-1 text-xs text-warning-600"><Info className="h-3.5 w-3.5" />{t('dashboard.campaignCreate.minBudget')}</div>}
                   </div>
                 </div>
               )}
@@ -246,7 +249,7 @@ export function CampaignCreatePage() {
                       )}
                     >
                       <Upload className="h-4 w-4 inline mr-2" />
-                      Upload Files
+                      {t('dashboard.campaignCreate.uploadFiles')}
                     </button>
                     <button
                       onClick={() => setCreativeMode('ai')}
@@ -258,7 +261,7 @@ export function CampaignCreatePage() {
                       )}
                     >
                       <Sparkles className="h-4 w-4 inline mr-2" />
-                      AI Generator
+                      {t('dashboard.campaignCreate.aiGenerator')}
                     </button>
                     <button
                       onClick={() => setCreativeMode('both')}
@@ -269,7 +272,7 @@ export function CampaignCreatePage() {
                           : 'border-transparent text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white'
                       )}
                     >
-                      Both Options
+                      {t('dashboard.campaignCreate.bothOptions')}
                     </button>
                   </div>
 
@@ -278,8 +281,8 @@ export function CampaignCreatePage() {
                     <div className="space-y-4">
                       <div className="border-2 border-dashed border-gray-300 dark:border-slate-600 rounded-xl p-12 text-center hover:border-primary-400 dark:hover:border-primary-600 transition-colors cursor-pointer" onDragOver={(e) => e.preventDefault()} onDrop={handleFileDrop} onClick={() => document.getElementById('file-upload')?.click()}>
                         <Upload className="h-10 w-10 text-gray-400 dark:text-slate-500 mx-auto mb-3" />
-                        <p className="text-sm font-medium text-gray-700 dark:text-slate-300">Drop files here or click to upload</p>
-                        <p className="text-xs text-gray-500 dark:text-slate-400 mt-1">Support images (PNG, JPG) and videos (MP4, MOV)</p>
+                        <p className="text-sm font-medium text-gray-700 dark:text-slate-300">{t('dashboard.campaignCreate.dropFiles')}</p>
+                        <p className="text-xs text-gray-500 dark:text-slate-400 mt-1">{t('dashboard.campaignCreate.dropFilesHint')}</p>
                         <input id="file-upload" type="file" multiple accept="image/*,video/*" className="hidden" onChange={handleFileInput} />
                       </div>
                       {formData.creatives.length > 0 && (
@@ -320,8 +323,8 @@ export function CampaignCreatePage() {
                       <div className={cn('absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform', formData.age_restricted ? 'translate-x-4' : 'translate-x-0.5')} />
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-gray-700 dark:text-slate-300">Age-Restricted Content</p>
-                      <p className="text-xs text-gray-500 dark:text-slate-400">Viewers will need to verify their age before viewing</p>
+                      <p className="text-sm font-medium text-gray-700 dark:text-slate-300">{t('dashboard.campaignCreate.ageRestricted')}</p>
+                      <p className="text-xs text-gray-500 dark:text-slate-400">{t('dashboard.campaignCreate.ageRestrictedHint')}</p>
                     </div>
                   </div>
                 </div>
@@ -331,7 +334,7 @@ export function CampaignCreatePage() {
                 <div className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-4">
-                      <h3 className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider">Campaign Details</h3>
+                      <h3 className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider">{t('dashboard.campaignCreate.stepDetails')}</h3>
                       <div className="space-y-2">
                         {[['Name', formData.name], ['Industry', formData.industry.replace('_', ' ')], ['Start Date', formData.start_date], ['End Date', formData.end_date]].map(([label, val]) => (
                           <div key={label} className="flex justify-between"><span className="text-sm text-gray-500 dark:text-slate-400">{label}</span><span className="text-sm font-medium text-gray-900 dark:text-white capitalize">{val}</span></div>
@@ -339,7 +342,7 @@ export function CampaignCreatePage() {
                       </div>
                     </div>
                     <div className="space-y-4">
-                      <h3 className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider">Budget & Targeting</h3>
+                      <h3 className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider">{t('dashboard.campaignCreate.stepBudget')}</h3>
                       <div className="space-y-2">
                         {[['Budget', `$${formData.budget.toLocaleString()}`], ['Reward', `$${formData.reward_value}`], ['Discount Shared', `${formData.discount_percentage}%`], ['Age Range', `${formData.age_min} - ${formData.age_max}`], ['Devices', formData.devices.join(', ')], ['Creatives', `${formData.creatives.length} files`]].map(([label, val]) => (
                           <div key={label} className="flex justify-between"><span className="text-sm text-gray-500 dark:text-slate-400">{label}</span><span className="text-sm font-medium text-gray-900 dark:text-white capitalize">{val}</span></div>
@@ -350,8 +353,8 @@ export function CampaignCreatePage() {
                   <div className="flex items-center gap-3 p-4 rounded-lg border border-secondary-200 dark:border-secondary-800 bg-secondary-50 dark:bg-secondary-900/20">
                     <input type="checkbox" checked={formData.ai_enabled} onChange={(e) => updateField('ai_enabled', e.target.checked)} className="rounded border-gray-300 dark:border-slate-600 text-secondary-600 focus:ring-secondary-500 dark:bg-slate-700" />
                     <div>
-                      <p className="text-sm font-medium text-secondary-700 dark:text-secondary-400">Enable AI Optimization</p>
-                      <p className="text-xs text-secondary-500 dark:text-secondary-400/70">Let our AI automatically optimize your campaign for better performance. Available after 48 hours of runtime.</p>
+                      <p className="text-sm font-medium text-secondary-700 dark:text-secondary-400">{t('dashboard.campaignCreate.enableAi')}</p>
+                      <p className="text-xs text-secondary-500 dark:text-secondary-400/70">{t('dashboard.campaignCreate.enableAiHint')}</p>
                     </div>
                   </div>
                 </div>
@@ -361,15 +364,15 @@ export function CampaignCreatePage() {
           </AnimatePresence>
 
           <div className="flex items-center justify-between mt-8 pt-6 border-t border-gray-200 dark:border-slate-700">
-            <Button variant="outline" onClick={() => goToStep(Math.max(0, currentStep - 1))} disabled={currentStep === 0} icon={<ChevronLeft className="h-4 w-4" />}>Back</Button>
+            <Button variant="outline" onClick={() => goToStep(Math.max(0, currentStep - 1))} disabled={currentStep === 0} icon={<ChevronLeft className="h-4 w-4" />}>{t('dashboard.common.back')}</Button>
             <div className="flex items-center gap-3">
-              {currentStep === 3 && <Button variant="outline" onClick={handleSaveDraft} loading={createMutation.isPending} icon={<Save className="h-4 w-4" />}>Save as Draft</Button>}
+              {currentStep === 3 && <Button variant="outline" onClick={handleSaveDraft} loading={createMutation.isPending} icon={<Save className="h-4 w-4" />}>{t('dashboard.campaignCreate.saveDraft')}</Button>}
               {currentStep < 3 ? (
-                <Button onClick={() => goToStep(currentStep + 1)} disabled={!canProceed()}>Next <ChevronRight className="h-4 w-4 ml-1" /></Button>
+                <Button onClick={() => goToStep(currentStep + 1)} disabled={!canProceed()}>{t('dashboard.common.next')} <ChevronRight className="h-4 w-4 ml-1" /></Button>
               ) : mustVerify ? (
-                <Button variant="secondary" onClick={() => navigate('/dashboard')} icon={<ShieldAlert className="h-4 w-4" />}>Verify account to launch</Button>
+                <Button variant="secondary" onClick={() => navigate('/dashboard')} icon={<ShieldAlert className="h-4 w-4" />}>{t('dashboard.campaignCreate.verifyToLaunch')}</Button>
               ) : (
-                <Button onClick={handleLaunch} loading={createMutation.isPending} icon={<Rocket className="h-4 w-4" />}>Launch Campaign</Button>
+                <Button onClick={handleLaunch} loading={createMutation.isPending} icon={<Rocket className="h-4 w-4" />}>{t('dashboard.campaignCreate.launch')}</Button>
               )}
             </div>
           </div>

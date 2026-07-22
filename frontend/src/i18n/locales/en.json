@@ -765,7 +765,13 @@
       "createdToast": "Campaign created successfully!",
       "createFailedToast": "Failed to create campaign",
       "draftToast": "Campaign saved as draft",
-      "draftFailedToast": "Failed to save draft"
+      "draftFailedToast": "Failed to save draft",
+      "steps": {
+        "basic": "Basic Info",
+        "budget": "Budget & Targeting",
+        "creatives": "Creatives",
+        "review": "Review & Launch"
+      }
     },
     "campaignEdit": {
       "title": "Edit Campaign",
@@ -786,7 +792,12 @@
       "regions": "Regions",
       "saveChanges": "Save Changes",
       "updatedToast": "Campaign updated successfully",
-      "updateFailedToast": "Failed to update campaign"
+      "updateFailedToast": "Failed to update campaign",
+      "steps": {
+        "basic": "Basic Info",
+        "budget": "Budget & Targeting",
+        "review": "Review & Save"
+      }
     },
     "campaignDetail": {
       "notFound": "Campaign Not Found",
