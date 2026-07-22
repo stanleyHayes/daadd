@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useSiteContent } from '@/hooks/useSiteContent';
+import { Skeleton } from '@/components/ui/Skeleton';
 import { PageTransition } from '@/components/ui/PageTransition';
 import { Clock, ArrowUpRight, BookOpen, Filter } from 'lucide-react';
 import { WatermarkBanner } from '@/components/ui/Watermark';
@@ -42,67 +44,30 @@ const headerTints = [
   'bg-emerald-50 dark:bg-emerald-900/20',
 ];
 
-const blogPosts = [
-  {
-    id: 1,
-    title: 'The Future of Geo-Targeted Advertising in 2026',
-    excerpt: 'How advances in geographic data and privacy-first targeting are reshaping the way advertisers reach local audiences at scale.',
-    date: 'March 10, 2026',
-    author: 'Alex Chen',
-    category: 'AdTech Trends' as const,
-    readTime: '6 min read',
-  },
-  {
-    id: 2,
-    title: 'Introducing the Ad Journey Storyteller',
-    excerpt: 'Our latest feature transforms raw campaign analytics into compelling narratives. Learn how it works and why it matters for your reporting.',
-    date: 'March 5, 2026',
-    author: 'Maria Silva',
-    category: 'Platform Updates' as const,
-    readTime: '4 min read',
-  },
-  {
-    id: 3,
-    title: 'How FitLife Increased Conversions by 340% with SmartAdDeals',
-    excerpt: 'A deep dive into how a fitness brand leveraged our AI optimization engine and reward-based engagement to achieve record-breaking results.',
-    date: 'February 28, 2026',
-    author: 'David Mensah',
-    category: 'Case Studies' as const,
-    readTime: '8 min read',
-  },
-  {
-    id: 4,
-    title: '5 Tips for Writing High-Converting Ad Copy',
-    excerpt: 'Practical advice on crafting ad copy that resonates with reward-motivated audiences. Includes real examples from top-performing campaigns.',
-    date: 'February 20, 2026',
-    author: 'Priya Sharma',
-    category: 'Tips & Guides' as const,
-    readTime: '5 min read',
-  },
-  {
-    id: 5,
-    title: 'Privacy-First Advertising: What GDPR Means for AdTech',
-    excerpt: 'Navigating the evolving landscape of data privacy regulations while still delivering effective, personalized ad experiences.',
-    date: 'February 15, 2026',
-    author: 'Sarah Okafor',
-    category: 'AdTech Trends' as const,
-    readTime: '7 min read',
-  },
-  {
-    id: 6,
-    title: 'New Anomaly Detection Dashboard: What You Need to Know',
-    excerpt: 'Our upgraded anomaly detection system now catches budget spikes, CTR drops, and suspicious activity in real time. Here is what changed.',
-    date: 'February 8, 2026',
-    author: 'James Park',
-    category: 'Platform Updates' as const,
-    readTime: '4 min read',
-  },
-];
-
 export function BlogPage() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const { data: posts = [], isLoading } = useSiteContent('blog_post');
+
+  // Shape the CMS rows into what the cards below already expect, so only the
+  // data source changed rather than the whole page.
+  const blogPosts = posts.map((post, i) => ({
+    id: post._id,
+    title: post.title,
+    excerpt: post.excerpt,
+    date: post.published_at
+      ? new Date(post.published_at).toLocaleDateString(undefined, {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })
+      : '',
+    author: post.name,
+    category: post.category,
+    readTime: post.read_time,
+    tint: headerTints[i % headerTints.length],
+  }));
 
   const filteredPosts = selectedCategory
     ? blogPosts.filter((post) => post.category === selectedCategory)
@@ -181,12 +146,18 @@ export function BlogPage() {
         {/* Blog Grid */}
         <section className="pb-20">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            {filteredPosts.length === 0 ? (
+            {isLoading ? (
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <Skeleton key={i} variant="card" className="h-72" />
+                ))}
+              </div>
+            ) : filteredPosts.length === 0 ? (
               <div className="text-center py-12 bg-card-bg rounded-2xl border border-border-color">
                 <p className="text-text-secondary">{t('blog.noResults')}</p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 items-stretch gap-8 md:grid-cols-2 lg:grid-cols-3">
                 {filteredPosts.map((post, index) => (
                   <motion.article
                     key={post.id}

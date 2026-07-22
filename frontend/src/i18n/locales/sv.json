@@ -1121,14 +1121,16 @@
         "caseStudies": "Kundcase",
         "team": "Team",
         "milestones": "Milstolpar",
-        "jobs": "Lediga tjänster"
+        "jobs": "Lediga tjänster",
+        "blog": "Blogginlägg"
       },
       "hints": {
         "testimonials": "Äkta citat från riktiga kunder, med deras tillstånd.",
         "caseStudies": "Ett tydligt resultat du kan styrka om en kund frågar.",
         "team": "Visas på Om oss-sidan.",
         "milestones": "Tidslinjen på Om oss-sidan.",
-        "jobs": "Visas på jobbsidan."
+        "jobs": "Visas på jobbsidan.",
+        "blog": "Artiklar på den publika bloggen. Inläggstexten tar HTML."
       },
       "fields": {
         "name": "Namn",
@@ -1144,7 +1146,10 @@
         "location": "Plats",
         "apply_url": "Vart Ansök länkar",
         "order": "Ordning",
-        "orderHint": "Lägre nummer visas först."
+        "orderHint": "Lägre nummer visas först.",
+        "excerpt": "Ingress",
+        "category": "Kategori",
+        "read_time": "Lästid"
       },
       "contactTitle": "Kontaktuppgifter",
       "contactSubtitle": "Visas på kontaktsidan och i sidfoten",

@@ -1121,14 +1121,16 @@
         "caseStudies": "Casos de éxito",
         "team": "Equipo",
         "milestones": "Hitos",
-        "jobs": "Vacantes"
+        "jobs": "Vacantes",
+        "blog": "Entradas del blog"
       },
       "hints": {
         "testimonials": "Citas reales de clientes reales, con su permiso.",
         "caseStudies": "Un resultado destacado que puedas demostrar si un cliente lo pide.",
         "team": "Se muestra en la página Sobre nosotros.",
         "milestones": "La cronología de la página Sobre nosotros.",
-        "jobs": "Se muestra en la página de Empleo."
+        "jobs": "Se muestra en la página de Empleo.",
+        "blog": "Artículos del blog público. El cuerpo admite HTML."
       },
       "fields": {
         "name": "Nombre",
@@ -1144,7 +1146,10 @@
         "location": "Ubicación",
         "apply_url": "Enlace del botón Solicitar",
         "order": "Orden",
-        "orderHint": "Los números más bajos aparecen primero."
+        "orderHint": "Los números más bajos aparecen primero.",
+        "excerpt": "Extracto",
+        "category": "Categoría",
+        "read_time": "Tiempo de lectura"
       },
       "contactTitle": "Datos de contacto",
       "contactSubtitle": "Se muestra en la página de contacto y en el pie de página",

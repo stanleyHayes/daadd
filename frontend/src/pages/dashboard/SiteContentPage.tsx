@@ -36,10 +36,11 @@ const FIELDS: Record<SiteContentType, (keyof SiteContentItem)[]> = {
   team_member: ['name', 'role', 'avatar_url'],
   milestone: ['year', 'title', 'body'],
   job_opening: ['title', 'department', 'location', 'apply_url'],
+  blog_post: ['title', 'name', 'category', 'read_time', 'excerpt', 'body'],
 };
 
 /** Long-form fields render as a textarea rather than a single-line input. */
-const MULTILINE = new Set<keyof SiteContentItem>(['body']);
+const MULTILINE = new Set<keyof SiteContentItem>(['body', 'excerpt']);
 
 const TABS: { type: SiteContentType; i18n: string }[] = [
   { type: 'testimonial', i18n: 'testimonials' },
@@ -47,6 +48,7 @@ const TABS: { type: SiteContentType; i18n: string }[] = [
   { type: 'team_member', i18n: 'team' },
   { type: 'milestone', i18n: 'milestones' },
   { type: 'job_opening', i18n: 'jobs' },
+  { type: 'blog_post', i18n: 'blog' },
 ];
 
 const CONTACT_FIELDS: (keyof SiteContact)[] = [

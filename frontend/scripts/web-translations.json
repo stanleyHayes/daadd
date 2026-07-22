@@ -1336,7 +1336,10 @@
           "orderHint": "Lägre nummer visas först.",
           "role": "Titel",
           "title": "Rubrik",
-          "year": "År"
+          "year": "År",
+          "excerpt": "Ingress",
+          "category": "Kategori",
+          "read_time": "Lästid"
         },
         "hidden": "Dold",
         "hints": {
@@ -1344,7 +1347,8 @@
           "jobs": "Visas på jobbsidan.",
           "milestones": "Tidslinjen på Om oss-sidan.",
           "team": "Visas på Om oss-sidan.",
-          "testimonials": "Äkta citat från riktiga kunder, med deras tillstånd."
+          "testimonials": "Äkta citat från riktiga kunder, med deras tillstånd.",
+          "blog": "Artiklar på den publika bloggen. Inläggstexten tar HTML."
         },
         "intro": "Allt som den publika webbplatsen visar om företaget. Inget här publiceras förrän du säger till, och varje avsnitt förblir dolt på webbplatsen så länge det är tomt.",
         "live": "Publicerad på webbplatsen",
@@ -1359,7 +1363,8 @@
           "jobs": "Lediga tjänster",
           "milestones": "Milstolpar",
           "team": "Team",
-          "testimonials": "Kundomdömen"
+          "testimonials": "Kundomdömen",
+          "blog": "Blogginlägg"
         },
         "title": "Webbplatsinnehåll",
         "unpublish": "Dölj från webbplatsen",
@@ -2717,7 +2722,10 @@
           "orderHint": "Los números más bajos aparecen primero.",
           "role": "Puesto",
           "title": "Título",
-          "year": "Año"
+          "year": "Año",
+          "excerpt": "Extracto",
+          "category": "Categoría",
+          "read_time": "Tiempo de lectura"
         },
         "hidden": "Oculto",
         "hints": {
@@ -2725,7 +2733,8 @@
           "jobs": "Se muestra en la página de Empleo.",
           "milestones": "La cronología de la página Sobre nosotros.",
           "team": "Se muestra en la página Sobre nosotros.",
-          "testimonials": "Citas reales de clientes reales, con su permiso."
+          "testimonials": "Citas reales de clientes reales, con su permiso.",
+          "blog": "Artículos del blog público. El cuerpo admite HTML."
         },
         "intro": "Todo lo que el sitio de marketing público muestra sobre la empresa. Nada de esto se publica hasta que tú lo decides, y cada sección permanece oculta en el sitio mientras esté vacía.",
         "live": "Publicado en el sitio",
@@ -2740,7 +2749,8 @@
           "jobs": "Vacantes",
           "milestones": "Hitos",
           "team": "Equipo",
-          "testimonials": "Testimonios"
+          "testimonials": "Testimonios",
+          "blog": "Entradas del blog"
         },
         "title": "Contenido del sitio web",
         "unpublish": "Ocultar del sitio",
@@ -4098,7 +4108,10 @@
           "orderHint": "Les nombres les plus petits apparaissent en premier.",
           "role": "Intitulé du poste",
           "title": "Titre",
-          "year": "Année"
+          "year": "Année",
+          "excerpt": "Accroche",
+          "category": "Catégorie",
+          "read_time": "Temps de lecture"
         },
         "hidden": "Masqué",
         "hints": {
@@ -4106,7 +4119,8 @@
           "jobs": "Affiché sur la page Carrières.",
           "milestones": "La chronologie de la page À propos.",
           "team": "Affiché sur la page À propos.",
-          "testimonials": "De vraies citations de vrais clients, avec leur accord."
+          "testimonials": "De vraies citations de vrais clients, avec leur accord.",
+          "blog": "Articles du blog public. Le corps de l'article accepte le HTML."
         },
         "intro": "Tout ce que le site vitrine public montre de l'entreprise. Rien n'est publié tant que vous ne l'avez pas décidé, et chaque section reste masquée sur le site tant qu'elle est vide.",
         "live": "En ligne sur le site",
@@ -4121,7 +4135,8 @@
           "jobs": "Postes ouverts",
           "milestones": "Étapes clés",
           "team": "Équipe",
-          "testimonials": "Témoignages"
+          "testimonials": "Témoignages",
+          "blog": "Articles de blog"
         },
         "title": "Contenu du site",
         "unpublish": "Masquer sur le site",
@@ -5479,7 +5494,10 @@
           "orderHint": "Niedrigere Zahlen erscheinen zuerst.",
           "role": "Jobtitel",
           "title": "Titel",
-          "year": "Jahr"
+          "year": "Jahr",
+          "excerpt": "Anrisstext",
+          "category": "Kategorie",
+          "read_time": "Lesedauer"
         },
         "hidden": "Ausgeblendet",
         "hints": {
@@ -5487,7 +5505,8 @@
           "jobs": "Wird auf der Karriereseite gelistet.",
           "milestones": "Die Zeitleiste auf der Über-uns-Seite.",
           "team": "Wird auf der Über-uns-Seite angezeigt.",
-          "testimonials": "Echte Zitate von echten Kunden, mit deren Einverständnis."
+          "testimonials": "Echte Zitate von echten Kunden, mit deren Einverständnis.",
+          "blog": "Artikel im öffentlichen Blog. Der Beitragstext akzeptiert HTML."
         },
         "intro": "Alles, was die öffentliche Marketing-Website über das Unternehmen zeigt. Nichts davon wird veröffentlicht, bevor du es freigibst, und jeder Bereich bleibt auf der Website ausgeblendet, solange er leer ist.",
         "live": "Live auf der Website",
@@ -5502,7 +5521,8 @@
           "jobs": "Offene Stellen",
           "milestones": "Meilensteine",
           "team": "Team",
-          "testimonials": "Testimonials"
+          "testimonials": "Testimonials",
+          "blog": "Blogbeiträge"
         },
         "title": "Website-Inhalte",
         "unpublish": "Auf der Website ausblenden",
@@ -6860,7 +6880,10 @@
           "orderHint": "Os números mais baixos aparecem primeiro.",
           "role": "Cargo",
           "title": "Título",
-          "year": "Ano"
+          "year": "Ano",
+          "excerpt": "Resumo",
+          "category": "Categoria",
+          "read_time": "Tempo de leitura"
         },
         "hidden": "Oculto",
         "hints": {
@@ -6868,7 +6891,8 @@
           "jobs": "Listado na página Carreiras.",
           "milestones": "A cronologia na página Sobre.",
           "team": "Mostrado na página Sobre.",
-          "testimonials": "Citações reais de clientes reais, com autorização deles."
+          "testimonials": "Citações reais de clientes reais, com autorização deles.",
+          "blog": "Artigos do blogue público. O corpo aceita HTML."
         },
         "intro": "Tudo o que o site público de marketing mostra sobre a empresa. Nada aqui é publicado sem que o indique, e cada secção fica oculta no site enquanto estiver vazia.",
         "live": "Ativo no site",
@@ -6883,7 +6907,8 @@
           "jobs": "Vagas",
           "milestones": "Marcos",
           "team": "Equipa",
-          "testimonials": "Testemunhos"
+          "testimonials": "Testemunhos",
+          "blog": "Artigos do blogue"
         },
         "title": "Conteúdo do site",
         "unpublish": "Ocultar do site",

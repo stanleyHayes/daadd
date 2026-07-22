@@ -1121,14 +1121,16 @@
         "caseStudies": "Case studies",
         "team": "Team",
         "milestones": "Milestones",
-        "jobs": "Job openings"
+        "jobs": "Job openings",
+        "blog": "Blog posts"
       },
       "hints": {
         "testimonials": "Real quotes from real customers, with their permission.",
         "caseStudies": "A headline result you can evidence if a customer asks.",
         "team": "Shown on the About page.",
         "milestones": "The timeline on the About page.",
-        "jobs": "Listed on the Careers page."
+        "jobs": "Listed on the Careers page.",
+        "blog": "Articles on the public blog. The post body accepts HTML."
       },
       "fields": {
         "name": "Name",
@@ -1144,7 +1146,10 @@
         "location": "Location",
         "apply_url": "Where Apply links to",
         "order": "Order",
-        "orderHint": "Lower numbers appear first."
+        "orderHint": "Lower numbers appear first.",
+        "excerpt": "Excerpt",
+        "category": "Category",
+        "read_time": "Read time"
       },
       "contactTitle": "Contact details",
       "contactSubtitle": "Shown on the Contact page and in the footer",

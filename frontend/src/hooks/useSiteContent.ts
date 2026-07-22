@@ -17,6 +17,7 @@ export const SITE_CONTENT_TYPES = [
   'team_member',
   'milestone',
   'job_opening',
+  'blog_post',
 ] as const;
 
 export type SiteContentType = (typeof SITE_CONTENT_TYPES)[number];
@@ -38,6 +39,10 @@ export interface SiteContentItem {
   department: string;
   location: string;
   apply_url: string;
+  excerpt: string;
+  category: string;
+  read_time: string;
+  published_at: string | null;
   created_at: string;
   updated_at: string;
 }

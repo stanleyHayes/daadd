@@ -147,6 +147,10 @@ const WRITABLE = [
   'department',
   'location',
   'apply_url',
+  'excerpt',
+  'category',
+  'read_time',
+  'published_at',
 ] as const;
 
 function pickWritable(body: Record<string, unknown>): Record<string, unknown> {

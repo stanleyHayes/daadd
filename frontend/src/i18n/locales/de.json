@@ -1121,14 +1121,16 @@
         "caseStudies": "Case Studies",
         "team": "Team",
         "milestones": "Meilensteine",
-        "jobs": "Offene Stellen"
+        "jobs": "Offene Stellen",
+        "blog": "Blogbeiträge"
       },
       "hints": {
         "testimonials": "Echte Zitate von echten Kunden, mit deren Einverständnis.",
         "caseStudies": "Ein Kernergebnis, das du belegen kannst, wenn ein Kunde nachfragt.",
         "team": "Wird auf der Über-uns-Seite angezeigt.",
         "milestones": "Die Zeitleiste auf der Über-uns-Seite.",
-        "jobs": "Wird auf der Karriereseite gelistet."
+        "jobs": "Wird auf der Karriereseite gelistet.",
+        "blog": "Artikel im öffentlichen Blog. Der Beitragstext akzeptiert HTML."
       },
       "fields": {
         "name": "Name",
@@ -1144,7 +1146,10 @@
         "location": "Standort",
         "apply_url": "Wohin „Bewerben“ verlinkt",
         "order": "Reihenfolge",
-        "orderHint": "Niedrigere Zahlen erscheinen zuerst."
+        "orderHint": "Niedrigere Zahlen erscheinen zuerst.",
+        "excerpt": "Anrisstext",
+        "category": "Kategorie",
+        "read_time": "Lesedauer"
       },
       "contactTitle": "Kontaktdaten",
       "contactSubtitle": "Wird auf der Kontaktseite und im Footer angezeigt",

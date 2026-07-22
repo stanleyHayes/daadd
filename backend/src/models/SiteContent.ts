@@ -20,6 +20,7 @@ export const SITE_CONTENT_TYPES = [
   'team_member',
   'milestone',
   'job_opening',
+  'blog_post',
 ] as const;
 
 export type SiteContentType = (typeof SITE_CONTENT_TYPES)[number];
@@ -59,6 +60,12 @@ export interface ISiteContent extends Document {
   /** job_opening: where "Apply" points. mailto: is fine. */
   apply_url: string;
 
+  /** blog_post: the article itself, plus how it is filed and credited. */
+  excerpt: string;
+  category: string;
+  read_time: string;
+  published_at: Date | null;
+
   created_at: Date;
   updated_at: Date;
 }
@@ -84,6 +91,11 @@ const SiteContentSchema = new Schema<ISiteContent>(
     department: { type: String, default: '', trim: true },
     location: { type: String, default: '', trim: true },
     apply_url: { type: String, default: '', trim: true },
+
+    excerpt: { type: String, default: '', trim: true },
+    category: { type: String, default: '', trim: true },
+    read_time: { type: String, default: '', trim: true },
+    published_at: { type: Date, default: null },
   },
   { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }
 );
