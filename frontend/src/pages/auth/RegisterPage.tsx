@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -6,10 +6,11 @@ import { z } from 'zod';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useRegister } from '@/hooks/useAuth';
-import { User, Mail, Lock, Eye, EyeOff, Zap, ArrowRight, Megaphone, Gift, Check } from 'lucide-react';
-import { WatermarkBanner, WatermarkPattern } from '@/components/ui/Watermark';
+import { User, Mail, Lock, Eye, EyeOff, Zap, ArrowRight, ArrowLeft, Megaphone, Gift, Check, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { AuthBrandPanel } from '@/components/auth/AuthBrandPanel';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
 
 // Validation messages are resolved through i18next at render time, so the
 // schema is built inside the component rather than at module scope.
@@ -72,72 +73,33 @@ export function RegisterPage() {
  };
 
  return (
- <div className="min-h-screen flex">
- {/* Left Panel - Branding */}
- <div className="hidden lg:flex lg:w-5/12 relative overflow-hidden bg-primary-700">
- <WatermarkPattern className="opacity-[0.03] dark:opacity-[0.02] text-white" />
- <WatermarkBanner />
- <WatermarkBanner align="left" className="opacity-50" />
- <div className="relative z-10 flex flex-col justify-between p-12 text-white w-full">
- <motion.div
- initial={{ opacity: 0, x: -20 }}
- animate={{ opacity: 1, x: 0 }}
- transition={{ duration: 0.5 }}
- >
- <Link to="/" className="flex items-center gap-3">
- <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
- <Zap className="h-6 w-6 text-white" />
- </div>
- <span className="text-xl font-bold tracking-tight">SmartAdDeals</span>
- </Link>
- </motion.div>
-
- <div>
- <motion.h1
- initial={{ opacity: 0, y: 20 }}
- animate={{ opacity: 1, y: 0 }}
- transition={{ duration: 0.6, delay: 0.1 }}
- className="text-4xl font-extrabold leading-tight mb-4"
- >
- {t('auth.register.panelTitle')}
- </motion.h1>
- <motion.p
- initial={{ opacity: 0, y: 20 }}
- animate={{ opacity: 1, y: 0 }}
- transition={{ duration: 0.6, delay: 0.2 }}
- className="text-primary-100 text-lg max-w-sm"
- >
- {t('auth.register.panelBlurb')}
- </motion.p>
- </div>
-
- <div />
- </div>
- </div>
+ <div className="auth-page min-h-screen flex bg-[#f7f5ef] dark:bg-slate-950">
+ <AuthBrandPanel variant="register" title={t('auth.register.panelTitle')} blurb={t('auth.register.panelBlurb')} />
 
  {/* Right Panel - Register Form */}
- <div className="relative flex-1 flex items-center justify-center bg-gray-50 dark:bg-slate-900 px-6 py-8 overflow-y-auto">
- <WatermarkPattern className="opacity-[0.02] dark:opacity-[0.015] text-primary-100 dark:text-slate-700" />
+ <main className="relative flex-1 flex items-start justify-center px-5 py-10 sm:px-8 lg:px-10 lg:py-14 overflow-y-auto">
+ <div className="marketing-grid pointer-events-none absolute inset-0 opacity-50 dark:opacity-15" />
+ <div className="absolute right-5 top-5 z-10"><ThemeToggle /></div>
  <motion.div
  initial={{ opacity: 0, y: 16 }}
  animate={{ opacity: 1, y: 0 }}
  transition={{ duration: 0.5 }}
- className="w-full max-w-[460px]"
+ className="relative w-full max-w-[590px]"
  >
  {/* Mobile logo */}
- <div className="lg:hidden text-center mb-6">
- <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary-700 mb-3 shadow-lg shadow-primary-500/25">
- <Zap className="h-8 w-8 text-white" />
- </div>
- <h1 className="text-2xl font-bold text-gray-900 dark:text-white">SmartAdDeals</h1>
+ <div className="lg:hidden flex items-center justify-between mb-8 pr-12">
+ <Link to="/" className="flex items-center gap-2.5"><span className="grid h-10 w-10 place-items-center rounded-[14px] bg-primary-900 text-white dark:bg-secondary-400 dark:text-primary-900"><Zap className="h-5 w-5 fill-current" /></span><span className="font-black tracking-[-0.04em] text-primary-900 dark:text-white">SmartAdDeals</span></Link>
+ <Link to="/" className="flex items-center gap-1.5 text-xs font-bold text-slate-500"><ArrowLeft className="h-3.5 w-3.5" /> Home</Link>
  </div>
 
- <div className="mb-6">
- <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{t('auth.register.title')}</h2>
- <p className="text-gray-500 dark:text-slate-400 mt-1">{t('auth.register.subtitle')}</p>
+ <div className="rounded-[32px] border border-white/80 bg-white/85 p-6 shadow-[0_25px_80px_rgba(7,20,49,0.10)] backdrop-blur-xl dark:border-slate-800 dark:bg-slate-900/85 sm:p-9">
+ <div className="mb-7">
+ <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-secondary-50 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.16em] text-secondary-800 dark:bg-secondary-400/10 dark:text-secondary-300"><ShieldCheck className="h-3.5 w-3.5" /> Create secure account</div>
+ <h2 className="text-3xl font-black tracking-[-0.045em] text-primary-900 dark:text-white sm:text-4xl">{t('auth.register.title')}</h2>
+ <p className="text-slate-500 dark:text-slate-400 mt-2 text-sm leading-6">{t('auth.register.subtitle')}</p>
  </div>
 
- <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+ <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
  {/* Role selection */}
  <div>
  <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">{t('auth.register.roleLabel')}</label>
@@ -146,10 +108,10 @@ export function RegisterPage() {
  type="button"
  onClick={() => setValue('role', 'advertiser')}
  className={cn(
- 'relative p-4 rounded-xl border-2 text-left transition-all group',
+ 'relative p-4 rounded-[20px] border text-left transition-all group',
  selectedRole === 'advertiser'
- ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20 ring-2 ring-primary-500/20'
- : 'border-gray-200 dark:border-slate-600 hover:border-gray-300 dark:hover:border-slate-500 bg-white dark:bg-slate-800'
+ ? 'border-primary-900 bg-primary-50 dark:border-secondary-400 dark:bg-secondary-400/10 ring-4 ring-primary-500/10'
+ : 'border-gray-200 dark:border-slate-700 hover:border-gray-400 dark:hover:border-slate-500 bg-white dark:bg-slate-800'
  )}
  >
  {selectedRole === 'advertiser' && (
@@ -165,10 +127,10 @@ export function RegisterPage() {
  type="button"
  onClick={() => setValue('role', 'end_user')}
  className={cn(
- 'relative p-4 rounded-xl border-2 text-left transition-all group',
+ 'relative p-4 rounded-[20px] border text-left transition-all group',
  selectedRole === 'end_user'
- ? 'border-accent-500 bg-accent-50 dark:bg-accent-900/20 ring-2 ring-accent-500/20'
- : 'border-gray-200 dark:border-slate-600 hover:border-gray-300 dark:hover:border-slate-500 bg-white dark:bg-slate-800'
+ ? 'border-accent-600 bg-accent-50 dark:bg-accent-900/20 ring-4 ring-accent-500/10'
+ : 'border-gray-200 dark:border-slate-700 hover:border-gray-400 dark:hover:border-slate-500 bg-white dark:bg-slate-800'
  )}
  >
  {selectedRole === 'end_user' && (
@@ -283,24 +245,25 @@ export function RegisterPage() {
  <button
  type="submit"
  disabled={registerMutation.isPending}
- className="w-full flex items-center justify-center gap-2 rounded-xl bg-secondary-600 hover:bg-secondary-700 text-primary-900 font-medium py-3 px-4 text-sm shadow-lg shadow-secondary-500/25 hover:shadow-secondary-500/40 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-2"
+ className="group w-full h-13 flex items-center justify-center gap-3 rounded-full bg-primary-900 hover:bg-primary-700 text-white font-bold px-6 text-sm shadow-[0_14px_30px_rgba(0,27,80,0.20)] hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-2 dark:bg-secondary-400 dark:hover:bg-secondary-300 dark:text-primary-900"
  >
  {registerMutation.isPending ? (
  <div className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
  ) : (
- <>{t('auth.register.submit')} <ArrowRight className="h-4 w-4" /></>
+ <>{t('auth.register.submit')} <span className="grid h-7 w-7 place-items-center rounded-full bg-white/15 transition-transform group-hover:translate-x-1"><ArrowRight className="h-4 w-4" /></span></>
  )}
  </button>
  </form>
 
- <p className="mt-6 text-center text-sm text-gray-500 dark:text-slate-400">
+ <p className="mt-7 text-center text-sm text-gray-500 dark:text-slate-400">
  {t('auth.register.haveAccount')}{' '}
  <Link to="/login" className="text-primary-600 hover:text-primary-700 dark:text-secondary-400 dark:hover:text-secondary-300 font-semibold">
  {t('auth.register.signIn')}
  </Link>
  </p>
- </motion.div>
  </div>
+ </motion.div>
+ </main>
  </div>
  );
 }

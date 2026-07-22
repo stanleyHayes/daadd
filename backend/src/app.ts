@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
+import { corsOrigin } from './utils/cors';
 import helmet from 'helmet';
 import compression from 'compression';
 import morgan from 'morgan';
@@ -14,17 +15,8 @@ import { rateLimit } from './middleware/rateLimit';
 const app = express();
 
 app.use(helmet());
-// CORS: explicit allow-list when CORS_ORIGINS is set; locked down entirely
-// in production when it isn't; localhost-only in development otherwise.
-const corsOrigins = process.env.CORS_ORIGINS?.split(',');
-if (!corsOrigins && process.env.NODE_ENV === 'production') {
-  console.warn('[cors] CORS_ORIGINS is not set in production — cross-origin requests will be blocked');
-}
-app.use(
-  cors({
-    origin: corsOrigins || (process.env.NODE_ENV === 'production' ? false : ['http://localhost:3000']),
-  })
-);
+// See utils/cors.ts — one definition, shared with the Socket.io server.
+app.use(cors({ origin: corsOrigin(), credentials: true }));
 app.use(compression());
 if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('combined'));

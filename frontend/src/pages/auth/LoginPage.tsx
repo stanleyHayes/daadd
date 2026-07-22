@@ -1,181 +1,91 @@
-
-import React, { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-
-import { useLogin } from '@/hooks/useAuth';
-import { Mail, Lock, Eye, EyeOff, Zap, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { ArrowLeft, ArrowRight, Check, Eye, EyeOff, Lock, Mail, ShieldCheck, Zap } from 'lucide-react';
+import { useLogin } from '@/hooks/useAuth';
+import { AuthBrandPanel } from '@/components/auth/AuthBrandPanel';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
 
-// Validation messages are resolved through i18next at render time, so the
-// schema is built inside the component rather than at module scope.
-const buildSchema = (t: (k: string) => string) =>
- z.object({
- email: z.string().email(t('auth.errors.emailInvalid')),
- password: z.string().min(6, t('auth.errors.passwordMin6')),
- });
+const buildSchema = (t: (key: string) => string) => z.object({
+  email: z.string().email(t('auth.errors.emailInvalid')),
+  password: z.string().min(6, t('auth.errors.passwordMin6')),
+});
 
 type LoginForm = z.infer<ReturnType<typeof buildSchema>>;
 
 export function LoginPage() {
- const { t } = useTranslation();
- const navigate = useNavigate();
- const loginMutation = useLogin();
- const [showPassword, setShowPassword] = useState(false);
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const loginMutation = useLogin();
+  const [showPassword, setShowPassword] = useState(false);
+  const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>({ resolver: zodResolver(buildSchema(t)) });
 
- const {
- register,
- handleSubmit,
- formState: { errors },
- } = useForm<LoginForm>({
- resolver: zodResolver(buildSchema(t)),
- });
+  const onSubmit = async (data: LoginForm) => {
+    try {
+      await loginMutation.mutateAsync(data);
+      toast.success(t('auth.login.successToast'));
+      navigate('/dashboard');
+    } catch {
+      toast.error(t('auth.login.errorToast'));
+    }
+  };
 
- const onSubmit = async (data: LoginForm) => {
- try {
- await loginMutation.mutateAsync(data);
- toast.success(t('auth.login.successToast'));
- navigate('/dashboard');
- } catch {
- toast.error(t('auth.login.errorToast'));
- }
- };
+  return (
+    <div className="auth-page flex min-h-screen bg-[#f7f5ef] dark:bg-slate-950">
+      <AuthBrandPanel title={t('auth.login.panelTitle')} blurb={t('auth.login.panelBlurb')} />
 
- return (
- <div className="min-h-screen flex">
- {/* Left Panel - Branding & Features */}
- <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-primary-600">
- <div className="relative z-10 flex flex-col justify-between p-12 text-white w-full">
- {/* Logo */}
- <motion.div
- initial={{ opacity: 0, x: -20 }}
- animate={{ opacity: 1, x: 0 }}
- transition={{ duration: 0.5 }}
- className="flex items-center gap-3"
- >
- <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
- <Zap className="h-6 w-6 text-white" />
- </div>
- <span className="text-xl font-bold tracking-tight">SmartAdDeals</span>
- </motion.div>
+      <main className="relative flex flex-1 items-center justify-center overflow-hidden px-5 py-16 sm:px-8 lg:px-10">
+        <div className="marketing-grid pointer-events-none absolute inset-0 opacity-50 dark:opacity-15" />
+        <div className="absolute right-5 top-5 z-10"><ThemeToggle /></div>
 
- <div>
- <motion.h1
- initial={{ opacity: 0, y: 20 }}
- animate={{ opacity: 1, y: 0 }}
- transition={{ duration: 0.6, delay: 0.1 }}
- className="text-4xl font-extrabold leading-tight mb-4"
- >
- {t('auth.login.panelTitle')}
- </motion.h1>
- <motion.p
- initial={{ opacity: 0, y: 20 }}
- animate={{ opacity: 1, y: 0 }}
- transition={{ duration: 0.6, delay: 0.2 }}
- className="text-primary-100 text-lg max-w-md"
- >
- {t('auth.login.panelBlurb')}
- </motion.p>
- </div>
+        <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="relative w-full max-w-[470px]">
+          <div className="mb-8 flex items-center justify-between lg:hidden">
+            <Link to="/" className="flex items-center gap-2.5"><span className="grid h-10 w-10 place-items-center rounded-[14px] bg-primary-900 text-white dark:bg-secondary-400 dark:text-primary-900"><Zap className="h-5 w-5 fill-current" /></span><span className="font-black tracking-[-0.04em] text-primary-900 dark:text-white">SmartAdDeals</span></Link>
+            <Link to="/" className="flex items-center gap-1.5 text-xs font-bold text-slate-500"><ArrowLeft className="h-3.5 w-3.5" /> Home</Link>
+          </div>
 
- <div />
- </div>
- </div>
+          <div className="rounded-[32px] border border-white/80 bg-white/85 p-6 shadow-[0_25px_80px_rgba(7,20,49,0.10)] backdrop-blur-xl dark:border-slate-800 dark:bg-slate-900/85 sm:p-9">
+            <div className="mb-8">
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.16em] text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300"><ShieldCheck className="h-3.5 w-3.5" /> Secure sign in</div>
+              <h2 className="text-3xl font-black tracking-[-0.045em] text-primary-900 dark:text-white sm:text-4xl">{t('auth.login.title')}</h2>
+              <p className="mt-2 text-sm leading-6 text-slate-500 dark:text-slate-400">{t('auth.login.subtitle')}</p>
+            </div>
 
- {/* Right Panel - Login Form */}
- <div className="relative flex-1 flex items-center justify-center bg-gray-50 dark:bg-slate-900 px-6 py-12">
- <motion.div
- initial={{ opacity: 0, y: 16 }}
- animate={{ opacity: 1, y: 0 }}
- transition={{ duration: 0.5 }}
- className="w-full max-w-[420px]"
- >
- {/* Mobile logo */}
- <div className="lg:hidden text-center mb-8">
- <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary-600 mb-3 shadow-lg shadow-primary-500/25">
- <Zap className="h-8 w-8 text-white" />
- </div>
- <h1 className="text-2xl font-bold text-gray-900 dark:text-white">SmartAdDeals</h1>
- </div>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+              <AuthField label={t('auth.login.email')} error={errors.email?.message}>
+                <Mail className="auth-field-icon" />
+                <input type="email" autoComplete="email" placeholder={t('auth.login.emailPlaceholder')} className="auth-field-input" {...register('email')} />
+              </AuthField>
 
- <div className="mb-8">
- <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{t('auth.login.title')}</h2>
- <p className="text-gray-500 dark:text-slate-400 mt-1">{t('auth.login.subtitle')}</p>
- </div>
+              <AuthField label={t('auth.login.password')} error={errors.password?.message} action={<Link to="/forgot-password" className="text-xs font-bold text-primary-700 transition hover:text-secondary-700 dark:text-secondary-300">{t('auth.login.forgotPassword')}</Link>}>
+                <Lock className="auth-field-icon" />
+                <input type={showPassword ? 'text' : 'password'} autoComplete="current-password" placeholder={t('auth.login.passwordPlaceholder')} className="auth-field-input pr-12!" {...register('password')} />
+                <button type="button" aria-label={showPassword ? 'Hide password' : 'Show password'} onClick={() => setShowPassword((show) => !show)} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 transition hover:text-primary-900 dark:hover:text-white">{showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}</button>
+              </AuthField>
 
- <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
- <div>
- <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1.5">{t('auth.login.email')}</label>
- <div className="relative">
- <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-slate-500" />
- <input
- type="email"
- placeholder={t('auth.login.emailPlaceholder')}
- className="block w-full rounded-xl border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 pl-10 pr-3 py-3 text-sm dark:text-white placeholder:text-gray-400 dark:placeholder:text-slate-500 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-all"
- {...register('email')}
- />
- </div>
- {errors.email && <p className="mt-1.5 text-xs text-danger-600">{errors.email.message}</p>}
- </div>
+              <label className="flex cursor-pointer items-center gap-2.5 text-sm text-slate-500 dark:text-slate-400"><input type="checkbox" id="remember" className="h-4 w-4 rounded border-slate-300 text-primary-900 focus:ring-secondary-400" /><span>{t('auth.login.remember')}</span></label>
 
- <div>
- <div className="flex items-center justify-between mb-1.5">
- <label className="block text-sm font-medium text-gray-700 dark:text-slate-300">{t('auth.login.password')}</label>
- <Link to="/forgot-password" className="text-xs text-primary-600 hover:text-primary-700 dark:text-secondary-400 dark:hover:text-secondary-300 font-medium">{t('auth.login.forgotPassword')}</Link>
- </div>
- <div className="relative">
- <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-slate-500" />
- <input
- type={showPassword ? 'text' : 'password'}
- placeholder={t('auth.login.passwordPlaceholder')}
- className="block w-full rounded-xl border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 pl-10 pr-10 py-3 text-sm dark:text-white placeholder:text-gray-400 dark:placeholder:text-slate-500 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-all"
- {...register('password')}
- />
- <button
- type="button"
- onClick={() => setShowPassword(!showPassword)}
- className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:text-slate-500 dark:hover:text-slate-300"
- >
- {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
- </button>
- </div>
- {errors.password && <p className="mt-1.5 text-xs text-danger-600">{errors.password.message}</p>}
- </div>
+              <button type="submit" disabled={loginMutation.isPending} className="group flex h-13 w-full items-center justify-center gap-3 rounded-full bg-primary-900 px-6 text-sm font-bold text-white shadow-[0_14px_30px_rgba(0,27,80,0.20)] transition hover:-translate-y-0.5 hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-secondary-400 dark:text-primary-900 dark:hover:bg-secondary-300">
+                {loginMutation.isPending ? <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" /> : <>{t('auth.login.submit')} <span className="grid h-7 w-7 place-items-center rounded-full bg-white/15 transition-transform group-hover:translate-x-1"><ArrowRight className="h-4 w-4" /></span></>}
+              </button>
+            </form>
 
- <div className="flex items-center gap-2">
- <input
- type="checkbox"
- id="remember"
- className="rounded border-gray-300 dark:border-slate-600 text-primary-600 focus:ring-primary-500 dark:bg-slate-700"
- />
- <label htmlFor="remember" className="text-sm text-gray-600 dark:text-slate-400">{t('auth.login.remember')}</label>
- </div>
+            <div className="my-7 flex items-center gap-3"><span className="h-px flex-1 bg-slate-200 dark:bg-slate-800" /><span className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">New here?</span><span className="h-px flex-1 bg-slate-200 dark:bg-slate-800" /></div>
+            <Link to="/register" className="flex h-12 w-full items-center justify-center gap-2 rounded-full border border-slate-200 bg-slate-50 text-sm font-bold text-primary-900 transition hover:border-primary-900 hover:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:hover:border-secondary-400">{t('auth.login.createAccount')} <ArrowRight className="h-4 w-4" /></Link>
+          </div>
 
- <button
- type="submit"
- disabled={loginMutation.isPending}
- className="w-full flex items-center justify-center gap-2 rounded-xl bg-secondary-600 hover:bg-secondary-700 text-primary-900 font-medium py-3 px-4 text-sm shadow-lg shadow-secondary-500/25 hover:shadow-secondary-500/40 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
- >
- {loginMutation.isPending ? (
- <div className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
- ) : (
- <>{t('auth.login.submit')} <ArrowRight className="h-4 w-4" /></>
- )}
- </button>
- </form>
+          <p className="mt-5 flex items-center justify-center gap-2 text-center text-[11px] font-semibold text-slate-400"><Check className="h-3.5 w-3.5 text-emerald-500" /> Encrypted session · Protected access</p>
+        </motion.div>
+      </main>
+    </div>
+  );
+}
 
- <p className="mt-6 text-center text-sm text-gray-500 dark:text-slate-400">
- {t('auth.login.noAccount')}{' '}
- <Link to="/register" className="text-primary-600 hover:text-primary-700 dark:text-secondary-400 dark:hover:text-secondary-300 font-semibold">
- {t('auth.login.createAccount')}
- </Link>
- </p>
- </motion.div>
- </div>
- </div>
- );
+function AuthField({ label, error, action, children }: { label: string; error?: string; action?: ReactNode; children: ReactNode }) {
+  return <div><div className="mb-2 flex items-center justify-between"><label className="text-xs font-bold uppercase tracking-[0.08em] text-slate-600 dark:text-slate-300">{label}</label>{action}</div><div className="relative">{children}</div>{error && <p className="mt-1.5 text-xs font-medium text-danger-600">{error}</p>}</div>;
 }

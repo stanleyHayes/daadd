@@ -369,6 +369,69 @@
   font-weight: 900;
 }
 
+.auth-panel-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: linear-gradient(135deg, black 20%, transparent 95%);
+}
+
+.auth-field-icon {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  z-index: 1;
+  width: 1rem;
+  height: 1rem;
+  color: #94a3b8;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.auth-field-input,
+.auth-page form input[type='text'],
+.auth-page form input[type='email'],
+.auth-page form input[type='password'] {
+  display: block;
+  width: 100%;
+  min-height: 3.25rem;
+  border: 1px solid #dbe1e8;
+  border-radius: 1rem;
+  background: rgba(248, 250, 252, 0.88);
+  padding: 0.75rem 1rem 0.75rem 2.75rem;
+  color: #0f172a;
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.auth-field-input:focus,
+.auth-page form input[type='text']:focus,
+.auth-page form input[type='email']:focus,
+.auth-page form input[type='password']:focus {
+  border-color: #d4af37;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.12);
+}
+
+.dark .auth-field-input,
+.dark .auth-page form input[type='text'],
+.dark .auth-page form input[type='email'],
+.dark .auth-page form input[type='password'] {
+  border-color: #334155;
+  background: rgba(15, 23, 42, 0.8);
+  color: #fff;
+}
+
+.dark .auth-field-input:focus,
+.dark .auth-page form input[type='text']:focus,
+.dark .auth-page form input[type='email']:focus,
+.dark .auth-page form input[type='password']:focus {
+  border-color: #f4c20d;
+  background: #0f172a;
+}
+
 .public-site main > div > section.bg-primary-700,
 .public-site main > div > div > section.bg-primary-700,
 .public-site main section.relative.bg-primary-700.text-white {

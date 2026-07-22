@@ -7,6 +7,7 @@ import { Server } from 'socket.io';
 import app from './app';
 import { JWT_SECRET } from './middleware/auth';
 import { registerMetricsHandlers } from './services/metrics-stream.service';
+import { corsOrigin } from './utils/cors';
 import { Conversation } from './models';
 import { seedDatabase } from './seed';
 import { scanAllActiveCampaigns } from './services/anomaly-detection.service';
@@ -53,17 +54,10 @@ async function startServer(): Promise<void> {
     // Share one HTTP server between Express and Socket.io (real-time chat).
     const httpServer = http.createServer(app);
 
-    const trimmedOrigins = process.env.CORS_ORIGINS?.split(',')
-      .map((o) => o.trim())
-      .filter(Boolean);
-    const socketOrigins =
-      trimmedOrigins && trimmedOrigins.length
-        ? trimmedOrigins
-        : process.env.NODE_ENV === 'production'
-          ? false
-          : ['http://localhost:3000'];
+    // Same origin rules as the REST API (utils/cors.ts). Computing these
+    // separately is how the two drifted apart in the first place.
     const io = new Server(httpServer, {
-      cors: { origin: socketOrigins, credentials: true },
+      cors: { origin: corsOrigin(), credentials: true },
     });
     // Authenticate every socket with the same JWT as the REST API; reject
     // missing / expired / refresh tokens. Each socket joins its personal room

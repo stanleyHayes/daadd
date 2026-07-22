@@ -1,6 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { WatermarkBanner } from '@/components/ui/Watermark';
+import { Sparkles } from 'lucide-react';
 
 interface PageHeaderProps {
   title: string;
@@ -14,19 +14,21 @@ export function PageHeader({ title, subtitle, action, className, size = 'md' }: 
   return (
     <div
       className={cn(
-        'relative overflow-hidden rounded-2xl bg-primary-700 text-white',
-        size === 'lg' ? 'p-6 md:p-8' : 'p-5 md:p-6',
+        'dashboard-page-header relative overflow-hidden rounded-[28px] bg-[#07142f] text-white shadow-[0_18px_50px_rgba(7,20,49,0.14)]',
+        size === 'lg' ? 'p-7 md:p-9' : 'p-6 md:p-8',
         className
       )}
     >
-      <WatermarkBanner className="opacity-40" />
+      <div className="auth-panel-grid pointer-events-none absolute inset-0 opacity-50" />
+      <div className="pointer-events-none absolute -right-20 -top-28 h-72 w-72 rounded-full bg-secondary-400/20 blur-[80px]" />
       <div className="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className={cn('font-bold tracking-tight', size === 'lg' ? 'text-2xl md:text-3xl' : 'text-xl md:text-2xl')}>
+          <p className="mb-3 flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-secondary-300"><Sparkles className="h-3.5 w-3.5" /> Workspace intelligence</p>
+          <h1 className={cn('font-black tracking-[-0.04em]', size === 'lg' ? 'text-3xl md:text-4xl' : 'text-2xl md:text-3xl')}>
             {title}
           </h1>
           {subtitle && (
-            <p className="text-sm text-primary-100 mt-1 max-w-2xl">{subtitle}</p>
+            <p className="text-sm leading-6 text-white/55 mt-2 max-w-2xl">{subtitle}</p>
           )}
         </div>
         {action && <div className="shrink-0">{action}</div>}

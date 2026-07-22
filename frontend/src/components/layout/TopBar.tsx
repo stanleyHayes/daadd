@@ -122,9 +122,9 @@ export function TopBar() {
 
  return (
  <>
- <header className="sticky top-0 z-40 h-[72px] flex items-center">
- <div className="ml-16 mr-4 md:mx-6 flex-1">
- <div className="flex items-center justify-between h-14 px-4 bg-card-bg/80 dark:bg-slate-950/80 backdrop-blur-xl border border-border-color dark:border-slate-800 rounded-2xl shadow-sm">
+ <header className="sticky top-0 z-40 flex h-[84px] items-center border-b border-slate-200/70 bg-[#f3f4f6]/85 backdrop-blur-xl dark:border-slate-800/70 dark:bg-[#070d19]/85">
+ <div className="ml-16 mr-4 flex-1 md:mx-7 xl:mx-8">
+ <div className="flex h-14 items-center justify-between rounded-[18px] border border-white bg-white/85 px-3 shadow-[0_8px_28px_rgba(7,20,49,0.055)] backdrop-blur-xl dark:border-slate-800 dark:bg-slate-900/80 sm:px-4">
  {/* Mobile/tablet: current page title (breadcrumbs are hidden below lg) */}
  <span className="lg:hidden min-w-0 truncate text-base font-semibold text-text-primary">
  {breadcrumbs[breadcrumbs.length - 1]?.label || 'Dashboard'}
@@ -161,7 +161,7 @@ export function TopBar() {
  value={searchQuery}
  onChange={(e) => setSearchQuery(e.target.value)}
  onKeyDown={handleSearch}
- className="w-full pl-10 pr-20 py-2 rounded-full border border-border-color dark:border-slate-700 bg-bg-secondary dark:bg-slate-900 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-secondary-500/30 focus:border-secondary-500 transition-all"
+ className="w-full pl-10 pr-20 py-2.5 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-4 focus:ring-secondary-500/10 focus:border-secondary-500 transition-all"
  />
  <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
  <button
@@ -182,7 +182,7 @@ export function TopBar() {
  <div className="flex items-center gap-2">
  <button
  onClick={() => navigate('/dashboard/campaigns/new')}
- className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full bg-primary-700 hover:bg-primary-800 text-white text-sm font-medium transition-all shadow-lg shadow-primary-700/20 active:scale-95"
+ className="hidden sm:flex items-center gap-2 px-4 py-2.5 rounded-full bg-primary-900 hover:bg-primary-700 text-white text-sm font-bold transition-all shadow-lg shadow-primary-900/15 active:scale-95 dark:bg-secondary-400 dark:text-primary-900 dark:hover:bg-secondary-300"
  >
  <Plus className="h-4 w-4" />
  <span className="hidden xl:inline">New Campaign</span>

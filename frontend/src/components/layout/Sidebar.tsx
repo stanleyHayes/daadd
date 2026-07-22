@@ -105,28 +105,26 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
   const sidebarContent = (
     <>
       {/* Brand */}
-      <div className="flex items-center gap-3 px-4 h-[72px] border-b border-white/10 shrink-0 bg-gradient-to-r from-primary-800 to-primary-900">
-        <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-secondary-500 shrink-0 shadow-lg shadow-secondary-500/25 ring-2 ring-secondary-500/20">
-          <Zap className="h-5 w-5 text-primary-900" />
+      <div className="flex items-center gap-3 px-4 h-[84px] border-b border-white/[0.07] shrink-0">
+        <div className="relative flex items-center justify-center w-11 h-11 overflow-hidden rounded-[15px] bg-white shrink-0 shadow-lg shadow-black/20">
+          <span className="absolute inset-x-0 bottom-0 h-1/2 bg-secondary-400" />
+          <Zap className="relative h-5 w-5 fill-primary-900 text-primary-900" />
         </div>
         {!collapsed && (
           <div className="flex flex-col">
-            <span className="text-lg font-bold text-white tracking-tight">SmartAdDeals</span>
-            <span className="text-[10px] text-secondary-300 uppercase tracking-[0.15em] font-semibold">{t('dashboard.nav.workspaceLabel')}</span>
+            <span className="text-lg font-black text-white tracking-[-0.04em]">SmartAd<span className="text-secondary-400">Deals</span></span>
+            <span className="mt-0.5 text-[9px] text-white/35 uppercase tracking-[0.18em] font-bold">{t('dashboard.nav.workspaceLabel')}</span>
           </div>
         )}
       </div>
 
-      {/* Gold hairline */}
-      <div className="gold-hairline w-full" />
-
       {/* Nav */}
-      <nav className="flex-1 overflow-y-auto scrollbar-thin py-4 px-2">
-        <div className="space-y-6">
+      <nav className="flex-1 overflow-y-auto scrollbar-thin py-5 px-3">
+        <div className="space-y-7">
           {visibleGroups.map((group) => (
             <div key={group.title}>
               {!collapsed && (
-                <p className="px-3 mb-2 text-[10px] font-bold uppercase tracking-[0.15em] text-secondary-400/80">
+                <p className="px-3 mb-2.5 text-[9px] font-black uppercase tracking-[0.2em] text-white/30">
                   {t(`dashboard.nav.${group.title}`)}
                 </p>
               )}
@@ -144,28 +142,22 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
                         to={item.href}
                         onClick={() => setMobileOpen(false)}
                         className={cn(
-                          'group flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-semibold transition-all duration-200 relative',
+                          'group flex items-center gap-3 px-3 py-3 rounded-[14px] text-sm font-semibold transition-all duration-200 relative',
                           isActive
-                            ? 'bg-white/10 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]'
+                            ? 'bg-secondary-400 text-primary-900 shadow-[0_10px_24px_rgba(244,194,13,0.14)]'
                             : 'text-white/70 hover:bg-white/5 hover:text-white',
                           collapsed && 'justify-center px-2'
                         )}
                         title={collapsed ? t(`dashboard.nav.${item.label}`) : undefined}
                       >
-                        {isActive && !collapsed && (
-                          <motion.div
-                            layoutId="sidebar-active-pill"
-                            className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-secondary-500 rounded-r-full"
-                            transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                          />
-                        )}
+                        {isActive && !collapsed && <motion.div layoutId="sidebar-active-pill" className="absolute inset-0 -z-10 rounded-[14px]" transition={{ type: 'spring', stiffness: 380, damping: 30 }} />}
                         {isActive && collapsed && (
                           <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-5 bg-secondary-500 rounded-r-full" />
                         )}
                         <Icon
                           className={cn(
                             'h-[18px] w-[18px] shrink-0 transition-colors',
-                            isActive ? 'text-secondary-400' : 'text-white/50 group-hover:text-secondary-300'
+                            isActive ? 'text-primary-900' : 'text-white/45 group-hover:text-secondary-300'
                           )}
                         />
                         {!collapsed && t(`dashboard.nav.${item.label}`)}
@@ -185,7 +177,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
           <Link
             to="/dashboard/profile"
             onClick={() => setMobileOpen(false)}
-            className="flex items-center gap-3 px-2 py-2 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/10 transition-colors"
+            className="flex items-center gap-3 px-2.5 py-2.5 rounded-2xl bg-white/[0.045] border border-white/[0.06] hover:bg-white/[0.08] hover:border-white/10 transition-colors"
           >
             <div className="w-9 h-9 rounded-full bg-secondary-400 flex items-center justify-center text-primary-900 text-xs font-bold shrink-0">
               {getInitials(user.name)}
@@ -205,7 +197,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
       )}
 
       {/* Collapse toggle */}
-      <div className="px-3 py-3 border-t border-white/10 shrink-0">
+      <div className="px-3 py-3 border-t border-white/[0.07] shrink-0">
         <button
           onClick={onToggle}
           className="flex items-center justify-center w-full p-2 rounded-xl text-white/50 hover:bg-white/5 hover:text-white transition-colors"
@@ -221,8 +213,8 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
     <>
       {/* Desktop rail */}
       <aside
-        style={{ width: collapsed ? 76 : 264 }}
-        className="fixed left-0 top-0 h-screen bg-gradient-to-b from-primary-800 to-primary-900 dark:from-primary-900 dark:to-slate-950 z-30 hidden md:flex flex-col shadow-2xl shadow-primary-950/40 border-r border-white/5"
+        style={{ width: collapsed ? 84 : 286 }}
+        className="fixed left-0 top-0 h-screen bg-[#07142f] z-30 hidden md:flex flex-col shadow-[18px_0_60px_rgba(7,20,49,0.13)] border-r border-white/[0.06]"
       >
         {sidebarContent}
       </aside>
@@ -252,9 +244,9 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="md:hidden fixed left-0 top-0 h-screen w-[264px] bg-gradient-to-b from-primary-800 to-primary-900 dark:from-primary-900 dark:to-slate-950 z-50 flex flex-col shadow-2xl border-r border-white/5"
+              className="md:hidden fixed left-0 top-0 h-screen w-[286px] bg-[#07142f] z-50 flex flex-col shadow-2xl border-r border-white/5"
             >
-              <div className="flex items-center justify-between px-4 h-[72px] border-b border-white/10 bg-gradient-to-r from-primary-800 to-primary-900">
+              <div className="flex items-center justify-between px-4 h-[84px] border-b border-white/10">
                 <span className="text-lg font-bold text-white tracking-tight">SmartAdDeals</span>
                 <button onClick={() => setMobileOpen(false)} className="p-2 rounded-lg text-white/70 hover:bg-white/10">
                   <X className="h-5 w-5" />
