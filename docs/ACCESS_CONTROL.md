@@ -1,28 +1,40 @@
 # Access control
 
-There are **two independent axes**. Confusing them is the main way this gets
-misconfigured, so they are named and stored separately.
+There are **three separate things called "role"** in this codebase. Confusing
+them is the main way access gets misconfigured.
 
-## Axis 1 — account type (`User.role`)
+Only the third — staff roles — is defined by this document. The other two
+predate it and are described here just well enough that you can tell them
+apart.
 
-*What kind of party you are in the marketplace.* Set when the account is
-created, by which product the person signed up for. Not something an admin
-tunes.
+## 1. Account type (`User.role`)
 
-| Account type | Who | How they get it |
-|---|---|---|
-| `advertiser` | A paying customer running campaigns | Public sign-up, then admin approval |
-| `campaign_manager` | Someone an advertiser adds to their own campaign team | Invited by their advertiser |
-| `analyst` | A read-only seat on an advertiser's account | Invited by their advertiser |
-| `merchant` | A business redeeming tokens at the till | Public sign-up |
-| `end_user` | A consumer browsing ads and earning tokens | Public sign-up |
-| `admin` | SmartAdDeals staff | Seeded, or invited from Roles & Access |
+*What kind of party someone is on the platform.* Set at sign-up by which
+product they came for.
 
-Everyone in the first five rows is a **customer**. Their access is decided by
-what they bought, not by anything on the staff side. A paying advertiser never
-holds a staff role, however senior they are at their own company.
+The enum is `admin | advertiser | campaign_manager | analyst | end_user |
+merchant` (`backend/src/models/User.ts`, listed in `SPECIFICATION.md` §6).
 
-## Axis 2 — staff role (`User.role_id` → a `Role` document)
+**The precise business meaning of the non-admin types is not pinned down
+anywhere authoritative.** `SPECIFICATION.md` names them without defining them,
+and `docs/TECHNICAL_GUIDE_ADMIN.md` describes a different, overlapping set. If
+you need to reason about what an `analyst` or a `campaign_manager` may do,
+check the product requirements rather than trusting a summary — including this
+one. Do not treat any table in this file as the definition of a customer type.
+
+What *is* safe to rely on: everyone except `admin` is a **customer**. Their
+access follows from what they signed up for, and none of them ever holds a
+staff role, however senior they are at their own company.
+
+## 2. Campaign team role (`TeamMember.role`)
+
+*What someone may do on one specific campaign.* An advertiser invites people
+onto their own campaigns as `admin` / `editor` / `viewer`. Scoped to that
+campaign, granted by the advertiser, nothing to do with SmartAdDeals staff.
+
+See `backend/src/models/TeamMember.ts` and `routes/teams.ts`.
+
+## 3. Staff role (`User.role_id` → a `Role` document)
 
 *What an internal SmartAdDeals employee may touch in the admin dashboard.*
 Only accounts with `role: 'admin'` have one.
@@ -31,7 +43,7 @@ These are editable documents, not hard-coded checks. An admin with
 `roles:update` can change what any of them means without a deploy.
 
 | Staff role | For | Roughly |
-|---|---|---|
+| --- | --- | --- |
 | Super Admin | Full access, including managing roles and other admins | Everything |
 | Administrator | Runs the platform day to day | Everything except role management and deleting staff |
 | Content Editor | Marketing site and submitted media | Website content, moderation, read-only reviews and support |
