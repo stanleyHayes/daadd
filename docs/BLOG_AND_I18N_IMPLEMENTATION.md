@@ -1,5 +1,12 @@
 # Blog & Internationalization (i18n) Implementation
 
+> **The i18n half of this document is SUPERSEDED.** It describes the original
+> 33-key, marketing-site-only setup across 5 languages. The apps now carry 963
+> web keys and 331 mobile keys across 6 languages (Swedish added), generated
+> from a single source file per app. See [I18N.md](I18N.md) for the current
+> system and [TRANSLATION_REVIEW.md](TRANSLATION_REVIEW.md) for the reviewer
+> handoff. The blog half of this document is still accurate.
+
 **Completion Date:** May 19, 2026  
 **Status:** ✅ Complete
 

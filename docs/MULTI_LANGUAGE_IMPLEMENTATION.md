@@ -1,5 +1,9 @@
 # Multi-Language Support Implementation Guide
 
+> This is about the **AI Creative Assistant generating ad copy** in multiple
+> languages — it is not about UI translation. For the interface strings see
+> [I18N.md](I18N.md).
+
 **Status:** 🚀 IN PROGRESS  
 **Target Launch:** May 28, 2026 (2 weeks)  
 **Effort:** 1-2 dev-weeks  

@@ -294,6 +294,24 @@ Run these from the repository root:
 | `npm run docker:down` | Stop all Docker Compose services                       |
 | `npm run db:seed`     | Seed the database with sample data                     |
 
+## Internationalisation
+
+The web and mobile apps ship in **English, Swedish, German, Spanish, French and
+Portuguese** — 963 web keys and 331 mobile keys, complete in every locale.
+
+`en.json` is the source of truth in both apps; the other locales are generated.
+Translators edit one file per app and re-run the generator:
+
+```bash
+node frontend/scripts/gen-locales.cjs
+node mobile/scripts/gen-locales.cjs
+```
+
+- [docs/I18N.md](docs/I18N.md) — how the system works, adding strings and languages
+- [docs/TRANSLATION_REVIEW.md](docs/TRANSLATION_REVIEW.md) — **the non-English copy
+  has not yet had a native-speaker review**; reviewer handoff, domain glossary
+  and per-locale sign-off live here
+
 ## Architecture
 
 The platform is organized into the following feature modules:
