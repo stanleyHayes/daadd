@@ -8,7 +8,7 @@ import { PageHeader } from '@/components/layout/PageHeader';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Card } from '@/components/ui/Card';
 import { MetricsCard } from '@/components/analytics/MetricsCard';
-import { Plug, AlertTriangle, Globe } from 'lucide-react';
+import { Plug, AlertTriangle, Globe, ArrowRight, CheckCircle2, RefreshCw, ShieldCheck } from 'lucide-react';
 
 interface PlatformAccount {
   id: string;
@@ -24,11 +24,11 @@ interface PlatformAccount {
 }
 
 const PLATFORMS = [
-  { id: 'google', name: 'Google Ads', color: 'bg-blue-500' },
-  { id: 'meta', name: 'Meta (Facebook/Instagram)', color: 'bg-blue-600' },
-  { id: 'tiktok', name: 'TikTok', color: 'bg-black' },
-  { id: 'linkedin', name: 'LinkedIn', color: 'bg-blue-700' },
-  { id: 'pinterest', name: 'Pinterest', color: 'bg-red-500' },
+  { id: 'google', name: 'Google Ads', color: 'bg-[#4285f4]', tone: 'from-blue-50 to-white dark:from-blue-950/20 dark:to-slate-900', description: 'Search, display and video campaign performance.' },
+  { id: 'meta', name: 'Meta', color: 'bg-[#0866ff]', tone: 'from-indigo-50 to-white dark:from-indigo-950/20 dark:to-slate-900', description: 'Facebook and Instagram campaign intelligence.' },
+  { id: 'tiktok', name: 'TikTok', color: 'bg-black', tone: 'from-slate-100 to-white dark:from-slate-800 dark:to-slate-900', description: 'Short-form video reach and engagement data.' },
+  { id: 'linkedin', name: 'LinkedIn', color: 'bg-[#0a66c2]', tone: 'from-sky-50 to-white dark:from-sky-950/20 dark:to-slate-900', description: 'Professional audience and B2B campaign reporting.' },
+  { id: 'pinterest', name: 'Pinterest', color: 'bg-[#e60023]', tone: 'from-rose-50 to-white dark:from-rose-950/20 dark:to-slate-900', description: 'Discovery, saves and shopping campaign insights.' },
 ];
 
 export function PlatformAccountsPage() {
@@ -86,7 +86,7 @@ export function PlatformAccountsPage() {
 
   if (isLoading) {
     return (
-      <div className="max-w-7xl mx-auto space-y-6">
+      <div className="max-w-[1500px] mx-auto space-y-6">
         <PageHeader
           title={t('dashboard.platformAccounts.title')}
           subtitle={t('dashboard.platformAccounts.subtitle')}
@@ -102,7 +102,7 @@ export function PlatformAccountsPage() {
 
   if (error) {
     return (
-      <div className="max-w-7xl mx-auto space-y-6">
+      <div className="max-w-[1500px] mx-auto space-y-6">
         <PageHeader
           title={t('dashboard.platformAccounts.title')}
           subtitle={t('dashboard.platformAccounts.subtitle')}
@@ -121,7 +121,7 @@ export function PlatformAccountsPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="max-w-[1500px] mx-auto space-y-6">
       <PageHeader
         title={t('dashboard.platformAccounts.title')}
         subtitle={t('dashboard.platformAccounts.subtitle')}
@@ -136,15 +136,15 @@ export function PlatformAccountsPage() {
       {/* Connected Accounts */}
       {accounts.length > 0 && (
         <div className="space-y-4">
-          <h2 className="text-xl font-semibold">{t('dashboard.platformAccounts.connectedAccounts')}</h2>
+          <div><p className="text-[10px] font-black uppercase tracking-[0.18em] text-secondary-700 dark:text-secondary-300">Active data sources</p><h2 className="mt-1 text-xl font-black tracking-[-0.025em]">{t('dashboard.platformAccounts.connectedAccounts')}</h2></div>
           <div className="grid gap-4">
             {accounts.map(account => {
               const platform = PLATFORMS.find(p => p.id === account.platform);
               return (
-                <Card key={account.id} className="p-4">
+                <Card key={account.id} shape="soft" className="p-5">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4">
-                      <div className={`w-12 h-12 rounded-lg ${platform?.color || 'bg-gray-500'} flex items-center justify-center text-white font-bold`}>
+                      <div className={`w-12 h-12 rounded-[16px] ${platform?.color || 'bg-gray-500'} flex items-center justify-center text-white font-black shadow-lg`}>
                         {platform?.name.charAt(0)}
                       </div>
                       <div>
@@ -201,26 +201,28 @@ export function PlatformAccountsPage() {
 
       {/* Available Platforms */}
       <div className="space-y-4">
-        <h2 className="text-xl font-semibold">{t('dashboard.platformAccounts.connectNew')}</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between"><div><p className="text-[10px] font-black uppercase tracking-[0.18em] text-secondary-700 dark:text-secondary-300">Integration directory</p><h2 className="mt-1 text-2xl font-black tracking-[-0.035em]">{t('dashboard.platformAccounts.connectNew')}</h2></div><p className="max-w-md text-sm text-text-muted">Bring campaign performance into one view. Connections use each platform's secure authorization flow.</p></div>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 items-stretch">
           {PLATFORMS.map(platform => (
             <Card
               key={platform.id}
-              className={`p-6 cursor-pointer transition-all ${
+              shape="soft"
+              className={`group relative min-h-64 overflow-hidden bg-gradient-to-br p-6 cursor-pointer transition-all ${platform.tone} ${
                 connectedPlatforms.includes(platform.id)
                   ? 'opacity-50'
-                  : 'hover:shadow-lg hover:border-blue-500'
+                  : 'hover:-translate-y-1 hover:shadow-[0_22px_55px_rgba(7,20,49,0.11)] hover:border-secondary-400'
               }`}
             >
-              <div className="flex flex-col items-center space-y-4">
-                <div className={`w-16 h-16 rounded-lg ${platform.color} flex items-center justify-center text-white text-2xl font-bold`}>
-                  {platform.name.charAt(0)}
-                </div>
-                <h3 className="font-semibold text-center">{platform.name}</h3>
+              <div className="flex h-full flex-col">
+                <div className="flex items-start justify-between"><div className={`w-14 h-14 rounded-[18px] ${platform.color} flex items-center justify-center text-white text-xl font-black shadow-lg`}>{platform.name.charAt(0)}</div>{connectedPlatforms.includes(platform.id) ? <span className="flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-1 text-[9px] font-black uppercase tracking-wider text-emerald-700"><CheckCircle2 className="h-3 w-3" /> Connected</span> : <ArrowRight className="h-5 w-5 text-slate-300 transition-transform group-hover:translate-x-1 group-hover:text-primary-900" />}</div>
+                <h3 className="mt-7 text-xl font-black tracking-[-0.03em]">{platform.name}</h3>
+                <p className="mt-2 text-sm leading-6 text-text-muted">{platform.description}</p>
                 <Button
-                  className="w-full"
+                  shape="pill"
+                  className="mt-auto w-full pt-3"
                   onClick={() => startOAuth(platform.id)}
                   disabled={connectedPlatforms.includes(platform.id)}
+                  icon={connectedPlatforms.includes(platform.id) ? <CheckCircle2 className="h-4 w-4" /> : <Plug className="h-4 w-4" />}
                 >
                   {connectedPlatforms.includes(platform.id) ? 'Connected' : 'Connect'}
                 </Button>
@@ -231,13 +233,13 @@ export function PlatformAccountsPage() {
       </div>
 
       {/* Info Box */}
-      <Card className="p-4 bg-blue-50 border-blue-200">
-        <h3 className="font-semibold text-blue-900 mb-2">{t('dashboard.platformAccounts.howItWorks')}</h3>
-        <ul className="text-sm text-blue-800 space-y-1 list-disc list-inside">
-          <li>{t('dashboard.platformAccounts.how1')}</li>
-          <li>{t('dashboard.platformAccounts.how2')}</li>
-          <li>{t('dashboard.platformAccounts.how3')}</li>
-          <li>{t('dashboard.platformAccounts.how4')}</li>
+      <Card shape="soft" className="overflow-hidden border-0 bg-[#07142f] p-6 text-white">
+        <div className="flex items-center gap-3"><span className="grid h-10 w-10 place-items-center rounded-2xl bg-secondary-400 text-primary-900"><ShieldCheck className="h-5 w-5" /></span><div><h3 className="font-bold">{t('dashboard.platformAccounts.howItWorks')}</h3><p className="text-xs text-white/45">Secure connection, clear control.</p></div></div>
+        <ul className="mt-5 grid gap-3 text-sm text-white/60 sm:grid-cols-2">
+          <li className="flex gap-2"><RefreshCw className="mt-0.5 h-4 w-4 shrink-0 text-secondary-300" />{t('dashboard.platformAccounts.how1')}</li>
+          <li className="flex gap-2"><RefreshCw className="mt-0.5 h-4 w-4 shrink-0 text-secondary-300" />{t('dashboard.platformAccounts.how2')}</li>
+          <li className="flex gap-2"><RefreshCw className="mt-0.5 h-4 w-4 shrink-0 text-secondary-300" />{t('dashboard.platformAccounts.how3')}</li>
+          <li className="flex gap-2"><RefreshCw className="mt-0.5 h-4 w-4 shrink-0 text-secondary-300" />{t('dashboard.platformAccounts.how4')}</li>
         </ul>
       </Card>
     </div>

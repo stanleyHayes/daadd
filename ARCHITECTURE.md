@@ -117,7 +117,7 @@ daadd/                              (npm-workspaces monorepo)
 
 | Area | Status |
 |---|---|
-| `/analytics/*` metrics | Synthetic (seeded random); exports work off the same data |
+| `/analytics/*` metrics | **Real** — aggregated from `DeviceEvent` and `AdView`. Returns zero and a `hasData` flag where nothing is recorded, rather than an estimate. CSV/PDF export still uses a seeded series |
 | `/heatmaps/*` | Synthetic; 100-view gate is frontend-only |
 | `/attribution/*`, `/benchmarks/*` | Synthetic (benchmarks enforces the 3-advertiser gate) |
 | `/ai/*` recommendations | Seeded pseudo-random; apply/dismiss/audit plumbing is real |

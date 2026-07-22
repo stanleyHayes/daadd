@@ -9,6 +9,8 @@ import { useChannels, useEstimateSpend, type AdChannel } from '@/hooks/useChanne
 import { formatCurrency } from '@/lib/utils';
 import { MonitorPlay, Radio, Store, Gavel, LayoutGrid, Calculator } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { PageHeader } from '@/components/layout/PageHeader';
+import { PageTransition } from '@/components/ui/PageTransition';
 
 /**
  * Ad channels (roadmap phases 3-6).
@@ -46,11 +48,8 @@ export function ChannelsPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-text-primary">{t('dashboard.channels.title')}</h1>
-        <p className="mt-1 text-sm text-text-secondary">{t('dashboard.channels.intro')}</p>
-      </div>
+    <PageTransition><div className="mx-auto max-w-[1500px] space-y-6">
+      <PageHeader title={t('dashboard.channels.title')} subtitle={t('dashboard.channels.intro')} />
 
       {isLoading ? (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -59,7 +58,7 @@ export function ChannelsPage() {
           ))}
         </div>
       ) : channels.length === 0 ? (
-        <Card>
+        <Card shape="soft">
           <EmptyState
             variant="plain"
             icon={<LayoutGrid />}
@@ -80,9 +79,9 @@ export function ChannelsPage() {
               >
                 {/* stretch + CardActions keeps every card in the row the same
                     height with its button on the same baseline */}
-                <Card stretch shape="soft">
+                <Card stretch shape="soft" className="group min-h-64 border-white/80 shadow-[0_14px_40px_rgba(7,20,49,0.055)] transition hover:-translate-y-1 hover:border-secondary-400 dark:border-slate-800">
                   <div className="mb-3 flex items-center gap-3">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-50 text-primary-600 dark:bg-primary-900/30 dark:text-primary-300">
+                    <span className="flex h-11 w-11 items-center justify-center rounded-[15px] bg-primary-900 text-secondary-300 dark:bg-secondary-400 dark:text-primary-900">
                       <Icon className="h-5 w-5" />
                     </span>
                     <div className="min-w-0">
@@ -136,7 +135,7 @@ export function ChannelsPage() {
       )}
 
       {estimate.data && (
-        <Card>
+        <Card shape="soft" className="border-white/80 shadow-[0_14px_40px_rgba(7,20,49,0.055)] dark:border-slate-800">
           <CardHeader
             title={t('dashboard.channels.estimateTitle', { channel: estimate.data.channel })}
             subtitle={t('dashboard.channels.estimateSubtitle')}
@@ -179,6 +178,6 @@ export function ChannelsPage() {
           )}
         </Card>
       )}
-    </div>
+    </div></PageTransition>
   );
 }

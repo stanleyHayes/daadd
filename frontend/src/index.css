@@ -432,6 +432,57 @@
   background: #0f172a;
 }
 
+/* Authenticated workspace system */
+.dashboard-shell main > div > div[class*='max-w-7xl'],
+.dashboard-shell main > div > div[class*='space-y-6'] {
+  position: relative;
+}
+
+.dashboard-shell main .bg-card-bg.border {
+  border-color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 12px 36px rgba(7, 20, 49, 0.055);
+}
+
+.dark .dashboard-shell main .bg-card-bg.border {
+  border-color: #1e293b;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.16);
+}
+
+.dashboard-shell main table thead {
+  background: #f8fafc;
+}
+
+.dashboard-shell main table th {
+  padding-block: 0.9rem;
+  color: #94a3b8;
+  font-size: 0.625rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.dashboard-shell main table tbody tr {
+  transition: background 160ms ease;
+}
+
+.dashboard-shell main table tbody td {
+  padding-block: 1rem;
+}
+
+.dark .dashboard-shell main table thead {
+  background: rgba(15, 23, 42, 0.72);
+}
+
+.dashboard-shell main input:not([type='checkbox']):not([type='radio']),
+.dashboard-shell main textarea,
+.dashboard-shell main select {
+  border-radius: 0.875rem;
+}
+
+.dashboard-page-header button,
+.dashboard-page-header a[class*='bg-'] {
+  border-radius: 999px;
+}
+
 .public-site main > div > section.bg-primary-700,
 .public-site main > div > div > section.bg-primary-700,
 .public-site main section.relative.bg-primary-700.text-white {

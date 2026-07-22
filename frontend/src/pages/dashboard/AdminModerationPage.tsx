@@ -6,6 +6,8 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { useModerationQueue, useModerateReview } from '@/hooks/useAdminTools';
 import { formatDate } from '@/lib/utils';
 import { ShieldCheck, Check, X, Star } from 'lucide-react';
+import { PageHeader } from '@/components/layout/PageHeader';
+import { PageTransition } from '@/components/ui/PageTransition';
 
 export function AdminModerationPage() {
   const { t } = useTranslation();
@@ -13,13 +15,10 @@ export function AdminModerationPage() {
   const moderate = useModerateReview();
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-text-primary">{t('dashboard.adminModeration.title')}</h1>
-        <p className="text-sm text-text-secondary mt-1">{t('dashboard.adminModeration.subtitle')}</p>
-      </div>
+    <PageTransition><div className="mx-auto max-w-[1500px] space-y-6">
+      <PageHeader title={t('dashboard.adminModeration.title')} subtitle={t('dashboard.adminModeration.subtitle')} />
 
-      <Card>
+      <Card shape="soft" className="border-white/80 shadow-[0_14px_40px_rgba(7,20,49,0.055)] dark:border-slate-800">
         <CardHeader
           title={t('dashboard.adminModeration.pendingMedia')}
           subtitle={t('dashboard.adminModeration.awaitingReview', { count: queue.length })}
@@ -42,7 +41,7 @@ export function AdminModerationPage() {
             {queue.map((review) => (
               <li
                 key={review._id}
-                className="flex flex-col gap-3 rounded-xl border border-border-color p-4 sm:flex-row sm:items-start"
+                className="flex flex-col gap-4 rounded-[22px] border border-border-color bg-bg-secondary/50 p-4 transition hover:border-secondary-400 sm:flex-row sm:items-start dark:bg-slate-800/40"
               >
                 {review.photo_url ? (
                   <img
@@ -92,6 +91,6 @@ export function AdminModerationPage() {
           </ul>
         )}
       </Card>
-    </div>
+    </div></PageTransition>
   );
 }

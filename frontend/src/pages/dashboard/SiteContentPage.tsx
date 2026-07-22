@@ -20,6 +20,8 @@ import {
 import { cn } from '@/lib/utils';
 import { Plus, Trash2, Eye, EyeOff, LayoutTemplate } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { PageHeader } from '@/components/layout/PageHeader';
+import { PageTransition } from '@/components/ui/PageTransition';
 
 /**
  * Website Content — the marketing site's CMS.
@@ -123,13 +125,10 @@ export function SiteContentPage() {
     item.name || item.title || item.company || item.year || t('dashboard.siteContent.untitled');
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-text-primary">{t('dashboard.siteContent.title')}</h1>
-        <p className="text-sm text-text-secondary mt-1">{t('dashboard.siteContent.intro')}</p>
-      </div>
+    <PageTransition><div className="mx-auto max-w-[1500px] space-y-6">
+      <PageHeader title={t('dashboard.siteContent.title')} subtitle={t('dashboard.siteContent.intro')} />
 
-      <div className="flex flex-wrap gap-1.5">
+      <div className="flex flex-wrap gap-1.5 rounded-[20px] border border-white bg-white p-2 shadow-[0_10px_30px_rgba(7,20,49,0.05)] dark:border-slate-800 dark:bg-slate-900">
         {TABS.map((entry) => (
           <button
             key={entry.type}
@@ -138,9 +137,9 @@ export function SiteContentPage() {
               setDraft(null);
             }}
             className={cn(
-              'rounded-full px-3 py-1.5 text-xs font-medium transition-colors',
+              'rounded-xl px-4 py-2 text-xs font-bold transition-colors',
               tab === entry.type
-                ? 'bg-primary-600 text-white'
+                ? 'bg-primary-900 text-white shadow-sm dark:bg-secondary-400 dark:text-primary-900'
                 : 'bg-bg-secondary text-text-secondary hover:text-text-primary dark:bg-slate-800'
             )}
           >
@@ -149,7 +148,7 @@ export function SiteContentPage() {
         ))}
       </div>
 
-      <Card>
+      <Card shape="soft" className="border-white/80 shadow-[0_14px_40px_rgba(7,20,49,0.055)] dark:border-slate-800">
         <CardHeader
           title={t(`dashboard.siteContent.tabs.${TABS.find((e) => e.type === tab)!.i18n}`)}
           subtitle={t(`dashboard.siteContent.hints.${TABS.find((e) => e.type === tab)!.i18n}`)}
@@ -178,7 +177,7 @@ export function SiteContentPage() {
         ) : (
           <ul className="divide-y divide-border-color dark:divide-slate-800">
             {rows.map((item) => (
-              <li key={item._id} className="flex items-center gap-3 py-3">
+              <li key={item._id} className="flex items-center gap-3 py-4">
                 <button
                   onClick={() => togglePublished(item)}
                   title={
@@ -283,7 +282,7 @@ export function SiteContentPage() {
       </Card>
 
       <ContactCard />
-    </div>
+    </div></PageTransition>
   );
 }
 
@@ -309,7 +308,7 @@ function ContactCard() {
   };
 
   return (
-    <Card>
+    <Card shape="soft" className="border-white/80 shadow-[0_14px_40px_rgba(7,20,49,0.055)] dark:border-slate-800">
       <CardHeader
         title={t('dashboard.siteContent.contactTitle')}
         subtitle={t('dashboard.siteContent.contactSubtitle')}

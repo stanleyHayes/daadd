@@ -21,6 +21,8 @@ import {
 import { cn, getInitials } from '@/lib/utils';
 import { Plus, Trash2, ShieldCheck, Lock, UserPlus, Check } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { PageHeader } from '@/components/layout/PageHeader';
+import { PageTransition } from '@/components/ui/PageTransition';
 
 /**
  * Roles and staff access.
@@ -66,7 +68,7 @@ function PermissionMatrix({
   const has = (resource: string, action: RowAction) => value.includes(`${resource}:${action}`);
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
       <table className="w-full min-w-[560px] text-sm">
         <thead>
           <tr className="border-b border-border-color dark:border-slate-800">
@@ -85,7 +87,7 @@ function PermissionMatrix({
         </thead>
         <tbody className="divide-y divide-border-color dark:divide-slate-800">
           {resources.map((resource) => (
-            <tr key={resource}>
+            <tr key={resource} className="transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/50">
               <td className="py-2 pr-4 text-text-primary">
                 {t(`dashboard.roles.resources.${resource}`, {
                   defaultValue: resource.replace(/_/g, ' '),
@@ -223,15 +225,12 @@ export function RolesPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-text-primary">{t('dashboard.roles.title')}</h1>
-        <p className="mt-1 text-sm text-text-secondary">{t('dashboard.roles.intro')}</p>
-      </div>
+    <PageTransition><div className="mx-auto max-w-[1500px] space-y-6">
+      <PageHeader title={t('dashboard.roles.title')} subtitle={t('dashboard.roles.intro')} />
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Roles list */}
-        <Card className="lg:col-span-1">
+        <Card shape="soft" className="border-white/80 shadow-[0_14px_40px_rgba(7,20,49,0.055)] dark:border-slate-800 lg:col-span-1">
           <CardHeader
             title={t('dashboard.roles.rolesTitle')}
             subtitle={t('dashboard.roles.rolesSubtitle')}
@@ -249,9 +248,9 @@ export function RolesPage() {
                   <button
                     onClick={() => setSelectedRole(role)}
                     className={cn(
-                      'flex w-full items-start gap-3 rounded-xl border p-3 text-left transition-colors',
+                      'flex w-full items-start gap-3 rounded-[18px] border p-3.5 text-left transition-all',
                       selectedRole?._id === role._id
-                        ? 'border-primary-500 bg-primary-50/60 dark:bg-primary-900/20'
+                        ? 'border-primary-900 bg-primary-50/60 shadow-sm dark:border-secondary-400 dark:bg-secondary-400/10'
                         : 'border-border-color bg-card-bg hover:bg-bg-secondary dark:border-slate-800'
                     )}
                   >
@@ -310,7 +309,7 @@ export function RolesPage() {
         </Card>
 
         {/* Permission matrix for the selected role */}
-        <Card className="lg:col-span-2">
+        <Card shape="soft" className="border-white/80 shadow-[0_14px_40px_rgba(7,20,49,0.055)] dark:border-slate-800 lg:col-span-2">
           {selectedRole ? (
             <>
               <CardHeader
@@ -357,7 +356,7 @@ export function RolesPage() {
       </div>
 
       {/* Staff */}
-      <Card>
+      <Card shape="soft" className="border-white/80 shadow-[0_14px_40px_rgba(7,20,49,0.055)] dark:border-slate-800">
         <CardHeader
           title={t('dashboard.roles.staffTitle')}
           subtitle={t('dashboard.roles.staffSubtitle')}
@@ -509,6 +508,6 @@ export function RolesPage() {
           </div>
         )}
       </Card>
-    </div>
+    </div></PageTransition>
   );
 }

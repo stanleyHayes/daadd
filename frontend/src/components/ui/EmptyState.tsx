@@ -32,9 +32,9 @@ export function EmptyState({
   const isBordered = variant === 'bordered';
   const isPlain = variant === 'plain';
   const sizeClasses = {
-    sm: 'py-8 px-4',
-    md: 'py-14 px-6',
-    lg: 'py-20 px-8',
+    sm: 'py-7 px-4',
+    md: 'py-10 px-6',
+    lg: 'py-14 px-8',
   };
 
   const iconSizeClasses = {
@@ -64,14 +64,15 @@ export function EmptyState({
   return (
     <div
       className={cn(
-        'relative overflow-hidden rounded-2xl text-center',
-        !isPlain && 'bg-card-bg',
+        'relative overflow-hidden rounded-[24px] text-center',
+        !isPlain && 'bg-gradient-to-br from-white to-slate-50/70 dark:from-slate-900 dark:to-slate-900',
         isBordered && 'border-2 border-dashed border-border-color',
         !isPlain && !isBordered && 'border border-border-color',
         sizeClasses[size],
         className
       )}
     >
+      {!isPlain && <div className="marketing-grid pointer-events-none absolute inset-0 opacity-35 dark:opacity-10" />}
       <div className="relative">
         {icon && (
           <motion.div
@@ -79,13 +80,11 @@ export function EmptyState({
             animate={{ opacity: 1, scale: 1 }}
             transition={{ type: 'spring', stiffness: 260, damping: 20 }}
             className={cn(
-              'inline-flex items-center justify-center rounded-xl bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-300 mb-4',
+              'inline-flex items-center justify-center rounded-[18px] bg-primary-900 text-secondary-300 shadow-[0_10px_25px_rgba(0,27,80,0.15)] dark:bg-secondary-400 dark:text-primary-900 mb-4',
               iconWrapperSizeClasses[size]
             )}
           >
             <motion.div
-              animate={{ y: [0, -5, 0] }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
               className={cn(iconSizeClasses[size])}
             >
               {icon}
@@ -97,7 +96,7 @@ export function EmptyState({
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className={cn(titleSizeClasses[size], 'font-bold text-text-primary mb-2')}
+          className={cn(titleSizeClasses[size], 'font-black tracking-[-0.025em] text-text-primary mb-2')}
         >
           {title}
         </motion.h3>
@@ -125,6 +124,7 @@ export function EmptyState({
                 onClick={onAction}
                 size={size === 'sm' ? 'sm' : size === 'lg' ? 'lg' : 'md'}
                 variant="primary"
+                shape="pill"
               >
                 {actionLabel}
               </Button>
@@ -134,6 +134,7 @@ export function EmptyState({
                 onClick={onAction2}
                 size={size === 'sm' ? 'sm' : size === 'lg' ? 'lg' : 'md'}
                 variant="outline"
+                shape="pill"
               >
                 {actionLabel2}
               </Button>

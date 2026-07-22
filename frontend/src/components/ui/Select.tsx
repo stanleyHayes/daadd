@@ -174,7 +174,7 @@ export function Select({
       {label && (
         <label
           htmlFor={selectId}
-          className="block text-sm font-medium text-text-secondary mb-1.5"
+          className="mb-2 block text-xs font-bold uppercase tracking-[0.06em] text-text-secondary"
         >
           {label}
         </label>
@@ -195,7 +195,7 @@ export function Select({
         onClick={() => !disabled && setOpen((o) => !o)}
         onKeyDown={handleTriggerKey}
         className={cn(
-          'relative flex items-center justify-between w-full rounded-md border border-border-color bg-card-bg px-3 pr-10 text-left transition-all',
+          'relative flex min-h-[42px] items-center justify-between w-full rounded-[14px] border border-border-color bg-card-bg px-4 pr-10 text-left shadow-sm transition-all',
           triggerSizeCls,
           !disabled && 'hover:border-primary-300 cursor-pointer',
           open
@@ -245,7 +245,7 @@ export function Select({
               maxWidth: Math.max(menuRect.width, 280),
             }}
             className={cn(
-              'z-[60] origin-top rounded-md border border-border-color bg-card-bg',
+              'z-[60] origin-top rounded-2xl border border-border-color bg-card-bg',
               'shadow-[0_8px_24px_rgba(0,0,0,0.12)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.4)]',
               'py-1 max-h-[280px] overflow-y-auto focus:outline-none scrollbar-thin',
               'animate-scale-in',

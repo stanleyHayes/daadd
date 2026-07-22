@@ -30,13 +30,13 @@ export function DashboardHome() {
 
   return (
     <PageTransition>
-      <div className="max-w-7xl mx-auto space-y-6">
+      <div className="relative mx-auto max-w-[1500px] space-y-6">
         <PageHeader
           title={t('dashboard.home.title')}
           subtitle={t('dashboard.home.subtitle')}
           action={
             <Link to="/dashboard/campaigns/new">
-              <Button icon={<Plus className="h-4 w-4" />}>{t('dashboard.home.newCampaign')}</Button>
+              <Button shape="pill" className="bg-secondary-400! px-5! text-primary-900! hover:bg-secondary-300!" icon={<Plus className="h-4 w-4" />}>{t('dashboard.home.newCampaign')}</Button>
             </Link>
           }
         />
@@ -44,7 +44,7 @@ export function DashboardHome() {
         <AdvertiserOnboarding />
 
         {metricsLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
             {Array.from({ length: 4 }).map((_, i) => (
               <SkeletonMetric key={i} />
             ))}
@@ -57,7 +57,7 @@ export function DashboardHome() {
             </div>
           </Card>
         ) : metrics ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
             {[
               { icon: <Megaphone className="h-5 w-5" />, label: t('dashboard.metrics.impressions'), value: formatNumber(metrics.totalImpressions), iconColor: 'text-primary-600', iconBg: 'bg-primary-50 dark:bg-primary-900/30' },
               { icon: <Eye className="h-5 w-5" />, label: t('dashboard.metrics.clicks'), value: formatNumber(metrics.totalClicks ?? 0), iconColor: 'text-secondary-600', iconBg: 'bg-secondary-50 dark:bg-secondary-900/30' },
@@ -87,7 +87,7 @@ export function DashboardHome() {
           </Card>
         )}
 
-        <Card>
+        <Card shape="soft" className="border-white/80 p-6 shadow-[0_14px_40px_rgba(7,20,49,0.06)] dark:border-slate-800">
           <CardHeader title={t('dashboard.home.chartTitle')} subtitle={t('dashboard.home.chartSubtitle')} />
           {timeSeriesLoading ? (
             <Skeleton variant="card" className="h-80" />
@@ -112,9 +112,9 @@ export function DashboardHome() {
           )}
         </Card>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2">
-            <Card padding={false}>
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+          <div className="xl:col-span-2">
+            <Card padding={false} shape="soft" className="overflow-hidden border-white/80 shadow-[0_14px_40px_rgba(7,20,49,0.06)] dark:border-slate-800">
               <div className="px-6 pt-6">
                 <CardHeader
                   title={t('dashboard.home.recentTitle')}
@@ -176,7 +176,7 @@ export function DashboardHome() {
           </div>
 
           <div className="space-y-4">
-            <Card>
+            <Card shape="soft" className="border-white/80 shadow-[0_14px_40px_rgba(7,20,49,0.06)] dark:border-slate-800">
               <CardHeader title={t('dashboard.home.quickActions')} />
               <div className="space-y-3">
                 {[
@@ -187,14 +187,14 @@ export function DashboardHome() {
                 ].map((action) => {
                   const Icon = action.icon;
                   return (
-                    <Link key={action.to} to={action.to} className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors">
-                      <div className={`w-10 h-10 rounded-lg ${action.iconBg} flex items-center justify-center`}>
+                    <Link key={action.to} to={action.to} className="group flex items-center gap-3 rounded-2xl border border-gray-200 p-3.5 transition-all hover:-translate-y-0.5 hover:border-secondary-400 hover:bg-secondary-50/40 dark:border-slate-700 dark:hover:bg-slate-800">
+                      <div className={`w-10 h-10 rounded-[13px] ${action.iconBg} flex items-center justify-center`}>
                         <Icon className={`h-5 w-5 ${action.iconColor}`} />
                       </div>
-                      <div>
+                      <div className="min-w-0 flex-1">
                         <p className="text-sm font-medium text-gray-900 dark:text-white">{action.title}</p>
                         <p className="text-xs text-gray-500 dark:text-slate-400">{action.desc}</p>
-                      </div>
+                      </div><ArrowRight className="h-4 w-4 text-slate-300 transition-transform group-hover:translate-x-1 group-hover:text-primary-900 dark:group-hover:text-secondary-300" />
                     </Link>
                   );
                 })}

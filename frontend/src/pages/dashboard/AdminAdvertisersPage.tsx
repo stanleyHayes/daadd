@@ -34,21 +34,21 @@ export function AdminAdvertisersPage() {
 
   return (
     <PageTransition>
-      <div className="max-w-7xl mx-auto space-y-6">
+      <div className="max-w-[1500px] mx-auto space-y-6">
         <PageHeader
           title={t('dashboard.adminAdvertisers.title')}
           subtitle={t('dashboard.adminAdvertisers.subtitle')}
         />
 
-        <div className="flex w-fit gap-1 rounded-xl bg-bg-secondary p-1 dark:bg-slate-800">
+        <div className="inline-flex w-fit gap-1 rounded-2xl border border-white bg-white p-1.5 shadow-[0_10px_30px_rgba(7,20,49,0.05)] dark:border-slate-800 dark:bg-slate-900">
           {TABS.map((key) => (
             <button
               key={key}
               onClick={() => setTab(key)}
               className={cn(
-                'rounded-lg px-4 py-2 text-sm font-medium transition-all',
+                'rounded-xl px-5 py-2 text-sm font-bold transition-all',
                 tab === key
-                  ? 'bg-white text-primary-700 shadow-sm dark:bg-slate-700 dark:text-white'
+                  ? 'bg-primary-900 text-white shadow-sm dark:bg-secondary-400 dark:text-primary-900'
                   : 'text-text-secondary hover:text-text-primary'
               )}
             >
@@ -57,7 +57,7 @@ export function AdminAdvertisersPage() {
           ))}
         </div>
 
-        <Card>
+        <Card shape="soft" className="border-white/80 shadow-[0_14px_40px_rgba(7,20,49,0.055)] dark:border-slate-800">
           {isLoading ? (
             <div className="py-12 text-center text-text-muted">{t('dashboard.common.loading')}</div>
           ) : !advertisers || advertisers.length === 0 ? (
@@ -76,7 +76,7 @@ export function AdminAdvertisersPage() {
           ) : (
             <ul className="divide-y divide-border-color dark:divide-slate-800">
               {advertisers.map((a) => (
-                <li key={a.id} className="flex flex-col gap-4 py-4 sm:flex-row sm:items-center">
+                <li key={a.id} className="flex flex-col gap-4 py-5 sm:flex-row sm:items-center">
                   <div className="flex min-w-0 flex-1 items-center gap-3">
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-100 font-semibold text-primary-700 dark:bg-primary-900/30 dark:text-primary-300">
                       {getInitials(a.name)}

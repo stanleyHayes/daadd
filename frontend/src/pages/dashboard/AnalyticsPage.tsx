@@ -48,7 +48,7 @@ export function AnalyticsPage() {
 
   return (
     <PageTransition>
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="max-w-[1500px] mx-auto space-y-6">
       <PageHeader
         title={t('dashboard.analytics.title')}
         subtitle={t('dashboard.analytics.subtitle')}
@@ -66,7 +66,12 @@ export function AnalyticsPage() {
         }
       />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <Card shape="soft" className="border-white/80 p-5 shadow-[0_14px_40px_rgba(7,20,49,0.055)] dark:border-slate-800">
+      <div className="mb-4 flex items-center justify-between">
+        <div><p className="text-sm font-bold text-primary-900 dark:text-white">Analysis scope</p><p className="text-xs text-text-muted">Choose the campaign and reporting window you want to investigate.</p></div>
+        <span className="hidden rounded-full bg-secondary-50 px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-secondary-800 dark:bg-secondary-400/10 dark:text-secondary-300 sm:block">Live reporting</span>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Select
           label={t('dashboard.common.campaign')}
           placeholder={t('dashboard.common.selectCampaign')}
@@ -76,13 +81,22 @@ export function AnalyticsPage() {
         />
         <DateRangePicker value={dateRange} onChange={setDateRange} />
       </div>
+      </Card>
 
       {!campaignId ? (
-        <Card>
-          <div className="text-center py-16">
-            <Eye className="h-10 w-10 text-gray-300 dark:text-slate-600 mx-auto mb-3" />
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">{t('dashboard.common.selectCampaignTitle')}</h3>
-            <p className="text-sm text-gray-500 dark:text-slate-400">{t('dashboard.analytics.selectPrompt')}</p>
+        <Card shape="soft" className="overflow-hidden border-white/80 p-0 shadow-[0_16px_50px_rgba(7,20,49,0.06)] dark:border-slate-800">
+          <div className="grid min-h-[360px] lg:grid-cols-[0.72fr_1.28fr]">
+            <div className="flex flex-col justify-center bg-[#07142f] p-8 text-white sm:p-10">
+              <span className="mb-6 grid h-12 w-12 place-items-center rounded-2xl bg-secondary-400 text-primary-900"><Eye className="h-5 w-5" /></span>
+              <h3 className="text-2xl font-black tracking-[-0.035em]">{t('dashboard.common.selectCampaignTitle')}</h3>
+              <p className="mt-3 max-w-sm text-sm leading-6 text-white/55">{t('dashboard.analytics.selectPrompt')}</p>
+            </div>
+            <div className="relative flex items-center justify-center overflow-hidden bg-white p-8 dark:bg-slate-900">
+              <div className="marketing-grid absolute inset-0 opacity-40 dark:opacity-10" />
+              <div className="relative grid w-full max-w-xl grid-cols-2 gap-3 sm:grid-cols-3">
+                {[['Reach', '—'], ['Engagement', '—'], ['Conversion', '—'], ['Cost', '—'], ['Devices', '—'], ['Funnel', '—']].map(([label, value]) => <div key={label} className="rounded-2xl border border-slate-200 bg-white/90 p-4 dark:border-slate-700 dark:bg-slate-800"><p className="text-[9px] font-black uppercase tracking-[0.12em] text-slate-400">{label}</p><p className="mt-5 text-2xl font-black text-primary-900 dark:text-white">{value}</p></div>)}
+              </div>
+            </div>
           </div>
         </Card>
       ) : metricsLoading ? (
@@ -137,7 +151,7 @@ export function AnalyticsPage() {
             </>
           )}
 
-          <Card>
+          <Card shape="soft">
             <CardHeader title={t('dashboard.analytics.seriesTitle')} subtitle={t('dashboard.analytics.seriesSubtitle')} />
             {timeSeriesLoading ? (
               <Skeleton variant="card" className="h-80" />
@@ -163,7 +177,7 @@ export function AnalyticsPage() {
           </Card>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card>
+            <Card shape="soft">
               <CardHeader title={t('dashboard.analytics.funnelTitle')} />
               {funnelLoading ? (
                 <Skeleton variant="card" className="h-56" />
@@ -179,7 +193,7 @@ export function AnalyticsPage() {
               )}
             </Card>
 
-            <Card>
+            <Card shape="soft">
               <CardHeader title={t('dashboard.analytics.devicesTitle')} />
               {deviceLoading ? (
                 <Skeleton variant="card" className="h-56" />

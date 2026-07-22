@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { useVipCriteria, useUpdateVipCriteria, type VipCriteria } from '@/hooks/useAdminTools';
 import { Sparkles, RotateCcw } from 'lucide-react';
+import { PageHeader } from '@/components/layout/PageHeader';
+import { PageTransition } from '@/components/ui/PageTransition';
 
 // Labels and hints are looked up per key under `dashboard.adminLoyalty`.
 const FIELDS: { key: keyof VipCriteria; i18n: string }[] = [
@@ -29,15 +31,11 @@ export function AdminLoyaltyPage() {
     setForm((f) => (f ? { ...f, [key]: Math.max(0, Math.floor(value)) } : f));
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-text-primary">{t('dashboard.adminLoyalty.title')}</h1>
-        <p className="text-sm text-text-secondary mt-1">
-          {t('dashboard.adminLoyalty.intro')}
-        </p>
-      </div>
+    <PageTransition><div className="mx-auto max-w-[1500px] space-y-6">
+      <PageHeader title={t('dashboard.adminLoyalty.title')} subtitle={t('dashboard.adminLoyalty.intro')} />
 
-      <Card>
+      <div className="grid gap-6 xl:grid-cols-[1.25fr_0.75fr]">
+      <Card shape="soft" className="border-white/80 shadow-[0_14px_40px_rgba(7,20,49,0.055)] dark:border-slate-800">
         <CardHeader
           title={t('dashboard.adminLoyalty.criteriaTitle')}
           subtitle={t('dashboard.adminLoyalty.criteriaSubtitle')}
@@ -53,14 +51,7 @@ export function AdminLoyaltyPage() {
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {FIELDS.map((field) => (
-                <Input
-                  key={field.key}
-                  label={t(`dashboard.adminLoyalty.${field.i18n}`)}
-                  type="number"
-                  value={form[field.key]}
-                  onChange={(e) => set(field.key, Number(e.target.value))}
-                  hint={t(`dashboard.adminLoyalty.${field.i18n}Hint`)}
-                />
+                <div key={field.key} className="rounded-[20px] border border-slate-200 bg-slate-50/70 p-4 dark:border-slate-700 dark:bg-slate-800/40"><Input label={t(`dashboard.adminLoyalty.${field.i18n}`)} type="number" value={form[field.key]} onChange={(e) => set(field.key, Number(e.target.value))} hint={t(`dashboard.adminLoyalty.${field.i18n}Hint`)} /></div>
               ))}
             </div>
 
@@ -77,6 +68,8 @@ export function AdminLoyaltyPage() {
           </>
         )}
       </Card>
-    </div>
+      <Card shape="soft" className="overflow-hidden border-0 bg-[#07142f] p-7 text-white"><span className="grid h-12 w-12 place-items-center rounded-2xl bg-secondary-400 text-primary-900"><Sparkles className="h-5 w-5" /></span><h2 className="mt-8 text-2xl font-black tracking-[-0.04em]">VIP rules, made transparent.</h2><p className="mt-3 text-sm leading-6 text-white/55">These thresholds determine when customers qualify for VIP status. Keep them achievable, measurable, and aligned with genuine loyalty.</p><div className="mt-8 space-y-3 text-xs text-white/45"><p>• Changes apply platform-wide.</p><p>• Values are always stored as whole numbers.</p><p>• Defaults remain available as a safe reset.</p></div></Card>
+      </div>
+    </div></PageTransition>
   );
 }

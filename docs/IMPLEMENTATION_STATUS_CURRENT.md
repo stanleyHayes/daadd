@@ -1,5 +1,11 @@
 # Implementation Status — Current (July 17, 2026)
 
+> **Partially superseded, 22 July 2026.** Campaign analytics are no longer
+> synthetic — `/analytics/*` aggregates real `DeviceEvent` and `AdView` records
+> (`services/campaign-metrics.service.ts`). RBAC, the website CMS and ad
+> channels landed the same day. See `ARCHITECTURE.md` §6 for what remains
+> unimplemented.
+
 > **This document supersedes all previous status docs.** The May 2026 versions (including the former content of this file and `COMPLETION_SUMMARY_MAY_2026.md`) described queues, services, DTOs, repositories, and endpoints that never existed in this tree. This version was verified file-by-file against the code.
 
 ## Verified Status

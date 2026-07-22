@@ -26,7 +26,7 @@ export function HeatmapPage() {
 
   return (
     <PageTransition>
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="max-w-[1500px] mx-auto space-y-6">
       <PageHeader title={t('dashboard.heatmap.title')} subtitle={t('dashboard.heatmap.subtitle')} />
 
       {campaignId && heatmapData && !isLoading && (
@@ -37,8 +37,10 @@ export function HeatmapPage() {
         </div>
       )}
 
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-        <div className="sm:w-56">
+      <Card shape="soft" className="border-white/80 p-5 shadow-[0_14px_40px_rgba(7,20,49,0.055)] dark:border-slate-800">
+      <div className="mb-4"><p className="text-sm font-bold text-primary-900 dark:text-white">Geographic scope</p><p className="text-xs text-text-muted">Select the campaign and how locations should be grouped.</p></div>
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-end gap-4">
+        <div className="flex-1">
           <Select
             label={t('dashboard.common.campaign')}
             placeholder={t('dashboard.common.selectCampaign')}
@@ -49,15 +51,15 @@ export function HeatmapPage() {
         </div>
         <div>
           <label className="block text-xs font-medium text-gray-500 dark:text-slate-400 mb-1">{t('dashboard.heatmap.aggregation')}</label>
-          <div className="flex rounded-lg border border-gray-300 dark:border-slate-600 overflow-hidden">
+          <div className="flex h-[42px] rounded-[14px] border border-gray-300 bg-white p-1 dark:border-slate-600 dark:bg-slate-800 overflow-hidden">
             <button
-              className={cn('px-4 py-2 text-sm font-medium transition-colors', aggregation === 'city' ? 'bg-primary-600 text-white' : 'bg-white dark:bg-slate-800 text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-700')}
+              className={cn('rounded-[10px] px-5 text-sm font-bold transition-colors', aggregation === 'city' ? 'bg-primary-900 text-white shadow-sm dark:bg-secondary-400 dark:text-primary-900' : 'text-gray-600 dark:text-slate-400')}
               onClick={() => setAggregation('city')}
             >
               {t('dashboard.heatmap.city')}
             </button>
             <button
-              className={cn('px-4 py-2 text-sm font-medium transition-colors', aggregation === 'country' ? 'bg-primary-600 text-white' : 'bg-white dark:bg-slate-800 text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-700')}
+              className={cn('rounded-[10px] px-5 text-sm font-bold transition-colors', aggregation === 'country' ? 'bg-primary-900 text-white shadow-sm dark:bg-secondary-400 dark:text-primary-900' : 'text-gray-600 dark:text-slate-400')}
               onClick={() => setAggregation('country')}
             >
               {t('dashboard.heatmap.country')}
@@ -65,13 +67,16 @@ export function HeatmapPage() {
           </div>
         </div>
       </div>
+      </Card>
 
       {!campaignId ? (
-        <Card>
-          <div className="text-center py-16">
-            <MapPin className="h-10 w-10 text-gray-300 dark:text-slate-600 mx-auto mb-3" />
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">{t('dashboard.common.selectCampaignTitle')}</h3>
-            <p className="text-sm text-gray-500 dark:text-slate-400">{t('dashboard.heatmap.selectPrompt')}</p>
+        <Card shape="soft" className="overflow-hidden border-white/80 p-0 shadow-[0_16px_50px_rgba(7,20,49,0.06)] dark:border-slate-800">
+          <div className="grid min-h-[360px] lg:grid-cols-[0.72fr_1.28fr]">
+            <div className="flex flex-col justify-center bg-[#07142f] p-8 text-white sm:p-10"><span className="mb-6 grid h-12 w-12 place-items-center rounded-2xl bg-secondary-400 text-primary-900"><MapPin className="h-5 w-5" /></span><h3 className="text-2xl font-black tracking-[-0.035em]">{t('dashboard.common.selectCampaignTitle')}</h3><p className="mt-3 max-w-sm text-sm leading-6 text-white/55">{t('dashboard.heatmap.selectPrompt')}</p></div>
+            <div className="relative flex items-center justify-center overflow-hidden bg-[#eef3f1] p-8 dark:bg-slate-900">
+              <div className="absolute h-52 w-72 rounded-[45%] border-2 border-dashed border-primary-900/10 dark:border-white/10" /><div className="absolute h-32 w-48 -rotate-12 rounded-[45%] border border-primary-900/10 dark:border-white/10" />
+              <div className="relative">{[[0,0,44],[-92,34,22],[95,52,30],[48,-58,18],[-72,-64,15]].map(([x,y,size], i) => <span key={i} className="absolute rounded-full bg-secondary-400/80 ring-8 ring-secondary-400/15" style={{ width: size, height: size, transform: `translate(${x - size / 2}px, ${y - size / 2}px)` }} />)}<Map className="h-20 w-20 text-primary-900/10 dark:text-white/10" /></div>
+            </div>
           </div>
         </Card>
       ) : isLoading ? (
@@ -108,7 +113,7 @@ export function HeatmapPage() {
           </div>
 
           <div className="space-y-4">
-            <Card>
+            <Card shape="soft">
               <CardHeader title={t('dashboard.heatmap.summary')} />
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
@@ -141,7 +146,7 @@ export function HeatmapPage() {
               </div>
             </Card>
 
-            <Card>
+            <Card shape="soft">
               <CardHeader title={t('dashboard.heatmap.topRegions')} />
               {topRegions.length === 0 ? (
                 <EmptyState

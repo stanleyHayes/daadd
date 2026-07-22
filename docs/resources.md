@@ -183,7 +183,9 @@ npm run dev          # backend + frontend
 npm run dev:all      # backend + frontend + mobile (Expo)
 ```
 
-Credentials for seeded users: see [credentials.txt](credentials.txt).
+Credentials for seeded users are printed once by `npm run seed:team --workspace backend`
+and are not stored in the repo. A `credentials.txt` was previously committed here; it has
+been removed and everything in it must be rotated.
 
 ---
 

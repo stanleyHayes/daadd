@@ -1,2 +1,0 @@
-- [feedback_design_prefs.md](feedback_design_prefs.md) - Inconsolata font, animations, dark/light theme support
-- [feedback_quality.md](feedback_quality.md) - Always build polished, production-quality UI by default
