@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Compass, Home, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { PageTransition } from '@/components/ui/PageTransition';
@@ -6,6 +7,7 @@ import { WatermarkBanner } from '@/components/ui/Watermark';
 
 export function NotFoundPage() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <PageTransition>
@@ -18,14 +20,13 @@ export function NotFoundPage() {
           </div>
 
           <p className="text-sm font-semibold uppercase tracking-widest text-secondary-600 dark:text-secondary-400">
-            404 error
+            {t('notFound.eyebrow')}
           </p>
           <h1 className="mt-3 text-4xl font-bold tracking-tight text-primary-900 dark:text-white sm:text-5xl">
-            Page not found
+            {t('notFound.title')}
           </h1>
           <p className="mt-4 text-base text-text-secondary">
-            Sorry, we couldn't find the page you're looking for. It may have been moved, renamed,
-            or never existed.
+            {t('notFound.body')}
           </p>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -35,7 +36,7 @@ export function NotFoundPage() {
               className="w-full gap-2 sm:w-auto"
             >
               <ArrowLeft className="h-4 w-4" />
-              Go back
+              {t('common.goBack')}
             </Button>
 
             <Button
@@ -43,7 +44,7 @@ export function NotFoundPage() {
               className="w-full gap-2 sm:w-auto"
             >
               <Home className="h-4 w-4" />
-              Return home
+              {t('common.returnHome')}
             </Button>
           </div>
         </div>

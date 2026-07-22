@@ -1,4 +1,5 @@
 import { useState, type ComponentType } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -17,21 +18,21 @@ import {
   CreditCard,
 } from 'lucide-react';
 
+// Labels and blurbs live in the locale files, keyed by `key`.
 const DESKS: {
   key: SupportCategory;
-  label: string;
-  blurb: string;
   icon: ComponentType<{ className?: string }>;
 }[] = [
-  { key: 'general', label: 'Contact Support', blurb: 'General questions about your account.', icon: MessageSquare },
-  { key: 'problem', label: 'Report a Problem', blurb: 'Something is broken or a reward looks wrong.', icon: AlertTriangle },
-  { key: 'fraud', label: 'Report Fraud or Abuse', blurb: 'Suspicious merchants, scams or misuse.', icon: ShieldAlert },
-  { key: 'campaign', label: 'Campaign Assistance', blurb: 'Help running or optimising a campaign.', icon: Megaphone },
-  { key: 'merchant', label: 'Merchant Assistance', blurb: 'Redemptions, outlets and QR scanning.', icon: Store },
-  { key: 'billing', label: 'Billing', blurb: 'Budgets, top-ups and invoices.', icon: CreditCard },
+  { key: 'general', icon: MessageSquare },
+  { key: 'problem', icon: AlertTriangle },
+  { key: 'fraud', icon: ShieldAlert },
+  { key: 'campaign', icon: Megaphone },
+  { key: 'merchant', icon: Store },
+  { key: 'billing', icon: CreditCard },
 ];
 
 export function SupportPage() {
+  const { t } = useTranslation();
   const user = useAuthStore((s) => s.user);
   const { data: faq = [] } = useFaq();
   const submitTicket = useSubmitTicket();
@@ -44,6 +45,8 @@ export function SupportPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   const activeDesk = DESKS.find((d) => d.key === category)!;
+  const deskLabel = (key: SupportCategory) => t(`support.desks.${key}.label`);
+  const deskBlurb = (key: SupportCategory) => t(`support.desks.${key}.blurb`);
 
   const handleSubmit = async () => {
     if (!email.trim() || !subject.trim() || !message.trim()) return;
@@ -61,15 +64,13 @@ export function SupportPage() {
           <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300">
             <LifeBuoy className="h-6 w-6" />
           </div>
-          <h1 className="mt-3 text-3xl font-bold text-text-primary">Support Centre</h1>
-          <p className="mt-2 text-text-secondary">
-            Find a quick answer below, or send the right team a message.
-          </p>
+          <h1 className="mt-3 text-3xl font-bold text-text-primary">{t('support.title')}</h1>
+          <p className="mt-2 text-text-secondary">{t('support.subtitle')}</p>
         </div>
 
         {/* FAQ */}
         <Card>
-          <h2 className="text-lg font-semibold text-text-primary mb-4">Frequently asked questions</h2>
+          <h2 className="text-lg font-semibold text-text-primary mb-4">{t('support.faqTitle')}</h2>
           <div className="divide-y divide-border-color dark:divide-slate-800">
             {faq.map((item, i) => (
               <div key={item.q} className="py-3">
@@ -95,7 +96,7 @@ export function SupportPage() {
 
         {/* Desks */}
         <div>
-          <h2 className="text-lg font-semibold text-text-primary mb-3">Who can help?</h2>
+          <h2 className="text-lg font-semibold text-text-primary mb-3">{t('support.desksTitle')}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {DESKS.map((desk) => {
               const Icon = desk.icon;
@@ -115,8 +116,8 @@ export function SupportPage() {
                     className={cn('h-5 w-5 shrink-0', isActive ? 'text-primary-600' : 'text-text-muted')}
                   />
                   <div className="min-w-0">
-                    <p className="text-sm font-semibold text-text-primary">{desk.label}</p>
-                    <p className="text-xs text-text-secondary">{desk.blurb}</p>
+                    <p className="text-sm font-semibold text-text-primary">{deskLabel(desk.key)}</p>
+                    <p className="text-xs text-text-secondary">{deskBlurb(desk.key)}</p>
                   </div>
                 </button>
               );
@@ -126,38 +127,38 @@ export function SupportPage() {
 
         {/* Form */}
         <Card>
-          <h2 className="text-lg font-semibold text-text-primary">{activeDesk.label}</h2>
-          <p className="mt-1 mb-4 text-sm text-text-secondary">{activeDesk.blurb}</p>
+          <h2 className="text-lg font-semibold text-text-primary">{deskLabel(activeDesk.key)}</h2>
+          <p className="mt-1 mb-4 text-sm text-text-secondary">{deskBlurb(activeDesk.key)}</p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Input label="Your name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Ama Mensah" />
+            <Input label={t('support.nameLabel')} value={name} onChange={(e) => setName(e.target.value)} placeholder={t('support.namePlaceholder')} />
             <Input
-              label="Email"
+              label={t('support.emailLabel')}
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
-              hint="We'll reply here."
+              placeholder={t('support.emailPlaceholder')}
+              hint={t('support.emailHint')}
             />
           </div>
           <div className="mt-4">
             <Input
-              label="Subject"
+              label={t('support.subjectLabel')}
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
-              placeholder="Briefly, what's this about?"
+              placeholder={t('support.subjectPlaceholder')}
             />
           </div>
           <div className="mt-4">
-            <label className="block text-sm font-medium text-text-secondary mb-1">Message</label>
+            <label className="block text-sm font-medium text-text-secondary mb-1">{t('support.messageLabel')}</label>
             <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               rows={5}
               placeholder={
                 category === 'problem' || category === 'fraud'
-                  ? 'Include the receipt number, merchant and date if you have them.'
-                  : 'Tell us a bit more…'
+                  ? t('support.messagePlaceholderIncident')
+                  : t('support.messagePlaceholder')
               }
               className="block w-full rounded-md border border-border-color bg-card-bg px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
             />
@@ -169,7 +170,7 @@ export function SupportPage() {
             disabled={!canSubmit}
             className="mt-4"
           >
-            Send to {activeDesk.label}
+            {t('support.submit', { desk: deskLabel(activeDesk.key) })}
           </Button>
         </Card>
       </div>

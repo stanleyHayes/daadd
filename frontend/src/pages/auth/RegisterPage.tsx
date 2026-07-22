@@ -4,35 +4,40 @@ import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 import { useRegister } from '@/hooks/useAuth';
 import { User, Mail, Lock, Eye, EyeOff, Zap, ArrowRight, Megaphone, Gift, Check } from 'lucide-react';
 import { WatermarkBanner, WatermarkPattern } from '@/components/ui/Watermark';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
-const registerSchema = z
+// Validation messages are resolved through i18next at render time, so the
+// schema is built inside the component rather than at module scope.
+const buildSchema = (t: (k: string) => string) =>
+ z
  .object({
- name: z.string().min(2, 'Name must be at least 2 characters'),
- email: z.string().email('Please enter a valid email'),
- password: z.string().min(8, 'Password must be at least 8 characters'),
+ name: z.string().min(2, t('auth.errors.nameMin2')),
+ email: z.string().email(t('auth.errors.emailInvalid')),
+ password: z.string().min(8, t('auth.errors.passwordMin8')),
  confirmPassword: z.string(),
- role: z.enum(['advertiser', 'end_user'], { message: 'Please select a role' }),
- terms: z.boolean().refine((val) => val === true, 'You must accept the terms'),
+ role: z.enum(['advertiser', 'end_user'], { message: t('auth.errors.roleRequired') }),
+ terms: z.boolean().refine((val) => val === true, t('auth.errors.termsRequired')),
  })
  .refine((data) => data.password === data.confirmPassword, {
- message: 'Passwords do not match',
+ message: t('auth.errors.passwordsMismatch'),
  path: ['confirmPassword'],
  });
 
-type RegisterForm = z.infer<typeof registerSchema>;
+type RegisterForm = z.infer<ReturnType<typeof buildSchema>>;
 
-const passwordChecks = [
- { label: 'At least 8 characters', test: (p: string) => p.length >= 8 },
- { label: 'Contains a number', test: (p: string) => /\d/.test(p) },
- { label: 'Contains uppercase letter', test: (p: string) => /[A-Z]/.test(p) },
-];
+const PASSWORD_CHECKS = [
+ { key: 'length', test: (p: string) => p.length >= 8 },
+ { key: 'number', test: (p: string) => /\d/.test(p) },
+ { key: 'uppercase', test: (p: string) => /[A-Z]/.test(p) },
+] as const;
 
 export function RegisterPage() {
+ const { t } = useTranslation();
  const navigate = useNavigate();
  const registerMutation = useRegister();
  const [showPassword, setShowPassword] = useState(false);
@@ -44,7 +49,7 @@ export function RegisterPage() {
  setValue,
  formState: { errors },
  } = useForm<RegisterForm>({
- resolver: zodResolver(registerSchema),
+ resolver: zodResolver(buildSchema(t)),
  defaultValues: { role: 'advertiser', terms: false },
  });
 
@@ -59,10 +64,10 @@ export function RegisterPage() {
  password: data.password,
  role: data.role,
  });
- toast.success('Account created! Please sign in.');
+ toast.success(t('auth.register.successToast'));
  navigate('/login');
  } catch {
- toast.error('Registration failed. Email may already be in use.');
+ toast.error(t('auth.register.errorToast'));
  }
  };
 
@@ -94,9 +99,9 @@ export function RegisterPage() {
  transition={{ duration: 0.6, delay: 0.1 }}
  className="text-4xl font-extrabold leading-tight mb-4"
  >
- Start Your
+ {t('auth.register.brandTitle')}
  <br />
- <span className="text-secondary-300">Ad Journey Today</span>
+ <span className="text-secondary-300">{t('auth.register.brandTitleAccent')}</span>
  </motion.h1>
  <motion.p
  initial={{ opacity: 0, y: 20 }}
@@ -104,7 +109,7 @@ export function RegisterPage() {
  transition={{ duration: 0.6, delay: 0.2 }}
  className="text-primary-100 text-lg max-w-sm mb-10"
  >
- Join thousands of advertisers and users on the most intelligent AdTech platform.
+ {t('auth.register.brandBlurb')}
  </motion.p>
 
  {/* Testimonial */}
@@ -120,13 +125,13 @@ export function RegisterPage() {
  ))}
  </div>
  <p className="text-sm text-white/90 italic leading-relaxed">
- "SmartAdDeals's AI optimization increased our CTR by 340% in the first month. The Ad Journey Storyteller is unlike anything else in the market."
+ {t('auth.register.testimonial')}
  </p>
  <div className="flex items-center gap-3 mt-4">
  <div className="w-9 h-9 rounded-full bg-secondary-500/20 flex items-center justify-center text-xs font-bold text-white">SK</div>
  <div>
  <p className="text-sm font-semibold">Sarah Kim</p>
- <p className="text-xs text-primary-200">Marketing Director, TechCorp</p>
+ <p className="text-xs text-primary-200">{t('auth.register.testimonialRole')}</p>
  </div>
  </div>
  </motion.div>
@@ -138,7 +143,7 @@ export function RegisterPage() {
  transition={{ duration: 0.5, delay: 0.6 }}
  className="text-primary-200 text-xs"
  >
- Trusted by 2,000+ companies worldwide
+ {t('auth.register.trustedBy')}
  </motion.p>
  </div>
  </div>
@@ -161,14 +166,14 @@ export function RegisterPage() {
  </div>
 
  <div className="mb-6">
- <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Create your account</h2>
- <p className="text-gray-500 dark:text-slate-400 mt-1">Get started in less than a minute</p>
+ <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{t('auth.register.title')}</h2>
+ <p className="text-gray-500 dark:text-slate-400 mt-1">{t('auth.register.subtitle')}</p>
  </div>
 
  <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
  {/* Role selection */}
  <div>
- <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">I want to...</label>
+ <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">{t('auth.register.roleLabel')}</label>
  <div className="grid grid-cols-2 gap-3">
  <button
  type="button"
@@ -186,8 +191,8 @@ export function RegisterPage() {
  </div>
  )}
  <Megaphone className={cn('h-6 w-6 mb-2', selectedRole === 'advertiser' ? 'text-primary-600' : 'text-gray-400 dark:text-slate-500')} />
- <p className={cn('font-semibold text-sm', selectedRole === 'advertiser' ? 'text-primary-700 dark:text-primary-400' : 'text-gray-700 dark:text-slate-300')}>Run Ads</p>
- <p className="text-xs mt-0.5 text-gray-500 dark:text-slate-400">Create & optimize campaigns</p>
+ <p className={cn('font-semibold text-sm', selectedRole === 'advertiser' ? 'text-primary-700 dark:text-primary-400' : 'text-gray-700 dark:text-slate-300')}>{t('auth.register.roleAdvertiser')}</p>
+ <p className="text-xs mt-0.5 text-gray-500 dark:text-slate-400">{t('auth.register.roleAdvertiserDesc')}</p>
  </button>
  <button
  type="button"
@@ -205,8 +210,8 @@ export function RegisterPage() {
  </div>
  )}
  <Gift className={cn('h-6 w-6 mb-2', selectedRole === 'end_user' ? 'text-accent-600' : 'text-gray-400 dark:text-slate-500')} />
- <p className={cn('font-semibold text-sm', selectedRole === 'end_user' ? 'text-accent-700 dark:text-accent-400' : 'text-gray-700 dark:text-slate-300')}>Earn Rewards</p>
- <p className="text-xs mt-0.5 text-gray-500 dark:text-slate-400">Browse ads & get paid</p>
+ <p className={cn('font-semibold text-sm', selectedRole === 'end_user' ? 'text-accent-700 dark:text-accent-400' : 'text-gray-700 dark:text-slate-300')}>{t('auth.register.roleUser')}</p>
+ <p className="text-xs mt-0.5 text-gray-500 dark:text-slate-400">{t('auth.register.roleUserDesc')}</p>
  </button>
  </div>
  {errors.role && <p className="mt-1.5 text-xs text-danger-600">{errors.role.message}</p>}
@@ -214,12 +219,12 @@ export function RegisterPage() {
 
  {/* Name */}
  <div>
- <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1.5">Full name</label>
+ <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1.5">{t('auth.register.name')}</label>
  <div className="relative">
  <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-slate-500" />
  <input
  type="text"
- placeholder="John Doe"
+ placeholder={t('auth.register.namePlaceholder')}
  className="block w-full rounded-xl border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 pl-10 pr-3 py-3 text-sm dark:text-white placeholder:text-gray-400 dark:placeholder:text-slate-500 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-all"
  {...register('name')}
  />
@@ -229,12 +234,12 @@ export function RegisterPage() {
 
  {/* Email */}
  <div>
- <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1.5">Email address</label>
+ <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1.5">{t('auth.register.email')}</label>
  <div className="relative">
  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-slate-500" />
  <input
  type="email"
- placeholder="you@company.com"
+ placeholder={t('auth.register.emailPlaceholder')}
  className="block w-full rounded-xl border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 pl-10 pr-3 py-3 text-sm dark:text-white placeholder:text-gray-400 dark:placeholder:text-slate-500 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-all"
  {...register('email')}
  />
@@ -244,12 +249,12 @@ export function RegisterPage() {
 
  {/* Password */}
  <div>
- <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1.5">Password</label>
+ <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1.5">{t('auth.register.password')}</label>
  <div className="relative">
  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-slate-500" />
  <input
  type={showPassword ? 'text' : 'password'}
- placeholder="Create a strong password"
+ placeholder={t('auth.register.passwordPlaceholder')}
  className="block w-full rounded-xl border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 pl-10 pr-10 py-3 text-sm dark:text-white placeholder:text-gray-400 dark:placeholder:text-slate-500 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-all"
  {...register('password')}
  />
@@ -264,12 +269,12 @@ export function RegisterPage() {
  {errors.password && <p className="mt-1.5 text-xs text-danger-600">{errors.password.message}</p>}
  {password.length > 0 && (
  <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-4 mt-2">
- {passwordChecks.map((check) => (
- <div key={check.label} className="flex items-center gap-1.5">
+ {PASSWORD_CHECKS.map((check) => (
+ <div key={check.key} className="flex items-center gap-1.5">
  <div className={cn('w-3.5 h-3.5 rounded-full flex items-center justify-center', check.test(password) ? 'bg-accent-500' : 'bg-gray-200 dark:bg-slate-600')}>
  {check.test(password) && <Check className="h-2.5 w-2.5 text-white" />}
  </div>
- <span className={cn('text-xs', check.test(password) ? 'text-accent-600 dark:text-accent-400' : 'text-gray-400 dark:text-slate-500')}>{check.label}</span>
+ <span className={cn('text-xs', check.test(password) ? 'text-accent-600 dark:text-accent-400' : 'text-gray-400 dark:text-slate-500')}>{t(`auth.register.checks.${check.key}`)}</span>
  </div>
  ))}
  </div>
@@ -278,12 +283,12 @@ export function RegisterPage() {
 
  {/* Confirm Password */}
  <div>
- <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1.5">Confirm password</label>
+ <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1.5">{t('auth.register.confirmPassword')}</label>
  <div className="relative">
  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-slate-500" />
  <input
  type="password"
- placeholder="Re-enter your password"
+ placeholder={t('auth.register.confirmPasswordPlaceholder')}
  className="block w-full rounded-xl border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 pl-10 pr-3 py-3 text-sm dark:text-white placeholder:text-gray-400 dark:placeholder:text-slate-500 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-all"
  {...register('confirmPassword')}
  />
@@ -299,10 +304,10 @@ export function RegisterPage() {
  {...register('terms')}
  />
  <span className="text-sm text-gray-600 dark:text-slate-400 leading-relaxed">
- I agree to the{' '}
- <Link to="/terms" className="text-primary-600 hover:text-primary-700 dark:text-secondary-400 dark:hover:text-secondary-300 font-medium">Terms of Service</Link>
- {' '}and{' '}
- <Link to="/privacy" className="text-primary-600 hover:text-primary-700 dark:text-secondary-400 dark:hover:text-secondary-300 font-medium">Privacy Policy</Link>
+ {t('auth.register.termsPrefix')}{' '}
+ <Link to="/terms" className="text-primary-600 hover:text-primary-700 dark:text-secondary-400 dark:hover:text-secondary-300 font-medium">{t('auth.register.termsOfService')}</Link>
+ {' '}{t('auth.register.termsAnd')}{' '}
+ <Link to="/privacy" className="text-primary-600 hover:text-primary-700 dark:text-secondary-400 dark:hover:text-secondary-300 font-medium">{t('auth.register.privacyPolicy')}</Link>
  </span>
  </label>
  {errors.terms && <p className="text-xs text-danger-600">{errors.terms.message}</p>}
@@ -316,15 +321,15 @@ export function RegisterPage() {
  {registerMutation.isPending ? (
  <div className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
  ) : (
- <>Create account <ArrowRight className="h-4 w-4" /></>
+ <>{t('auth.register.submit')} <ArrowRight className="h-4 w-4" /></>
  )}
  </button>
  </form>
 
  <p className="mt-6 text-center text-sm text-gray-500 dark:text-slate-400">
- Already have an account?{' '}
+ {t('auth.register.haveAccount')}{' '}
  <Link to="/login" className="text-primary-600 hover:text-primary-700 dark:text-secondary-400 dark:hover:text-secondary-300 font-semibold">
- Sign in
+ {t('auth.register.signIn')}
  </Link>
  </p>
  </motion.div>

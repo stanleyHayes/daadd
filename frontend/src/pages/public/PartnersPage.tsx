@@ -8,6 +8,7 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { usePublicAds, type PublicAd } from '@/hooks/usePublicAds';
 import { motion } from 'framer-motion';
 import { SkeletonAdCard } from '@/components/ui/Skeleton';
+import { useTranslation } from 'react-i18next';
 
 interface PartnerAggregate {
   name: string;
@@ -24,6 +25,7 @@ function makeSlug(name: string) {
 }
 
 export function PartnersPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { data: ads, isLoading } = usePublicAds({ sort: 'reward' });
 
@@ -70,7 +72,7 @@ export function PartnersPage() {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-sm font-medium mb-6"
             >
               <Megaphone className="h-4 w-4 text-secondary-400" />
-              <span>Advertisers & Creators</span>
+              <span>{t('partners.eyebrow')}</span>
             </motion.div>
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
@@ -78,7 +80,7 @@ export function PartnersPage() {
               transition={{ delay: 0.1 }}
               className="text-4xl sm:text-5xl font-bold tracking-tight mb-4"
             >
-              Our Partners
+              {t('partners.title')}
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -86,7 +88,7 @@ export function PartnersPage() {
               transition={{ delay: 0.2 }}
               className="text-lg text-primary-100 max-w-2xl mx-auto"
             >
-              Discover the brands and creators powering campaigns on SmartAdDeals. Browse their profiles to see what they are advertising.
+              {t('partners.subtitle')}
             </motion.p>
           </div>
         </section>
@@ -152,7 +154,7 @@ export function PartnersPage() {
                     <div className="bg-bg-secondary dark:bg-slate-800/50 rounded-xl p-3">
                       <div className="flex items-center gap-1.5 text-text-muted text-xs mb-1">
                         <TrendingUp className="h-3.5 w-3.5" />
-                        Rewards
+                        {t('partners.rewards')}
                       </div>
                       <p className="text-lg font-bold text-text-primary">
                         ${partner.totalReward.toLocaleString()}
@@ -161,7 +163,7 @@ export function PartnersPage() {
                   </div>
 
                   <Button variant="outline" className="w-full group-hover:bg-primary-700 group-hover:text-white group-hover:border-primary-700 transition-colors">
-                    View profile <ArrowRight className="h-4 w-4" />
+                    {t('partners.viewProfile')} <ArrowRight className="h-4 w-4" />
                   </Button>
                 </motion.div>
               ))}

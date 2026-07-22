@@ -5,26 +5,31 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 
 import { useLogin } from '@/hooks/useAuth';
 import { Mail, Lock, Eye, EyeOff, Zap, ArrowRight, BarChart3, Shield, TrendingUp, Gift } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-const loginSchema = z.object({
- email: z.string().email('Please enter a valid email'),
- password: z.string().min(6, 'Password must be at least 6 characters'),
-});
+// Validation messages are resolved through i18next at render time, so the
+// schema is built inside the component rather than at module scope.
+const buildSchema = (t: (k: string) => string) =>
+ z.object({
+ email: z.string().email(t('auth.errors.emailInvalid')),
+ password: z.string().min(6, t('auth.errors.passwordMin6')),
+ });
 
-type LoginForm = z.infer<typeof loginSchema>;
+type LoginForm = z.infer<ReturnType<typeof buildSchema>>;
 
-const features = [
- { icon: BarChart3, title: 'Real-time Analytics', desc: 'Track impressions, clicks, CTR, and conversions with live dashboards' },
- { icon: TrendingUp, title: 'AI Optimization', desc: 'Let AI fine-tune your campaigns for maximum ROI automatically' },
- { icon: Shield, title: 'Anomaly Detection', desc: 'Instant alerts for bot traffic, CTR spikes, and suspicious activity' },
- { icon: Gift, title: 'Reward System', desc: 'Engage users with real rewards for viewing and interacting with ads' },
-];
+const FEATURES = [
+ { icon: BarChart3, key: 'analytics' },
+ { icon: TrendingUp, key: 'ai' },
+ { icon: Shield, key: 'anomaly' },
+ { icon: Gift, key: 'rewards' },
+] as const;
 
 export function LoginPage() {
+ const { t } = useTranslation();
  const navigate = useNavigate();
  const loginMutation = useLogin();
  const [showPassword, setShowPassword] = useState(false);
@@ -34,16 +39,16 @@ export function LoginPage() {
  handleSubmit,
  formState: { errors },
  } = useForm<LoginForm>({
- resolver: zodResolver(loginSchema),
+ resolver: zodResolver(buildSchema(t)),
  });
 
  const onSubmit = async (data: LoginForm) => {
  try {
  await loginMutation.mutateAsync(data);
- toast.success('Welcome back!');
+ toast.success(t('auth.login.successToast'));
  navigate('/dashboard');
  } catch {
- toast.error('Invalid credentials. Please try again.');
+ toast.error(t('auth.login.errorToast'));
  }
  };
 
@@ -73,9 +78,9 @@ export function LoginPage() {
  transition={{ duration: 0.6, delay: 0.1 }}
  className="text-4xl font-extrabold leading-tight mb-4"
  >
- The Future of
+ {t('auth.login.brandTitle')}
  <br />
- <span className="text-accent-400">Intelligent Advertising</span>
+ <span className="text-accent-400">{t('auth.login.brandTitleAccent')}</span>
  </motion.h1>
  <motion.p
  initial={{ opacity: 0, y: 20 }}
@@ -83,16 +88,16 @@ export function LoginPage() {
  transition={{ duration: 0.6, delay: 0.2 }}
  className="text-primary-100 text-lg max-w-md mb-10"
  >
- Create, optimize, and analyze ad campaigns with AI-powered insights and real-time analytics.
+ {t('auth.login.brandBlurb')}
  </motion.p>
 
  {/* Feature list */}
  <div className="space-y-5">
- {features.map((f, i) => {
+ {FEATURES.map((f, i) => {
  const Icon = f.icon;
  return (
  <motion.div
- key={f.title}
+ key={f.key}
  initial={{ opacity: 0, x: -20 }}
  animate={{ opacity: 1, x: 0 }}
  transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
@@ -102,8 +107,8 @@ export function LoginPage() {
  <Icon className="h-5 w-5 text-accent-400" />
  </div>
  <div>
- <h3 className="font-semibold text-sm">{f.title}</h3>
- <p className="text-primary-200 text-xs mt-0.5 leading-relaxed">{f.desc}</p>
+ <h3 className="font-semibold text-sm">{t(`auth.login.features.${f.key}.title`)}</h3>
+ <p className="text-primary-200 text-xs mt-0.5 leading-relaxed">{t(`auth.login.features.${f.key}.desc`)}</p>
  </div>
  </motion.div>
  );
@@ -119,9 +124,9 @@ export function LoginPage() {
  className="flex gap-8"
  >
  {[
- { value: '12K+', label: 'Active Campaigns' },
- { value: '98.5%', label: 'Uptime SLA' },
- { value: '2.3M', label: 'Ads Served Daily' },
+ { value: '12K+', label: t('auth.login.stats.campaigns') },
+ { value: '98.5%', label: t('auth.login.stats.uptime') },
+ { value: '2.3M', label: t('auth.login.stats.adsDaily') },
  ].map((stat) => (
  <div key={stat.label}>
  <p className="text-2xl font-extrabold">{stat.value}</p>
@@ -149,18 +154,18 @@ export function LoginPage() {
  </div>
 
  <div className="mb-8">
- <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Welcome back</h2>
- <p className="text-gray-500 dark:text-slate-400 mt-1">Sign in to your account to continue</p>
+ <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{t('auth.login.title')}</h2>
+ <p className="text-gray-500 dark:text-slate-400 mt-1">{t('auth.login.subtitle')}</p>
  </div>
 
  <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
  <div>
- <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1.5">Email address</label>
+ <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1.5">{t('auth.login.email')}</label>
  <div className="relative">
  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-slate-500" />
  <input
  type="email"
- placeholder="you@company.com"
+ placeholder={t('auth.login.emailPlaceholder')}
  className="block w-full rounded-xl border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 pl-10 pr-3 py-3 text-sm dark:text-white placeholder:text-gray-400 dark:placeholder:text-slate-500 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-all"
  {...register('email')}
  />
@@ -170,14 +175,14 @@ export function LoginPage() {
 
  <div>
  <div className="flex items-center justify-between mb-1.5">
- <label className="block text-sm font-medium text-gray-700 dark:text-slate-300">Password</label>
- <Link to="/forgot-password" className="text-xs text-primary-600 hover:text-primary-700 dark:text-secondary-400 dark:hover:text-secondary-300 font-medium">Forgot password?</Link>
+ <label className="block text-sm font-medium text-gray-700 dark:text-slate-300">{t('auth.login.password')}</label>
+ <Link to="/forgot-password" className="text-xs text-primary-600 hover:text-primary-700 dark:text-secondary-400 dark:hover:text-secondary-300 font-medium">{t('auth.login.forgotPassword')}</Link>
  </div>
  <div className="relative">
  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-slate-500" />
  <input
  type={showPassword ? 'text' : 'password'}
- placeholder="Enter your password"
+ placeholder={t('auth.login.passwordPlaceholder')}
  className="block w-full rounded-xl border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 pl-10 pr-10 py-3 text-sm dark:text-white placeholder:text-gray-400 dark:placeholder:text-slate-500 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-all"
  {...register('password')}
  />
@@ -198,7 +203,7 @@ export function LoginPage() {
  id="remember"
  className="rounded border-gray-300 dark:border-slate-600 text-primary-600 focus:ring-primary-500 dark:bg-slate-700"
  />
- <label htmlFor="remember" className="text-sm text-gray-600 dark:text-slate-400">Remember me for 30 days</label>
+ <label htmlFor="remember" className="text-sm text-gray-600 dark:text-slate-400">{t('auth.login.remember')}</label>
  </div>
 
  <button
@@ -209,15 +214,15 @@ export function LoginPage() {
  {loginMutation.isPending ? (
  <div className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
  ) : (
- <>Sign in <ArrowRight className="h-4 w-4" /></>
+ <>{t('auth.login.submit')} <ArrowRight className="h-4 w-4" /></>
  )}
  </button>
  </form>
 
  <p className="mt-6 text-center text-sm text-gray-500 dark:text-slate-400">
- Don't have an account?{' '}
+ {t('auth.login.noAccount')}{' '}
  <Link to="/register" className="text-primary-600 hover:text-primary-700 dark:text-secondary-400 dark:hover:text-secondary-300 font-semibold">
- Create free account
+ {t('auth.login.createAccount')}
  </Link>
  </p>
  </motion.div>

@@ -25,45 +25,42 @@ import { AdCard } from '@/components/ads/AdCard';
 import { cn } from '@/lib/utils';
 import { SkeletonAdCard } from '@/components/ui/Skeleton';
 import { PROGRAMMATIC_PARTNERS } from '@/lib/constants';
+import { useTranslation } from 'react-i18next';
 
 const categories = [
- { name: 'Entertainment', icon: Film, gradient: 'from-secondary-500 to-secondary-700', glow: 'shadow-secondary-500/30', iconColor: 'text-secondary-600 dark:text-secondary-400' },
- { name: 'Sports', icon: Trophy, gradient: 'from-danger-500 to-rose-600', glow: 'shadow-danger-500/30', iconColor: 'text-danger-600 dark:text-danger-400' },
- { name: 'Retail', icon: ShoppingBag, gradient: 'from-warning-400 to-orange-500', glow: 'shadow-warning-500/30', iconColor: 'text-warning-600 dark:text-warning-400' },
- { name: 'Technology', icon: Cpu, gradient: 'from-primary-500 to-primary-700', glow: 'shadow-primary-500/30', iconColor: 'text-primary-600 dark:text-primary-400' },
- { name: 'Health', icon: Heart, gradient: 'from-pink-500 to-rose-500', glow: 'shadow-pink-500/30', iconColor: 'text-pink-600 dark:text-pink-400' },
- { name: 'Finance', icon: BarChart3, gradient: 'from-accent-500 to-emerald-600', glow: 'shadow-accent-500/30', iconColor: 'text-accent-600 dark:text-accent-400' },
+ { key: 'entertainment', icon: Film, gradient: 'from-secondary-500 to-secondary-700', glow: 'shadow-secondary-500/30', iconColor: 'text-secondary-600 dark:text-secondary-400' },
+ { key: 'sports', icon: Trophy, gradient: 'from-danger-500 to-rose-600', glow: 'shadow-danger-500/30', iconColor: 'text-danger-600 dark:text-danger-400' },
+ { key: 'retail', icon: ShoppingBag, gradient: 'from-warning-400 to-orange-500', glow: 'shadow-warning-500/30', iconColor: 'text-warning-600 dark:text-warning-400' },
+ { key: 'technology', icon: Cpu, gradient: 'from-primary-500 to-primary-700', glow: 'shadow-primary-500/30', iconColor: 'text-primary-600 dark:text-primary-400' },
+ { key: 'health', icon: Heart, gradient: 'from-pink-500 to-rose-500', glow: 'shadow-pink-500/30', iconColor: 'text-pink-600 dark:text-pink-400' },
+ { key: 'finance', icon: BarChart3, gradient: 'from-accent-500 to-emerald-600', glow: 'shadow-accent-500/30', iconColor: 'text-accent-600 dark:text-accent-400' },
 ];
 
 const features = [
  {
  icon: Zap,
- title: 'AI-Powered Optimization',
- desc: 'Machine learning algorithms continuously optimize bids, budgets, and targeting to maximize your ROAS.',
+ key: 'ai',
  color: 'from-primary-500 to-primary-600',
  bg: 'bg-primary-50 dark:bg-primary-900/20',
  iconColor: 'text-primary-600 dark:text-primary-400',
  },
  {
  icon: MapPin,
- title: 'Geographic Heatmaps',
- desc: 'Visualize ad performance across regions with interactive heatmaps powered by real-time location data.',
+ key: 'heatmaps',
  color: 'from-secondary-500 to-secondary-600',
  bg: 'bg-secondary-50 dark:bg-secondary-900/20',
  iconColor: 'text-secondary-600 dark:text-secondary-400',
  },
  {
  icon: Shield,
- title: 'Anomaly Detection',
- desc: 'Get instant alerts for unusual spikes or drops in metrics. Catch issues before they cost you money.',
+ key: 'anomalies',
  color: 'from-accent-500 to-accent-600',
  bg: 'bg-accent-50 dark:bg-accent-900/20',
  iconColor: 'text-accent-600 dark:text-accent-400',
  },
  {
  icon: MousePointerClick,
- title: 'Cross-Device Attribution',
- desc: 'Track user journeys across desktop, mobile, and tablet to attribute conversions accurately.',
+ key: 'attribution',
  color: 'from-warning-500 to-warning-600',
  bg: 'bg-warning-50 dark:bg-warning-900/20',
  iconColor: 'text-warning-600 dark:text-warning-400',
@@ -72,33 +69,30 @@ const features = [
 
 const testimonials = [
  {
+ key: 't1',
  name: 'Jessica Park',
- role: 'CMO, FitLife',
  avatar: 'JP',
- text: 'We increased conversions by 340% using SmartAdDeals\'s AI optimization. The reward-based engagement model completely changed how we think about advertising.',
  rating: 5,
  },
  {
+ key: 't2',
  name: 'Marcus Chen',
- role: 'Growth Lead, TechStart',
  avatar: 'MC',
- text: 'The geographic heatmaps and real-time anomaly detection saved us thousands in ad spend. Best analytics platform we\'ve ever used.',
  rating: 5,
  },
  {
+ key: 't3',
  name: 'Sarah Williams',
- role: 'Head of Digital, RetailMax',
  avatar: 'SW',
- text: 'Our team loves the Ad Journey Storyteller. It turns dry campaign data into compelling narratives we actually want to share with stakeholders.',
  rating: 5,
  },
 ];
 
 const stats = [
- { value: 12500, suffix: '+', label: 'Active Campaigns', icon: Zap },
- { value: 2.3, suffix: 'M', label: 'Daily Ad Impressions', icon: Eye },
- { value: 98, suffix: '%', label: 'Platform Uptime', icon: Shield },
- { value: 150, suffix: '+', label: 'Countries Reached', icon: Globe },
+ { value: 12500, suffix: '+', key: 'campaigns', icon: Zap },
+ { value: 2.3, suffix: 'M', key: 'impressions', icon: Eye },
+ { value: 98, suffix: '%', key: 'uptime', icon: Shield },
+ { value: 150, suffix: '+', key: 'countries', icon: Globe },
 ];
 
 function AnimatedCounter({ value, suffix }: { value: number; suffix: string }) {
@@ -153,6 +147,7 @@ function FloatingBlob({ className, delay = 0 }: { className?: string; delay?: nu
 }
 
 export function LandingPage() {
+ const { t } = useTranslation();
  const navigate = useNavigate();
  const { data: featuredAds, isLoading: featuredLoading } = useFeaturedAds();
  const [activeTestimonial, setActiveTestimonial] = useState(0);
@@ -182,16 +177,23 @@ export function LandingPage() {
  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-sm font-medium mb-8"
  >
  <Sparkles className="h-4 w-4 text-accent-300" />
- <span>Now with AI Creative Generation</span>
+ <span>{t('landing.hero.badge')}</span>
  <ArrowRight className="h-4 w-4" />
  </motion.div>
 
  <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold leading-[1.1] tracking-tight">
- <SplitText text="Discover Ads." mode="words" stagger={0.14} delay={0.1} />
+ <SplitText text={t('landing.hero.titleLine1')} mode="words" stagger={0.14} delay={0.1} />
  <br />
  <GradientText className="from-accent-300 via-secondary-300 to-accent-300">
- Earn{' '}
- <RotatingWords words={['Rewards.', 'Tokens.', 'Gift Cards.', 'Cash Back.']} />
+ {t('landing.hero.titleEarn')}{' '}
+ <RotatingWords
+ words={[
+ t('landing.hero.rotating.rewards'),
+ t('landing.hero.rotating.tokens'),
+ t('landing.hero.rotating.giftCards'),
+ t('landing.hero.rotating.cashBack'),
+ ]}
+ />
  </GradientText>
  </h1>
 
@@ -201,8 +203,7 @@ export function LandingPage() {
  transition={{ duration: 0.6, delay: 0.2 }}
  className="mt-6 text-lg sm:text-xl text-primary-100 max-w-2xl leading-relaxed"
  >
- The intelligent advertising platform that connects brands with engaged audiences.
- Browse curated ads and earn real rewards for your attention.
+ {t('landing.hero.blurb')}
  </motion.p>
 
  <motion.div
@@ -216,7 +217,7 @@ export function LandingPage() {
  onClick={() => navigate('/ads')}
  className="inline-flex items-center justify-center gap-2 rounded-xl font-semibold px-8 py-4 text-base bg-white text-primary-700 hover:bg-gray-50 shadow-xl shadow-black/10 active:scale-[0.97] transition-all"
  >
- Browse Ads <ArrowRight className="h-5 w-5" />
+ {t('common.browseAds')} <ArrowRight className="h-5 w-5" />
  </button>
  </MagneticButton>
  <MagneticButton>
@@ -224,7 +225,7 @@ export function LandingPage() {
  onClick={() => navigate('/register')}
  className="inline-flex items-center justify-center gap-2 rounded-xl font-semibold px-8 py-4 text-base border-2 border-white/30 text-white hover:bg-white/10 active:scale-[0.97] transition-all backdrop-blur-sm"
  >
- I'm an Advertiser
+ {t('landing.hero.ctaAdvertiser')}
  </button>
  </MagneticButton>
  </motion.div>
@@ -252,7 +253,7 @@ export function LandingPage() {
  <Star key={i} className="h-4 w-4 fill-amber-300 text-amber-300" />
  ))}
  </div>
- <p className="text-primary-200">Trusted by 12,000+ advertisers</p>
+ <p className="text-primary-200">{t('landing.hero.socialProof')}</p>
  </div>
  </motion.div>
  </div>
@@ -277,7 +278,7 @@ export function LandingPage() {
  const Icon = stat.icon;
  return (
  <motion.div
- key={stat.label}
+ key={stat.key}
  initial={{ opacity: 0, y: 20 }}
  whileInView={{ opacity: 1, y: 0 }}
  viewport={{ once: true }}
@@ -289,7 +290,7 @@ export function LandingPage() {
  <p className="text-3xl font-extrabold text-gray-900 dark:text-white">
  <AnimatedCounter value={stat.value} suffix={stat.suffix} />
  </p>
- <p className="text-sm text-gray-500 dark:text-slate-400 mt-1">{stat.label}</p>
+ <p className="text-sm text-gray-500 dark:text-slate-400 mt-1">{t(`landing.stats.${stat.key}`)}</p>
  </motion.div>
  );
  })}
@@ -302,14 +303,14 @@ export function LandingPage() {
  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
  <div className="flex items-end justify-between mb-10">
  <div>
- <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Featured Ads</h2>
- <p className="text-gray-500 dark:text-slate-400 mt-2">Hand-picked campaigns with the highest rewards</p>
+ <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{t('landing.featured.title')}</h2>
+ <p className="text-gray-500 dark:text-slate-400 mt-2">{t('landing.featured.subtitle')}</p>
  </div>
  <Link
  to="/ads"
  className="hidden sm:inline-flex items-center gap-1 text-sm font-semibold text-primary-600 hover:text-primary-700 transition-colors"
  >
- View all <ArrowUpRight className="h-4 w-4" />
+ {t('common.viewAll')} <ArrowUpRight className="h-4 w-4" />
  </Link>
  </div>
 
@@ -332,9 +333,9 @@ export function LandingPage() {
  ) : (
  <EmptyState
  icon={<Sparkles className="h-12 w-12" />}
- title="No Featured Ads Yet"
- description="Featured ads will appear here soon. Check back regularly or browse by category to discover ads right now!"
- actionLabel="Browse All Ads"
+ title={t('landing.featured.emptyTitle')}
+ description={t('landing.featured.emptyDesc')}
+ actionLabel={t('landing.featured.emptyAction')}
  onAction={() => navigate('/ads')}
  size="md"
  />
@@ -347,40 +348,22 @@ export function LandingPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-end justify-between mb-10">
           <div>
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Latest from the Blog</h2>
-            <p className="text-gray-500 dark:text-slate-400 mt-2">Insights, case studies, and platform updates from our team.</p>
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{t('landing.blogTeaser.title')}</h2>
+            <p className="text-gray-500 dark:text-slate-400 mt-2">{t('landing.blogTeaser.subtitle')}</p>
           </div>
           <Link
             to="/blog"
             className="hidden sm:inline-flex items-center gap-1 text-sm font-semibold text-primary-600 hover:text-primary-700 transition-colors"
           >
-            View all articles <ArrowUpRight className="h-4 w-4" />
+            {t('landing.blogTeaser.viewAll')} <ArrowUpRight className="h-4 w-4" />
           </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
-            {
-              id: 3,
-              title: 'How FitLife Increased Conversions by 340% with SmartAdDeals',
-              excerpt: 'A deep dive into how a fitness brand leveraged AI optimization and reward-based engagement.',
-              date: 'February 28, 2026',
-              category: 'Case Studies',
-            },
-            {
-              id: 1,
-              title: 'The Future of Geo-Targeted Advertising in 2026',
-              excerpt: 'Privacy-first targeting and new technologies reshaping local advertising at scale.',
-              date: 'March 10, 2026',
-              category: 'AdTech Trends',
-            },
-            {
-              id: 2,
-              title: 'Introducing the Ad Journey Storyteller',
-              excerpt: 'Turn raw campaign analytics into compelling narratives for stakeholders.',
-              date: 'March 5, 2026',
-              category: 'Platform Updates',
-            },
+            { id: 3, key: 'p3', date: 'February 28, 2026', category: 'cases' },
+            { id: 1, key: 'p1', date: 'March 10, 2026', category: 'trends' },
+            { id: 2, key: 'p2', date: 'March 5, 2026', category: 'updates' },
           ].map((post, index) => (
             <motion.article
               key={post.id}
@@ -392,13 +375,13 @@ export function LandingPage() {
               className="group bg-white dark:bg-slate-800 rounded-2xl border border-gray-200/80 dark:border-slate-700/80 p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer"
             >
               <span className="inline-block px-2.5 py-1 rounded-full text-xs font-medium bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300 border border-primary-100 dark:border-primary-900/30 mb-4">
-                {post.category}
+                {t(`blog.category.${post.category}`)}
               </span>
               <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-primary-700 dark:group-hover:text-secondary-400 transition-colors">
-                {post.title}
+                {t(`landing.blogTeaser.posts.${post.key}title`)}
               </h3>
               <p className="text-sm text-gray-500 dark:text-slate-400 line-clamp-3 leading-relaxed mb-4">
-                {post.excerpt}
+                {t(`landing.blogTeaser.posts.${post.key}excerpt`)}
               </p>
               <div className="flex items-center justify-between text-xs text-gray-400 dark:text-slate-500">
                 <span>{post.date}</span>
@@ -415,7 +398,7 @@ export function LandingPage() {
             to="/blog"
             className="inline-flex items-center justify-center gap-1 rounded-md px-4 py-2 text-sm font-medium bg-primary-700 text-white hover:bg-primary-800 transition-colors"
           >
-            View all articles <ArrowUpRight className="h-4 w-4" />
+            {t('landing.blogTeaser.viewAll')} <ArrowUpRight className="h-4 w-4" />
           </Link>
         </div>
       </div>
@@ -425,9 +408,9 @@ export function LandingPage() {
  <section className="py-20 bg-gray-50 dark:bg-slate-800/30">
  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
  <div className="text-center max-w-2xl mx-auto mb-16">
- <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Everything You Need</h2>
+ <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{t('landing.features.title')}</h2>
  <p className="text-gray-500 dark:text-slate-400 mt-3">
- Powerful tools for advertisers and a rewarding experience for users — all in one platform.
+ {t('landing.features.subtitle')}
  </p>
  </div>
 
@@ -436,7 +419,7 @@ export function LandingPage() {
  const Icon = feat.icon;
  return (
  <motion.div
- key={feat.title}
+ key={feat.key}
  initial={{ opacity: 0, y: 30 }}
  whileInView={{ opacity: 1, y: 0 }}
  viewport={{ once: true, margin: '-50px' }}
@@ -446,8 +429,8 @@ export function LandingPage() {
  <div className={cn('w-14 h-14 rounded-xl flex items-center justify-center mb-5', feat.bg)}>
  <Icon className={cn('h-7 w-7', feat.iconColor)} />
  </div>
- <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{feat.title}</h3>
- <p className="text-gray-500 dark:text-slate-400 leading-relaxed">{feat.desc}</p>
+ <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{t(`landing.features.${feat.key}.title`)}</h3>
+ <p className="text-gray-500 dark:text-slate-400 leading-relaxed">{t(`landing.features.${feat.key}.desc`)}</p>
  <div className={cn(
  'absolute top-8 right-8 w-24 h-24 rounded-full blur-3xl opacity-0 group-hover:opacity-40 transition-opacity duration-500 bg-primary-600',
  feat.color
@@ -464,35 +447,21 @@ export function LandingPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-end justify-between mb-10">
           <div>
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Success Stories</h2>
-            <p className="text-gray-500 dark:text-slate-400 mt-2">See how brands are winning with AI-powered advertising.</p>
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{t('landing.cases.title')}</h2>
+            <p className="text-gray-500 dark:text-slate-400 mt-2">{t('landing.cases.subtitle')}</p>
           </div>
           <Link
             to="/blog?category=Case Studies"
             className="hidden sm:inline-flex items-center gap-1 text-sm font-semibold text-primary-600 hover:text-primary-700 transition-colors"
           >
-            Read case studies <ArrowUpRight className="h-4 w-4" />
+            {t('landing.cases.cta')} <ArrowUpRight className="h-4 w-4" />
           </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {[
-            {
-              brand: 'FitLife',
-              metric: '+340%',
-              metricLabel: 'conversion lift',
-              quote: "SmartAdDeals's AI optimization and reward-based engagement completely changed how we think about advertising.",
-              author: 'Jessica Park, CMO',
-              color: 'from-accent-500 to-accent-600',
-            },
-            {
-              brand: 'TechStart',
-              metric: '4.8x',
-              metricLabel: 'return on ad spend',
-              quote: 'The geographic heatmaps and real-time anomaly detection saved us thousands in ad spend.',
-              author: 'Marcus Chen, Growth Lead',
-              color: 'from-primary-500 to-primary-600',
-            },
+            { brand: 'FitLife', key: 'fitlife', metric: '+340%', color: 'from-accent-500 to-accent-600' },
+            { brand: 'TechStart', key: 'techstart', metric: '4.8x', color: 'from-primary-500 to-primary-600' },
           ].map((study, i) => (
             <motion.div
               key={study.brand}
@@ -508,12 +477,12 @@ export function LandingPage() {
                   <div>
                     <p className="text-sm text-primary-200 font-medium uppercase tracking-wider">{study.brand}</p>
                     <p className="text-5xl font-extrabold mt-1">{study.metric}</p>
-                    <p className="text-sm text-primary-200">{study.metricLabel}</p>
+                    <p className="text-sm text-primary-200">{t(`landing.cases.items.${study.key}Label`)}</p>
                   </div>
                   <Quote className="h-8 w-8 text-white/30" />
                 </div>
-                <p className="text-lg text-white/90 leading-relaxed mb-6">"{study.quote}"</p>
-                <p className="text-sm text-primary-200">— {study.author}</p>
+                <p className="text-lg text-white/90 leading-relaxed mb-6">&ldquo;{t(`landing.cases.items.${study.key}Quote`)}&rdquo;</p>
+                <p className="text-sm text-primary-200">— {t(`landing.cases.items.${study.key}Author`)}</p>
               </div>
             </motion.div>
           ))}
@@ -524,7 +493,7 @@ export function LandingPage() {
             to="/blog?category=Case Studies"
             className="inline-flex items-center justify-center gap-1 rounded-md px-4 py-2 text-sm font-medium bg-primary-700 text-white hover:bg-primary-800 transition-colors"
           >
-            Read case studies <ArrowUpRight className="h-4 w-4" />
+            {t('landing.cases.cta')} <ArrowUpRight className="h-4 w-4" />
           </Link>
         </div>
       </div>
@@ -534,9 +503,9 @@ export function LandingPage() {
  <section className="py-20 bg-white dark:bg-slate-900">
  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
  <div className="text-center max-w-2xl mx-auto mb-16">
- <h2 className="text-3xl font-bold text-gray-900 dark:text-white">How It Works</h2>
+ <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{t('landing.how.title')}</h2>
  <p className="text-gray-500 dark:text-slate-400 mt-3">
- Three simple steps to start earning rewards from ads you actually care about.
+ {t('landing.how.subtitle')}
  </p>
  </div>
 
@@ -545,9 +514,9 @@ export function LandingPage() {
  <div className="hidden md:block absolute top-16 left-[20%] right-[20%] h-0.5 bg-primary-200 dark:from-primary-900/40 dark:/40 dark:to-accent-900/40" />
 
  {[
- { step: 1, title: 'Browse', desc: 'Explore a curated catalog of ads from top brands across various industries. Filter by what interests you.', icon: Eye, color: 'bg-primary-600', lightColor: 'bg-primary-50 dark:bg-primary-900/20', textColor: 'text-primary-600 dark:text-primary-400' },
- { step: 2, title: 'Engage', desc: 'View and interact with ads that match your interests. Your attention is valued and rewarded.', icon: TrendingUp, color: 'bg-secondary-600', lightColor: 'bg-secondary-50 dark:bg-secondary-900/20', textColor: 'text-secondary-600 dark:text-secondary-400' },
- { step: 3, title: 'Earn', desc: 'Receive real rewards for your engagement. Cash out anytime or reinvest in more premium experiences.', icon: Gift, color: 'bg-accent-600', lightColor: 'bg-accent-50 dark:bg-accent-900/20', textColor: 'text-accent-600 dark:text-accent-400' },
+ { step: 1, key: 'browse', icon: Eye, color: 'bg-primary-600', lightColor: 'bg-primary-50 dark:bg-primary-900/20', textColor: 'text-primary-600 dark:text-primary-400' },
+ { step: 2, key: 'engage', icon: TrendingUp, color: 'bg-secondary-600', lightColor: 'bg-secondary-50 dark:bg-secondary-900/20', textColor: 'text-secondary-600 dark:text-secondary-400' },
+ { step: 3, key: 'earn', icon: Gift, color: 'bg-accent-600', lightColor: 'bg-accent-50 dark:bg-accent-900/20', textColor: 'text-accent-600 dark:text-accent-400' },
  ].map((item) => {
  const Icon = item.icon;
  return (
@@ -567,8 +536,8 @@ export function LandingPage() {
  {item.step}
  </div>
  </div>
- <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{item.title}</h3>
- <p className="text-gray-500 dark:text-slate-400 max-w-xs mx-auto leading-relaxed">{item.desc}</p>
+ <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{t(`landing.how.${item.key}.title`)}</h3>
+ <p className="text-gray-500 dark:text-slate-400 max-w-xs mx-auto leading-relaxed">{t(`landing.how.${item.key}.desc`)}</p>
  </motion.div>
  );
  })}
@@ -580,45 +549,24 @@ export function LandingPage() {
     <section className="py-20 bg-white dark:bg-slate-900">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Frequently Asked Questions</h2>
-          <p className="text-gray-500 dark:text-slate-400 mt-3">Everything you need to know about earning rewards and advertising with us.</p>
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{t('landing.faq.title')}</h2>
+          <p className="text-gray-500 dark:text-slate-400 mt-3">{t('landing.faq.subtitle')}</p>
         </div>
 
         <div className="space-y-4">
-          {[
-            {
-              q: 'How do I earn rewards from ads?',
-              a: 'Simply browse ads that interest you, view the content, and claim the reward shown. Rewards are credited to your account and can be cashed out once you reach the minimum balance.',
-            },
-            {
-              q: 'Is it free for advertisers to join?',
-              a: 'Yes. Creating an advertiser account is free. You only pay for the ad budget you allocate to campaigns, plus a small platform fee based on performance.',
-            },
-            {
-              q: 'What makes SmartAdDeals different from other ad networks?',
-              a: 'We combine AI-powered optimization, privacy-first targeting, geographic heatmaps, and a reward-based engagement model that values user attention.',
-            },
-            {
-              q: 'How does the AI optimization work?',
-              a: 'Our machine learning engine analyzes campaign performance in real time and recommends adjustments to bids, budgets, audiences, and creatives to improve ROAS.',
-            },
-            {
-              q: 'Can I integrate SmartAdDeals with my existing ad accounts?',
-              a: 'Yes. We offer integrations with major programmatic platforms and ad exchanges. Visit our developer docs to learn more about API and OAuth connections.',
-            },
-          ].map((item, i) => (
+          {[1, 2, 3, 4, 5].map((n) => ({ q: `landing.faq.q${n}`, a: `landing.faq.a${n}` })).map((item, i) => (
             <details
               key={i}
               className="group bg-gray-50 dark:bg-slate-800/50 rounded-xl border border-gray-200 dark:border-slate-700 open:bg-white dark:open:bg-slate-800 transition-colors"
             >
               <summary className="flex items-center justify-between cursor-pointer p-5 text-left font-semibold text-gray-900 dark:text-white list-none">
-                {item.q}
+                {t(item.q)}
                 <span className="ml-4 shrink-0 w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300 flex items-center justify-center group-open:rotate-180 transition-transform">
                   <ChevronDown className="h-4 w-4" />
                 </span>
               </summary>
               <div className="px-5 pb-5 text-sm text-gray-600 dark:text-slate-400 leading-relaxed">
-                {item.a}
+                {t(item.a)}
               </div>
             </details>
           ))}
@@ -629,7 +577,7 @@ export function LandingPage() {
             to="/contact"
             className="inline-flex items-center gap-2 text-sm font-semibold text-primary-600 hover:text-primary-700 transition-colors"
           >
-            Still have questions? Contact us <ArrowRight className="h-4 w-4" />
+            {t('landing.faq.stillHaveQuestions')} {t('landing.faq.contactUs')} <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
       </div>
@@ -639,9 +587,9 @@ export function LandingPage() {
  <section className="py-20 bg-gray-50 dark:bg-slate-800/30">
  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
  <div className="text-center max-w-2xl mx-auto mb-12">
- <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Browse by Category</h2>
+ <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{t('landing.categories.title')}</h2>
  <p className="text-gray-500 dark:text-slate-400 mt-3">
- Find ads from industries you care about — from entertainment to finance.
+ {t('landing.categories.subtitle')}
  </p>
  </div>
 
@@ -650,8 +598,8 @@ export function LandingPage() {
  const Icon = cat.icon;
  return (
  <Link
- key={cat.name}
- to={`/ads?industry=${cat.name.toLowerCase()}`}
+ key={cat.key}
+ to={`/ads?industry=${cat.key}`}
  className="group relative overflow-hidden flex flex-col items-center gap-4 p-6 rounded-2xl bg-white dark:bg-slate-800/80 border border-gray-200/80 dark:border-slate-700/80 hover:border-transparent transition-all duration-300 hover:-translate-y-1"
  >
  <div className={cn('absolute inset-0 bg-primary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300', cat.gradient)} />
@@ -671,11 +619,11 @@ export function LandingPage() {
  </div>
 
  <span className="relative text-sm font-semibold text-gray-700 dark:text-slate-200 group-hover:text-white transition-colors duration-300">
- {cat.name}
+ {t(`landing.categories.${cat.key}`)}
  </span>
 
  <div className="relative flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-white/90 opacity-0 -mt-2 group-hover:opacity-100 group-hover:mt-0 transition-all duration-300">
- Explore <ArrowRight className="h-3 w-3" />
+ {t('common.explore')} <ArrowRight className="h-3 w-3" />
  </div>
  </Link>
  );
@@ -688,9 +636,9 @@ export function LandingPage() {
  <section className="py-20 bg-white dark:bg-slate-900 overflow-hidden">
  <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
  <div className="text-center max-w-2xl mx-auto mb-12">
- <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Loved by Advertisers</h2>
+ <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{t('landing.testimonials.title')}</h2>
  <p className="text-gray-500 dark:text-slate-400 mt-3">
- See what industry leaders are saying about SmartAdDeals.
+ {t('landing.testimonials.subtitle')}
  </p>
  </div>
 
@@ -701,23 +649,23 @@ export function LandingPage() {
  animate={{ x: `-${activeTestimonial * 100}%` }}
  transition={{ type: 'spring', stiffness: 300, damping: 30 }}
  >
- {testimonials.map((t, i) => (
+ {testimonials.map((item, i) => (
  <div key={i} className="w-full flex-shrink-0 px-4">
  <div className="bg-gray-50 dark:bg-slate-800/50 rounded-2xl p-8 md:p-10 border border-gray-200/80 dark:border-slate-700/80">
  <Quote className="h-10 w-10 text-primary-200 dark:text-primary-900 mb-4" />
  <p className="text-lg md:text-xl text-gray-700 dark:text-slate-300 leading-relaxed mb-6">
- {t.text}
+ &ldquo;{t(`landing.testimonials.${item.key}text`)}&rdquo;
  </p>
  <div className="flex items-center gap-4">
  <div className="w-12 h-12 rounded-full overflow-hidden bg-primary-500 ring-2 ring-white dark:ring-slate-800 shadow-sm flex items-center justify-center text-white font-bold">
- {t.avatar}
+ {item.avatar}
  </div>
  <div>
- <p className="font-semibold text-gray-900 dark:text-white">{t.name}</p>
- <p className="text-sm text-gray-500 dark:text-slate-400">{t.role}</p>
+ <p className="font-semibold text-gray-900 dark:text-white">{item.name}</p>
+ <p className="text-sm text-gray-500 dark:text-slate-400">{t(`landing.testimonials.${item.key}role`)}</p>
  </div>
  <div className="ml-auto flex gap-0.5">
- {Array.from({ length: t.rating }).map((_, j) => (
+ {Array.from({ length: item.rating }).map((_, j) => (
  <Star key={j} className="h-5 w-5 fill-amber-400 text-amber-400" />
  ))}
  </div>
@@ -764,10 +712,10 @@ export function LandingPage() {
  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
  <div className="text-center max-w-2xl mx-auto mb-10">
  <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
- Integrated with Leading Programmatic Platforms
+ {t('landing.integrations.title')}
  </h2>
  <p className="text-gray-500 dark:text-slate-400 mt-3">
- Our ecosystem connects with the world’s top demand-side platforms, supply-side platforms, and ad exchanges.
+ {t('landing.integrations.subtitle')}
  </p>
  </div>
 
@@ -806,7 +754,7 @@ export function LandingPage() {
  <section className="py-16 bg-white dark:bg-slate-900">
  <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
  <p className="text-center text-sm font-medium text-gray-400 dark:text-slate-500 uppercase tracking-wider mb-8">
- Trusted by teams at
+ {t('landing.integrations.trustedBy')}
  </p>
  <Marquee duration={30} className="opacity-50 grayscale dark:opacity-40 [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
  {['FitLife', 'TechStart', 'RetailMax', 'GreenEnergy', 'MediaHub', 'CloudNine'].map((name) => (
@@ -827,26 +775,26 @@ export function LandingPage() {
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white text-xs font-semibold uppercase tracking-wider mb-4">
                 <Code className="h-3.5 w-3.5" />
-                Developer Ready
+                {t('landing.developer.title')}
               </div>
               <h2 className="text-3xl font-bold text-white mb-4">
                 <ScrambleText text="Built for Integrations" />
               </h2>
               <p className="text-primary-100 leading-relaxed mb-6">
-                Connect your existing programmatic stack, sync campaign data, and build custom workflows with our REST API, webhooks, and OAuth-enabled platform accounts.
+                {t('landing.developer.desc')}
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <Link
                   to="/register"
                   className="inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-semibold bg-secondary-500 text-primary-900 hover:bg-secondary-400 transition-colors"
                 >
-                  Get API Access
+                  {t('landing.developer.cta')}
                 </Link>
                 <Link
                   to="/contact"
                   className="inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-semibold border border-white/30 text-white hover:bg-white/10 transition-colors"
                 >
-                  Talk to Engineering
+                  {t('landing.developer.ctaSecondary')}
                 </Link>
               </div>
             </div>
@@ -872,9 +820,9 @@ export function LandingPage() {
     <section className="py-16 bg-primary-700 text-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <Mail className="h-8 w-8 mx-auto mb-4 text-secondary-400" />
-        <h2 className="text-2xl sm:text-3xl font-bold mb-3">Stay Ahead of AdTech</h2>
+        <h2 className="text-2xl sm:text-3xl font-bold mb-3">{t('landing.newsletter.title')}</h2>
         <p className="text-primary-100 mb-6 max-w-xl mx-auto">
-          Get the latest platform updates, case studies, and advertising tips delivered to your inbox every two weeks.
+          {t('landing.newsletter.desc')}
         </p>
         <form
           onSubmit={(e) => {
@@ -886,17 +834,17 @@ export function LandingPage() {
           <input
             type="email"
             required
-            placeholder="Enter your email"
+            placeholder={t('common.emailPlaceholder')}
             className="flex-1 px-4 py-3 rounded-md bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-secondary-500/50"
           />
           <button
             type="submit"
             className="px-6 py-3 rounded-md font-semibold bg-secondary-500 text-primary-900 hover:bg-secondary-400 transition-colors"
           >
-            Subscribe
+            {t('common.subscribe')}
           </button>
         </form>
-        <p className="text-xs text-primary-200 mt-3">No spam. Unsubscribe anytime.</p>
+        <p className="text-xs text-primary-200 mt-3">{t('landing.newsletter.disclaimer')}</p>
       </div>
     </section>
 
@@ -907,27 +855,27 @@ export function LandingPage() {
  <FloatingBlob className="bottom-0 right-1/4 w-64 h-64 bg-white/10" delay={3} />
 
  <div className="relative max-w-3xl mx-auto px-4 text-center">
- <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">Ready to Get Started?</h2>
+ <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">{t('landing.finalCta.title')}</h2>
  <p className="text-primary-100 text-lg mb-10 max-w-xl mx-auto">
- Join thousands of users already earning rewards on SmartAdDeals. It takes less than a minute to sign up.
+ {t('landing.finalCta.desc')}
  </p>
  <div className="flex flex-col sm:flex-row justify-center gap-4">
  <button
  onClick={() => navigate('/register')}
  className="inline-flex items-center justify-center gap-2 rounded-xl font-semibold px-8 py-4 text-base bg-white text-primary-700 hover:bg-gray-50 shadow-xl active:scale-[0.97] transition-all"
  >
- Create Free Account
+ {t('landing.finalCta.primary')}
  </button>
  <button
  onClick={() => navigate('/ads')}
  className="inline-flex items-center justify-center gap-2 rounded-xl font-semibold px-8 py-4 text-base border-2 border-white/40 text-white hover:bg-white/15 active:scale-[0.97] transition-all"
  >
- Browse Ads
+ {t('common.browseAds')}
  </button>
  </div>
  <div className="mt-8 flex items-center justify-center gap-6 text-sm text-primary-200">
- <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4" /> No credit card required</span>
- <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4" /> Free forever</span>
+ <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4" /> {t('landing.finalCta.noCard')}</span>
+ <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4" /> {t('landing.finalCta.free')}</span>
  </div>
  </div>
  </section>

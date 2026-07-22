@@ -67,7 +67,15 @@
       "blogTeaser": {
         "title": "Senaste från bloggen",
         "subtitle": "Insikter, fallstudier och plattformsnyheter från vårt team.",
-        "viewAll": "Visa alla artiklar"
+        "viewAll": "Visa alla artiklar",
+        "posts": {
+          "p3title": "Så ökade FitLife sina konverteringar med 340 % med SmartAdDeals",
+          "p3excerpt": "En djupdykning i hur ett träningsvarumärke använde AI-optimering och belöningsbaserat engagemang.",
+          "p1title": "Framtiden för geomålstyrd annonsering 2026",
+          "p1excerpt": "Integritetsfokuserad målgruppsstyrning och ny teknik som formar om lokal annonsering i stor skala.",
+          "p2title": "Vi presenterar Ad Journey Storyteller",
+          "p2excerpt": "Förvandla rå kampanjdata till engagerande berättelser för intressenter."
+        }
       },
       "features": {
         "title": "Allt du behöver",
@@ -100,7 +108,15 @@
       "cases": {
         "title": "Framgångshistorier",
         "subtitle": "Se hur varumärken lyckas med AI-driven annonsering.",
-        "cta": "Läs fallstudier"
+        "cta": "Läs fallstudier",
+        "items": {
+          "fitlifeLabel": "ökning av konverteringar",
+          "fitlifeQuote": "SmartAdDeals AI-optimering och belöningsbaserade engagemang förändrade helt hur vi tänker kring annonsering.",
+          "fitlifeAuthor": "Jessica Park, marknadschef",
+          "techstartLabel": "avkastning på annonsbudget",
+          "techstartQuote": "De geografiska värmekartorna och avvikelsedetekteringen i realtid sparade oss tusentals kronor i annonsbudget.",
+          "techstartAuthor": "Marcus Chen, tillväxtansvarig"
+        }
       },
       "how": {
         "title": "Så fungerar det",
@@ -136,11 +152,23 @@
       },
       "categories": {
         "title": "Bläddra efter kategori",
-        "subtitle": "Hitta annonser från branscher du bryr dig om – från underhållning till finans."
+        "subtitle": "Hitta annonser från branscher du bryr dig om – från underhållning till finans.",
+        "entertainment": "Underhållning",
+        "sports": "Sport",
+        "retail": "Detaljhandel",
+        "technology": "Teknik",
+        "health": "Hälsa",
+        "finance": "Finans"
       },
       "testimonials": {
         "title": "Uppskattat av annonsörer",
-        "subtitle": "Se vad branschledarna säger om SmartAdDeals."
+        "subtitle": "Se vad branschledarna säger om SmartAdDeals.",
+        "t1role": "Marknadschef, FitLife",
+        "t1text": "Vi ökade konverteringarna med 340 % med SmartAdDeals AI-optimering. Den belöningsbaserade modellen förändrade helt hur vi ser på annonsering.",
+        "t2role": "Tillväxtansvarig, TechStart",
+        "t2text": "De geografiska värmekartorna och avvikelsedetekteringen i realtid sparade oss tusentals kronor i annonsbudget. Den bästa analysplattform vi använt.",
+        "t3role": "Digitalchef, RetailMax",
+        "t3text": "Vårt team älskar Ad Journey Storyteller. Den förvandlar torr kampanjdata till berättelser vi faktiskt vill dela med intressenterna."
       },
       "integrations": {
         "title": "Integrerat med ledande programmatiska plattformar",
@@ -378,7 +406,8 @@
         "london": "London"
       },
       "noRoleTitle": "Hittar du inte din roll?",
-      "noRoleDesc": "Vi letar alltid efter duktiga människor. Skicka ditt cv och berätta hur du skulle bidra till SmartAdDeals."
+      "noRoleDesc": "Vi letar alltid efter duktiga människor. Skicka ditt cv och berätta hur du skulle bidra till SmartAdDeals.",
+      "applyToast": "Ansökan till {{role}} har skickats! Vi hör av oss."
     },
     "partners": {
       "eyebrow": "Annonsörer och kreatörer",
@@ -426,7 +455,23 @@
       "saturday": "Lördag",
       "sunday": "Söndag",
       "closed": "Stängt",
-      "faqTitle": "Vanliga frågor"
+      "faqTitle": "Vanliga frågor",
+      "nameLabel": "Namn",
+      "emailLabel": "E-post",
+      "topicLabel": "Ämne",
+      "sentToast": "Meddelandet har skickats! Vi återkommer snart.",
+      "weekdaysHours": "09:00 – 18:00 EST",
+      "saturdayHours": "10:00 – 14:00 EST",
+      "faq": {
+        "q1": "Hur snabbt svarar ni på förfrågningar?",
+        "a1": "Vi strävar efter att svara på alla meddelanden inom en arbetsdag. Företagskunder får prioriterad support.",
+        "q2": "Kan jag boka en demo för mitt team?",
+        "a2": "Absolut. Fyll i formuläret med företagets uppgifter och välj \"Säljdemo\" som ämne. Vårt team hör av sig för att boka en tid.",
+        "q3": "Erbjuder ni skräddarsydda företagsavtal?",
+        "a3": "Ja. Vi erbjuder anpassade avtal för byråer och stora annonsörer. Kontakta vårt säljteam för priser och introduktion.",
+        "q4": "Var hittar jag teknisk dokumentation?",
+        "a4": "Registrerade användare når dokumentationen från översikten. Du kan även begära API-dokumentation via det här formuläret."
+      }
     },
     "support": {
       "title": "Supportcenter",

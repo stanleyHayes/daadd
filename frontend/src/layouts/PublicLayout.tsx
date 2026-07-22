@@ -20,12 +20,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ScrollToTop } from '@/components/ui/ScrollToTop';
 import { WatermarkPattern } from '@/components/ui/Watermark';
 import { cn } from '@/lib/utils';
+import { languages } from '@/i18n/config';
 
 export function PublicLayout() {
  const navigate = useNavigate();
  const location = useLocation();
  const { user, isAuthenticated, logout } = useAuthStore();
- const { t } = useTranslation();
+ const { t, i18n } = useTranslation();
  const [searchQuery, setSearchQuery] = useState('');
  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
  const [scrolled, setScrolled] = useState(false);
@@ -82,12 +83,12 @@ export function PublicLayout() {
  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary-400 opacity-75" />
  <span className="relative inline-flex rounded-full h-2 w-2 bg-secondary-500" />
  </span>
- <span>Platform operational — v1.0 live</span>
+ <span>{t('header.status')}</span>
  </div>
  <div className="flex items-center gap-4">
- <Link to="/about" className="hover:text-white transition-colors">About</Link>
- <Link to="/careers" className="hover:text-white transition-colors">Careers</Link>
- <Link to="/contact" className="hover:text-white transition-colors">Contact</Link>
+ <Link to="/about" className="hover:text-white transition-colors">{t('header.nav.about')}</Link>
+ <Link to="/careers" className="hover:text-white transition-colors">{t('header.nav.careers')}</Link>
+ <Link to="/contact" className="hover:text-white transition-colors">{t('header.nav.contact')}</Link>
  </div>
  </div>
 
@@ -146,7 +147,7 @@ export function PublicLayout() {
  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-muted" />
  <input
  type="text"
- placeholder="Search ads..."
+ placeholder={t('header.searchPlaceholder')}
  value={searchQuery}
  onChange={(e) => setSearchQuery(e.target.value)}
  className="w-56 pl-10 pr-4 py-2 rounded-full border border-border-color dark:border-slate-700 bg-bg-secondary dark:bg-slate-900 text-sm placeholder:text-text-muted dark:text-white focus:outline-none focus:ring-2 focus:ring-secondary-500/30 focus:border-secondary-500 transition-all"
@@ -176,7 +177,7 @@ export function PublicLayout() {
  ) : (
  <div className="hidden sm:flex items-center gap-2">
  <Button variant="ghost" size="sm" onClick={() => navigate('/login')}>
- Log in
+ {t('header.login')}
  </Button>
  <Button size="sm" onClick={() => navigate('/register')}>
  {t('header.cta')}
@@ -209,7 +210,7 @@ export function PublicLayout() {
  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-muted" />
  <input
  type="text"
- placeholder="Search ads..."
+ placeholder={t('header.searchPlaceholder')}
  value={searchQuery}
  onChange={(e) => setSearchQuery(e.target.value)}
  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-border-color dark:border-slate-700 bg-bg-secondary dark:bg-slate-900 text-sm dark:text-white focus:outline-none focus:ring-2 focus:ring-secondary-500/30"
@@ -243,23 +244,23 @@ export function PublicLayout() {
  className="w-full flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium text-text-secondary hover:bg-bg-tertiary dark:hover:bg-slate-800"
  >
  <LayoutDashboard className="h-4 w-4" />
- Dashboard
+ {t('header.dashboard')}
  </button>
  <button
  onClick={() => { logout(); navigate('/'); }}
  className="w-full flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium text-danger-600 hover:bg-danger-50 dark:hover:bg-danger-900/20"
  >
  <LogOut className="h-4 w-4" />
- Logout
+ {t('header.logout')}
  </button>
  </div>
  ) : (
  <div className="pt-2 flex gap-2">
  <Button variant="outline" className="flex-1" onClick={() => navigate('/login')}>
- Log in
+ {t('header.login')}
  </Button>
  <Button className="flex-1" onClick={() => navigate('/register')}>
- Sign up
+ {t('header.signup')}
  </Button>
  </div>
  )}
@@ -288,47 +289,46 @@ export function PublicLayout() {
  <span className="text-xl font-bold">SmartAdDeals</span>
  </div>
  <p className="text-sm leading-relaxed max-w-sm mb-6 text-white/70">
- The intelligent advertising platform that connects brands with engaged audiences.
- Browse curated ads and earn real rewards for your attention.
+ {t('footer.blurb')}
  </p>
  <div className="flex gap-2">
  <div className="relative flex-1">
  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/50" />
  <input
  type="email"
- placeholder="Enter your email"
+ placeholder={t('common.emailPlaceholder')}
  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-primary-800 border border-primary-700 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-secondary-500/30 focus:border-secondary-500"
  />
  </div>
  <Button size="sm" className="bg-secondary-500 hover:bg-secondary-600 text-primary-900 font-semibold">
- Subscribe
+ {t('common.subscribe')}
  </Button>
  </div>
  </div>
 
  <div>
- <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Platform</h4>
+ <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">{t('footer.platform.title')}</h4>
  <ul className="space-y-3 text-sm text-white/70">
- <li><Link to="/ads" className="hover:text-secondary-300 transition-colors">Browse Ads</Link></li>
- <li><Link to="/partners" className="hover:text-secondary-300 transition-colors">Partners</Link></li>
- <li><Link to="/register" className="hover:text-secondary-300 transition-colors">For Advertisers</Link></li>
- <li><Link to="/ads" className="hover:text-secondary-300 transition-colors">Earn Rewards</Link></li>
- <li><Link to="/blog" className="hover:text-secondary-300 transition-colors">Blog</Link></li>
+ <li><Link to="/ads" className="hover:text-secondary-300 transition-colors">{t('footer.platform.browseAds')}</Link></li>
+ <li><Link to="/partners" className="hover:text-secondary-300 transition-colors">{t('footer.platform.partners')}</Link></li>
+ <li><Link to="/register" className="hover:text-secondary-300 transition-colors">{t('footer.platform.forAdvertisers')}</Link></li>
+ <li><Link to="/ads" className="hover:text-secondary-300 transition-colors">{t('footer.platform.earnRewards')}</Link></li>
+ <li><Link to="/blog" className="hover:text-secondary-300 transition-colors">{t('footer.platform.blog')}</Link></li>
  </ul>
  </div>
 
  <div>
- <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Company</h4>
+ <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">{t('footer.company.title')}</h4>
  <ul className="space-y-3 text-sm text-white/70">
- <li><Link to="/about" className="hover:text-secondary-300 transition-colors">About</Link></li>
- <li><Link to="/careers" className="hover:text-secondary-300 transition-colors">Careers</Link></li>
- <li><Link to="/blog" className="hover:text-secondary-300 transition-colors">Blog</Link></li>
- <li><Link to="/contact" className="hover:text-secondary-300 transition-colors">Contact</Link></li>
+ <li><Link to="/about" className="hover:text-secondary-300 transition-colors">{t('footer.company.about')}</Link></li>
+ <li><Link to="/careers" className="hover:text-secondary-300 transition-colors">{t('footer.company.careers')}</Link></li>
+ <li><Link to="/blog" className="hover:text-secondary-300 transition-colors">{t('footer.platform.blog')}</Link></li>
+ <li><Link to="/contact" className="hover:text-secondary-300 transition-colors">{t('footer.company.contact')}</Link></li>
  </ul>
  </div>
 
  <div>
- <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Legal</h4>
+ <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">{t('footer.legal.title')}</h4>
  <ul className="space-y-3 text-sm text-white/70">
  <li><Link to="/privacy" className="hover:text-secondary-300 transition-colors">{t('footer.links.privacy')}</Link></li>
  <li><Link to="/terms" className="hover:text-secondary-300 transition-colors">{t('footer.links.terms')}</Link></li>
@@ -343,7 +343,7 @@ export function PublicLayout() {
  <p className="text-sm text-white/60">{t('footer.copyright')}</p>
  <div className="flex items-center gap-4 text-white/60">
  <Globe className="h-4 w-4" />
- <span className="text-sm">English</span>
+ <span className="text-sm">{languages[(i18n.resolvedLanguage ?? i18n.language) as keyof typeof languages]?.name}</span>
  </div>
  </div>
  </div>
