@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { PageTransition } from '@/components/ui/PageTransition';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Card } from '@/components/ui/Card';
@@ -10,23 +11,24 @@ import { UserCheck, Check, X, Mail, CreditCard } from 'lucide-react';
 import toast from 'react-hot-toast';
 import type { AdvertiserApproval } from '@/types';
 
-const tabs: { key: AdvertiserApproval; label: string }[] = [
-  { key: 'pending', label: 'Pending' },
-  { key: 'approved', label: 'Approved' },
-  { key: 'rejected', label: 'Rejected' },
-];
+const TABS: AdvertiserApproval[] = ['pending', 'approved', 'rejected'];
 
 export function AdminAdvertisersPage() {
   const [tab, setTab] = useState<AdvertiserApproval>('pending');
+  const { t } = useTranslation();
   const { data: advertisers, isLoading } = useAdvertiserReviews(tab);
   const setApproval = useSetAdvertiserApproval();
 
   const act = async (id: string, action: 'approve' | 'reject') => {
     try {
       await setApproval.mutateAsync({ id, action });
-      toast.success(action === 'approve' ? 'Advertiser approved' : 'Advertiser rejected');
+      toast.success(
+        action === 'approve'
+          ? t('dashboard.adminAdvertisers.approvedToast')
+          : t('dashboard.adminAdvertisers.rejectedToast')
+      );
     } catch {
-      toast.error('Action failed');
+      toast.error(t('dashboard.adminAdvertisers.actionFailed'));
     }
   };
 
@@ -34,39 +36,41 @@ export function AdminAdvertisersPage() {
     <PageTransition>
       <div className="max-w-7xl mx-auto space-y-6">
         <PageHeader
-          title="Advertiser Approvals"
-          subtitle="Review and approve advertiser accounts before they can run ads."
+          title={t('dashboard.adminAdvertisers.title')}
+          subtitle={t('dashboard.adminAdvertisers.subtitle')}
         />
 
         <div className="flex w-fit gap-1 rounded-xl bg-bg-secondary p-1 dark:bg-slate-800">
-          {tabs.map((t) => (
+          {TABS.map((key) => (
             <button
-              key={t.key}
-              onClick={() => setTab(t.key)}
+              key={key}
+              onClick={() => setTab(key)}
               className={cn(
                 'rounded-lg px-4 py-2 text-sm font-medium transition-all',
-                tab === t.key
+                tab === key
                   ? 'bg-white text-primary-700 shadow-sm dark:bg-slate-700 dark:text-white'
                   : 'text-text-secondary hover:text-text-primary'
               )}
             >
-              {t.label}
+              {t(`dashboard.status.${key}`)}
             </button>
           ))}
         </div>
 
         <Card>
           {isLoading ? (
-            <div className="py-12 text-center text-text-muted">Loading…</div>
+            <div className="py-12 text-center text-text-muted">{t('dashboard.common.loading')}</div>
           ) : !advertisers || advertisers.length === 0 ? (
             <EmptyState
               variant="plain"
               icon={<UserCheck />}
-              title={`No ${tab} advertisers`}
+              title={t('dashboard.adminAdvertisers.emptyTitle', { status: t(`dashboard.status.${tab}`).toLowerCase() })}
               description={
                 tab === 'pending'
-                  ? 'New advertiser sign-ups awaiting review will appear here.'
-                  : `There are no ${tab} advertisers.`
+                  ? t('dashboard.adminAdvertisers.emptyPending')
+                  : t('dashboard.adminAdvertisers.emptyOther', {
+                      status: t(`dashboard.status.${tab}`).toLowerCase(),
+                    })
               }
             />
           ) : (
@@ -80,16 +84,16 @@ export function AdminAdvertisersPage() {
                     <div className="min-w-0">
                       <p className="truncate font-semibold text-text-primary">{a.name}</p>
                       <p className="truncate text-sm text-text-secondary">{a.email}</p>
-                      <p className="text-xs text-text-muted">Joined {formatDate(a.created_at)}</p>
+                      <p className="text-xs text-text-muted">{t('dashboard.adminAdvertisers.joined', { date: formatDate(a.created_at) })}</p>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <Chip ok={a.email_verified} icon={<Mail className="h-3 w-3" />} label="Email" />
+                    <Chip ok={a.email_verified} icon={<Mail className="h-3 w-3" />} label={t('dashboard.common.email')} />
                     <Chip
                       ok={a.billing_ready}
                       icon={<CreditCard className="h-3 w-3" />}
-                      label="Billing"
+                      label={t('dashboard.adminAdvertisers.billing')}
                     />
                   </div>
 
@@ -102,10 +106,10 @@ export function AdminAdvertisersPage() {
                         onClick={() => act(a.id, 'reject')}
                         loading={setApproval.isPending}
                       >
-                        <X className="h-4 w-4" /> Reject
+                        <X className="h-4 w-4" /> {t('dashboard.common.reject')}
                       </Button>
                       <Button size="sm" onClick={() => act(a.id, 'approve')} loading={setApproval.isPending}>
-                        <Check className="h-4 w-4" /> Approve
+                        <Check className="h-4 w-4" /> {t('dashboard.common.approve')}
                       </Button>
                     </div>
                   ) : (
@@ -117,7 +121,7 @@ export function AdminAdvertisersPage() {
                           : 'bg-danger-100 text-danger-700 dark:bg-danger-900/30 dark:text-danger-300'
                       )}
                     >
-                      {a.advertiser_approval}
+                      {t(`dashboard.status.${a.advertiser_approval}`)}
                     </span>
                   )}
                 </li>

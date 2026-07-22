@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardHeader } from '@/components/ui/Card';
 import { MetricsCard } from '@/components/analytics/MetricsCard';
 import { PageHeader } from '@/components/layout/PageHeader';
@@ -24,6 +25,7 @@ const roleConfig = {
 
 export function TeamPage() {
   const [campaignId, setCampaignId] = useState('');
+  const { t } = useTranslation();
   const [inviteEmail, setInviteEmail] = useState('');
   const [inviteRole, setInviteRole] = useState('viewer');
   const authUser = useAuthStore((s) => s.user);
@@ -48,28 +50,28 @@ export function TeamPage() {
     if (!inviteEmail || !campaignId) return;
     try {
       await inviteMutation.mutateAsync({ email: inviteEmail, role: inviteRole, campaign_id: campaignId });
-      toast.success('Invitation sent!');
+      toast.success(t('dashboard.team.inviteSent'));
       setInviteEmail('');
     } catch {
-      toast.error('Failed to send invitation');
+      toast.error(t('dashboard.team.inviteFailed'));
     }
   };
 
   const handleRemove = async (id: string) => {
     try {
       await removeMutation.mutateAsync(id);
-      toast.success('Member removed');
+      toast.success(t('dashboard.team.memberRemoved'));
     } catch {
-      toast.error('Failed to remove member');
+      toast.error(t('dashboard.team.removeFailed'));
     }
   };
 
   const handleRoleChange = async (memberId: string, newRole: string) => {
     try {
       await updateRoleMutation.mutateAsync({ memberId, role: newRole });
-      toast.success('Role updated');
+      toast.success(t('dashboard.team.roleUpdated'));
     } catch {
-      toast.error('Failed to update role');
+      toast.error(t('dashboard.team.roleFailed'));
     }
   };
 
@@ -77,22 +79,22 @@ export function TeamPage() {
     <PageTransition>
     <div className="max-w-7xl mx-auto space-y-6">
       <PageHeader
-        title="Team Management"
-        subtitle="Manage team members and their permissions"
+        title={t('dashboard.team.title')}
+        subtitle={t('dashboard.team.subtitle')}
       />
 
       {campaignId && !isLoading && (
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <MetricsCard icon={<Users className="h-5 w-5" />} label="Team Members" value={String(teamMembers.length)} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
-          <MetricsCard icon={<Shield className="h-5 w-5" />} label="Admins" value={String(teamMembers.filter(m => m.role === 'admin').length)} iconColor="text-secondary-600" iconBg="bg-secondary-50 dark:bg-secondary-900/30" />
-          <MetricsCard icon={<Mail className="h-5 w-5" />} label="Editors" value={String(teamMembers.filter(m => m.role === 'editor').length)} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
+          <MetricsCard icon={<Users className="h-5 w-5" />} label={t('dashboard.team.members')} value={String(teamMembers.length)} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
+          <MetricsCard icon={<Shield className="h-5 w-5" />} label={t('dashboard.team.admins')} value={String(teamMembers.filter(m => m.role === 'admin').length)} iconColor="text-secondary-600" iconBg="bg-secondary-50 dark:bg-secondary-900/30" />
+          <MetricsCard icon={<Mail className="h-5 w-5" />} label={t('dashboard.team.editors')} value={String(teamMembers.filter(m => m.role === 'editor').length)} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
         </div>
       )}
 
       <div className="w-56">
         <Select
-          label="Campaign"
-          placeholder="Select a campaign"
+          label={t('dashboard.common.campaign')}
+          placeholder={t('dashboard.common.selectCampaign')}
           options={campaigns.map((c) => ({ value: c.id, label: c.name }))}
           value={campaignId}
           onChange={setCampaignId}
@@ -103,8 +105,8 @@ export function TeamPage() {
         <Card>
           <div className="text-center py-16">
             <Users className="h-10 w-10 text-gray-300 dark:text-slate-600 mx-auto mb-3" />
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">Select a Campaign</h3>
-            <p className="text-sm text-gray-500 dark:text-slate-400">Choose a campaign above to manage its team.</p>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">{t('dashboard.common.selectCampaignTitle')}</h3>
+            <p className="text-sm text-gray-500 dark:text-slate-400">{t('dashboard.team.selectPrompt')}</p>
           </div>
         </Card>
       ) : isLoading ? (
@@ -130,22 +132,22 @@ export function TeamPage() {
         <Card>
           <div className="text-center py-12">
             <AlertTriangle className="h-8 w-8 text-danger-500 mx-auto mb-2" />
-            <p className="text-sm text-gray-500 dark:text-slate-400">Failed to load team data. Please try again later.</p>
+            <p className="text-sm text-gray-500 dark:text-slate-400">{t('dashboard.team.loadError')}</p>
           </div>
         </Card>
       ) : (
         <>
           {canInvite && (
             <Card>
-              <CardHeader title="Invite Team Member" />
+              <CardHeader title={t('dashboard.team.inviteTitle')} />
               <div className="flex flex-col sm:flex-row gap-3">
                 <div className="flex-1">
-                  <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1.5">Email Address</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1.5">{t('dashboard.team.emailLabel')}</label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-slate-500" />
                     <input
                       type="email"
-                      placeholder="colleague@company.com"
+                      placeholder={t('dashboard.team.emailPlaceholder')}
                       value={inviteEmail}
                       onChange={(e) => setInviteEmail(e.target.value)}
                       className="block w-full rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 pl-10 pr-3 py-2.5 text-sm dark:text-white placeholder:text-gray-400 dark:placeholder:text-slate-500 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 focus:outline-none"
@@ -166,7 +168,7 @@ export function TeamPage() {
                 </div>
                 <div className="sm:self-end">
                   <Button onClick={handleInvite} loading={inviteMutation.isPending} icon={<UserPlus className="h-4 w-4" />} className="w-full sm:w-auto whitespace-nowrap">
-                    Send Invite
+                    {t('dashboard.team.sendInvite')}
                   </Button>
                 </div>
               </div>
@@ -174,12 +176,12 @@ export function TeamPage() {
           )}
 
           <Card>
-            <CardHeader title="Current Team" />
+            <CardHeader title={t('dashboard.team.currentTeam')} />
             {teamMembers.length === 0 ? (
               <div className="text-center py-12">
                 <Users className="h-10 w-10 text-gray-300 dark:text-slate-600 mx-auto mb-3" />
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">No Team Members</h3>
-                <p className="text-sm text-gray-500 dark:text-slate-400">Invite team members to collaborate on this campaign.</p>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">{t('dashboard.team.noMembers')}</h3>
+                <p className="text-sm text-gray-500 dark:text-slate-400">{t('dashboard.team.noMembersDesc')}</p>
               </div>
             ) : (
               <div className="overflow-x-auto">
@@ -242,15 +244,15 @@ export function TeamPage() {
           </Card>
 
           <Card>
-            <CardHeader title="Audit Log" />
+            <CardHeader title={t('dashboard.team.auditTitle')} />
             {logLoading ? (
               <SkeletonTable rows={3} columns={5} />
             ) : logs.length === 0 ? (
               <EmptyState
                 variant="plain"
                 icon={<Clock />}
-                title="No activity yet"
-                description="Changes to campaigns, roles, and settings will appear here as they happen."
+                title={t('dashboard.team.auditEmpty')}
+                description={t('dashboard.team.auditEmptyDesc')}
               />
             ) : (
               <div className="overflow-x-auto">

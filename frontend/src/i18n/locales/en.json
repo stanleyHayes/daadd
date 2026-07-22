@@ -592,7 +592,8 @@
       "remove": "Remove",
       "exportPdf": "Export PDF",
       "exportCsv": "Export CSV",
-      "exportHtml": "Export HTML"
+      "exportHtml": "Export HTML",
+      "user": "User"
     },
     "nav": {
       "overview": "Overview",
@@ -700,7 +701,9 @@
       "next": "Next",
       "deleted": "Campaign deleted",
       "deleteFailed": "Failed to delete campaign",
-      "cloneFailed": "Failed to clone campaign"
+      "cloneFailed": "Failed to clone campaign",
+      "emptyDescCreate": "Create your first campaign to get started with advertising.",
+      "emptyDescView": "No campaigns are available to view."
     },
     "campaignCreate": {
       "title": "Create Campaign",
@@ -880,7 +883,10 @@
         "medium": "MEDIUM",
         "high": "HIGH",
         "critical": "CRITICAL"
-      }
+      },
+      "autoPausedBadge": "Auto-Paused",
+      "thresholdInline": "(threshold: {{value}})",
+      "detected": "Detected {{when}}"
     },
     "heatmap": {
       "title": "Heatmaps",
@@ -1154,13 +1160,21 @@
       "title": "Advertiser Approvals",
       "subtitle": "Review and approve advertiser accounts before they can run ads.",
       "billing": "Billing",
-      "actionFailed": "Action failed"
+      "actionFailed": "Action failed",
+      "approvedToast": "Advertiser approved",
+      "rejectedToast": "Advertiser rejected",
+      "emptyTitle": "No {{status}} advertisers",
+      "emptyPending": "New advertiser sign-ups awaiting review will appear here.",
+      "emptyOther": "There are no {{status}} advertisers.",
+      "joined": "Joined {{date}}"
     },
     "adminModeration": {
       "title": "Review Moderation",
       "pendingMedia": "Pending media",
       "emptyTitle": "Nothing to moderate",
-      "emptyDesc": "Uploaded review photos and videos will queue up here."
+      "emptyDesc": "Uploaded review photos and videos will queue up here.",
+      "subtitle": "Photos and videos awaiting approval. The reviewer's base tokens are already paid — approving releases the media bonus, rejecting removes the media and pays nothing.",
+      "awaitingReview": "{{count}} awaiting review"
     },
     "adminLoyalty": {
       "title": "Loyalty & VIP",

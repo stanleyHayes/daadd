@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardHeader } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -11,6 +12,7 @@ import toast from 'react-hot-toast';
 const EMPTY: OutletInput = { name: '', address: '', city: '', phone: '', opening_hours: '' };
 
 export function OutletsPage() {
+  const { t } = useTranslation();
   const { data: outlets = [], isLoading } = useOutlets();
   const createOutlet = useCreateOutlet();
   const updateOutlet = useUpdateOutlet();
@@ -39,30 +41,30 @@ export function OutletsPage() {
 
   const handleSubmit = async () => {
     if (!form.name?.trim()) {
-      toast.error('Outlet name is required');
+      toast.error(t('dashboard.outlets.nameRequired'));
       return;
     }
     try {
       if (editingId) {
         await updateOutlet.mutateAsync({ id: editingId, ...form });
-        toast.success('Outlet updated');
+        toast.success(t('dashboard.outlets.updated'));
       } else {
         await createOutlet.mutateAsync(form);
-        toast.success('Outlet added');
+        toast.success(t('dashboard.outlets.added'));
       }
       cancelEdit();
     } catch {
-      toast.error('Could not save the outlet');
+      toast.error(t('dashboard.outlets.saveFailed'));
     }
   };
 
   const handleDelete = async (o: Outlet) => {
     try {
       await deleteOutlet.mutateAsync(o.id);
-      toast.success('Outlet removed');
+      toast.success(t('dashboard.outlets.removed'));
       if (editingId === o.id) cancelEdit();
     } catch {
-      toast.error('Could not remove the outlet');
+      toast.error(t('dashboard.outlets.removeFailed'));
     }
   };
 
@@ -71,7 +73,7 @@ export function OutletsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-text-primary">Outlets & Branches</h1>
+        <h1 className="text-2xl font-bold text-text-primary">{t('dashboard.outlets.title')}</h1>
         <p className="text-sm text-text-secondary mt-1">
           Your physical locations. Customers pick the branch they're visiting when they redeem, and
           these appear on your adverts.
@@ -81,13 +83,13 @@ export function OutletsPage() {
       <Card>
         <CardHeader title={editingId ? 'Edit outlet' : 'Add an outlet'} />
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <Input label="Outlet name" placeholder="Osu Branch" value={form.name || ''} onChange={(e) => set('name', e.target.value)} />
-          <Input label="City" placeholder="Accra" value={form.city || ''} onChange={(e) => set('city', e.target.value)} />
-          <Input label="Address" placeholder="123 High St" value={form.address || ''} onChange={(e) => set('address', e.target.value)} />
-          <Input label="Phone" type="tel" placeholder="+233 20 000 0000" value={form.phone || ''} onChange={(e) => set('phone', e.target.value)} />
+          <Input label={t('dashboard.outlets.name')} placeholder={t('dashboard.outlets.namePlaceholder')} value={form.name || ''} onChange={(e) => set('name', e.target.value)} />
+          <Input label={t('dashboard.outlets.city')} placeholder={t('dashboard.outlets.cityPlaceholder')} value={form.city || ''} onChange={(e) => set('city', e.target.value)} />
+          <Input label={t('dashboard.outlets.address')} placeholder={t('dashboard.outlets.addressPlaceholder')} value={form.address || ''} onChange={(e) => set('address', e.target.value)} />
+          <Input label={t('dashboard.outlets.phone')} type="tel" placeholder={t('dashboard.outlets.phonePlaceholder')} value={form.phone || ''} onChange={(e) => set('phone', e.target.value)} />
           <Input
-            label="Opening hours"
-            placeholder="Mon–Sat 9am–7pm"
+            label={t('dashboard.outlets.hours')}
+            placeholder={t('dashboard.outlets.hoursPlaceholder')}
             value={form.opening_hours || ''}
             onChange={(e) => set('opening_hours', e.target.value)}
             className="sm:col-span-2"
@@ -100,22 +102,22 @@ export function OutletsPage() {
           </Button>
           {editingId && (
             <Button variant="ghost" onClick={cancelEdit}>
-              <X className="h-4 w-4 mr-1.5" /> Cancel
+              <X className="h-4 w-4 mr-1.5" /> {t('dashboard.common.cancel')}
             </Button>
           )}
         </div>
       </Card>
 
       <Card>
-        <CardHeader title="Your outlets" subtitle={`${outlets.length} location${outlets.length === 1 ? '' : 's'}`} />
+        <CardHeader title={t('dashboard.outlets.yourOutlets')} subtitle={`${outlets.length} location${outlets.length === 1 ? '' : 's'}`} />
         {isLoading ? (
-          <p className="py-6 text-center text-sm text-text-muted">Loading…</p>
+          <p className="py-6 text-center text-sm text-text-muted">{t('dashboard.common.loading')}</p>
         ) : outlets.length === 0 ? (
           <EmptyState
             variant="plain"
             icon={<MapPin />}
-            title="No outlets yet"
-            description="Add your first branch so customers can tell you where they shopped."
+            title={t('dashboard.outlets.emptyTitle')}
+            description={t('dashboard.outlets.emptyDesc')}
           />
         ) : (
           <ul className="divide-y divide-border-color dark:divide-slate-800">

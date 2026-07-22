@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import api from '@/lib/api';
@@ -31,6 +32,7 @@ const PLATFORMS = [
 ];
 
 export function PlatformAccountsPage() {
+  const { t } = useTranslation();
   // Fetch platform accounts
   const { data: accounts = [], isLoading, error, refetch } = useQuery({
     queryKey: ['platform-accounts'],
@@ -46,11 +48,11 @@ export function PlatformAccountsPage() {
       await api.delete(`/platform-accounts/${accountId}`);
     },
     onSuccess: () => {
-      toast.success('Platform account disconnected');
+      toast.success(t('dashboard.platformAccounts.disconnected'));
       refetch();
     },
     onError: () => {
-      toast.error('Failed to disconnect account');
+      toast.error(t('dashboard.platformAccounts.disconnectFailed'));
     },
   });
 
@@ -61,11 +63,11 @@ export function PlatformAccountsPage() {
       return response.data;
     },
     onSuccess: () => {
-      toast.success('Connection verified');
+      toast.success(t('dashboard.platformAccounts.verified'));
       refetch();
     },
     onError: () => {
-      toast.error('Connection failed');
+      toast.error(t('dashboard.platformAccounts.verifyFailed'));
     },
   });
 
@@ -86,8 +88,8 @@ export function PlatformAccountsPage() {
     return (
       <div className="max-w-7xl mx-auto space-y-6">
         <PageHeader
-          title="Platform Accounts"
-          subtitle="Connect your ad platform accounts to enable metrics sync"
+          title={t('dashboard.platformAccounts.title')}
+          subtitle={t('dashboard.platformAccounts.subtitle')}
         />
         <LoadingSpinner size="lg" className="py-16" />
       </div>
@@ -98,15 +100,15 @@ export function PlatformAccountsPage() {
     return (
       <div className="max-w-7xl mx-auto space-y-6">
         <PageHeader
-          title="Platform Accounts"
-          subtitle="Connect your ad platform accounts to enable metrics sync"
+          title={t('dashboard.platformAccounts.title')}
+          subtitle={t('dashboard.platformAccounts.subtitle')}
         />
         <Card className="p-8">
           <div className="text-center">
             <AlertTriangle className="h-8 w-8 text-danger-500 mx-auto mb-2" />
-            <p className="text-sm text-gray-500 dark:text-slate-400 mb-4">Failed to load platform accounts.</p>
+            <p className="text-sm text-gray-500 dark:text-slate-400 mb-4">{t('dashboard.platformAccounts.loadError')}</p>
             <Button variant="outline" size="sm" onClick={() => refetch()}>
-              Retry
+              {t('dashboard.common.retry')}
             </Button>
           </div>
         </Card>
@@ -117,20 +119,20 @@ export function PlatformAccountsPage() {
   return (
     <div className="max-w-7xl mx-auto space-y-6">
       <PageHeader
-        title="Platform Accounts"
-        subtitle="Connect your ad platform accounts to enable metrics sync"
+        title={t('dashboard.platformAccounts.title')}
+        subtitle={t('dashboard.platformAccounts.subtitle')}
       />
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <MetricsCard icon={<Plug className="h-5 w-5" />} label="Connected" value={String(accounts.filter(a => a.status === 'connected').length)} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
-        <MetricsCard icon={<AlertTriangle className="h-5 w-5" />} label="Sync Errors" value={String(accounts.filter(a => a.status === 'sync_error').length)} iconColor="text-danger-600" iconBg="bg-danger-50 dark:bg-danger-900/30" />
-        <MetricsCard icon={<Globe className="h-5 w-5" />} label="Available Platforms" value={String(PLATFORMS.length)} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
+        <MetricsCard icon={<Plug className="h-5 w-5" />} label={t('dashboard.platformAccounts.connected')} value={String(accounts.filter(a => a.status === 'connected').length)} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
+        <MetricsCard icon={<AlertTriangle className="h-5 w-5" />} label={t('dashboard.platformAccounts.syncErrors')} value={String(accounts.filter(a => a.status === 'sync_error').length)} iconColor="text-danger-600" iconBg="bg-danger-50 dark:bg-danger-900/30" />
+        <MetricsCard icon={<Globe className="h-5 w-5" />} label={t('dashboard.platformAccounts.availablePlatforms')} value={String(PLATFORMS.length)} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
       </div>
 
       {/* Connected Accounts */}
       {accounts.length > 0 && (
         <div className="space-y-4">
-          <h2 className="text-xl font-semibold">Connected Accounts</h2>
+          <h2 className="text-xl font-semibold">{t('dashboard.platformAccounts.connectedAccounts')}</h2>
           <div className="grid gap-4">
             {accounts.map(account => {
               const platform = PLATFORMS.find(p => p.id === account.platform);
@@ -177,7 +179,7 @@ export function PlatformAccountsPage() {
                         onClick={() => disconnectMutation.mutate(account.id)}
                         disabled={disconnectMutation.isPending}
                       >
-                        Disconnect
+                        {t('dashboard.platformAccounts.disconnect')}
                       </Button>
                     </div>
                   </div>
@@ -195,7 +197,7 @@ export function PlatformAccountsPage() {
 
       {/* Available Platforms */}
       <div className="space-y-4">
-        <h2 className="text-xl font-semibold">Connect New Platform</h2>
+        <h2 className="text-xl font-semibold">{t('dashboard.platformAccounts.connectNew')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {PLATFORMS.map(platform => (
             <Card
@@ -226,12 +228,12 @@ export function PlatformAccountsPage() {
 
       {/* Info Box */}
       <Card className="p-4 bg-blue-50 border-blue-200">
-        <h3 className="font-semibold text-blue-900 mb-2">How it works</h3>
+        <h3 className="font-semibold text-blue-900 mb-2">{t('dashboard.platformAccounts.howItWorks')}</h3>
         <ul className="text-sm text-blue-800 space-y-1 list-disc list-inside">
-          <li>Click "Connect" on any platform to authorize access to your account</li>
-          <li>Your access tokens are encrypted and stored securely</li>
-          <li>Metrics are synced automatically based on your selected frequency</li>
-          <li>Use the "Test" button to verify your connection at any time</li>
+          <li>{t('dashboard.platformAccounts.how1')}</li>
+          <li>{t('dashboard.platformAccounts.how2')}</li>
+          <li>{t('dashboard.platformAccounts.how3')}</li>
+          <li>{t('dashboard.platformAccounts.how4')}</li>
         </ul>
       </Card>
     </div>

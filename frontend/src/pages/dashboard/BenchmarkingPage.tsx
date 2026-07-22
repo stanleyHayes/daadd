@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardHeader } from '@/components/ui/Card';
 import { MetricsCard } from '@/components/analytics/MetricsCard';
 import { PageHeader } from '@/components/layout/PageHeader';
@@ -16,6 +17,7 @@ import { SkeletonMetric, SkeletonCard, Skeleton } from '@/components/ui/Skeleton
 
 export function BenchmarkingPage() {
   const [campaignId, setCampaignId] = useState('');
+  const { t } = useTranslation();
   const { data: benchmark, isLoading, error } = useBenchmarkData(campaignId || undefined);
   const { data: campaignsData } = useCampaigns();
   const campaigns = campaignsData?.data || [];
@@ -28,20 +30,20 @@ export function BenchmarkingPage() {
   return (
     <PageTransition>
     <div className="max-w-7xl mx-auto space-y-6">
-      <PageHeader title="Benchmarking" subtitle="Compare your performance against industry averages" />
+      <PageHeader title={t('dashboard.benchmarking.title')} subtitle={t('dashboard.benchmarking.subtitle')} />
 
       {campaignId && benchmark && !isLoading && (
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <MetricsCard icon={<Users className="h-5 w-5" />} label="Advertisers in Industry" value={String(advertiserCount)} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
-          <MetricsCard icon={<BarChart3 className="h-5 w-5" />} label="Comparisons" value={String(comparisons.length)} iconColor="text-secondary-600" iconBg="bg-secondary-50 dark:bg-secondary-900/30" />
-          <MetricsCard icon={<TrendingUp className="h-5 w-5" />} label="Above Average" value={String(comparisons.filter(c => c.is_above_avg).length)} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
+          <MetricsCard icon={<Users className="h-5 w-5" />} label={t('dashboard.benchmarking.advertisersInIndustry')} value={String(advertiserCount)} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
+          <MetricsCard icon={<BarChart3 className="h-5 w-5" />} label={t('dashboard.benchmarking.comparisons')} value={String(comparisons.length)} iconColor="text-secondary-600" iconBg="bg-secondary-50 dark:bg-secondary-900/30" />
+          <MetricsCard icon={<TrendingUp className="h-5 w-5" />} label={t('dashboard.benchmarking.aboveAverage')} value={String(comparisons.filter(c => c.is_above_avg).length)} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
         </div>
       )}
 
       <div className="w-56">
         <Select
-          label="Campaign"
-          placeholder="Select a campaign"
+          label={t('dashboard.common.campaign')}
+          placeholder={t('dashboard.common.selectCampaign')}
           options={campaigns.map((c) => ({ value: c.id, label: c.name }))}
           value={campaignId}
           onChange={setCampaignId}
@@ -52,8 +54,8 @@ export function BenchmarkingPage() {
         <Card>
           <div className="text-center py-16">
             <TrendingUp className="h-10 w-10 text-gray-300 dark:text-slate-600 mx-auto mb-3" />
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">Select a Campaign</h3>
-            <p className="text-sm text-gray-500 dark:text-slate-400">Choose a campaign above to view its benchmarks.</p>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">{t('dashboard.common.selectCampaignTitle')}</h3>
+            <p className="text-sm text-gray-500 dark:text-slate-400">{t('dashboard.benchmarking.selectPrompt')}</p>
           </div>
         </Card>
       ) : isLoading ? (
@@ -72,7 +74,7 @@ export function BenchmarkingPage() {
         <Card>
           <div className="text-center py-12">
             <AlertCircle className="h-8 w-8 text-danger-500 mx-auto mb-2" />
-            <p className="text-sm text-gray-500 dark:text-slate-400">Failed to load benchmark data. Please try again later.</p>
+            <p className="text-sm text-gray-500 dark:text-slate-400">{t('dashboard.benchmarking.loadError')}</p>
           </div>
         </Card>
       ) : advertiserCount < 3 ? (
@@ -80,7 +82,7 @@ export function BenchmarkingPage() {
           <div className="flex items-center gap-3">
             <AlertCircle className="h-6 w-6 text-warning-600 shrink-0" />
             <div>
-              <h3 className="font-semibold text-warning-800 dark:text-warning-300">Insufficient Data</h3>
+              <h3 className="font-semibold text-warning-800 dark:text-warning-300">{t('dashboard.benchmarking.insufficient')}</h3>
               <p className="text-sm text-warning-700 dark:text-warning-400 mt-1">
                 At least 3 advertisers in your industry are required for meaningful benchmarking. Currently {advertiserCount} advertiser(s) available.
               </p>
@@ -91,8 +93,8 @@ export function BenchmarkingPage() {
         <Card>
           <EmptyState
             icon={<BarChart3 className="h-12 w-12" />}
-            title="No Benchmark Data"
-            description="Benchmark comparison requires at least 3 advertiser campaigns with similar data. More advertisers will unlock competitive insights."
+            title={t('dashboard.benchmarking.noDataTitle')}
+            description={t('dashboard.benchmarking.noDataDesc')}
             size="md"
           />
         </Card>
@@ -136,7 +138,7 @@ export function BenchmarkingPage() {
           </div>
 
           <Card>
-            <CardHeader title="Your Metrics vs Industry Average" />
+            <CardHeader title={t('dashboard.benchmarking.yoursVsIndustry')} />
             <div style={{ width: '100%', height: 320 }}>
               <ResponsiveContainer>
                 <BarChart data={comparisons}>

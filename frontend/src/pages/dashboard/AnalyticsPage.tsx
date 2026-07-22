@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardHeader } from '@/components/ui/Card';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Select } from '@/components/ui/Select';
@@ -25,6 +26,7 @@ import type { FilterOptions } from '@/types';
 
 export function AnalyticsPage() {
   const [campaignId, setCampaignId] = useState('');
+  const { t } = useTranslation();
   const [dateRange, setDateRange] = useState({ start: subDays(new Date(), 30), end: new Date() });
   const exportCSV = useExportCSV();
   const exportPDF = useExportPDF();
@@ -48,16 +50,16 @@ export function AnalyticsPage() {
     <PageTransition>
     <div className="max-w-7xl mx-auto space-y-6">
       <PageHeader
-        title="Analytics"
-        subtitle="Deep dive into your advertising performance"
+        title={t('dashboard.analytics.title')}
+        subtitle={t('dashboard.analytics.subtitle')}
         action={
           canExport && campaignId && (
             <div className="flex items-center gap-2">
               <Button variant="outline" size="sm" icon={<FileText className="h-4 w-4" />} onClick={() => exportPDF.mutate({ campaignId, filters: dateFilters })} loading={exportPDF.isPending}>
-                Export PDF
+                {t('dashboard.common.exportPdf')}
               </Button>
               <Button variant="outline" size="sm" icon={<Download className="h-4 w-4" />} onClick={() => exportCSV.mutate({ campaignId, filters: dateFilters })} loading={exportCSV.isPending}>
-                Export CSV
+                {t('dashboard.common.exportCsv')}
               </Button>
             </div>
           )
@@ -66,8 +68,8 @@ export function AnalyticsPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <Select
-          label="Campaign"
-          placeholder="Select a campaign"
+          label={t('dashboard.common.campaign')}
+          placeholder={t('dashboard.common.selectCampaign')}
           options={campaigns.map((c) => ({ value: c.id, label: c.name }))}
           value={campaignId}
           onChange={setCampaignId}
@@ -79,8 +81,8 @@ export function AnalyticsPage() {
         <Card>
           <div className="text-center py-16">
             <Eye className="h-10 w-10 text-gray-300 dark:text-slate-600 mx-auto mb-3" />
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">Select a Campaign</h3>
-            <p className="text-sm text-gray-500 dark:text-slate-400">Choose a campaign above to view its analytics.</p>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">{t('dashboard.common.selectCampaignTitle')}</h3>
+            <p className="text-sm text-gray-500 dark:text-slate-400">{t('dashboard.analytics.selectPrompt')}</p>
           </div>
         </Card>
       ) : metricsLoading ? (
@@ -114,7 +116,7 @@ export function AnalyticsPage() {
         <Card>
           <div className="text-center py-12">
             <AlertTriangle className="h-8 w-8 text-danger-500 mx-auto mb-2" />
-            <p className="text-sm text-gray-500 dark:text-slate-400">Failed to load analytics data. Please try again later.</p>
+            <p className="text-sm text-gray-500 dark:text-slate-400">{t('dashboard.analytics.loadError')}</p>
           </div>
         </Card>
       ) : (
@@ -122,30 +124,30 @@ export function AnalyticsPage() {
           {metrics && (
             <>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <MetricsCard icon={<Eye className="h-4 w-4" />} label="Impressions" value={formatNumber(metrics.totalImpressions)} change={metrics.impressionChange} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
-                <MetricsCard icon={<MousePointerClick className="h-4 w-4" />} label="Clicks" value={formatNumber(metrics.totalClicks || 0)} change={metrics.clickChange || 0} iconColor="text-secondary-600" iconBg="bg-secondary-50 dark:bg-secondary-900/30" />
-                <MetricsCard icon={<TrendingUp className="h-4 w-4" />} label="CTR" value={formatPercentage(metrics.avgCTR)} change={metrics.ctrChange} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
-                <MetricsCard icon={<ArrowDownRight className="h-4 w-4" />} label="Bounce Rate" value={formatPercentage(metrics.bounceRate || 0)} change={metrics.bounceRateChange || 0} iconColor="text-danger-600" iconBg="bg-danger-50 dark:bg-danger-900/30" />
+                <MetricsCard icon={<Eye className="h-4 w-4" />} label={t('dashboard.metrics.impressions')} value={formatNumber(metrics.totalImpressions)} change={metrics.impressionChange} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
+                <MetricsCard icon={<MousePointerClick className="h-4 w-4" />} label={t('dashboard.metrics.clicks')} value={formatNumber(metrics.totalClicks || 0)} change={metrics.clickChange || 0} iconColor="text-secondary-600" iconBg="bg-secondary-50 dark:bg-secondary-900/30" />
+                <MetricsCard icon={<TrendingUp className="h-4 w-4" />} label={t('dashboard.metrics.ctr')} value={formatPercentage(metrics.avgCTR)} change={metrics.ctrChange} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
+                <MetricsCard icon={<ArrowDownRight className="h-4 w-4" />} label={t('dashboard.metrics.bounceRate')} value={formatPercentage(metrics.bounceRate || 0)} change={metrics.bounceRateChange || 0} iconColor="text-danger-600" iconBg="bg-danger-50 dark:bg-danger-900/30" />
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                <MetricsCard icon={<Target className="h-4 w-4" />} label="Conv. Rate" value={formatPercentage(metrics.conversionRate || 0)} change={metrics.conversionRateChange || 0} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
-                <MetricsCard icon={<DollarSign className="h-4 w-4" />} label="CPC" value={formatCurrency(metrics.cpc || 0)} change={metrics.cpcChange || 0} iconColor="text-warning-600" iconBg="bg-warning-50 dark:bg-warning-900/30" />
-                <MetricsCard icon={<CreditCard className="h-4 w-4" />} label="CPA" value={formatCurrency(metrics.cpa || 0)} change={metrics.cpaChange || 0} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
+                <MetricsCard icon={<Target className="h-4 w-4" />} label={t('dashboard.metrics.convRate')} value={formatPercentage(metrics.conversionRate || 0)} change={metrics.conversionRateChange || 0} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
+                <MetricsCard icon={<DollarSign className="h-4 w-4" />} label={t('dashboard.metrics.cpc')} value={formatCurrency(metrics.cpc || 0)} change={metrics.cpcChange || 0} iconColor="text-warning-600" iconBg="bg-warning-50 dark:bg-warning-900/30" />
+                <MetricsCard icon={<CreditCard className="h-4 w-4" />} label={t('dashboard.metrics.cpa')} value={formatCurrency(metrics.cpa || 0)} change={metrics.cpaChange || 0} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
               </div>
             </>
           )}
 
           <Card>
-            <CardHeader title="Performance Over Time" subtitle="Impressions, clicks, and conversions" />
+            <CardHeader title={t('dashboard.analytics.seriesTitle')} subtitle={t('dashboard.analytics.seriesSubtitle')} />
             {timeSeriesLoading ? (
               <Skeleton variant="card" className="h-80" />
             ) : timeSeriesData && timeSeriesData.length > 0 ? (
               <TimeSeriesChart
                 data={timeSeriesData}
                 lines={[
-                  { dataKey: 'impressions', color: '#2563EB', name: 'Impressions' },
-                  { dataKey: 'clicks', color: '#7C3AED', name: 'Clicks' },
-                  { dataKey: 'conversions', color: '#10B981', name: 'Conversions' },
+                  { dataKey: 'impressions', color: '#2563EB', name: t('dashboard.metrics.impressions') },
+                  { dataKey: 'clicks', color: '#7C3AED', name: t('dashboard.metrics.clicks') },
+                  { dataKey: 'conversions', color: '#10B981', name: t('dashboard.metrics.conversions') },
                 ]}
                 xKey="date"
                 height={320}
@@ -153,8 +155,8 @@ export function AnalyticsPage() {
             ) : (
               <EmptyState
                 icon={<TrendingUp className="h-12 w-12" />}
-                title="No Time Series Data"
-                description="Performance trends will appear here as your campaigns run and collect events over time."
+                title={t('dashboard.analytics.noSeriesTitle')}
+                description={t('dashboard.analytics.noSeriesDesc')}
                 size="md"
               />
             )}
@@ -162,7 +164,7 @@ export function AnalyticsPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card>
-              <CardHeader title="Conversion Funnel" />
+              <CardHeader title={t('dashboard.analytics.funnelTitle')} />
               {funnelLoading ? (
                 <Skeleton variant="card" className="h-56" />
               ) : funnelData && funnelData.length > 0 ? (
@@ -170,15 +172,15 @@ export function AnalyticsPage() {
               ) : (
                 <EmptyState
                   icon={<Eye className="h-12 w-12" />}
-                  title="No Funnel Data"
-                  description="Your conversion funnel will display here once campaigns have collected conversion data."
+                  title={t('dashboard.analytics.noFunnelTitle')}
+                  description={t('dashboard.analytics.noFunnelDesc')}
                   size="md"
                 />
               )}
             </Card>
 
             <Card>
-              <CardHeader title="Device Breakdown" />
+              <CardHeader title={t('dashboard.analytics.devicesTitle')} />
               {deviceLoading ? (
                 <Skeleton variant="card" className="h-56" />
               ) : deviceData && deviceData.length > 0 ? (
@@ -186,8 +188,8 @@ export function AnalyticsPage() {
               ) : (
                 <EmptyState
                   icon={<Target className="h-12 w-12" />}
-                  title="No Device Data"
-                  description="Device breakdown analytics will appear here once you have campaign impressions from different devices."
+                  title={t('dashboard.analytics.noDevicesTitle')}
+                  description={t('dashboard.analytics.noDevicesDesc')}
                   size="md"
                 />
               )}

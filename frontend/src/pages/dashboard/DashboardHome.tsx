@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Card, CardHeader } from '@/components/ui/Card';
@@ -19,6 +20,7 @@ import { Skeleton, SkeletonMetric, SkeletonTable } from '@/components/ui/Skeleto
 import { useAggregateDashboard, useTimeSeries } from '@/hooks/useAnalytics';
 
 export function DashboardHome() {
+  const { t } = useTranslation();
   const { data: campaignsData, isLoading: campaignsLoading, error: campaignsError } = useCampaigns({ limit: 5 });
   const recentCampaigns = campaignsData?.data || [];
 
@@ -30,11 +32,11 @@ export function DashboardHome() {
     <PageTransition>
       <div className="max-w-7xl mx-auto space-y-6">
         <PageHeader
-          title="Dashboard"
-          subtitle="Overview of your advertising performance"
+          title={t('dashboard.home.title')}
+          subtitle={t('dashboard.home.subtitle')}
           action={
             <Link to="/dashboard/campaigns/new">
-              <Button icon={<Plus className="h-4 w-4" />}>New Campaign</Button>
+              <Button icon={<Plus className="h-4 w-4" />}>{t('dashboard.home.newCampaign')}</Button>
             </Link>
           }
         />
@@ -51,16 +53,16 @@ export function DashboardHome() {
           <Card>
             <div className="text-center py-8">
               <AlertTriangle className="h-8 w-8 text-danger-500 mx-auto mb-2" />
-              <p className="text-sm text-gray-500 dark:text-slate-400">Failed to load dashboard metrics. Please try again later.</p>
+              <p className="text-sm text-gray-500 dark:text-slate-400">{t('dashboard.home.loadError')}</p>
             </div>
           </Card>
         ) : metrics ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { icon: <Megaphone className="h-5 w-5" />, label: 'Impressions', value: formatNumber(metrics.totalImpressions), iconColor: 'text-primary-600', iconBg: 'bg-primary-50 dark:bg-primary-900/30' },
-              { icon: <Eye className="h-5 w-5" />, label: 'Clicks', value: formatNumber(metrics.totalClicks ?? 0), iconColor: 'text-secondary-600', iconBg: 'bg-secondary-50 dark:bg-secondary-900/30' },
-              { icon: <MousePointerClick className="h-5 w-5" />, label: 'CTR', value: formatPercentage(metrics.avgCTR), iconColor: 'text-accent-600', iconBg: 'bg-accent-50 dark:bg-accent-900/30' },
-              { icon: <DollarSign className="h-5 w-5" />, label: 'Total Spend', value: formatCurrency(metrics.totalSpend), iconColor: 'text-warning-600', iconBg: 'bg-warning-50 dark:bg-warning-900/30' },
+              { icon: <Megaphone className="h-5 w-5" />, label: t('dashboard.metrics.impressions'), value: formatNumber(metrics.totalImpressions), iconColor: 'text-primary-600', iconBg: 'bg-primary-50 dark:bg-primary-900/30' },
+              { icon: <Eye className="h-5 w-5" />, label: t('dashboard.metrics.clicks'), value: formatNumber(metrics.totalClicks ?? 0), iconColor: 'text-secondary-600', iconBg: 'bg-secondary-50 dark:bg-secondary-900/30' },
+              { icon: <MousePointerClick className="h-5 w-5" />, label: t('dashboard.metrics.ctr'), value: formatPercentage(metrics.avgCTR), iconColor: 'text-accent-600', iconBg: 'bg-accent-50 dark:bg-accent-900/30' },
+              { icon: <DollarSign className="h-5 w-5" />, label: t('dashboard.metrics.totalSpend'), value: formatCurrency(metrics.totalSpend), iconColor: 'text-warning-600', iconBg: 'bg-warning-50 dark:bg-warning-900/30' },
             ].map((kpi, i) => (
               <motion.div
                 key={kpi.label}
@@ -76,9 +78,9 @@ export function DashboardHome() {
           <Card>
             <EmptyState
               icon={<Megaphone className="h-12 w-12" />}
-              title="No Campaigns Yet"
-              description="Start by creating your first campaign to see performance metrics and insights on this dashboard."
-              actionLabel="Create Campaign"
+              title={t('dashboard.home.emptyTitle')}
+              description={t('dashboard.home.emptyDesc')}
+              actionLabel={t('dashboard.home.actions.createCampaign')}
               onAction={() => window.location.href = '/dashboard/campaigns/new'}
               size="md"
             />
@@ -86,15 +88,15 @@ export function DashboardHome() {
         )}
 
         <Card>
-          <CardHeader title="Performance (Last 30 Days)" subtitle="Impressions, clicks, and conversions over time" />
+          <CardHeader title={t('dashboard.home.chartTitle')} subtitle={t('dashboard.home.chartSubtitle')} />
           {timeSeriesLoading ? (
             <Skeleton variant="card" className="h-80" />
           ) : timeSeriesData && timeSeriesData.length > 0 ? (
             <TimeSeriesChart
               data={timeSeriesData}
               lines={[
-                { dataKey: 'impressions', color: '#2563EB', name: 'Impressions' },
-                { dataKey: 'clicks', color: '#7C3AED', name: 'Clicks' },
+                { dataKey: 'impressions', color: '#2563EB', name: t('dashboard.metrics.impressions') },
+                { dataKey: 'clicks', color: '#7C3AED', name: t('dashboard.metrics.clicks') },
                 { dataKey: 'conversions', color: '#10B981', name: 'Conversions' },
               ]}
               xKey="date"
@@ -103,8 +105,8 @@ export function DashboardHome() {
           ) : (
             <EmptyState
               icon={<TrendingUp className="h-12 w-12" />}
-              title="No Time Series Data"
-              description="Performance data will appear here once your campaigns start running and collecting events."
+              title={t('dashboard.home.noSeriesTitle')}
+              description={t('dashboard.home.noSeriesDesc')}
               size="md"
             />
           )}
@@ -115,10 +117,10 @@ export function DashboardHome() {
             <Card padding={false}>
               <div className="px-6 pt-6">
                 <CardHeader
-                  title="Recent Campaigns"
+                  title={t('dashboard.home.recentTitle')}
                   action={
                     <Link to="/dashboard/campaigns" className="text-sm text-primary-600 hover:text-primary-700 font-medium flex items-center gap-1">
-                      View all <ArrowRight className="h-3.5 w-3.5" />
+                      {t('dashboard.common.viewAll')} <ArrowRight className="h-3.5 w-3.5" />
                     </Link>
                   }
                 />
@@ -128,16 +130,16 @@ export function DashboardHome() {
               ) : campaignsError ? (
                 <div className="text-center py-8 px-6">
                   <AlertTriangle className="h-6 w-6 text-danger-500 mx-auto mb-2" />
-                  <p className="text-sm text-gray-500 dark:text-slate-400">Failed to load campaigns.</p>
+                  <p className="text-sm text-gray-500 dark:text-slate-400">{t('dashboard.home.campaignsError')}</p>
                 </div>
               ) : recentCampaigns.length === 0 ? (
                 <EmptyState
                   size="sm"
                   variant="plain"
                   icon={<Megaphone />}
-                  title="No campaigns yet"
-                  description="Create your first campaign to get started."
-                  actionLabel="New Campaign"
+                  title={t('dashboard.home.recentEmptyTitle')}
+                  description={t('dashboard.home.recentEmptyDesc')}
+                  actionLabel={t('dashboard.home.newCampaign')}
                   onAction={() => (window.location.href = '/dashboard/campaigns/new')}
                 />
               ) : (
@@ -145,10 +147,10 @@ export function DashboardHome() {
                   <table className="min-w-full divide-y divide-gray-200 dark:divide-slate-700">
                     <thead className="bg-gray-50 dark:bg-slate-700/50">
                       <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-400 uppercase">Campaign</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-400 uppercase">Industry</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-400 uppercase">Status</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-400 uppercase">Budget</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-400 uppercase">{t('dashboard.common.campaign')}</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-400 uppercase">{t('dashboard.common.industry')}</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-400 uppercase">{t('dashboard.common.status')}</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-400 uppercase">{t('dashboard.common.budget')}</th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-400 uppercase">CTR</th>
                       </tr>
                     </thead>
@@ -175,13 +177,13 @@ export function DashboardHome() {
 
           <div className="space-y-4">
             <Card>
-              <CardHeader title="Quick Actions" />
+              <CardHeader title={t('dashboard.home.quickActions')} />
               <div className="space-y-3">
                 {[
-                  { to: '/dashboard/campaigns/new', icon: Plus, iconBg: 'bg-primary-50 dark:bg-primary-900/30', iconColor: 'text-primary-600', title: 'Create Campaign', desc: 'Launch a new ad campaign' },
-                  { to: '/dashboard/analytics', icon: BarChart3, iconBg: 'bg-accent-50 dark:bg-accent-900/30', iconColor: 'text-accent-600', title: 'View Analytics', desc: 'Deep dive into performance' },
-                  { to: '/dashboard/anomalies', icon: AlertTriangle, iconBg: 'bg-danger-50 dark:bg-danger-900/30', iconColor: 'text-danger-600', title: 'Check Anomalies', desc: 'Monitor campaign health' },
-                  { to: '/dashboard/ai-optimization', icon: Brain, iconBg: 'bg-secondary-50 dark:bg-secondary-900/30', iconColor: 'text-secondary-600', title: 'AI Insights', desc: 'Review AI recommendations' },
+                  { to: '/dashboard/campaigns/new', icon: Plus, iconBg: 'bg-primary-50 dark:bg-primary-900/30', iconColor: 'text-primary-600', title: t('dashboard.home.actions.createCampaign'), desc: t('dashboard.home.actions.createCampaignDesc') },
+                  { to: '/dashboard/analytics', icon: BarChart3, iconBg: 'bg-accent-50 dark:bg-accent-900/30', iconColor: 'text-accent-600', title: t('dashboard.home.actions.viewAnalytics'), desc: t('dashboard.home.actions.viewAnalyticsDesc') },
+                  { to: '/dashboard/anomalies', icon: AlertTriangle, iconBg: 'bg-danger-50 dark:bg-danger-900/30', iconColor: 'text-danger-600', title: t('dashboard.home.actions.checkAnomalies'), desc: t('dashboard.home.actions.checkAnomaliesDesc') },
+                  { to: '/dashboard/ai-optimization', icon: Brain, iconBg: 'bg-secondary-50 dark:bg-secondary-900/30', iconColor: 'text-secondary-600', title: t('dashboard.home.actions.aiInsights'), desc: t('dashboard.home.actions.aiInsightsDesc') },
                 ].map((action) => {
                   const Icon = action.icon;
                   return (

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '@/stores/auth.store';
 import { getInitials } from '@/lib/utils';
 import { ROLE_NAV_ITEMS } from '@/lib/rbac';
@@ -36,55 +37,57 @@ import {
 interface NavItem {
   key: string;
   href: string;
+  /** i18n key under `dashboard.nav` */
   label: string;
   icon: React.ComponentType<{ className?: string }>;
 }
 
 interface NavGroup {
+  /** i18n key under `dashboard.nav` */
   title: string;
   items: NavItem[];
 }
 
 const allNavGroups: NavGroup[] = [
   {
-    title: 'Overview',
-    items: [{ key: 'dashboard', href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard }],
+    title: 'overview',
+    items: [{ key: 'dashboard', href: '/dashboard', label: 'dashboard', icon: LayoutDashboard }],
   },
   {
-    title: 'Campaigns',
+    title: 'campaigns',
     items: [
-      { key: 'campaigns', href: '/dashboard/campaigns', label: 'Campaigns', icon: Megaphone },
-      { key: 'ai-optimization', href: '/dashboard/ai-optimization', label: 'AI Optimization', icon: Brain },
-      { key: 'anomalies', href: '/dashboard/anomalies', label: 'Anomalies', icon: AlertTriangle },
+      { key: 'campaigns', href: '/dashboard/campaigns', label: 'campaigns', icon: Megaphone },
+      { key: 'ai-optimization', href: '/dashboard/ai-optimization', label: 'aiOptimization', icon: Brain },
+      { key: 'anomalies', href: '/dashboard/anomalies', label: 'anomalies', icon: AlertTriangle },
     ],
   },
   {
-    title: 'Analytics',
+    title: 'analytics',
     items: [
-      { key: 'analytics', href: '/dashboard/analytics', label: 'Analytics', icon: BarChart3 },
-      { key: 'heatmaps', href: '/dashboard/heatmaps', label: 'Heatmaps', icon: Map },
-      { key: 'benchmarking', href: '/dashboard/benchmarking', label: 'Benchmarking', icon: TrendingUp },
-      { key: 'storyteller', href: '/dashboard/storyteller', label: 'Storyteller', icon: BookOpen },
+      { key: 'analytics', href: '/dashboard/analytics', label: 'analytics', icon: BarChart3 },
+      { key: 'heatmaps', href: '/dashboard/heatmaps', label: 'heatmaps', icon: Map },
+      { key: 'benchmarking', href: '/dashboard/benchmarking', label: 'benchmarking', icon: TrendingUp },
+      { key: 'storyteller', href: '/dashboard/storyteller', label: 'storyteller', icon: BookOpen },
     ],
   },
   {
-    title: 'Workspace',
+    title: 'workspace',
     items: [
-      { key: 'messages', href: '/dashboard/messages', label: 'Messages', icon: MessageSquare },
-      { key: 'merchant', href: '/dashboard/merchant', label: 'Merchant Performance', icon: Store },
-      { key: 'outlets', href: '/dashboard/outlets', label: 'Outlets', icon: MapPin },
-      { key: 'team', href: '/dashboard/team', label: 'Team', icon: Users },
-      { key: 'platform-accounts', href: '/dashboard/platform-accounts', label: 'Ad Accounts', icon: Plug },
-      { key: 'profile', href: '/dashboard/profile', label: 'My Profile', icon: User },
-      { key: 'settings', href: '/dashboard/settings', label: 'Settings', icon: Settings },
+      { key: 'messages', href: '/dashboard/messages', label: 'messages', icon: MessageSquare },
+      { key: 'merchant', href: '/dashboard/merchant', label: 'merchant', icon: Store },
+      { key: 'outlets', href: '/dashboard/outlets', label: 'outlets', icon: MapPin },
+      { key: 'team', href: '/dashboard/team', label: 'team', icon: Users },
+      { key: 'platform-accounts', href: '/dashboard/platform-accounts', label: 'adAccounts', icon: Plug },
+      { key: 'profile', href: '/dashboard/profile', label: 'profile', icon: User },
+      { key: 'settings', href: '/dashboard/settings', label: 'settings', icon: Settings },
     ],
   },
   {
-    title: 'Admin',
+    title: 'admin',
     items: [
-      { key: 'admin-advertisers', href: '/dashboard/admin/advertisers', label: 'Advertiser Approvals', icon: UserCheck },
-      { key: 'admin-moderation', href: '/dashboard/admin/moderation', label: 'Review Moderation', icon: ShieldCheck },
-      { key: 'admin-loyalty', href: '/dashboard/admin/loyalty', label: 'Loyalty & VIP', icon: Sparkles },
+      { key: 'admin-advertisers', href: '/dashboard/admin/advertisers', label: 'advertiserApprovals', icon: UserCheck },
+      { key: 'admin-moderation', href: '/dashboard/admin/moderation', label: 'reviewModeration', icon: ShieldCheck },
+      { key: 'admin-loyalty', href: '/dashboard/admin/loyalty', label: 'loyaltyVip', icon: Sparkles },
     ],
   },
 ];
@@ -95,6 +98,7 @@ interface SidebarProps {
 }
 
 export function Sidebar({ collapsed, onToggle }: SidebarProps) {
+  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const user = useAuthStore((s) => s.user);
@@ -127,7 +131,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
         {!collapsed && (
           <div className="flex flex-col">
             <span className="text-lg font-bold text-white tracking-tight">SmartAdDeals</span>
-            <span className="text-[10px] text-secondary-300 uppercase tracking-[0.15em] font-semibold">Workspace</span>
+            <span className="text-[10px] text-secondary-300 uppercase tracking-[0.15em] font-semibold">{t('dashboard.nav.workspaceLabel')}</span>
           </div>
         )}
       </div>
@@ -142,7 +146,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
             <div key={group.title}>
               {!collapsed && (
                 <p className="px-3 mb-2 text-[10px] font-bold uppercase tracking-[0.15em] text-secondary-400/80">
-                  {group.title}
+                  {t(`dashboard.nav.${group.title}`)}
                 </p>
               )}
               {collapsed && <div className="mx-auto w-6 border-t border-white/10 mb-3" />}
@@ -165,7 +169,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
                             : 'text-white/70 hover:bg-white/5 hover:text-white',
                           collapsed && 'justify-center px-2'
                         )}
-                        title={collapsed ? item.label : undefined}
+                        title={collapsed ? t(`dashboard.nav.${item.label}`) : undefined}
                       >
                         {isActive && !collapsed && (
                           <motion.div
@@ -183,7 +187,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
                             isActive ? 'text-secondary-400' : 'text-white/50 group-hover:text-secondary-300'
                           )}
                         />
-                        {!collapsed && item.label}
+                        {!collapsed && t(`dashboard.nav.${item.label}`)}
                       </Link>
                     </li>
                   );
@@ -214,7 +218,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
             onClick={handleLogout}
             className="mt-2 flex items-center gap-2 w-full px-3 py-2 rounded-xl text-xs font-medium text-white/60 hover:text-danger-300 hover:bg-danger-500/10 transition-colors"
           >
-            <LogOut className="h-3.5 w-3.5" /> Log out
+            <LogOut className="h-3.5 w-3.5" /> {t('dashboard.nav.logOut')}
           </button>
         </div>
       )}
@@ -224,7 +228,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
         <button
           onClick={onToggle}
           className="flex items-center justify-center w-full p-2 rounded-xl text-white/50 hover:bg-white/5 hover:text-white transition-colors"
-          title={collapsed ? 'Expand' : 'Collapse'}
+          title={collapsed ? t('dashboard.nav.expand') : t('dashboard.nav.collapse')}
         >
           {collapsed ? <ChevronRight className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
         </button>
@@ -246,7 +250,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
       <button
         onClick={() => setMobileOpen(true)}
         className="md:hidden fixed top-4 left-4 z-50 p-2.5 rounded-xl bg-primary-700 text-white shadow-lg"
-        aria-label="Open menu"
+        aria-label={t('dashboard.nav.openMenu')}
       >
         <Menu className="h-5 w-5" />
       </button>

@@ -1,4 +1,5 @@
 import { Card, CardHeader } from '@/components/ui/Card';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/Button';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { useModerationQueue, useModerateReview } from '@/hooks/useAdminTools';
@@ -6,32 +7,30 @@ import { formatDate } from '@/lib/utils';
 import { ShieldCheck, Check, X, Star } from 'lucide-react';
 
 export function AdminModerationPage() {
+  const { t } = useTranslation();
   const { data: queue = [], isLoading } = useModerationQueue();
   const moderate = useModerateReview();
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-text-primary">Review Moderation</h1>
-        <p className="text-sm text-text-secondary mt-1">
-          Photos and videos awaiting approval. The reviewer's base tokens are already paid — approving
-          releases the media bonus, rejecting removes the media and pays nothing.
-        </p>
+        <h1 className="text-2xl font-bold text-text-primary">{t('dashboard.adminModeration.title')}</h1>
+        <p className="text-sm text-text-secondary mt-1">{t('dashboard.adminModeration.subtitle')}</p>
       </div>
 
       <Card>
         <CardHeader
-          title="Pending media"
-          subtitle={`${queue.length} awaiting review`}
+          title={t('dashboard.adminModeration.pendingMedia')}
+          subtitle={t('dashboard.adminModeration.awaitingReview', { count: queue.length })}
         />
         {isLoading ? (
-          <p className="py-8 text-center text-sm text-text-muted">Loading…</p>
+          <p className="py-8 text-center text-sm text-text-muted">{t('dashboard.common.loading')}</p>
         ) : queue.length === 0 ? (
           <EmptyState
             variant="plain"
             icon={<ShieldCheck />}
-            title="Nothing to moderate"
-            description="Uploaded review photos and videos will queue up here."
+            title={t('dashboard.adminModeration.emptyTitle')}
+            description={t('dashboard.adminModeration.emptyDesc')}
           />
         ) : (
           <ul className="space-y-4">
@@ -53,7 +52,7 @@ export function AdminModerationPage() {
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
                     <p className="text-sm font-semibold text-text-primary">
-                      {review.user?.name || 'User'}
+                      {review.user?.name || t('dashboard.common.user')}
                     </p>
                     <span className="flex items-center gap-0.5 text-xs text-text-muted">
                       <Star className="h-3 w-3 fill-secondary-500 text-secondary-500" />
@@ -72,7 +71,7 @@ export function AdminModerationPage() {
                     onClick={() => moderate.mutate({ id: review._id, approve: true })}
                     loading={moderate.isPending}
                   >
-                    <Check className="h-4 w-4 mr-1" /> Approve
+                    <Check className="h-4 w-4 mr-1" /> {t('dashboard.common.approve')}
                   </Button>
                   <Button
                     size="sm"
@@ -80,7 +79,7 @@ export function AdminModerationPage() {
                     onClick={() => moderate.mutate({ id: review._id, approve: false })}
                     loading={moderate.isPending}
                   >
-                    <X className="h-4 w-4 mr-1" /> Reject
+                    <X className="h-4 w-4 mr-1" /> {t('dashboard.common.reject')}
                   </Button>
                 </div>
               </li>

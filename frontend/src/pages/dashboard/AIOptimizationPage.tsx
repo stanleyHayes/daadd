@@ -1,5 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardHeader } from '@/components/ui/Card';
 import { MetricsCard } from '@/components/analytics/MetricsCard';
 import { PageHeader } from '@/components/layout/PageHeader';
@@ -33,6 +34,7 @@ const typeColors: Record<string, string> = {
 
 export function AIOptimizationPage() {
   const [campaignId, setCampaignId] = useState('');
+  const { t } = useTranslation();
   const [aiMode, setAiMode] = useState<'auto_adjust' | 'recommendation_only'>('auto_adjust');
 
   const { data: campaignsData } = useCampaigns();
@@ -64,9 +66,9 @@ export function AIOptimizationPage() {
     try {
       await updateAIModeMutation.mutateAsync({ campaignId, mode });
       setAiMode(mode);
-      toast.success('AI mode updated');
+      toast.success(t('dashboard.ai.modeUpdated'));
     } catch {
-      toast.error('Failed to update AI mode');
+      toast.error(t('dashboard.ai.modeFailed'));
     }
   };
 
@@ -74,9 +76,9 @@ export function AIOptimizationPage() {
     if (!campaignId) return;
     try {
       await applyMutation.mutateAsync({ campaignId, recommendationId: id });
-      toast.success('Recommendation applied');
+      toast.success(t('dashboard.ai.applied'));
     } catch {
-      toast.error('Failed to apply recommendation');
+      toast.error(t('dashboard.ai.applyFailed'));
     }
   };
 
@@ -84,9 +86,9 @@ export function AIOptimizationPage() {
     if (!campaignId) return;
     try {
       await dismissMutation.mutateAsync({ campaignId, recommendationId: id });
-      toast.success('Recommendation dismissed');
+      toast.success(t('dashboard.ai.dismissed'));
     } catch {
-      toast.error('Failed to dismiss recommendation');
+      toast.error(t('dashboard.ai.dismissFailed'));
     }
   };
 
@@ -94,44 +96,44 @@ export function AIOptimizationPage() {
     <PageTransition>
     <div className="max-w-7xl mx-auto space-y-6">
       <PageHeader
-        title="AI Optimization"
-        subtitle="AI-powered recommendations for campaign performance"
+        title={t('dashboard.ai.title')}
+        subtitle={t('dashboard.ai.subtitle')}
       />
 
       {campaignId && !recsLoading && (
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <MetricsCard icon={<Brain className="h-5 w-5" />} label="Recommendations" value={String(recs.length)} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
-          <MetricsCard icon={<CheckCircle className="h-5 w-5" />} label="Applied" value={String(recs.filter(r => r.status === 'applied').length)} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
-          <MetricsCard icon={<XCircle className="h-5 w-5" />} label="Dismissed" value={String(recs.filter(r => r.status === 'dismissed').length)} iconColor="text-danger-600" iconBg="bg-danger-50 dark:bg-danger-900/30" />
+          <MetricsCard icon={<Brain className="h-5 w-5" />} label={t('dashboard.ai.recommendations')} value={String(recs.length)} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
+          <MetricsCard icon={<CheckCircle className="h-5 w-5" />} label={t('dashboard.ai.status.applied')} value={String(recs.filter(r => r.status === 'applied').length)} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
+          <MetricsCard icon={<XCircle className="h-5 w-5" />} label={t('dashboard.ai.status.dismissed')} value={String(recs.filter(r => r.status === 'dismissed').length)} iconColor="text-danger-600" iconBg="bg-danger-50 dark:bg-danger-900/30" />
         </div>
       )}
 
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
         <div className="sm:w-56">
           <Select
-            label="Campaign"
-            placeholder="Select a campaign"
+            label={t('dashboard.common.campaign')}
+            placeholder={t('dashboard.common.selectCampaign')}
             options={campaigns.map((c) => ({ value: c.id, label: c.name }))}
             value={campaignId}
             onChange={setCampaignId}
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-gray-500 dark:text-slate-400 mb-1">AI Mode</label>
+          <label className="block text-xs font-medium text-gray-500 dark:text-slate-400 mb-1">{t('dashboard.ai.mode')}</label>
           <div className="flex rounded-lg border border-gray-300 dark:border-slate-600 overflow-hidden">
             <button
               className={cn('px-4 py-2 text-sm font-medium transition-colors whitespace-nowrap disabled:opacity-50', aiMode === 'auto_adjust' ? 'bg-secondary-600 text-white' : 'bg-white dark:bg-slate-800 text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-700')}
               onClick={() => handleAIModeChange('auto_adjust')}
               disabled={updateAIModeMutation.isPending}
             >
-              Auto-Adjust
+              {t('dashboard.ai.autoAdjust')}
             </button>
             <button
               className={cn('px-4 py-2 text-sm font-medium transition-colors whitespace-nowrap disabled:opacity-50', aiMode === 'recommendation_only' ? 'bg-secondary-600 text-white' : 'bg-white dark:bg-slate-800 text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-700')}
               onClick={() => handleAIModeChange('recommendation_only')}
               disabled={updateAIModeMutation.isPending}
             >
-              Recommendation Only
+              {t('dashboard.ai.recommendationOnly')}
             </button>
           </div>
         </div>
@@ -141,8 +143,8 @@ export function AIOptimizationPage() {
         <Card>
           <div className="text-center py-16">
             <Brain className="h-10 w-10 text-gray-300 dark:text-slate-600 mx-auto mb-3" />
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">Select a Campaign</h3>
-            <p className="text-sm text-gray-500 dark:text-slate-400">Choose a campaign above to view AI recommendations.</p>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">{t('dashboard.common.selectCampaignTitle')}</h3>
+            <p className="text-sm text-gray-500 dark:text-slate-400">{t('dashboard.ai.selectPrompt')}</p>
           </div>
         </Card>
       ) : recsLoading ? (
@@ -180,7 +182,7 @@ export function AIOptimizationPage() {
         <Card>
           <div className="text-center py-12">
             <AlertTriangle className="h-8 w-8 text-danger-500 mx-auto mb-2" />
-            <p className="text-sm text-gray-500 dark:text-slate-400">Failed to load AI recommendations. Please try again later.</p>
+            <p className="text-sm text-gray-500 dark:text-slate-400">{t('dashboard.ai.loadError')}</p>
           </div>
         </Card>
       ) : (
@@ -191,8 +193,8 @@ export function AIOptimizationPage() {
               <Card>
                 <div className="text-center py-12">
                   <Check className="h-10 w-10 text-accent-500 mx-auto mb-3" />
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">All Caught Up</h3>
-                  <p className="text-sm text-gray-500 dark:text-slate-400">No pending AI recommendations for this campaign.</p>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">{t('dashboard.ai.allCaughtUp')}</h3>
+                  <p className="text-sm text-gray-500 dark:text-slate-400">{t('dashboard.ai.noPending')}</p>
                 </div>
               </Card>
             ) : (
@@ -227,7 +229,7 @@ export function AIOptimizationPage() {
           </div>
 
           <Card>
-            <CardHeader title="AI Audit Log" subtitle="History of AI-driven changes" />
+            <CardHeader title={t('dashboard.ai.auditTitle')} subtitle={t('dashboard.ai.auditSubtitle')} />
             {logLoading ? (
               <div className="space-y-4 py-2">
                 {Array.from({ length: 3 }).map((_, i) => (
@@ -248,8 +250,8 @@ export function AIOptimizationPage() {
               <EmptyState
                 variant="plain"
                 icon={<Brain />}
-                title="No AI changes yet"
-                description="Once AI recommendations are applied, a versioned history of all changes will appear here."
+                title={t('dashboard.ai.auditEmpty')}
+                description={t('dashboard.ai.auditEmptyDesc')}
               />
             ) : (
               <div className="space-y-4">

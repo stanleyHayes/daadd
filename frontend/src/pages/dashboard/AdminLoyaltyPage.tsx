@@ -1,18 +1,21 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardHeader } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { useVipCriteria, useUpdateVipCriteria, type VipCriteria } from '@/hooks/useAdminTools';
 import { Sparkles, RotateCcw } from 'lucide-react';
 
-const FIELDS: { key: keyof VipCriteria; label: string; hint: string }[] = [
-  { key: 'min_merchant_visits', label: 'Minimum merchant visits', hint: 'Distinct merchants the member has bought from.' },
-  { key: 'min_purchases', label: 'Minimum purchases', hint: 'Completed redemptions.' },
-  { key: 'min_reviews', label: 'Minimum reviews', hint: 'Reviews they have submitted.' },
-  { key: 'min_engagement_score', label: 'Minimum engagement score', hint: 'Weighted score across visits, purchases, reviews, views and streaks.' },
+// Labels and hints are looked up per key under `dashboard.adminLoyalty`.
+const FIELDS: { key: keyof VipCriteria; i18n: string }[] = [
+  { key: 'min_merchant_visits', i18n: 'minVisits' },
+  { key: 'min_purchases', i18n: 'minPurchases' },
+  { key: 'min_reviews', i18n: 'minReviews' },
+  { key: 'min_engagement_score', i18n: 'minScore' },
 ];
 
 export function AdminLoyaltyPage() {
+  const { t } = useTranslation();
   const { data, isLoading } = useVipCriteria();
   const updateCriteria = useUpdateVipCriteria();
   const [form, setForm] = useState<VipCriteria | null>(null);
@@ -27,43 +30,42 @@ export function AdminLoyaltyPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-text-primary">Loyalty & VIP</h1>
+        <h1 className="text-2xl font-bold text-text-primary">{t('dashboard.adminLoyalty.title')}</h1>
         <p className="text-sm text-text-secondary mt-1">
-          Members qualify for VIP automatically when they meet every requirement below. Set a value to
-          <strong className="text-text-primary"> 0</strong> to disable that requirement entirely.
+          {t('dashboard.adminLoyalty.intro')}
         </p>
       </div>
 
       <Card>
         <CardHeader
-          title="VIP qualification criteria"
-          subtitle="Applies to every member the next time their status is evaluated"
+          title={t('dashboard.adminLoyalty.criteriaTitle')}
+          subtitle={t('dashboard.adminLoyalty.criteriaSubtitle')}
         />
 
         {isLoading || !form ? (
-          <p className="py-8 text-center text-sm text-text-muted">Loading…</p>
+          <p className="py-8 text-center text-sm text-text-muted">{t('dashboard.common.loading')}</p>
         ) : (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {FIELDS.map((field) => (
                 <Input
                   key={field.key}
-                  label={field.label}
+                  label={t(`dashboard.adminLoyalty.${field.i18n}`)}
                   type="number"
                   value={form[field.key]}
                   onChange={(e) => set(field.key, Number(e.target.value))}
-                  hint={field.hint}
+                  hint={t(`dashboard.adminLoyalty.${field.i18n}Hint`)}
                 />
               ))}
             </div>
 
             <div className="mt-5 flex items-center gap-2">
               <Button onClick={() => updateCriteria.mutate(form)} loading={updateCriteria.isPending}>
-                <Sparkles className="h-4 w-4 mr-1.5" /> Save criteria
+                <Sparkles className="h-4 w-4 mr-1.5" /> {t('dashboard.adminLoyalty.save')}
               </Button>
               {data?.defaults && (
                 <Button variant="ghost" onClick={() => setForm(data.defaults)}>
-                  <RotateCcw className="h-4 w-4 mr-1.5" /> Reset to defaults
+                  <RotateCcw className="h-4 w-4 mr-1.5" /> {t('dashboard.adminLoyalty.reset')}
                 </Button>
               )}
             </div>

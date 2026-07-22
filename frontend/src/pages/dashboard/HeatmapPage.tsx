@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardHeader } from '@/components/ui/Card';
 import { MetricsCard } from '@/components/analytics/MetricsCard';
 import { PageHeader } from '@/components/layout/PageHeader';
@@ -15,6 +16,7 @@ import { Skeleton, SkeletonMap, SkeletonCard, SkeletonMetric, SkeletonList } fro
 
 export function HeatmapPage() {
   const [campaignId, setCampaignId] = useState('');
+  const { t } = useTranslation();
   const [aggregation, setAggregation] = useState<'city' | 'country'>('city');
   const { data: heatmapData, isLoading, error } = useHeatmapData(campaignId || undefined);
   const { data: campaignsData } = useCampaigns();
@@ -25,40 +27,40 @@ export function HeatmapPage() {
   return (
     <PageTransition>
     <div className="max-w-7xl mx-auto space-y-6">
-      <PageHeader title="Heatmaps" subtitle="Geographic engagement visualization" />
+      <PageHeader title={t('dashboard.heatmap.title')} subtitle={t('dashboard.heatmap.subtitle')} />
 
       {campaignId && heatmapData && !isLoading && (
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <MetricsCard icon={<Eye className="h-5 w-5" />} label="Total Views" value={formatNumber(heatmapData.total_views)} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
-          <MetricsCard icon={<MapPin className="h-5 w-5" />} label="Active Regions" value={String(heatmapData.active_regions ?? heatmapData.top_regions?.length ?? 0)} iconColor="text-secondary-600" iconBg="bg-secondary-50 dark:bg-secondary-900/30" />
-          <MetricsCard icon={<TrendingUp className="h-5 w-5" />} label="Avg CTR" value={formatPercentage(heatmapData.avg_ctr)} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
+          <MetricsCard icon={<Eye className="h-5 w-5" />} label={t('dashboard.heatmap.totalViews')} value={formatNumber(heatmapData.total_views)} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
+          <MetricsCard icon={<MapPin className="h-5 w-5" />} label={t('dashboard.heatmap.activeRegions')} value={String(heatmapData.active_regions ?? heatmapData.top_regions?.length ?? 0)} iconColor="text-secondary-600" iconBg="bg-secondary-50 dark:bg-secondary-900/30" />
+          <MetricsCard icon={<TrendingUp className="h-5 w-5" />} label={t('dashboard.heatmap.avgCtr')} value={formatPercentage(heatmapData.avg_ctr)} iconColor="text-accent-600" iconBg="bg-accent-50 dark:bg-accent-900/30" />
         </div>
       )}
 
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
         <div className="sm:w-56">
           <Select
-            label="Campaign"
-            placeholder="Select a campaign"
+            label={t('dashboard.common.campaign')}
+            placeholder={t('dashboard.common.selectCampaign')}
             options={campaigns.map((c) => ({ value: c.id, label: c.name }))}
             value={campaignId}
             onChange={setCampaignId}
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-gray-500 dark:text-slate-400 mb-1">Aggregation</label>
+          <label className="block text-xs font-medium text-gray-500 dark:text-slate-400 mb-1">{t('dashboard.heatmap.aggregation')}</label>
           <div className="flex rounded-lg border border-gray-300 dark:border-slate-600 overflow-hidden">
             <button
               className={cn('px-4 py-2 text-sm font-medium transition-colors', aggregation === 'city' ? 'bg-primary-600 text-white' : 'bg-white dark:bg-slate-800 text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-700')}
               onClick={() => setAggregation('city')}
             >
-              City
+              {t('dashboard.heatmap.city')}
             </button>
             <button
               className={cn('px-4 py-2 text-sm font-medium transition-colors', aggregation === 'country' ? 'bg-primary-600 text-white' : 'bg-white dark:bg-slate-800 text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-700')}
               onClick={() => setAggregation('country')}
             >
-              Country
+              {t('dashboard.heatmap.country')}
             </button>
           </div>
         </div>
@@ -68,8 +70,8 @@ export function HeatmapPage() {
         <Card>
           <div className="text-center py-16">
             <MapPin className="h-10 w-10 text-gray-300 dark:text-slate-600 mx-auto mb-3" />
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">Select a Campaign</h3>
-            <p className="text-sm text-gray-500 dark:text-slate-400">Choose a campaign above to view its geographic heatmap.</p>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">{t('dashboard.common.selectCampaignTitle')}</h3>
+            <p className="text-sm text-gray-500 dark:text-slate-400">{t('dashboard.heatmap.selectPrompt')}</p>
           </div>
         </Card>
       ) : isLoading ? (
@@ -96,7 +98,7 @@ export function HeatmapPage() {
         <Card>
           <div className="text-center py-12">
             <AlertTriangle className="h-8 w-8 text-danger-500 mx-auto mb-2" />
-            <p className="text-sm text-gray-500 dark:text-slate-400">Failed to load heatmap data. Please try again later.</p>
+            <p className="text-sm text-gray-500 dark:text-slate-400">{t('dashboard.heatmap.loadError')}</p>
           </div>
         </Card>
       ) : (
@@ -107,7 +109,7 @@ export function HeatmapPage() {
 
           <div className="space-y-4">
             <Card>
-              <CardHeader title="Summary" />
+              <CardHeader title={t('dashboard.heatmap.summary')} />
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-lg bg-primary-50 dark:bg-primary-900/30 flex items-center justify-center">
@@ -124,7 +126,7 @@ export function HeatmapPage() {
                   </div>
                   <div>
                     <p className="text-2xl font-bold text-gray-900 dark:text-white">{formatPercentage(heatmapData?.avg_ctr || 0)}</p>
-                    <p className="text-xs text-gray-500 dark:text-slate-400">Avg CTR by Region</p>
+                    <p className="text-xs text-gray-500 dark:text-slate-400">{t('dashboard.heatmap.avgCtrByRegion')}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -140,12 +142,12 @@ export function HeatmapPage() {
             </Card>
 
             <Card>
-              <CardHeader title="Top Regions" />
+              <CardHeader title={t('dashboard.heatmap.topRegions')} />
               {topRegions.length === 0 ? (
                 <EmptyState
                   icon={<Map className="h-10 w-10" />}
-                  title="No Region Data"
-                  description="Geographic data will appear once your campaign reaches 100+ impressions across regions."
+                  title={t('dashboard.heatmap.noRegionTitle')}
+                  description={t('dashboard.heatmap.noRegionDesc')}
                   size="sm"
                 />
               ) : (

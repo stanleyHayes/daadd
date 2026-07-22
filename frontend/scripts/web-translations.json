@@ -593,7 +593,8 @@
         "remove": "Ta bort",
         "exportPdf": "Exportera PDF",
         "exportCsv": "Exportera CSV",
-        "exportHtml": "Exportera HTML"
+        "exportHtml": "Exportera HTML",
+        "user": "Användare"
       },
       "nav": {
         "overview": "Översikt",
@@ -701,7 +702,9 @@
         "next": "Nästa",
         "deleted": "Kampanjen har tagits bort",
         "deleteFailed": "Det gick inte att ta bort kampanjen",
-        "cloneFailed": "Det gick inte att duplicera kampanjen"
+        "cloneFailed": "Det gick inte att duplicera kampanjen",
+        "emptyDescCreate": "Skapa din första kampanj för att komma igång med annonsering.",
+        "emptyDescView": "Det finns inga kampanjer att visa."
       },
       "campaignCreate": {
         "title": "Skapa kampanj",
@@ -881,7 +884,10 @@
           "medium": "MEDEL",
           "high": "HÖG",
           "critical": "KRITISK"
-        }
+        },
+        "autoPausedBadge": "Autopausad",
+        "thresholdInline": "(tröskel: {{value}})",
+        "detected": "Upptäckt {{when}}"
       },
       "heatmap": {
         "title": "Värmekartor",
@@ -1155,13 +1161,21 @@
         "title": "Godkännande av annonsörer",
         "subtitle": "Granska och godkänn annonsörskonton innan de får annonsera.",
         "billing": "Fakturering",
-        "actionFailed": "Åtgärden misslyckades"
+        "actionFailed": "Åtgärden misslyckades",
+        "approvedToast": "Annonsören har godkänts",
+        "rejectedToast": "Annonsören har avslagits",
+        "emptyTitle": "Inga annonsörer med status {{status}}",
+        "emptyPending": "Nya annonsörsregistreringar som väntar på granskning visas här.",
+        "emptyOther": "Det finns inga annonsörer med status {{status}}.",
+        "joined": "Gick med {{date}}"
       },
       "adminModeration": {
         "title": "Moderering av omdömen",
         "pendingMedia": "Väntande media",
         "emptyTitle": "Inget att moderera",
-        "emptyDesc": "Uppladdade foton och videor från omdömen hamnar i kö här."
+        "emptyDesc": "Uppladdade foton och videor från omdömen hamnar i kö här.",
+        "subtitle": "Foton och videor som väntar på godkännande. Recensentens bastoken är redan utbetalda – godkännande frisläpper mediabonusen, avslag tar bort mediefilen och ger ingen ersättning.",
+        "awaitingReview": "{{count}} väntar på granskning"
       },
       "adminLoyalty": {
         "title": "Lojalitet och VIP",

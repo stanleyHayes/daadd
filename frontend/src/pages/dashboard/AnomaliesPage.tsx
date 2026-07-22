@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card } from '@/components/ui/Card';
 import { MetricsCard } from '@/components/analytics/MetricsCard';
 import { PageHeader } from '@/components/layout/PageHeader';
@@ -16,15 +17,16 @@ import { useAuthStore } from '@/stores/auth.store';
 import type { AnomalySeverity } from '@/types';
 import { Skeleton, SkeletonMetric, SkeletonCard, SkeletonText } from '@/components/ui/Skeleton';
 
-const severityConfig: Record<AnomalySeverity, { variant: 'blue' | 'yellow' | 'red'; label: string }> = {
-  low: { variant: 'blue', label: 'LOW' },
-  medium: { variant: 'yellow', label: 'MEDIUM' },
-  high: { variant: 'red', label: 'HIGH' },
-  critical: { variant: 'red', label: 'CRITICAL' },
+const severityConfig: Record<AnomalySeverity, { variant: 'blue' | 'yellow' | 'red' }> = {
+  low: { variant: 'blue' },
+  medium: { variant: 'yellow' },
+  high: { variant: 'red' },
+  critical: { variant: 'red' },
 };
 
 export function AnomaliesPage() {
   const [campaignId, setCampaignId] = useState('');
+  const { t } = useTranslation();
   const { data: anomalies, isLoading, error } = useAnomalies(campaignId || undefined);
   const resolveMutation = useResolveAnomaly();
   const user = useAuthStore((s) => s.user);
@@ -40,29 +42,29 @@ export function AnomaliesPage() {
   const handleResolve = async (id: string) => {
     try {
       await resolveMutation.mutateAsync(id);
-      toast.success('Anomaly resolved');
+      toast.success(t('dashboard.anomalies.resolvedToast'));
     } catch {
-      toast.error('Failed to resolve anomaly');
+      toast.error(t('dashboard.anomalies.resolveFailed'));
     }
   };
 
   return (
     <PageTransition>
     <div className="max-w-7xl mx-auto space-y-6">
-      <PageHeader title="Anomaly Detection" subtitle="Monitor and respond to campaign anomalies" />
+      <PageHeader title={t('dashboard.anomalies.title')} subtitle={t('dashboard.anomalies.subtitle')} />
 
       {campaignId && !isLoading && activeAnomalies.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <MetricsCard icon={<AlertTriangle className="h-5 w-5" />} label="Total Anomalies" value={String(activeAnomalies.length)} iconColor="text-warning-600" iconBg="bg-warning-50 dark:bg-warning-900/30" />
-          <MetricsCard icon={<Shield className="h-5 w-5" />} label="High / Critical" value={String(activeAnomalies.filter(a => a.severity === 'high' || a.severity === 'critical').length)} iconColor="text-danger-600" iconBg="bg-danger-50 dark:bg-danger-900/30" />
-          <MetricsCard icon={<PauseCircle className="h-5 w-5" />} label="Auto-Paused" value={String(autoPaused)} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
+          <MetricsCard icon={<AlertTriangle className="h-5 w-5" />} label={t('dashboard.anomalies.total')} value={String(activeAnomalies.length)} iconColor="text-warning-600" iconBg="bg-warning-50 dark:bg-warning-900/30" />
+          <MetricsCard icon={<Shield className="h-5 w-5" />} label={t('dashboard.anomalies.highCritical')} value={String(activeAnomalies.filter(a => a.severity === 'high' || a.severity === 'critical').length)} iconColor="text-danger-600" iconBg="bg-danger-50 dark:bg-danger-900/30" />
+          <MetricsCard icon={<PauseCircle className="h-5 w-5" />} label={t('dashboard.anomalies.autoPaused')} value={String(autoPaused)} iconColor="text-primary-600" iconBg="bg-primary-50 dark:bg-primary-900/30" />
         </div>
       )}
 
       <div className="w-56">
         <Select
-          label="Campaign"
-          placeholder="Select a campaign"
+          label={t('dashboard.common.campaign')}
+          placeholder={t('dashboard.common.selectCampaign')}
           options={campaigns.map((c) => ({ value: c.id, label: c.name }))}
           value={campaignId}
           onChange={setCampaignId}
@@ -73,8 +75,8 @@ export function AnomaliesPage() {
         <Card>
           <div className="text-center py-16">
             <Shield className="h-10 w-10 text-gray-300 dark:text-slate-600 mx-auto mb-3" />
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">Select a Campaign</h3>
-            <p className="text-sm text-gray-500 dark:text-slate-400">Choose a campaign above to view its anomalies.</p>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">{t('dashboard.common.selectCampaignTitle')}</h3>
+            <p className="text-sm text-gray-500 dark:text-slate-400">{t('dashboard.anomalies.selectPrompt')}</p>
           </div>
         </Card>
       ) : isLoading ? (
@@ -115,7 +117,7 @@ export function AnomaliesPage() {
         <Card>
           <div className="text-center py-12">
             <AlertTriangle className="h-8 w-8 text-danger-500 mx-auto mb-2" />
-            <p className="text-sm text-gray-500 dark:text-slate-400">Failed to load anomalies. Please try again later.</p>
+            <p className="text-sm text-gray-500 dark:text-slate-400">{t('dashboard.anomalies.loadError')}</p>
           </div>
         </Card>
       ) : (
@@ -123,21 +125,21 @@ export function AnomaliesPage() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <MetricsCard
               icon={<AlertTriangle className="h-5 w-5" />}
-              label="Active Anomalies"
+              label={t('dashboard.anomalies.activeTitle')}
               value={activeAnomalies.length.toString()}
               iconColor="text-danger-600"
               iconBg="bg-danger-50 dark:bg-danger-900/30"
             />
             <MetricsCard
               icon={<CheckCircle className="h-5 w-5" />}
-              label="Resolved"
+              label={t('dashboard.status.resolved')}
               value={activeAnomalies.filter((a) => a.resolved_at).length.toString()}
               iconColor="text-accent-600"
               iconBg="bg-accent-50 dark:bg-accent-900/30"
             />
             <MetricsCard
               icon={<PauseCircle className="h-5 w-5" />}
-              label="Auto-Paused"
+              label={t('dashboard.anomalies.autoPaused')}
               value={autoPaused.toString()}
               iconColor="text-warning-600"
               iconBg="bg-warning-50 dark:bg-warning-900/30"
@@ -148,13 +150,13 @@ export function AnomaliesPage() {
             <Card>
               <div className="text-center py-12">
                 <CheckCircle className="h-10 w-10 text-accent-500 mx-auto mb-3" />
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">All Clear</h3>
-                <p className="text-sm text-gray-500 dark:text-slate-400">No anomalies detected for this campaign.</p>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">{t('dashboard.anomalies.allClear')}</h3>
+                <p className="text-sm text-gray-500 dark:text-slate-400">{t('dashboard.anomalies.allClearDesc')}</p>
               </div>
             </Card>
           ) : (
             <div>
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Active Anomalies</h2>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t('dashboard.anomalies.activeTitle')}</h2>
               <div className="space-y-4">
                 {activeAnomalies.map((anomaly) => {
                   const config = severityConfig[anomaly.severity];
@@ -167,23 +169,23 @@ export function AnomaliesPage() {
                           </div>
                           <div>
                             <div className="flex items-center gap-2 mb-1">
-                              <Badge variant={config.variant}>{config.label}</Badge>
+                              <Badge variant={config.variant}>{t(`dashboard.anomalies.severity.${anomaly.severity}`)}</Badge>
                               <span className="text-xs text-gray-500 capitalize">{anomaly.type.replace('_', ' ')}</span>
-                              {anomaly.auto_paused && <Badge variant="yellow" size="sm">Auto-Paused</Badge>}
+                              {anomaly.auto_paused && <Badge variant="yellow" size="sm">{t('dashboard.anomalies.autoPausedBadge')}</Badge>}
                             </div>
                             <h3 className="text-sm font-semibold text-gray-900 dark:text-white">{anomaly.campaign_name}</h3>
                             <p className="text-xs text-gray-500 mt-1">{anomaly.description}</p>
                             <div className="flex items-center gap-4 mt-2">
                               <span className="text-xs text-gray-500">
-                                {anomaly.metric}: <span className="font-medium text-danger-600">{anomaly.current_value}</span> (threshold: {anomaly.threshold_value})
+                                {anomaly.metric}: <span className="font-medium text-danger-600">{anomaly.current_value}</span> {t('dashboard.anomalies.thresholdInline', { value: anomaly.threshold_value })}
                               </span>
-                              <span className="text-xs text-gray-400">Detected {formatRelativeTime(anomaly.detected_at)}</span>
+                              <span className="text-xs text-gray-400">{t('dashboard.anomalies.detected', { when: formatRelativeTime(anomaly.detected_at) })}</span>
                             </div>
                           </div>
                         </div>
                         {canResolve && (
                           <Button size="sm" variant="outline" onClick={() => handleResolve(anomaly.id)} loading={resolveMutation.isPending}>
-                            Resolve
+                            {t('dashboard.anomalies.resolve')}
                           </Button>
                         )}
                       </div>
