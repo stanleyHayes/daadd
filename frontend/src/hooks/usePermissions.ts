@@ -45,12 +45,26 @@ export function usePermissions() {
 
   const canAny = (resource: Resource) => permissions.some((p) => p.startsWith(`${resource}:`));
 
+  /**
+   * Staff accounts are governed by the permission set. Everyone else —
+   * advertisers, merchants, consumers — has no role_id and therefore no
+   * permissions, and is still governed by the older role matrix in lib/rbac.
+   *
+   * Rather than leave two systems disagreeing, callers pass the legacy answer
+   * in and this picks whichever one actually applies to this account.
+   */
+  const isStaff = query.isSuccess && permissions.length > 0;
+  const canOr = (legacy: boolean, resource: Resource, action: Action = 'read') =>
+    isStaff ? can(resource, action) : legacy;
+
   return {
     ...query,
     permissions,
     roleName: query.data?.roleName ?? null,
     can,
     canAny,
+    canOr,
+    isStaff,
     /** True once we have a real answer, so callers can hold back a redirect. */
     isResolved: query.isSuccess || query.isError,
   };

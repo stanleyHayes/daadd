@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card, CardHeader } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
+import { Can } from '@/components/auth/Can';
 import { Input } from '@/components/ui/Input';
 import { EmptyState } from '@/components/ui/EmptyState';
 import {
@@ -150,9 +151,11 @@ export function SiteContentPage() {
           title={t(`dashboard.siteContent.tabs.${TABS.find((e) => e.type === tab)!.i18n}`)}
           subtitle={t(`dashboard.siteContent.hints.${TABS.find((e) => e.type === tab)!.i18n}`)}
           action={
-            <Button size="sm" onClick={() => setDraft(blankDraft(tab))}>
-              <Plus className="h-4 w-4 mr-1.5" /> {t('dashboard.siteContent.add')}
-            </Button>
+            <Can resource="site_content" action="create">
+              <Button size="sm" onClick={() => setDraft(blankDraft(tab))}>
+                <Plus className="h-4 w-4 mr-1.5" /> {t('dashboard.siteContent.add')}
+              </Button>
+            </Can>
           }
         />
 
@@ -202,13 +205,15 @@ export function SiteContentPage() {
                   </p>
                 </button>
 
-                <button
-                  onClick={() => removeItem(item)}
-                  className="shrink-0 rounded-lg p-1.5 text-text-muted transition-colors hover:bg-danger-50 hover:text-danger-600 dark:hover:bg-danger-900/20"
-                  title={t('dashboard.common.remove')}
-                >
-                  <Trash2 className="h-4 w-4" />
-                </button>
+                <Can resource="site_content" action="delete">
+                  <button
+                    onClick={() => removeItem(item)}
+                    className="shrink-0 rounded-lg p-1.5 text-text-muted transition-colors hover:bg-danger-50 hover:text-danger-600 dark:hover:bg-danger-900/20"
+                    title={t('dashboard.common.remove')}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                </Can>
               </li>
             ))}
           </ul>

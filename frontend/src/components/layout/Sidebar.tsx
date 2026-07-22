@@ -28,6 +28,7 @@ import {
   ShieldCheck,
   Sparkles,
   LayoutTemplate,
+  KeyRound,
   ChevronLeft,
   ChevronRight,
   Zap,
@@ -93,6 +94,7 @@ const allNavGroups: NavGroup[] = [
       { key: 'admin-moderation', resource: 'moderation', href: '/dashboard/admin/moderation', label: 'reviewModeration', icon: ShieldCheck },
       { key: 'admin-loyalty', resource: 'loyalty', href: '/dashboard/admin/loyalty', label: 'loyaltyVip', icon: Sparkles },
       { key: 'site-content', resource: 'site_content', href: '/dashboard/admin/site-content', label: 'siteContent', icon: LayoutTemplate },
+      { key: 'roles-access', resource: 'roles', href: '/dashboard/admin/roles', label: 'roles', icon: KeyRound },
     ],
   },
 ];
