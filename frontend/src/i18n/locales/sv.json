@@ -33,24 +33,24 @@
   },
   "landing": {
     "hero": {
-      "title": "Get paid for the ads you choose to watch",
-      "blurb": "Browse ads from brands you care about, earn tokens for your attention, and spend them with the merchants running the campaign.",
-      "ctaAdvertiser": "I want to advertise",
-      "noCard": "Free to join. No credit card needed."
+      "title": "Få betalt för annonserna du väljer att titta på",
+      "blurb": "Bläddra bland annonser från varumärken du bryr dig om, tjäna tokens för din uppmärksamhet och använd dem hos handlarna som kör kampanjen.",
+      "ctaAdvertiser": "Jag vill annonsera",
+      "noCard": "Gratis att gå med. Inget kreditkort behövs."
     },
     "featured": {
       "title": "Utvalda annonser",
-      "subtitle": "Campaigns running right now, with the tokens each one pays.",
+      "subtitle": "Kampanjer som pågår just nu, med de tokens var och en ger.",
       "emptyTitle": "Inga utvalda annonser ännu",
-      "emptyDesc": "No campaigns are featured at the moment. Browse everything that is live instead.",
+      "emptyDesc": "Inga kampanjer är utvalda just nu. Bläddra bland alla pågående kampanjer i stället.",
       "emptyAction": "Visa alla annonser"
     },
     "features": {
-      "title": "What advertisers get",
-      "subtitle": "The reporting side of the platform, for the people paying for the campaigns.",
+      "title": "Det annonsörer får",
+      "subtitle": "Plattformens rapporteringsdel, för dem som betalar för kampanjerna.",
       "ai": {
         "title": "AI-driven optimering",
-        "desc": "Bid, budget and targeting adjustments are proposed from live campaign data. You approve them, or let the campaign apply them automatically."
+        "desc": "Förslag på ändringar av bud, budget och målgrupp tas fram utifrån live-data från kampanjen. Du godkänner dem, eller låter kampanjen tillämpa dem automatiskt."
       },
       "realtime": {
         "title": "Realtidsanalys",
@@ -66,7 +66,7 @@
       },
       "anomalies": {
         "title": "Avvikelsedetektering",
-        "desc": "Alerts when clicks, spend or traffic move outside their usual range, so a broken campaign does not run all weekend."
+        "desc": "Larm när klick, kostnad eller trafik rör sig utanför sitt vanliga intervall, så att en trasig kampanj inte rullar hela helgen."
       },
       "attribution": {
         "title": "Attribution över enheter",
@@ -75,7 +75,7 @@
     },
     "how": {
       "title": "Så fungerar det",
-      "subtitle": "How the tokens get from a campaign budget into your pocket.",
+      "subtitle": "Så tar sig dina tokens från en kampanjbudget till din ficka.",
       "browse": {
         "title": "Bläddra",
         "desc": "Utforska en utvald katalog med annonser från ledande varumärken i olika branscher. Filtrera efter det som intresserar dig."
@@ -86,12 +86,12 @@
       },
       "earn": {
         "title": "Tjäna",
-        "desc": "Tokens land in your balance. Spend them as a discount at the merchant, or keep stacking them."
+        "desc": "Dina tokens hamnar på ditt saldo. Använd dem som rabatt hos handlaren, eller fortsätt samla på dig."
       }
     },
     "faq": {
       "title": "Vanliga frågor",
-      "subtitle": "Tokens, budgets and what the platform does with your data.",
+      "subtitle": "Tokens, budgetar och vad plattformen gör med dina data.",
       "stillHaveQuestions": "Har du fortfarande frågor?",
       "contactUs": "Kontakta oss",
       "q1": "Hur tjänar jag belöningar på annonser?",
@@ -99,7 +99,7 @@
       "q2": "Är det gratis för annonsörer att gå med?",
       "a2": "Ja. Det är gratis att skapa ett annonsörskonto. Du betalar bara för den annonsbudget du avsätter till kampanjer, plus en liten plattformsavgift baserad på resultat.",
       "q3": "Vad skiljer SmartAdDeals från andra annonsnätverk?",
-      "a3": "Consumers get paid for their attention instead of being tracked for it, and the merchant funding the campaign is the one who redeems the reward. The analytics side is ordinary: heatmaps, attribution and anomaly alerts.",
+      "a3": "Konsumenter får betalt för sin uppmärksamhet i stället för att spåras för den, och handlaren som finansierar kampanjen är den som löser in belöningen. Analysdelen är helt vanlig: heatmaps, attribution och avvikelselarm.",
       "q4": "Hur fungerar AI-optimeringen?",
       "a4": "Vår maskininlärningsmotor analyserar kampanjresultat i realtid och föreslår justeringar av bud, budgetar, målgrupper och kreativt material för att förbättra ROAS.",
       "q5": "Kan jag koppla SmartAdDeals till mina befintliga annonskonton?",
@@ -107,7 +107,7 @@
     },
     "categories": {
       "title": "Bläddra efter kategori",
-      "subtitle": "Jump straight to the industries you are interested in.",
+      "subtitle": "Gå direkt till de branscher du är intresserad av.",
       "entertainment": "Underhållning",
       "sports": "Sport",
       "retail": "Detaljhandel",
@@ -116,8 +116,8 @@
       "finance": "Finans"
     },
     "finalCta": {
-      "title": "Ready to start?",
-      "desc": "Sign up as a consumer to start earning, or as an advertiser to run your first campaign.",
+      "title": "Redo att börja?",
+      "desc": "Registrera dig som konsument för att börja tjäna tokens, eller som annonsör för att köra din första kampanj.",
       "primary": "Skapa gratiskonto",
       "noCard": "Inget kreditkort krävs"
     }
@@ -125,7 +125,7 @@
   "auth": {
     "login": {
       "title": "Välkommen tillbaka",
-      "subtitle": "Sign in to continue",
+      "subtitle": "Logga in för att fortsätta",
       "email": "E-postadress",
       "emailPlaceholder": "du@företag.se",
       "password": "Lösenord",
@@ -137,12 +137,12 @@
       "createAccount": "Skapa gratiskonto",
       "successToast": "Välkommen tillbaka!",
       "errorToast": "Ogiltiga uppgifter. Försök igen.",
-      "panelTitle": "Campaign reporting that shows where the budget went",
-      "panelBlurb": "Impressions, clicks, conversions and spend, plus heatmaps and anomaly alerts when something moves out of range."
+      "panelTitle": "Kampanjrapportering som visar vart budgeten tog vägen",
+      "panelBlurb": "Visningar, klick, konverteringar och kostnad, plus heatmaps och avvikelselarm när något rör sig utanför sitt normala intervall."
     },
     "register": {
       "title": "Skapa ditt konto",
-      "subtitle": "Takes about a minute",
+      "subtitle": "Tar ungefär en minut",
       "roleLabel": "Jag vill...",
       "roleAdvertiser": "Annonsera",
       "roleAdvertiserDesc": "Skapa och optimera kampanjer",
@@ -170,8 +170,8 @@
       "signIn": "Logga in",
       "successToast": "Kontot har skapats! Logga in.",
       "errorToast": "Registreringen misslyckades. E-postadressen kan redan vara registrerad.",
-      "panelTitle": "Two ways in",
-      "panelBlurb": "Run campaigns and track what they return, or browse ads and earn tokens you can spend at the merchant."
+      "panelTitle": "Två vägar in",
+      "panelBlurb": "Kör kampanjer och följ vad de ger tillbaka, eller bläddra bland annonser och tjäna tokens du kan använda hos handlaren."
     },
     "forgot": {
       "backToLogin": "Tillbaka till inloggningen",
@@ -196,13 +196,13 @@
     }
   },
   "about": {
-    "title": "About SmartAdDeals",
-    "subtitle": "An advertising platform where the person watching the ad gets paid for it.",
-    "missionTitle": "Why we built it",
-    "missionP1": "Online advertising pays everyone except the person actually watching. We wanted to try the other arrangement: the advertiser sets aside part of their discount, the consumer earns it by engaging, and the merchant hands it back at the till.",
-    "missionP2": "The advertiser side is a normal analytics product. Campaign reporting, geographic heatmaps, cross-device attribution, anomaly alerts, and a narrative view that turns a campaign into something you can hand to a stakeholder.",
+    "title": "Om SmartAdDeals",
+    "subtitle": "En annonsplattform där den som tittar på annonsen får betalt för det.",
+    "missionTitle": "Varför vi byggde det",
+    "missionP1": "Onlineannonsering betalar alla utom den som faktiskt tittar. Vi ville testa det omvända upplägget: annonsören avsätter en del av sin rabatt, konsumenten tjänar in den genom att engagera sig, och handlaren betalar tillbaka den i kassan.",
+    "missionP2": "Annonsörssidan är en helt vanlig analysprodukt. Kampanjrapportering, geografiska heatmaps, attribution över flera enheter, avvikelselarm och en berättande vy som gör kampanjen till något du kan lämna över till en intressent.",
     "valuesTitle": "Våra värderingar",
-    "valuesSubtitle": "What we optimise for when the two sides disagree.",
+    "valuesSubtitle": "Det vi optimerar för när de två sidorna är oense.",
     "values": {
       "precision": {
         "title": "Precision",
@@ -214,7 +214,7 @@
       },
       "innovation": {
         "title": "Innovation",
-        "desc": "We would rather ship an unusual mechanic that works than a familiar one that does not."
+        "desc": "Vi släpper hellre en ovanlig mekanik som fungerar än en välbekant som inte gör det."
       },
       "community": {
         "title": "Gemenskap",
@@ -230,7 +230,7 @@
       }
     },
     "journeyTitle": "Vår resa",
-    "journeySubtitle": "Where the product has got to so far.",
+    "journeySubtitle": "Så här långt har produkten kommit.",
     "milestones": {
       "beginning": {
         "title": "Början",
@@ -254,7 +254,7 @@
       }
     },
     "teamTitle": "Ledningsgrupp",
-    "teamSubtitle": "The people building it.",
+    "teamSubtitle": "Människorna som bygger den.",
     "roles": {
       "ceo": "Vd och medgrundare",
       "cto": "CTO och medgrundare",
@@ -263,24 +263,24 @@
       "headAi": "Chef för AI/ML",
       "headDesign": "Designchef"
     },
-    "ctaTitle": "Get started",
-    "ctaDesc": "Advertisers run campaigns and see where the budget went. Consumers browse ads and earn tokens they can actually spend.",
+    "ctaTitle": "Kom igång",
+    "ctaDesc": "Annonsörer kör kampanjer och ser vart budgeten tog vägen. Konsumenter bläddrar bland annonser och tjänar tokens som de faktiskt kan använda.",
     "ctaPrimary": "Kom igång gratis",
     "stats": {
-      "campaigns": "Campaigns run",
-      "advertisers": "Advertisers",
-      "adViews": "Ad views",
-      "cities": "Towns and cities"
+      "campaigns": "Genomförda kampanjer",
+      "advertisers": "Annonsörer",
+      "adViews": "Annonsvisningar",
+      "cities": "Orter och städer"
     }
   },
   "careers": {
     "title": "Jobba hos oss",
-    "subtitle": "We are building an ad platform that pays the audience. If that sounds like a problem worth working on, get in touch.",
-    "perksTitle": "How we work",
+    "subtitle": "Vi bygger en annonsplattform som betalar publiken. Om det låter som ett problem värt att jobba med, hör av dig.",
+    "perksTitle": "Så jobbar vi",
     "perks": {
       "remote": {
         "title": "Distansarbete först",
-        "desc": "Work from wherever you are. We hire for the work, not the postcode."
+        "desc": "Jobba var du än är. Vi anställer utifrån arbetet, inte postnumret."
       },
       "equity": {
         "title": "Konkurrenskraftigt aktieprogram",
@@ -302,19 +302,19 @@
       "london": "London"
     },
     "noRoleTitle": "Hittar du inte din roll?",
-    "noRoleDesc": "Send us your CV and tell us what you would want to work on.",
-    "noRoles": "There are no open roles right now.",
-    "emailUnset": "Careers email not published yet"
+    "noRoleDesc": "Skicka ditt CV och berätta vad du skulle vilja jobba med.",
+    "noRoles": "Det finns inga lediga tjänster just nu.",
+    "emailUnset": "E-post för jobb är inte publicerad ännu"
   },
   "partners": {
     "title": "Våra partner",
-    "subtitle": "The brands and creators running campaigns on SmartAdDeals. Open a profile to see what they are advertising.",
+    "subtitle": "Varumärkena och kreatörerna som kör kampanjer på SmartAdDeals. Öppna en profil för att se vad de annonserar.",
     "rewards": "Belöningar",
     "viewProfile": "Visa profil"
   },
   "contact": {
-    "title": "Get in touch",
-    "subtitle": "A question, a bug, or a partnership idea. Pick whichever route suits.",
+    "title": "Kontakta oss",
+    "subtitle": "En fråga, en bugg eller en idé om samarbete. Välj den väg som passar.",
     "channels": {
       "email": "Mejla oss",
       "phone": "Ring oss",
@@ -364,8 +364,8 @@
       "q4": "Var hittar jag teknisk dokumentation?",
       "a4": "Registrerade användare når dokumentationen från översikten. Du kan även begära API-dokumentation via det här formuläret."
     },
-    "noChannels": "Contact details have not been published yet.",
-    "sendFailed": "Could not send that. Please try again, or email us directly."
+    "noChannels": "Kontaktuppgifter har inte publicerats ännu.",
+    "sendFailed": "Det gick inte att skicka. Försök igen, eller mejla oss direkt."
   },
   "support": {
     "title": "Supportcenter",
@@ -516,9 +516,9 @@
       "expand": "Expandera",
       "collapse": "Fäll ihop",
       "openMenu": "Öppna menyn",
-      "siteContent": "Website Content",
-      "roles": "Roles & Access",
-      "channels": "Ad Channels"
+      "siteContent": "Webbplatsinnehåll",
+      "roles": "Roller och behörigheter",
+      "channels": "Annonskanaler"
     },
     "home": {
       "title": "Översikt",
@@ -1101,161 +1101,161 @@
       "reset": "Återställ till standard"
     },
     "siteContent": {
-      "title": "Website Content",
-      "intro": "Everything the public marketing site shows about the company. Nothing here is published until you say so, and each section stays hidden on the site while it is empty.",
-      "add": "Add",
-      "saved": "Saved",
-      "saveFailed": "Could not save that",
-      "removed": "Removed",
-      "removeFailed": "Could not remove that",
-      "untitled": "Untitled",
-      "live": "Live on the site",
-      "hidden": "Hidden",
-      "publish": "Publish",
-      "unpublish": "Hide from the site",
-      "publishNow": "Show this on the site",
-      "emptyTitle": "Nothing here yet",
-      "emptyDesc": "Add an entry to start. The matching section stays off the marketing site until at least one item is published.",
+      "title": "Webbplatsinnehåll",
+      "intro": "Allt som den publika webbplatsen visar om företaget. Inget här publiceras förrän du säger till, och varje avsnitt förblir dolt på webbplatsen så länge det är tomt.",
+      "add": "Lägg till",
+      "saved": "Sparad",
+      "saveFailed": "Det gick inte att spara",
+      "removed": "Borttagen",
+      "removeFailed": "Det gick inte att ta bort",
+      "untitled": "Namnlös",
+      "live": "Publicerad på webbplatsen",
+      "hidden": "Dold",
+      "publish": "Publicera",
+      "unpublish": "Dölj från webbplatsen",
+      "publishNow": "Visa detta på webbplatsen",
+      "emptyTitle": "Inget här ännu",
+      "emptyDesc": "Lägg till en post för att komma igång. Motsvarande avsnitt visas inte på webbplatsen förrän minst en post är publicerad.",
       "tabs": {
-        "testimonials": "Testimonials",
-        "caseStudies": "Case studies",
+        "testimonials": "Kundomdömen",
+        "caseStudies": "Kundcase",
         "team": "Team",
-        "milestones": "Milestones",
-        "jobs": "Job openings"
+        "milestones": "Milstolpar",
+        "jobs": "Lediga tjänster"
       },
       "hints": {
-        "testimonials": "Real quotes from real customers, with their permission.",
-        "caseStudies": "A headline result you can evidence if a customer asks.",
-        "team": "Shown on the About page.",
-        "milestones": "The timeline on the About page.",
-        "jobs": "Listed on the Careers page."
+        "testimonials": "Äkta citat från riktiga kunder, med deras tillstånd.",
+        "caseStudies": "Ett tydligt resultat du kan styrka om en kund frågar.",
+        "team": "Visas på Om oss-sidan.",
+        "milestones": "Tidslinjen på Om oss-sidan.",
+        "jobs": "Visas på jobbsidan."
       },
       "fields": {
-        "name": "Name",
-        "role": "Job title",
-        "company": "Company",
-        "body": "Quote or description",
-        "avatar_url": "Photo URL",
-        "metric": "Headline figure",
-        "metric_label": "What it measures",
-        "year": "Year",
-        "title": "Title",
-        "department": "Department",
-        "location": "Location",
-        "apply_url": "Where Apply links to",
-        "order": "Order",
-        "orderHint": "Lower numbers appear first."
+        "name": "Namn",
+        "role": "Titel",
+        "company": "Företag",
+        "body": "Citat eller beskrivning",
+        "avatar_url": "Foto-URL",
+        "metric": "Nyckeltal",
+        "metric_label": "Vad det mäter",
+        "year": "År",
+        "title": "Rubrik",
+        "department": "Avdelning",
+        "location": "Plats",
+        "apply_url": "Vart Ansök länkar",
+        "order": "Ordning",
+        "orderHint": "Lägre nummer visas först."
       },
-      "contactTitle": "Contact details",
-      "contactSubtitle": "Shown on the Contact page and in the footer",
-      "contactHint": "Leave a field blank and the site simply omits that channel. Nothing is invented to fill a gap.",
+      "contactTitle": "Kontaktuppgifter",
+      "contactSubtitle": "Visas på kontaktsidan och i sidfoten",
+      "contactHint": "Lämnar du ett fält tomt utelämnar webbplatsen helt enkelt den kanalen. Inget hittas på för att fylla en lucka.",
       "contact": {
-        "email": "Email address",
-        "phone": "Phone number",
-        "careers_email": "Careers email",
-        "address_line": "Street address",
-        "address_city": "City and postcode",
-        "hours_weekdays": "Weekday hours",
-        "hours_saturday": "Saturday hours",
-        "hours_sunday": "Sunday hours",
-        "legal_entity": "Registered company name",
-        "privacy_email": "Privacy contact email",
-        "legal_email": "Legal contact email"
+        "email": "E-postadress",
+        "phone": "Telefonnummer",
+        "careers_email": "E-post för jobb",
+        "address_line": "Gatuadress",
+        "address_city": "Postnummer och ort",
+        "hours_weekdays": "Öppettider vardagar",
+        "hours_saturday": "Öppettider lördag",
+        "hours_sunday": "Öppettider söndag",
+        "legal_entity": "Registrerat företagsnamn",
+        "privacy_email": "E-post till dataskydd",
+        "legal_email": "E-post till juridik"
       }
     },
     "roles": {
-      "title": "Roles & Access",
-      "intro": "Two different things share the word \"role\" here. An account type says what kind of party someone is on the platform — advertiser, merchant, consumer. The roles below are for SmartAdDeals staff only, and say what each person may touch in this dashboard.",
-      "rolesTitle": "Roles",
-      "rolesSubtitle": "Editing a role changes it for everyone who holds it",
-      "resource": "Area",
+      "title": "Roller och behörigheter",
+      "intro": "Två olika saker delar ordet ”roll” här. En kontotyp anger vilken sorts part någon är på plattformen – annonsör, handlare, konsument. Rollerna nedan gäller bara personal på SmartAdDeals och anger vad varje person får ändra i den här panelen.",
+      "rolesTitle": "Roller",
+      "rolesSubtitle": "Ändrar du en roll ändras den för alla som har den",
+      "resource": "Område",
       "actions": {
-        "read": "View",
-        "create": "Create",
-        "update": "Edit",
-        "delete": "Delete"
+        "read": "Visa",
+        "create": "Skapa",
+        "update": "Redigera",
+        "delete": "Ta bort"
       },
-      "summary": "{{permissions}} permissions · {{users}} people",
-      "systemRole": "Built in — can be edited but not deleted",
-      "noDescription": "No description",
-      "newRolePlaceholder": "New role name",
-      "pickRoleTitle": "Pick a role",
-      "pickRoleDesc": "Choose a role on the left to see and edit what it can do.",
-      "roleCreated": "Role created",
-      "roleSaved": "Role saved",
-      "roleDeleted": "Role deleted",
-      "saveFailed": "That did not save",
-      "staffTitle": "People",
-      "staffSubtitle": "Staff accounts and what each one can reach",
-      "noStaffTitle": "No staff accounts yet",
-      "noStaffDesc": "Invite someone and pick the role they should start with.",
-      "noRole": "No role",
-      "permissionCount": "{{count}} permissions",
-      "adjust": "Adjust",
-      "adjusting": "Adjusting {{name}}",
-      "adjustHint": "These changes apply to this person only. Their role ({{role}}) is left alone.",
-      "invite": "Invite",
-      "inviteName": "Name",
-      "inviteEmail": "Email",
-      "inviteRole": "Starting role",
-      "inviteHint": "They are created without a password and set their own through the reset link.",
-      "inviteSent": "Account created",
+      "summary": "{{permissions}} behörigheter · {{users}} personer",
+      "systemRole": "Inbyggd – kan redigeras men inte tas bort",
+      "noDescription": "Ingen beskrivning",
+      "newRolePlaceholder": "Namn på ny roll",
+      "pickRoleTitle": "Välj en roll",
+      "pickRoleDesc": "Välj en roll till vänster för att se och ändra vad den får göra.",
+      "roleCreated": "Rollen har skapats",
+      "roleSaved": "Rollen har sparats",
+      "roleDeleted": "Rollen har tagits bort",
+      "saveFailed": "Det gick inte att spara",
+      "staffTitle": "Personer",
+      "staffSubtitle": "Personalkonton och vad var och en kommer åt",
+      "noStaffTitle": "Inga personalkonton ännu",
+      "noStaffDesc": "Bjud in någon och välj vilken roll de ska börja med.",
+      "noRole": "Ingen roll",
+      "permissionCount": "{{count}} behörigheter",
+      "adjust": "Justera",
+      "adjusting": "Justerar {{name}}",
+      "adjustHint": "De här ändringarna gäller bara den här personen. Rollen ({{role}}) påverkas inte.",
+      "invite": "Bjud in",
+      "inviteName": "Namn",
+      "inviteEmail": "E-post",
+      "inviteRole": "Startroll",
+      "inviteHint": "Kontot skapas utan lösenord och personen väljer sitt eget via återställningslänken.",
+      "inviteSent": "Kontot har skapats",
       "resources": {
-        "campaigns": "Campaigns",
-        "ads": "Adverts",
-        "analytics": "Analytics",
-        "anomalies": "Anomalies",
-        "ai": "AI optimisation",
+        "campaigns": "Kampanjer",
+        "ads": "Annonser",
+        "analytics": "Analys",
+        "anomalies": "Avvikelser",
+        "ai": "AI-optimering",
         "heatmaps": "Heatmaps",
         "benchmarks": "Benchmarking",
         "storyteller": "Storyteller",
-        "messages": "Messages",
-        "outlets": "Outlets",
-        "redemptions": "Redemptions",
-        "reviews": "Reviews",
-        "rewards": "Rewards",
-        "team": "Campaign team",
-        "platform_accounts": "Ad accounts",
-        "advertisers": "Advertiser approvals",
-        "moderation": "Review moderation",
-        "loyalty": "Loyalty & VIP",
-        "site_content": "Website content",
-        "users": "Staff accounts",
-        "roles": "Roles & permissions",
-        "billing": "Billing",
+        "messages": "Meddelanden",
+        "outlets": "Butiker",
+        "redemptions": "Inlösen",
+        "reviews": "Recensioner",
+        "rewards": "Belöningar",
+        "team": "Kampanjteam",
+        "platform_accounts": "Annonskonton",
+        "advertisers": "Godkännande av annonsörer",
+        "moderation": "Moderering av recensioner",
+        "loyalty": "Lojalitet och VIP",
+        "site_content": "Webbplatsinnehåll",
+        "users": "Personalkonton",
+        "roles": "Roller och behörigheter",
+        "billing": "Fakturering",
         "support": "Support"
       }
     },
     "channels": {
-      "title": "Ad Channels",
-      "intro": "Where your adverts can run. A channel only appears here once it has been enabled, which happens when the supply agreement behind it is in place.",
-      "emptyTitle": "No channels enabled",
-      "emptyDesc": "On-platform display is available by default. Programmatic, connected TV, audio and retail media each need a supply agreement before they can be switched on.",
+      "title": "Annonskanaler",
+      "intro": "Var dina annonser kan visas. En kanal dyker upp här först när den har aktiverats, vilket sker när leverantörsavtalet bakom den är på plats.",
+      "emptyTitle": "Inga kanaler aktiverade",
+      "emptyDesc": "Display på plattformen är tillgängligt som standard. Programmatic, connected TV, ljud och retail media kräver var för sig ett leverantörsavtal innan de kan aktiveras.",
       "types": {
-        "display": "On-platform display",
-        "rtb": "Programmatic exchange",
+        "display": "Display på plattformen",
+        "rtb": "Programmatisk annonsbörs",
         "ctv": "Connected TV",
-        "audio": "Audio",
+        "audio": "Ljud",
         "retail_media": "Retail media"
       },
-      "pricing": "Billed on",
-      "rate": "Rate",
-      "provider": "Supply partner",
-      "estimate": "Estimate cost",
-      "estimateTitle": "{{channel}} estimate",
-      "estimateSubtitle": "What this delivery would cost before you commit any budget",
+      "pricing": "Debiteras per",
+      "rate": "Pris",
+      "provider": "Leverantör",
+      "estimate": "Beräkna kostnad",
+      "estimateTitle": "Uppskattning för {{channel}}",
+      "estimateSubtitle": "Vad den här leveransen skulle kosta innan du binder någon budget",
       "unitsLabel": "{{unit}}",
-      "spend": "Estimated spend",
-      "ecpm": "Effective CPM",
-      "recalculate": "Recalculate"
+      "spend": "Uppskattad kostnad",
+      "ecpm": "Effektiv CPM",
+      "recalculate": "Räkna om"
     }
   },
   "legal": {
-    "contactHeading": "Contact",
-    "privacyIntro": "If you have questions about this Privacy Policy or how we handle your data, contact us:",
-    "termsIntro": "If you have questions about these Terms of Service, contact us:",
-    "notPublished": "Contact details for this policy have not been published yet.",
-    "attnPrivacy": "Attn: Data Protection",
-    "attnLegal": "Attn: Legal"
+    "contactHeading": "Kontakt",
+    "privacyIntro": "Om du har frågor om denna integritetspolicy eller om hur vi hanterar dina uppgifter, kontakta oss:",
+    "termsIntro": "Om du har frågor om dessa användarvillkor, kontakta oss:",
+    "notPublished": "Kontaktuppgifter för den här policyn har inte publicerats ännu.",
+    "attnPrivacy": "Att: Dataskydd",
+    "attnLegal": "Att: Juridik"
   }
 }

@@ -33,24 +33,24 @@
   },
   "landing": {
     "hero": {
-      "title": "Get paid for the ads you choose to watch",
-      "blurb": "Browse ads from brands you care about, earn tokens for your attention, and spend them with the merchants running the campaign.",
-      "ctaAdvertiser": "I want to advertise",
-      "noCard": "Free to join. No credit card needed."
+      "title": "Lass dich für die Anzeigen bezahlen, die du dir ansiehst",
+      "blurb": "Stöber durch Anzeigen von Marken, die dich interessieren, verdiene Tokens für deine Aufmerksamkeit und gib sie bei den Händlern aus, die die Kampagne schalten.",
+      "ctaAdvertiser": "Ich möchte werben",
+      "noCard": "Kostenlos beitreten. Keine Kreditkarte nötig."
     },
     "featured": {
       "title": "Empfohlene Anzeigen",
-      "subtitle": "Campaigns running right now, with the tokens each one pays.",
+      "subtitle": "Kampagnen, die gerade laufen – mit den Tokens, die sie jeweils zahlen.",
       "emptyTitle": "Noch keine empfohlenen Anzeigen",
-      "emptyDesc": "No campaigns are featured at the moment. Browse everything that is live instead.",
+      "emptyDesc": "Zurzeit sind keine Kampagnen hervorgehoben. Stöber stattdessen durch alles, was gerade live ist.",
       "emptyAction": "Alle Anzeigen ansehen"
     },
     "features": {
-      "title": "What advertisers get",
-      "subtitle": "The reporting side of the platform, for the people paying for the campaigns.",
+      "title": "Was Werbetreibende bekommen",
+      "subtitle": "Die Reporting-Seite der Plattform – für die Leute, die die Kampagnen bezahlen.",
       "ai": {
         "title": "KI-gestützte Optimierung",
-        "desc": "Bid, budget and targeting adjustments are proposed from live campaign data. You approve them, or let the campaign apply them automatically."
+        "desc": "Anpassungen bei Gebot, Budget und Targeting werden aus laufenden Kampagnendaten vorgeschlagen. Du gibst sie frei – oder lässt die Kampagne sie automatisch übernehmen."
       },
       "realtime": {
         "title": "Echtzeit-Analysen",
@@ -66,7 +66,7 @@
       },
       "anomalies": {
         "title": "Anomalieerkennung",
-        "desc": "Alerts when clicks, spend or traffic move outside their usual range, so a broken campaign does not run all weekend."
+        "desc": "Warnungen, wenn Klicks, Ausgaben oder Traffic aus ihrem üblichen Rahmen fallen – damit eine kaputte Kampagne nicht das ganze Wochenende weiterläuft."
       },
       "attribution": {
         "title": "Geräteübergreifende Attribution",
@@ -75,7 +75,7 @@
     },
     "how": {
       "title": "So funktioniert es",
-      "subtitle": "How the tokens get from a campaign budget into your pocket.",
+      "subtitle": "Wie die Tokens aus einem Kampagnenbudget in deine Tasche kommen.",
       "browse": {
         "title": "Stöbern",
         "desc": "Entdecke einen kuratierten Katalog mit Anzeigen führender Marken aus verschiedenen Branchen. Filtere nach deinen Interessen."
@@ -86,12 +86,12 @@
       },
       "earn": {
         "title": "Verdienen",
-        "desc": "Tokens land in your balance. Spend them as a discount at the merchant, or keep stacking them."
+        "desc": "Tokens landen in deinem Guthaben. Gib sie als Rabatt beim Händler aus oder sammle weiter."
       }
     },
     "faq": {
       "title": "Häufig gestellte Fragen",
-      "subtitle": "Tokens, budgets and what the platform does with your data.",
+      "subtitle": "Tokens, Budgets und was die Plattform mit deinen Daten macht.",
       "stillHaveQuestions": "Noch Fragen?",
       "contactUs": "Kontaktiere uns",
       "q1": "Wie verdiene ich Prämien mit Anzeigen?",
@@ -99,7 +99,7 @@
       "q2": "Ist der Einstieg für Werbetreibende kostenlos?",
       "a2": "Ja. Ein Werbekonto anzulegen ist kostenlos. Du zahlst nur für das Werbebudget, das du Kampagnen zuweist, plus eine kleine leistungsabhängige Plattformgebühr.",
       "q3": "Was unterscheidet SmartAdDeals von anderen Werbenetzwerken?",
-      "a3": "Consumers get paid for their attention instead of being tracked for it, and the merchant funding the campaign is the one who redeems the reward. The analytics side is ordinary: heatmaps, attribution and anomaly alerts.",
+      "a3": "Konsumenten werden für ihre Aufmerksamkeit bezahlt, statt dafür getrackt zu werden, und der Händler, der die Kampagne finanziert, löst die Prämie auch selbst ein. Die Analytics-Seite ist ganz gewöhnlich: Heatmaps, Attribution und Anomalie-Warnungen.",
       "q4": "Wie funktioniert die KI-Optimierung?",
       "a4": "Unsere Machine-Learning-Engine analysiert die Kampagnenleistung in Echtzeit und empfiehlt Anpassungen an Geboten, Budgets, Zielgruppen und Creatives, um den ROAS zu verbessern.",
       "q5": "Kann ich SmartAdDeals mit meinen bestehenden Werbekonten verbinden?",
@@ -107,7 +107,7 @@
     },
     "categories": {
       "title": "Nach Kategorie stöbern",
-      "subtitle": "Jump straight to the industries you are interested in.",
+      "subtitle": "Spring direkt zu den Branchen, die dich interessieren.",
       "entertainment": "Unterhaltung",
       "sports": "Sport",
       "retail": "Einzelhandel",
@@ -116,8 +116,8 @@
       "finance": "Finanzen"
     },
     "finalCta": {
-      "title": "Ready to start?",
-      "desc": "Sign up as a consumer to start earning, or as an advertiser to run your first campaign.",
+      "title": "Bereit loszulegen?",
+      "desc": "Registriere dich als Konsument, um zu verdienen, oder als Werbetreibender, um deine erste Kampagne zu schalten.",
       "primary": "Kostenloses Konto erstellen",
       "noCard": "Keine Kreditkarte erforderlich"
     }
@@ -125,7 +125,7 @@
   "auth": {
     "login": {
       "title": "Willkommen zurück",
-      "subtitle": "Sign in to continue",
+      "subtitle": "Melde dich an, um fortzufahren",
       "email": "E-Mail-Adresse",
       "emailPlaceholder": "du@firma.de",
       "password": "Passwort",
@@ -137,12 +137,12 @@
       "createAccount": "Kostenloses Konto erstellen",
       "successToast": "Willkommen zurück!",
       "errorToast": "Ungültige Zugangsdaten. Bitte versuche es erneut.",
-      "panelTitle": "Campaign reporting that shows where the budget went",
-      "panelBlurb": "Impressions, clicks, conversions and spend, plus heatmaps and anomaly alerts when something moves out of range."
+      "panelTitle": "Kampagnen-Reporting, das zeigt, wohin das Budget geflossen ist",
+      "panelBlurb": "Impressions, Klicks, Conversions und Ausgaben, dazu Heatmaps und Anomalie-Warnungen, wenn etwas aus dem Rahmen fällt."
     },
     "register": {
       "title": "Konto erstellen",
-      "subtitle": "Takes about a minute",
+      "subtitle": "Dauert etwa eine Minute",
       "roleLabel": "Ich möchte …",
       "roleAdvertiser": "Werben",
       "roleAdvertiserDesc": "Kampagnen erstellen und optimieren",
@@ -170,8 +170,8 @@
       "signIn": "Anmelden",
       "successToast": "Konto erstellt! Bitte melde dich an.",
       "errorToast": "Registrierung fehlgeschlagen. Die E-Mail-Adresse wird möglicherweise bereits verwendet.",
-      "panelTitle": "Two ways in",
-      "panelBlurb": "Run campaigns and track what they return, or browse ads and earn tokens you can spend at the merchant."
+      "panelTitle": "Zwei Wege hinein",
+      "panelBlurb": "Schalte Kampagnen und verfolge, was sie einbringen – oder stöbere durch Anzeigen und verdiene Tokens, die du beim Händler ausgeben kannst."
     },
     "forgot": {
       "backToLogin": "Zurück zur Anmeldung",
@@ -196,13 +196,13 @@
     }
   },
   "about": {
-    "title": "About SmartAdDeals",
-    "subtitle": "An advertising platform where the person watching the ad gets paid for it.",
-    "missionTitle": "Why we built it",
-    "missionP1": "Online advertising pays everyone except the person actually watching. We wanted to try the other arrangement: the advertiser sets aside part of their discount, the consumer earns it by engaging, and the merchant hands it back at the till.",
-    "missionP2": "The advertiser side is a normal analytics product. Campaign reporting, geographic heatmaps, cross-device attribution, anomaly alerts, and a narrative view that turns a campaign into something you can hand to a stakeholder.",
+    "title": "Über SmartAdDeals",
+    "subtitle": "Eine Werbeplattform, auf der die Person bezahlt wird, die sich die Anzeige ansieht.",
+    "missionTitle": "Warum wir es gebaut haben",
+    "missionP1": "Online-Werbung bezahlt alle außer der Person, die sie sich tatsächlich ansieht. Wir wollten es andersherum versuchen: Der Werbetreibende legt einen Teil seines Rabatts zurück, der Konsument verdient ihn sich durch seine Aufmerksamkeit, und der Händler zahlt ihn an der Kasse wieder aus.",
+    "missionP2": "Die Seite der Werbetreibenden ist ein ganz normales Analytics-Produkt. Kampagnen-Reporting, geografische Heatmaps, geräteübergreifende Attribution, Anomalie-Warnungen und eine erzählende Ansicht, die aus einer Kampagne etwas macht, das du einem Stakeholder in die Hand geben kannst.",
     "valuesTitle": "Unsere Werte",
-    "valuesSubtitle": "What we optimise for when the two sides disagree.",
+    "valuesSubtitle": "Worauf wir optimieren, wenn die beiden Seiten sich uneinig sind.",
     "values": {
       "precision": {
         "title": "Präzision",
@@ -214,7 +214,7 @@
       },
       "innovation": {
         "title": "Innovation",
-        "desc": "We would rather ship an unusual mechanic that works than a familiar one that does not."
+        "desc": "Uns ist eine ungewöhnliche Mechanik, die funktioniert, lieber als eine vertraute, die es nicht tut."
       },
       "community": {
         "title": "Gemeinschaft",
@@ -230,7 +230,7 @@
       }
     },
     "journeyTitle": "Unser Weg",
-    "journeySubtitle": "Where the product has got to so far.",
+    "journeySubtitle": "Wie weit das Produkt bisher gekommen ist.",
     "milestones": {
       "beginning": {
         "title": "Der Anfang",
@@ -254,7 +254,7 @@
       }
     },
     "teamTitle": "Führungsteam",
-    "teamSubtitle": "The people building it.",
+    "teamSubtitle": "Die Menschen, die es bauen.",
     "roles": {
       "ceo": "CEO und Mitgründer",
       "cto": "CTO und Mitgründerin",
@@ -263,24 +263,24 @@
       "headAi": "Leitung KI/ML",
       "headDesign": "Leitung Design"
     },
-    "ctaTitle": "Get started",
-    "ctaDesc": "Advertisers run campaigns and see where the budget went. Consumers browse ads and earn tokens they can actually spend.",
+    "ctaTitle": "Loslegen",
+    "ctaDesc": "Werbetreibende schalten Kampagnen und sehen, wohin das Budget geflossen ist. Konsumenten stöbern durch Anzeigen und verdienen Tokens, die sie wirklich ausgeben können.",
     "ctaPrimary": "Kostenlos loslegen",
     "stats": {
-      "campaigns": "Campaigns run",
-      "advertisers": "Advertisers",
-      "adViews": "Ad views",
-      "cities": "Towns and cities"
+      "campaigns": "Geschaltete Kampagnen",
+      "advertisers": "Werbetreibende",
+      "adViews": "Anzeigenaufrufe",
+      "cities": "Städte und Gemeinden"
     }
   },
   "careers": {
     "title": "Werde Teil unseres Teams",
-    "subtitle": "We are building an ad platform that pays the audience. If that sounds like a problem worth working on, get in touch.",
-    "perksTitle": "How we work",
+    "subtitle": "Wir bauen eine Werbeplattform, die das Publikum bezahlt. Wenn das nach einem Problem klingt, an dem du arbeiten willst, melde dich.",
+    "perksTitle": "Wie wir arbeiten",
     "perks": {
       "remote": {
         "title": "Remote-First",
-        "desc": "Work from wherever you are. We hire for the work, not the postcode."
+        "desc": "Arbeite von dort, wo du bist. Wir stellen für die Arbeit ein, nicht für die Postleitzahl."
       },
       "equity": {
         "title": "Attraktive Beteiligung",
@@ -302,19 +302,19 @@
       "london": "London"
     },
     "noRoleTitle": "Deine Rolle ist nicht dabei?",
-    "noRoleDesc": "Send us your CV and tell us what you would want to work on.",
-    "noRoles": "There are no open roles right now.",
-    "emailUnset": "Careers email not published yet"
+    "noRoleDesc": "Schick uns deinen Lebenslauf und erzähl uns, woran du arbeiten möchtest.",
+    "noRoles": "Zurzeit sind keine Stellen offen.",
+    "emailUnset": "Karriere-E-Mail noch nicht veröffentlicht"
   },
   "partners": {
     "title": "Unsere Partner",
-    "subtitle": "The brands and creators running campaigns on SmartAdDeals. Open a profile to see what they are advertising.",
+    "subtitle": "Die Marken und Creator, die Kampagnen auf SmartAdDeals schalten. Öffne ein Profil, um zu sehen, wofür sie werben.",
     "rewards": "Prämien",
     "viewProfile": "Profil ansehen"
   },
   "contact": {
-    "title": "Get in touch",
-    "subtitle": "A question, a bug, or a partnership idea. Pick whichever route suits.",
+    "title": "Kontakt aufnehmen",
+    "subtitle": "Eine Frage, ein Bug oder eine Idee für eine Partnerschaft. Wähl den Weg, der dir passt.",
     "channels": {
       "email": "Schreib uns",
       "phone": "Ruf uns an",
@@ -364,8 +364,8 @@
       "q4": "Wo finde ich die technische Dokumentation?",
       "a4": "Registrierte Nutzer erreichen unsere Dokumentation über das Dashboard. Du kannst die API-Dokumentation auch über dieses Formular anfordern."
     },
-    "noChannels": "Contact details have not been published yet.",
-    "sendFailed": "Could not send that. Please try again, or email us directly."
+    "noChannels": "Kontaktdaten sind noch nicht veröffentlicht.",
+    "sendFailed": "Konnte nicht gesendet werden. Versuch es noch einmal oder schreib uns direkt eine E-Mail."
   },
   "support": {
     "title": "Support-Center",
@@ -516,9 +516,9 @@
       "expand": "Ausklappen",
       "collapse": "Einklappen",
       "openMenu": "Menü öffnen",
-      "siteContent": "Website Content",
-      "roles": "Roles & Access",
-      "channels": "Ad Channels"
+      "siteContent": "Website-Inhalte",
+      "roles": "Rollen & Zugriff",
+      "channels": "Werbekanäle"
     },
     "home": {
       "title": "Dashboard",
@@ -1101,161 +1101,161 @@
       "reset": "Auf Standard zurücksetzen"
     },
     "siteContent": {
-      "title": "Website Content",
-      "intro": "Everything the public marketing site shows about the company. Nothing here is published until you say so, and each section stays hidden on the site while it is empty.",
-      "add": "Add",
-      "saved": "Saved",
-      "saveFailed": "Could not save that",
-      "removed": "Removed",
-      "removeFailed": "Could not remove that",
-      "untitled": "Untitled",
-      "live": "Live on the site",
-      "hidden": "Hidden",
-      "publish": "Publish",
-      "unpublish": "Hide from the site",
-      "publishNow": "Show this on the site",
-      "emptyTitle": "Nothing here yet",
-      "emptyDesc": "Add an entry to start. The matching section stays off the marketing site until at least one item is published.",
+      "title": "Website-Inhalte",
+      "intro": "Alles, was die öffentliche Marketing-Website über das Unternehmen zeigt. Nichts davon wird veröffentlicht, bevor du es freigibst, und jeder Bereich bleibt auf der Website ausgeblendet, solange er leer ist.",
+      "add": "Hinzufügen",
+      "saved": "Gespeichert",
+      "saveFailed": "Konnte nicht gespeichert werden",
+      "removed": "Entfernt",
+      "removeFailed": "Konnte nicht entfernt werden",
+      "untitled": "Ohne Titel",
+      "live": "Live auf der Website",
+      "hidden": "Ausgeblendet",
+      "publish": "Veröffentlichen",
+      "unpublish": "Auf der Website ausblenden",
+      "publishNow": "Auf der Website anzeigen",
+      "emptyTitle": "Hier ist noch nichts",
+      "emptyDesc": "Füg einen Eintrag hinzu, um zu starten. Der zugehörige Bereich bleibt auf der Marketing-Website ausgeblendet, bis mindestens ein Eintrag veröffentlicht ist.",
       "tabs": {
         "testimonials": "Testimonials",
-        "caseStudies": "Case studies",
+        "caseStudies": "Case Studies",
         "team": "Team",
-        "milestones": "Milestones",
-        "jobs": "Job openings"
+        "milestones": "Meilensteine",
+        "jobs": "Offene Stellen"
       },
       "hints": {
-        "testimonials": "Real quotes from real customers, with their permission.",
-        "caseStudies": "A headline result you can evidence if a customer asks.",
-        "team": "Shown on the About page.",
-        "milestones": "The timeline on the About page.",
-        "jobs": "Listed on the Careers page."
+        "testimonials": "Echte Zitate von echten Kunden, mit deren Einverständnis.",
+        "caseStudies": "Ein Kernergebnis, das du belegen kannst, wenn ein Kunde nachfragt.",
+        "team": "Wird auf der Über-uns-Seite angezeigt.",
+        "milestones": "Die Zeitleiste auf der Über-uns-Seite.",
+        "jobs": "Wird auf der Karriereseite gelistet."
       },
       "fields": {
         "name": "Name",
-        "role": "Job title",
-        "company": "Company",
-        "body": "Quote or description",
-        "avatar_url": "Photo URL",
-        "metric": "Headline figure",
-        "metric_label": "What it measures",
-        "year": "Year",
-        "title": "Title",
-        "department": "Department",
-        "location": "Location",
-        "apply_url": "Where Apply links to",
-        "order": "Order",
-        "orderHint": "Lower numbers appear first."
+        "role": "Jobtitel",
+        "company": "Unternehmen",
+        "body": "Zitat oder Beschreibung",
+        "avatar_url": "Foto-URL",
+        "metric": "Kernzahl",
+        "metric_label": "Was sie misst",
+        "year": "Jahr",
+        "title": "Titel",
+        "department": "Abteilung",
+        "location": "Standort",
+        "apply_url": "Wohin „Bewerben“ verlinkt",
+        "order": "Reihenfolge",
+        "orderHint": "Niedrigere Zahlen erscheinen zuerst."
       },
-      "contactTitle": "Contact details",
-      "contactSubtitle": "Shown on the Contact page and in the footer",
-      "contactHint": "Leave a field blank and the site simply omits that channel. Nothing is invented to fill a gap.",
+      "contactTitle": "Kontaktdaten",
+      "contactSubtitle": "Wird auf der Kontaktseite und im Footer angezeigt",
+      "contactHint": "Lass ein Feld leer, und die Website lässt diesen Kanal einfach weg. Es wird nichts erfunden, um eine Lücke zu füllen.",
       "contact": {
-        "email": "Email address",
-        "phone": "Phone number",
-        "careers_email": "Careers email",
-        "address_line": "Street address",
-        "address_city": "City and postcode",
-        "hours_weekdays": "Weekday hours",
-        "hours_saturday": "Saturday hours",
-        "hours_sunday": "Sunday hours",
-        "legal_entity": "Registered company name",
-        "privacy_email": "Privacy contact email",
-        "legal_email": "Legal contact email"
+        "email": "E-Mail-Adresse",
+        "phone": "Telefonnummer",
+        "careers_email": "Karriere-E-Mail",
+        "address_line": "Straße und Hausnummer",
+        "address_city": "Ort und Postleitzahl",
+        "hours_weekdays": "Öffnungszeiten werktags",
+        "hours_saturday": "Öffnungszeiten Samstag",
+        "hours_sunday": "Öffnungszeiten Sonntag",
+        "legal_entity": "Eingetragener Firmenname",
+        "privacy_email": "E-Mail für Datenschutzanfragen",
+        "legal_email": "E-Mail für rechtliche Anfragen"
       }
     },
     "roles": {
-      "title": "Roles & Access",
-      "intro": "Two different things share the word \"role\" here. An account type says what kind of party someone is on the platform — advertiser, merchant, consumer. The roles below are for SmartAdDeals staff only, and say what each person may touch in this dashboard.",
-      "rolesTitle": "Roles",
-      "rolesSubtitle": "Editing a role changes it for everyone who holds it",
-      "resource": "Area",
+      "title": "Rollen & Zugriff",
+      "intro": "Zwei verschiedene Dinge teilen sich hier das Wort „Rolle“. Ein Kontotyp sagt, welche Art von Partei jemand auf der Plattform ist – Werbetreibender, Händler, Konsument. Die Rollen unten gelten nur für SmartAdDeals-Mitarbeitende und legen fest, was jede Person in diesem Dashboard anfassen darf.",
+      "rolesTitle": "Rollen",
+      "rolesSubtitle": "Änderungen an einer Rolle gelten für alle, die sie haben",
+      "resource": "Bereich",
       "actions": {
-        "read": "View",
-        "create": "Create",
-        "update": "Edit",
-        "delete": "Delete"
+        "read": "Ansehen",
+        "create": "Erstellen",
+        "update": "Bearbeiten",
+        "delete": "Löschen"
       },
-      "summary": "{{permissions}} permissions · {{users}} people",
-      "systemRole": "Built in — can be edited but not deleted",
-      "noDescription": "No description",
-      "newRolePlaceholder": "New role name",
-      "pickRoleTitle": "Pick a role",
-      "pickRoleDesc": "Choose a role on the left to see and edit what it can do.",
-      "roleCreated": "Role created",
-      "roleSaved": "Role saved",
-      "roleDeleted": "Role deleted",
-      "saveFailed": "That did not save",
-      "staffTitle": "People",
-      "staffSubtitle": "Staff accounts and what each one can reach",
-      "noStaffTitle": "No staff accounts yet",
-      "noStaffDesc": "Invite someone and pick the role they should start with.",
-      "noRole": "No role",
-      "permissionCount": "{{count}} permissions",
-      "adjust": "Adjust",
-      "adjusting": "Adjusting {{name}}",
-      "adjustHint": "These changes apply to this person only. Their role ({{role}}) is left alone.",
-      "invite": "Invite",
+      "summary": "{{permissions}} Berechtigungen · {{users}} Personen",
+      "systemRole": "Integriert – bearbeitbar, aber nicht löschbar",
+      "noDescription": "Keine Beschreibung",
+      "newRolePlaceholder": "Name der neuen Rolle",
+      "pickRoleTitle": "Rolle auswählen",
+      "pickRoleDesc": "Wähl links eine Rolle, um zu sehen und zu bearbeiten, was sie darf.",
+      "roleCreated": "Rolle erstellt",
+      "roleSaved": "Rolle gespeichert",
+      "roleDeleted": "Rolle gelöscht",
+      "saveFailed": "Das wurde nicht gespeichert",
+      "staffTitle": "Personen",
+      "staffSubtitle": "Mitarbeiterkonten und worauf jedes davon zugreifen kann",
+      "noStaffTitle": "Noch keine Mitarbeiterkonten",
+      "noStaffDesc": "Lade jemanden ein und wähl die Rolle, mit der die Person startet.",
+      "noRole": "Keine Rolle",
+      "permissionCount": "{{count}} Berechtigungen",
+      "adjust": "Anpassen",
+      "adjusting": "{{name}} anpassen",
+      "adjustHint": "Diese Änderungen gelten nur für diese Person. Ihre Rolle ({{role}}) bleibt unverändert.",
+      "invite": "Einladen",
       "inviteName": "Name",
-      "inviteEmail": "Email",
-      "inviteRole": "Starting role",
-      "inviteHint": "They are created without a password and set their own through the reset link.",
-      "inviteSent": "Account created",
+      "inviteEmail": "E-Mail",
+      "inviteRole": "Startrolle",
+      "inviteHint": "Das Konto wird ohne Passwort angelegt; die Person setzt ihr eigenes über den Zurücksetzen-Link.",
+      "inviteSent": "Konto erstellt",
       "resources": {
-        "campaigns": "Campaigns",
-        "ads": "Adverts",
+        "campaigns": "Kampagnen",
+        "ads": "Anzeigen",
         "analytics": "Analytics",
-        "anomalies": "Anomalies",
-        "ai": "AI optimisation",
+        "anomalies": "Anomalien",
+        "ai": "KI-Optimierung",
         "heatmaps": "Heatmaps",
         "benchmarks": "Benchmarking",
         "storyteller": "Storyteller",
-        "messages": "Messages",
-        "outlets": "Outlets",
-        "redemptions": "Redemptions",
-        "reviews": "Reviews",
-        "rewards": "Rewards",
-        "team": "Campaign team",
-        "platform_accounts": "Ad accounts",
-        "advertisers": "Advertiser approvals",
-        "moderation": "Review moderation",
+        "messages": "Nachrichten",
+        "outlets": "Filialen",
+        "redemptions": "Einlösungen",
+        "reviews": "Bewertungen",
+        "rewards": "Prämien",
+        "team": "Kampagnenteam",
+        "platform_accounts": "Werbekonten",
+        "advertisers": "Freigaben für Werbetreibende",
+        "moderation": "Bewertungsmoderation",
         "loyalty": "Loyalty & VIP",
-        "site_content": "Website content",
-        "users": "Staff accounts",
-        "roles": "Roles & permissions",
-        "billing": "Billing",
+        "site_content": "Website-Inhalte",
+        "users": "Mitarbeiterkonten",
+        "roles": "Rollen & Berechtigungen",
+        "billing": "Abrechnung",
         "support": "Support"
       }
     },
     "channels": {
-      "title": "Ad Channels",
-      "intro": "Where your adverts can run. A channel only appears here once it has been enabled, which happens when the supply agreement behind it is in place.",
-      "emptyTitle": "No channels enabled",
-      "emptyDesc": "On-platform display is available by default. Programmatic, connected TV, audio and retail media each need a supply agreement before they can be switched on.",
+      "title": "Werbekanäle",
+      "intro": "Wo deine Anzeigen laufen können. Ein Kanal erscheint hier erst, wenn er aktiviert wurde – und das passiert, sobald die Supply-Vereinbarung dahinter steht.",
+      "emptyTitle": "Keine Kanäle aktiviert",
+      "emptyDesc": "On-Platform-Display ist standardmäßig verfügbar. Programmatic, Connected TV, Audio und Retail Media brauchen jeweils eine Supply-Vereinbarung, bevor sie aktiviert werden können.",
       "types": {
-        "display": "On-platform display",
-        "rtb": "Programmatic exchange",
+        "display": "On-Platform-Display",
+        "rtb": "Programmatic Exchange",
         "ctv": "Connected TV",
         "audio": "Audio",
-        "retail_media": "Retail media"
+        "retail_media": "Retail Media"
       },
-      "pricing": "Billed on",
-      "rate": "Rate",
-      "provider": "Supply partner",
-      "estimate": "Estimate cost",
-      "estimateTitle": "{{channel}} estimate",
-      "estimateSubtitle": "What this delivery would cost before you commit any budget",
+      "pricing": "Abrechnung nach",
+      "rate": "Preis",
+      "provider": "Supply-Partner",
+      "estimate": "Kosten schätzen",
+      "estimateTitle": "Schätzung für {{channel}}",
+      "estimateSubtitle": "Was diese Auslieferung kosten würde, bevor du Budget festlegst",
       "unitsLabel": "{{unit}}",
-      "spend": "Estimated spend",
-      "ecpm": "Effective CPM",
-      "recalculate": "Recalculate"
+      "spend": "Geschätzte Ausgaben",
+      "ecpm": "Effektiver CPM",
+      "recalculate": "Neu berechnen"
     }
   },
   "legal": {
-    "contactHeading": "Contact",
-    "privacyIntro": "If you have questions about this Privacy Policy or how we handle your data, contact us:",
-    "termsIntro": "If you have questions about these Terms of Service, contact us:",
-    "notPublished": "Contact details for this policy have not been published yet.",
-    "attnPrivacy": "Attn: Data Protection",
-    "attnLegal": "Attn: Legal"
+    "contactHeading": "Kontakt",
+    "privacyIntro": "Wenn du Fragen zu dieser Datenschutzerklärung hast oder dazu, wie wir mit deinen Daten umgehen, melde dich bei uns:",
+    "termsIntro": "Wenn du Fragen zu diesen Nutzungsbedingungen hast, melde dich bei uns:",
+    "notPublished": "Die Kontaktdaten zu dieser Richtlinie sind noch nicht veröffentlicht.",
+    "attnPrivacy": "z. Hd. Datenschutz",
+    "attnLegal": "z. Hd. Rechtsabteilung"
   }
 }
