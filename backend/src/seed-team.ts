@@ -8,6 +8,10 @@ import { ROLE_TEMPLATES, effectivePermissions } from './utils/permissions';
 /**
  * Seeds the roles, the staff accounts and a starting set of website content.
  *
+ * These four are SmartAdDeals employees. Everyone else on the platform —
+ * advertisers, merchants, consumers — signs up through the public flow, gets an
+ * account type rather than a staff role, and never appears here.
+ *
  * Safe to re-run: roles and content are matched on a natural key and updated
  * rather than duplicated, and an existing user is never overwritten (so
  * re-running will not reset somebody's password).
@@ -26,7 +30,7 @@ const TEAM: { name: string; handle: string; role: keyof typeof ROLE_TEMPLATES }[
   { name: 'Stanley', handle: 'stanley', role: 'Super Admin' },
   { name: 'Freddy', handle: 'freddy', role: 'Administrator' },
   { name: 'Serwaa', handle: 'serwaa', role: 'Content Editor' },
-  { name: 'Fiifi', handle: 'fiifi', role: 'Analyst' },
+  { name: 'Fiifi', handle: 'fiifi', role: 'Insights Analyst' },
 ];
 
 /**

@@ -94,9 +94,26 @@ describe('role templates', () => {
     expect(admin).toContain('campaigns:update');
   });
 
-  it('keeps Analyst read-only', () => {
-    const analyst = ROLE_TEMPLATES.Analyst.permissions;
+  it('keeps Insights Analyst read-only', () => {
+    const analyst = ROLE_TEMPLATES['Insights Analyst'].permissions;
     expect(analyst.every((p) => p.endsWith(':read'))).toBe(true);
+  });
+
+  it('lets Policy & Compliance set the rules but not run campaigns', () => {
+    const policy = ROLE_TEMPLATES['Policy & Compliance'].permissions;
+    expect(policy).toContain('loyalty:update');
+    expect(policy).toContain('advertisers:update');
+    expect(policy).not.toContain('campaigns:update');
+    expect(policy).not.toContain('roles:update');
+  });
+
+  it('names no staff role after an account type', () => {
+    // `analyst` is an account type a customer can hold; a staff role sharing
+    // that name makes every conversation about "the analyst" ambiguous.
+    const accountTypes = ['admin', 'advertiser', 'campaign_manager', 'analyst', 'end_user', 'merchant'];
+    for (const name of Object.keys(ROLE_TEMPLATES)) {
+      expect(accountTypes).not.toContain(name.toLowerCase().replace(/ /g, '_'));
+    }
   });
 
   it('every template satisfies the write-implies-read rule', () => {

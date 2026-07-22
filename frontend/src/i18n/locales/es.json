@@ -1164,7 +1164,7 @@
     },
     "roles": {
       "title": "Roles & Access",
-      "intro": "A role is a set of permissions. Someone copies their role when their account is made, and can be adjusted afterwards without moving anyone else who shares it.",
+      "intro": "Two different things share the word \"role\" here. An account type says what kind of party someone is on the platform — advertiser, merchant, consumer. The roles below are for SmartAdDeals staff only, and say what each person may touch in this dashboard.",
       "rolesTitle": "Roles",
       "rolesSubtitle": "Editing a role changes it for everyone who holds it",
       "resource": "Area",

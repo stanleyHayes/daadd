@@ -118,9 +118,27 @@ export function can(permissions: string[], permission: Permission): boolean {
 }
 
 /**
- * The starting points an admin picks from when inviting someone. These are
- * seeded as editable Role documents rather than hard-coded checks, so an admin
- * can change what any of them means without a deploy.
+ * Staff roles — the SECOND of two independent axes. Do not confuse them.
+ *
+ *   1. `User.role` (admin | advertiser | campaign_manager | merchant |
+ *      end_user) says WHAT KIND OF PARTY someone is in the marketplace. An
+ *      advertiser pays to run campaigns; a merchant redeems tokens at the
+ *      till; an end user earns them. These are customers, and their access is
+ *      decided by which product they bought, not by anything an admin ticks.
+ *
+ *   2. `User.role_id` -> one of the Role documents below says WHAT AN INTERNAL
+ *      STAFF MEMBER MAY TOUCH inside the admin dashboard. Only SmartAdDeals
+ *      employees have one. A paying advertiser never does, however senior they
+ *      are at their own company.
+ *
+ * So "Insights Analyst" here is a job on the SmartAdDeals team, and is a
+ * different thing from the `analyst` account type a customer can hold. The
+ * staff role was called plain "Analyst" at first, which collided with that
+ * account type in conversation and in grep; it is deliberately named
+ * differently now.
+ *
+ * These are seeded as editable Role documents rather than hard-coded checks,
+ * so an admin can change what any of them means without a deploy.
  */
 export const ROLE_TEMPLATES: Record<string, { description: string; permissions: Permission[] }> = {
   'Super Admin': {
@@ -144,8 +162,9 @@ export const ROLE_TEMPLATES: Record<string, { description: string; permissions: 
       'support:read',
     ]),
   },
-  Analyst: {
-    description: 'Read-only across reporting. Cannot change campaigns or content.',
+  'Insights Analyst': {
+    description:
+      'Read-only across reporting. Cannot change campaigns, content or anyone\'s access.',
     permissions: normalise([
       'campaigns:read',
       'ads:read',
@@ -166,6 +185,23 @@ export const ROLE_TEMPLATES: Record<string, { description: string; permissions: 
       'messages:read',
       'messages:create',
       'users:read',
+      'redemptions:read',
+    ]),
+  },
+  'Policy & Compliance': {
+    description:
+      'Sets the rules the platform runs on — loyalty thresholds, what gets moderated, who is approved to advertise.',
+    permissions: normalise([
+      'moderation:read',
+      'moderation:update',
+      'moderation:delete',
+      'loyalty:read',
+      'loyalty:update',
+      'advertisers:read',
+      'advertisers:update',
+      'reviews:read',
+      'reviews:delete',
+      'support:read',
       'redemptions:read',
     ]),
   },
