@@ -23,6 +23,7 @@ import messageRoutes from './messages';
 import outletRoutes from './outlets';
 import supportRoutes from './support';
 import siteRoutes from './site';
+import roleRoutes from './roles';
 
 const router = Router();
 
@@ -50,5 +51,6 @@ router.use('/messages', messageRoutes);
 router.use('/outlets', outletRoutes);
 router.use('/support', supportRoutes);
 router.use('/site', siteRoutes);
+router.use('/roles', roleRoutes);
 
 export default router;

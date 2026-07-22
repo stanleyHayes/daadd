@@ -11,6 +11,18 @@ export interface IUser extends Document {
   email: string;
   password_hash: string;
   role: UserRole;
+  /**
+   * The Role document this user was created or invited with. `role` above is
+   * the coarse account type and still drives the JWT; `role_id` carries the
+   * editable permission set. Absent on consumer accounts, which have no
+   * dashboard access to gate.
+   */
+  role_id?: Types.ObjectId;
+  /**
+   * Individual adjustments layered on top of the role, so one person can be
+   * given or denied something without moving everyone who shares their role.
+   */
+  permission_overrides?: { granted: string[]; revoked: string[] };
   avatar_url?: string;
   age_verified: boolean;
   // Advertiser onboarding gates (see routes/auth.ts + utils/advertiser-gate.ts).
@@ -52,6 +64,11 @@ const UserSchema = new Schema<IUser>({
     type: String,
     enum: ['admin', 'advertiser', 'campaign_manager', 'analyst', 'end_user', 'merchant'],
     default: 'end_user',
+  },
+  role_id: { type: Schema.Types.ObjectId, ref: 'Role', index: true },
+  permission_overrides: {
+    granted: { type: [String], default: [] },
+    revoked: { type: [String], default: [] },
   },
   avatar_url: { type: String, default: '' },
   age_verified: { type: Boolean, default: false },

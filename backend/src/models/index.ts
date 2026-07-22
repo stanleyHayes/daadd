@@ -20,5 +20,6 @@ export { Conversation, IConversation } from './Conversation';
 export { Message, IMessage } from './Message';
 export { Outlet, IOutlet } from './Outlet';
 export { PlatformSetting, IPlatformSetting } from './PlatformSetting';
+export { Role, IRole } from './Role';
 export { SiteContent, ISiteContent, SITE_CONTENT_TYPES, SiteContentType } from './SiteContent';
 export { SupportTicket, ISupportTicket, SupportCategory, SupportStatus } from './SupportTicket';
