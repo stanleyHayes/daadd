@@ -1,346 +1,200 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
-import { useAuthStore } from '@/stores/auth.store';
-import { useTranslation } from 'react-i18next';
+import { useEffect, useState, type FormEvent } from 'react';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 import {
- Zap,
- Search,
- Menu,
- X,
- LogOut,
- LayoutDashboard,
- Globe,
- Mail,
+  ArrowRight,
+  Globe2,
+  LayoutDashboard,
+  LogOut,
+  Mail,
+  Menu,
+  Search,
+  Sparkles,
+  X,
+  Zap,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/Button';
-import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
-import { getInitials } from '@/lib/utils';
-import { motion, AnimatePresence } from 'framer-motion';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { ScrollToTop } from '@/components/ui/ScrollToTop';
-import { WatermarkPattern } from '@/components/ui/Watermark';
-import { cn } from '@/lib/utils';
+import { useAuthStore } from '@/stores/auth.store';
+import { getInitials } from '@/lib/utils';
 import { languages } from '@/i18n/config';
 
 export function PublicLayout() {
- const navigate = useNavigate();
- const location = useLocation();
- const { user, isAuthenticated, logout } = useAuthStore();
- const { t, i18n } = useTranslation();
- const [searchQuery, setSearchQuery] = useState('');
- const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
- const [scrolled, setScrolled] = useState(false);
- const navRef = useRef<HTMLDivElement>(null);
- const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, opacity: 0 });
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { user, isAuthenticated, logout } = useAuthStore();
+  const { t, i18n } = useTranslation();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
- useEffect(() => {
- const handleScroll = () => setScrolled(window.scrollY > 10);
- window.addEventListener('scroll', handleScroll, { passive: true });
- return () => window.removeEventListener('scroll', handleScroll);
- }, []);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 18);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
- useEffect(() => {
- setMobileMenuOpen(false);
- }, [location.pathname]);
+  useEffect(() => setMobileMenuOpen(false), [location.pathname]);
 
- useEffect(() => {
- const activeLink = navRef.current?.querySelector('[data-active="true"]') as HTMLElement | null;
- if (activeLink) {
- setIndicatorStyle({
- left: activeLink.offsetLeft,
- width: activeLink.offsetWidth,
- opacity: 1,
- });
- } else {
- setIndicatorStyle((s) => ({ ...s, opacity: 0 }));
- }
- }, [location.pathname]);
+  const handleSearch = (event: FormEvent) => {
+    event.preventDefault();
+    if (!searchQuery.trim()) return;
+    navigate(`/ads?search=${encodeURIComponent(searchQuery.trim())}`);
+    setSearchQuery('');
+  };
 
- const handleSearch = (e: React.FormEvent) => {
- e.preventDefault();
- if (searchQuery.trim()) {
- navigate(`/ads?search=${encodeURIComponent(searchQuery.trim())}`);
- setSearchQuery('');
- }
- };
+  const navLinks = [
+    { to: '/ads', label: t('header.nav.ads') },
+    { to: '/partners', label: t('header.nav.partners') },
+    { to: '/about', label: t('header.nav.about') },
+    { to: '/blog', label: t('header.nav.blog') },
+  ];
+  const isActive = (to: string) => location.pathname.startsWith(to);
 
- const navLinks = [
- { to: '/ads', label: t('header.nav.ads') },
- { to: '/partners', label: t('header.nav.partners') },
- { to: '/about', label: t('header.nav.about') },
- { to: '/blog', label: t('header.nav.blog') },
- ];
+  return (
+    <div className="public-site min-h-screen bg-bg-primary text-text-primary">
+      <div className="relative z-50 bg-primary-900 text-white">
+        <div className="mx-auto flex min-h-9 max-w-[1440px] items-center justify-center gap-2 px-4 py-2 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-white/75 sm:text-xs">
+          <Sparkles className="h-3.5 w-3.5 text-secondary-400" />
+          <span>Attention should create value for everyone.</span>
+          <Link to="/about" className="hidden items-center gap-1 text-secondary-300 transition-colors hover:text-white sm:inline-flex">
+            Our approach <ArrowRight className="h-3 w-3" />
+          </Link>
+        </div>
+      </div>
 
- const isActive = (to: string) => location.pathname.startsWith(to);
+      <header className={`sticky top-0 z-40 border-b transition-all duration-300 ${scrolled ? 'border-slate-200/80 bg-white/90 shadow-[0_14px_50px_rgba(7,20,49,0.08)] backdrop-blur-xl dark:border-slate-800 dark:bg-slate-950/90' : 'border-transparent bg-white/95 dark:bg-slate-950/95'}`}>
+        <div className="mx-auto flex h-[76px] max-w-[1440px] items-center gap-8 px-4 sm:px-6 lg:px-10">
+          <Link to="/" className="group flex shrink-0 items-center gap-3" aria-label="SmartAdDeals home">
+            <span className="relative grid h-10 w-10 place-items-center overflow-hidden rounded-[14px] bg-primary-800 shadow-[0_8px_24px_rgba(0,27,80,0.22)]">
+              <span className="absolute inset-x-0 bottom-0 h-1/2 bg-secondary-400" />
+              <Zap className="relative h-5 w-5 fill-white text-white mix-blend-difference" />
+            </span>
+            <span className="text-lg font-extrabold tracking-[-0.04em] text-primary-900 dark:text-white">
+              SmartAd<span className="text-secondary-600 dark:text-secondary-400">Deals</span>
+            </span>
+          </Link>
 
- return (
- <div className="min-h-screen bg-bg-primary dark:bg-slate-950 flex flex-col relative overflow-x-hidden">
+          <nav className="hidden items-center gap-1 lg:flex">
+            {navLinks.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className={`rounded-full px-4 py-2 text-sm font-semibold transition-all ${isActive(link.to) ? 'bg-primary-900 text-white shadow-sm dark:bg-secondary-400 dark:text-primary-900' : 'text-slate-600 hover:bg-slate-100 hover:text-primary-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white'}`}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
 
- {/* Utility bar */}
- <div className="hidden md:flex items-center justify-end px-6 py-2 bg-primary-800 text-white/80 text-xs">
- <div className="flex items-center gap-4">
- <Link to="/about" className="hover:text-white transition-colors">{t('header.nav.about')}</Link>
- <Link to="/careers" className="hover:text-white transition-colors">{t('header.nav.careers')}</Link>
- <Link to="/contact" className="hover:text-white transition-colors">{t('header.nav.contact')}</Link>
- </div>
- </div>
+          <div className="ml-auto flex items-center gap-2">
+            <form onSubmit={handleSearch} className="relative hidden xl:block">
+              <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+              <input
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
+                placeholder={t('header.searchPlaceholder')}
+                className="h-10 w-48 rounded-full border border-slate-200 bg-slate-50 pl-10 pr-4 text-sm text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:w-60 focus:border-secondary-500 focus:bg-white focus:ring-4 focus:ring-secondary-400/10 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+              />
+            </form>
+            <div className="hidden items-center sm:flex"><LanguageSwitcher /></div>
+            <div className="hidden items-center sm:flex"><ThemeToggle /></div>
 
- {/* Header */}
- <header
- className={cn(
- 'sticky top-0 z-40 transition-all duration-300 border-b',
- scrolled
- ? 'bg-bg-primary/90 dark:bg-slate-950/90 backdrop-blur-xl shadow-md border-border-color dark:border-slate-800'
- : 'bg-bg-primary/80 dark:bg-slate-950/80 backdrop-blur-sm border-transparent'
- )}
- >
- <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
- <div className="flex items-center justify-between h-16">
- {/* Logo */}
- <Link to="/" className="flex items-center gap-2.5 group">
- <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-secondary-500 shadow-lg shadow-secondary-500/25 group-hover:shadow-secondary-500/40 transition-shadow">
- <Zap className="h-5 w-5 text-primary-900" />
- </div>
- <span className="text-lg font-bold gradient-text">SmartAdDeals</span>
- </Link>
+            {isAuthenticated ? (
+              <button onClick={() => navigate('/dashboard')} className="hidden items-center gap-2 rounded-full border border-slate-200 bg-white py-1.5 pl-1.5 pr-3 text-sm font-semibold text-slate-700 transition hover:border-secondary-400 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 sm:flex">
+                <span className="grid h-7 w-7 place-items-center rounded-full bg-primary-900 text-[10px] font-bold text-white dark:bg-secondary-400 dark:text-primary-900">{user ? getInitials(user.name) : 'U'}</span>
+                {user?.name?.split(' ')[0]}
+              </button>
+            ) : (
+              <div className="hidden items-center gap-1.5 sm:flex">
+                <Button variant="ghost" size="sm" shape="pill" onClick={() => navigate('/login')}>{t('header.login')}</Button>
+                <Button size="sm" shape="pill" className="h-10 px-5! shadow-[0_8px_20px_rgba(0,27,80,0.18)]" onClick={() => navigate('/register')}>
+                  {t('header.cta')} <ArrowRight className="h-3.5 w-3.5" />
+                </Button>
+              </div>
+            )}
 
- {/* Pill navbar */}
- <nav
- ref={navRef}
- className="hidden md:flex items-center relative bg-bg-tertiary dark:bg-slate-900 rounded-full p-1 border border-border-color dark:border-slate-800"
- >
- <div
- className="absolute top-1 bottom-1 bg-card-bg dark:bg-slate-800 rounded-full shadow-sm border border-border-color dark:border-slate-700 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
- style={{
- left: indicatorStyle.left,
- width: indicatorStyle.width,
- opacity: indicatorStyle.opacity,
- }}
- />
- {navLinks.map((link) => (
- <Link
- key={link.to}
- to={link.to}
- data-active={isActive(link.to)}
- className={cn(
- 'relative z-10 px-4 py-1.5 rounded-full text-sm font-medium transition-colors',
- isActive(link.to)
- ? 'text-primary-700 dark:text-secondary-300'
- : 'text-text-secondary hover:text-text-primary'
- )}
- >
- {link.label}
- </Link>
- ))}
- </nav>
+            <button className="grid h-10 w-10 place-items-center rounded-full border border-slate-200 text-slate-700 lg:hidden dark:border-slate-700 dark:text-slate-200" onClick={() => setMobileMenuOpen((open) => !open)} aria-label="Toggle menu">
+              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
+        </div>
 
- {/* Right side */}
- <div className="flex items-center gap-3">
- <form onSubmit={handleSearch} className="relative hidden lg:block">
- <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-muted" />
- <input
- type="text"
- placeholder={t('header.searchPlaceholder')}
- value={searchQuery}
- onChange={(e) => setSearchQuery(e.target.value)}
- className="w-56 pl-10 pr-4 py-2 rounded-full border border-border-color dark:border-slate-700 bg-bg-secondary dark:bg-slate-900 text-sm placeholder:text-text-muted dark:text-white focus:outline-none focus:ring-2 focus:ring-secondary-500/30 focus:border-secondary-500 transition-all"
- />
- </form>
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden border-t border-slate-200 bg-white lg:hidden dark:border-slate-800 dark:bg-slate-950">
+              <div className="mx-auto max-w-[1440px] space-y-2 px-4 py-5 sm:px-6">
+                <form onSubmit={handleSearch} className="relative mb-4">
+                  <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                  <input value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)} placeholder={t('header.searchPlaceholder')} className="h-12 w-full rounded-2xl border border-slate-200 bg-slate-50 pl-11 pr-4 text-sm outline-none dark:border-slate-700 dark:bg-slate-900" />
+                </form>
+                {navLinks.map((link) => <Link key={link.to} to={link.to} className={`flex items-center justify-between rounded-2xl px-4 py-3 font-semibold ${isActive(link.to) ? 'bg-primary-900 text-white' : 'text-slate-700 dark:text-slate-200'}`}>{link.label}<ArrowRight className="h-4 w-4" /></Link>)}
+                <div className="flex items-center justify-between border-t border-slate-200 px-3 pt-4 dark:border-slate-800"><LanguageSwitcher /><ThemeToggle /></div>
+                {isAuthenticated ? (
+                  <div className="grid grid-cols-2 gap-2 pt-2">
+                    <Button variant="outline" shape="rounded" onClick={() => navigate('/dashboard')}><LayoutDashboard className="h-4 w-4" /> {t('header.dashboard')}</Button>
+                    <Button variant="ghost" shape="rounded" onClick={() => { logout(); navigate('/'); }}><LogOut className="h-4 w-4" /> {t('header.logout')}</Button>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 gap-2 pt-2"><Button variant="outline" shape="rounded" onClick={() => navigate('/login')}>{t('header.login')}</Button><Button shape="rounded" onClick={() => navigate('/register')}>{t('header.signup')}</Button></div>
+                )}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </header>
 
- <div className="hidden sm:flex items-center">
- <LanguageSwitcher />
- </div>
+      <main className="relative min-h-[60vh] overflow-hidden"><Outlet /></main>
+      <ScrollToTop />
 
- <div className="hidden sm:flex items-center">
- <ThemeToggle />
- </div>
+      <footer className="relative overflow-hidden bg-[#06112b] text-white">
+        <div className="pointer-events-none absolute -right-40 top-0 h-96 w-96 rounded-full bg-secondary-400/10 blur-3xl" />
+        <div className="mx-auto max-w-[1440px] px-4 py-16 sm:px-6 lg:px-10 lg:py-20">
+          <div className="mb-16 grid gap-8 rounded-[32px] border border-white/10 bg-white/[0.04] p-6 sm:p-9 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+            <div>
+              <span className="mb-4 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-secondary-300"><Sparkles className="h-4 w-4" /> The attention exchange</span>
+              <h2 className="max-w-2xl text-3xl font-extrabold tracking-[-0.04em] sm:text-4xl">Better ads. Real rewards. Smarter growth.</h2>
+            </div>
+            <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">
+              <Button shape="pill" size="lg" className="bg-secondary-400! text-primary-900! hover:bg-secondary-300!" onClick={() => navigate('/ads')}>Explore live ads <ArrowRight className="h-4 w-4" /></Button>
+              <Button shape="pill" size="lg" className="border-white/20! bg-white/5! text-white! hover:bg-white/10!" variant="outline" onClick={() => navigate('/register')}>Create a campaign</Button>
+            </div>
+          </div>
 
- {isAuthenticated ? (
- <div className="hidden sm:flex items-center gap-2">
- <button
- onClick={() => navigate('/dashboard')}
- className="flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium text-text-secondary hover:bg-bg-tertiary dark:hover:bg-slate-800 transition-colors"
- >
- <div className="w-8 h-8 rounded-full bg-secondary-400 flex items-center justify-center text-primary-900 text-xs font-bold">
- {user ? getInitials(user.name) : 'U'}
- </div>
- <span className="hidden md:inline">{user?.name}</span>
- </button>
- </div>
- ) : (
- <div className="hidden sm:flex items-center gap-2">
- <Button variant="ghost" size="sm" onClick={() => navigate('/login')}>
- {t('header.login')}
- </Button>
- <Button size="sm" onClick={() => navigate('/register')}>
- {t('header.cta')}
- </Button>
- </div>
- )}
+          <div className="grid gap-12 lg:grid-cols-[1.5fr_0.75fr_0.75fr_0.75fr]">
+            <div>
+              <Link to="/" className="mb-5 flex items-center gap-3"><span className="grid h-10 w-10 place-items-center rounded-[14px] bg-secondary-400"><Zap className="h-5 w-5 fill-primary-900 text-primary-900" /></span><span className="text-xl font-extrabold tracking-[-0.04em]">SmartAdDeals</span></Link>
+              <p className="max-w-sm text-sm leading-7 text-white/55">{t('footer.blurb')}</p>
+              <form className="mt-6 flex max-w-md gap-2" onSubmit={(event) => event.preventDefault()}>
+                <label className="relative min-w-0 flex-1"><Mail className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/35" /><input type="email" aria-label="Email address" placeholder={t('common.emailPlaceholder')} className="h-11 w-full rounded-full border border-white/10 bg-white/[0.06] pl-11 pr-4 text-sm text-white outline-none placeholder:text-white/35 focus:border-secondary-400" /></label>
+                <Button size="sm" shape="pill" className="bg-white! px-5! text-primary-900!">{t('common.subscribe')}</Button>
+              </form>
+            </div>
+            <FooterColumn title={t('footer.platform.title')} links={[[t('footer.platform.browseAds'), '/ads'], [t('footer.platform.partners'), '/partners'], [t('footer.platform.forAdvertisers'), '/register'], [t('footer.platform.blog'), '/blog']]} />
+            <FooterColumn title={t('footer.company.title')} links={[[t('footer.company.about'), '/about'], [t('footer.company.careers'), '/careers'], [t('footer.company.contact'), '/contact'], ['Support', '/support']]} />
+            <FooterColumn title={t('footer.legal.title')} links={[[t('footer.links.privacy'), '/privacy'], [t('footer.links.terms'), '/terms'], [t('footer.links.cookies'), '/cookies']]} />
+          </div>
 
- <button
- className="md:hidden p-2 rounded-lg text-text-secondary hover:bg-bg-tertiary dark:hover:bg-slate-800"
- onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
- >
- {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
- </button>
- </div>
- </div>
- </div>
+          <div className="mt-14 flex flex-col gap-4 border-t border-white/10 pt-7 text-xs text-white/40 sm:flex-row sm:items-center sm:justify-between">
+            <p>{t('footer.copyright')}</p>
+            <p className="flex items-center gap-2"><Globe2 className="h-4 w-4" /> {languages[(i18n.resolvedLanguage ?? i18n.language) as keyof typeof languages]?.name} · Built for meaningful attention</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
 
- {/* Mobile menu */}
- <AnimatePresence>
- {mobileMenuOpen && (
- <motion.div
- initial={{ height: 0, opacity: 0 }}
- animate={{ height: 'auto', opacity: 1 }}
- exit={{ height: 0, opacity: 0 }}
- transition={{ duration: 0.2 }}
- className="md:hidden overflow-hidden border-t border-border-color dark:border-slate-800 bg-bg-primary dark:bg-slate-950"
- >
- <div className="px-4 py-4 space-y-3">
- <form onSubmit={handleSearch} className="relative">
- <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-muted" />
- <input
- type="text"
- placeholder={t('header.searchPlaceholder')}
- value={searchQuery}
- onChange={(e) => setSearchQuery(e.target.value)}
- className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-border-color dark:border-slate-700 bg-bg-secondary dark:bg-slate-900 text-sm dark:text-white focus:outline-none focus:ring-2 focus:ring-secondary-500/30"
- />
- </form>
-
- {navLinks.map((link) => (
- <Link
- key={link.to}
- to={link.to}
- className={cn(
- 'block px-3 py-2.5 rounded-xl text-sm font-medium',
- isActive(link.to)
- ? 'text-primary-700 dark:text-secondary-300 bg-secondary-500/10'
- : 'text-text-secondary'
- )}
- >
- {link.label}
- </Link>
- ))}
-
- <div className="pt-2 border-t border-border-color dark:border-slate-800 flex items-center gap-4 px-3">
- <LanguageSwitcher />
- <ThemeToggle />
- </div>
-
- {isAuthenticated ? (
- <div className="pt-2 space-y-2">
- <button
- onClick={() => navigate('/dashboard')}
- className="w-full flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium text-text-secondary hover:bg-bg-tertiary dark:hover:bg-slate-800"
- >
- <LayoutDashboard className="h-4 w-4" />
- {t('header.dashboard')}
- </button>
- <button
- onClick={() => { logout(); navigate('/'); }}
- className="w-full flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium text-danger-600 hover:bg-danger-50 dark:hover:bg-danger-900/20"
- >
- <LogOut className="h-4 w-4" />
- {t('header.logout')}
- </button>
- </div>
- ) : (
- <div className="pt-2 flex gap-2">
- <Button variant="outline" className="flex-1" onClick={() => navigate('/login')}>
- {t('header.login')}
- </Button>
- <Button className="flex-1" onClick={() => navigate('/register')}>
- {t('header.signup')}
- </Button>
- </div>
- )}
- </div>
- </motion.div>
- )}
- </AnimatePresence>
- </header>
-
- <main className="flex-1 relative">
- <WatermarkPattern />
- <Outlet />
- </main>
-
- <ScrollToTop />
-
- {/* Footer */}
- <footer className="relative bg-primary-900 text-white overflow-hidden">
- <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
- <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
- <div className="lg:col-span-2">
- <div className="flex items-center gap-2.5 mb-4">
- <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-secondary-400">
- <Zap className="h-5 w-5 text-primary-900" />
- </div>
- <span className="text-xl font-bold">SmartAdDeals</span>
- </div>
- <p className="text-sm leading-relaxed max-w-sm mb-6 text-white/70">
- {t('footer.blurb')}
- </p>
- <div className="flex gap-2">
- <div className="relative flex-1">
- <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/50" />
- <input
- type="email"
- placeholder={t('common.emailPlaceholder')}
- className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-primary-800 border border-primary-700 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-secondary-500/30 focus:border-secondary-500"
- />
- </div>
- <Button size="sm" className="bg-secondary-500 hover:bg-secondary-600 text-primary-900 font-semibold">
- {t('common.subscribe')}
- </Button>
- </div>
- </div>
-
- <div>
- <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">{t('footer.platform.title')}</h4>
- <ul className="space-y-3 text-sm text-white/70">
- <li><Link to="/ads" className="hover:text-secondary-300 transition-colors">{t('footer.platform.browseAds')}</Link></li>
- <li><Link to="/partners" className="hover:text-secondary-300 transition-colors">{t('footer.platform.partners')}</Link></li>
- <li><Link to="/register" className="hover:text-secondary-300 transition-colors">{t('footer.platform.forAdvertisers')}</Link></li>
- <li><Link to="/ads" className="hover:text-secondary-300 transition-colors">{t('footer.platform.earnRewards')}</Link></li>
- <li><Link to="/blog" className="hover:text-secondary-300 transition-colors">{t('footer.platform.blog')}</Link></li>
- </ul>
- </div>
-
- <div>
- <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">{t('footer.company.title')}</h4>
- <ul className="space-y-3 text-sm text-white/70">
- <li><Link to="/about" className="hover:text-secondary-300 transition-colors">{t('footer.company.about')}</Link></li>
- <li><Link to="/careers" className="hover:text-secondary-300 transition-colors">{t('footer.company.careers')}</Link></li>
- <li><Link to="/blog" className="hover:text-secondary-300 transition-colors">{t('footer.platform.blog')}</Link></li>
- <li><Link to="/contact" className="hover:text-secondary-300 transition-colors">{t('footer.company.contact')}</Link></li>
- </ul>
- </div>
-
- <div>
- <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">{t('footer.legal.title')}</h4>
- <ul className="space-y-3 text-sm text-white/70">
- <li><Link to="/privacy" className="hover:text-secondary-300 transition-colors">{t('footer.links.privacy')}</Link></li>
- <li><Link to="/terms" className="hover:text-secondary-300 transition-colors">{t('footer.links.terms')}</Link></li>
- <li><Link to="/cookies" className="hover:text-secondary-300 transition-colors">{t('footer.links.cookies')}</Link></li>
- </ul>
- </div>
- </div>
-
- <div className="gold-hairline w-full mt-12 mb-8" />
-
- <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
- <p className="text-sm text-white/60">{t('footer.copyright')}</p>
- <div className="flex items-center gap-4 text-white/60">
- <Globe className="h-4 w-4" />
- <span className="text-sm">{languages[(i18n.resolvedLanguage ?? i18n.language) as keyof typeof languages]?.name}</span>
- </div>
- </div>
- </div>
- </footer>
- </div>
- );
+function FooterColumn({ title, links }: { title: string; links: [string, string][] }) {
+  return (
+    <div>
+      <h3 className="mb-5 text-xs font-bold uppercase tracking-[0.18em] text-white/40">{title}</h3>
+      <ul className="space-y-3.5 text-sm text-white/65">
+        {links.map(([label, to]) => <li key={`${label}-${to}`}><Link to={to} className="transition-colors hover:text-secondary-300">{label}</Link></li>)}
+      </ul>
+    </div>
+  );
 }

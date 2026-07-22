@@ -23,7 +23,7 @@ export function CareersPage() {
  <PageTransition>
  <div>
  {/* Hero */}
- <section className="bg-primary-600 text-white py-20">
+ <section className="relative bg-primary-700 text-white py-20 overflow-hidden">
           <WatermarkBanner icon={<Users />} />
  <div className="max-w-4xl mx-auto px-4 text-center">
  <h1 className="text-4xl sm:text-5xl font-extrabold mb-4">{t('careers.title')}</h1>
@@ -100,7 +100,7 @@ export function CareersPage() {
  </section>
 
  {/* Bottom CTA */}
- <section className="py-16 bg-primary-600 text-white text-center">
+ <section className="relative py-16 bg-primary-700 text-white text-center overflow-hidden">
  <div className="max-w-3xl mx-auto px-4">
  <h2 className="text-2xl font-bold mb-3">{t('careers.noRoleTitle')}</h2>
  <p className="text-primary-100 mb-6">

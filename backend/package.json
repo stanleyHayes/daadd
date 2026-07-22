@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "dev": "tsup src/server.ts --format cjs --out-dir dist --target node20 --sourcemap --silent --external @aws-sdk/client-s3 --watch src --onSuccess \"node dist/server.js\"",
     "build": "tsup src/server.ts --format cjs --out-dir dist --target node20 --sourcemap --clean --external @aws-sdk/client-s3",
     "typecheck": "tsc --noEmit",
     "start": "node dist/server.js",
     "start:prod": "NODE_ENV=production node dist/server.js",
     "test": "jest --runInBand",
-    "seed": "ts-node --transpile-only src/database/seeds/seed.ts",
+    "seed": "tsup src/database/seeds/seed.ts --format cjs --out-dir dist-seed --target node20 --silent --external @aws-sdk/client-s3 && node dist-seed/seed.js",
     "seed:team": "tsup src/seed-team.ts --format cjs --out-dir dist-seed --target node20 --silent --external @aws-sdk/client-s3 && node dist-seed/seed-team.js",
     "lint": "eslint src"
   },

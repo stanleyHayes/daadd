@@ -127,7 +127,7 @@ export function ContactPage() {
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-14">
             {/* Form */}
             <div className="lg:col-span-3">
-              <Card className="overflow-hidden border-0 shadow-lg">
+              <Card padding={false} shape="soft" className="overflow-hidden border-0 shadow-lg">
                 <div className="bg-primary-700 px-6 sm:px-8 py-6">
                   <h2 className="text-xl font-bold text-white">{t('contact.formTitle')}</h2>
                   <p className="text-primary-100 text-sm mt-1">{t('contact.formSubtitle')}</p>
@@ -268,4 +268,3 @@ export function ContactPage() {
     </PageTransition>
   );
 }
-

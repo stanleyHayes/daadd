@@ -7,6 +7,7 @@ import { usePermissions } from '@/hooks/usePermissions';
 import { useAuthStore } from '@/stores/auth.store';
 import { getInitials } from '@/lib/utils';
 import { ROLE_NAV_ITEMS } from '@/lib/rbac';
+import { NAV_ENTRIES, NAV_GROUPS } from '@/lib/navigation';
 import type { UserRole } from '@/types';
 import {
   LayoutDashboard,
@@ -38,68 +39,30 @@ import {
   LogOut,
 } from 'lucide-react';
 
-interface NavItem {
-  key: string;
-  /** Permission resource gating this item. Empty means always available. */
-  resource: string;
-  href: string;
-  /** i18n key under `dashboard.nav` */
-  label: string;
-  icon: React.ComponentType<{ className?: string }>;
-}
-
-interface NavGroup {
-  /** i18n key under `dashboard.nav` */
-  title: string;
-  items: NavItem[];
-}
-
-const allNavGroups: NavGroup[] = [
-  {
-    title: 'overview',
-    items: [{ key: 'dashboard', resource: 'analytics', href: '/dashboard', label: 'dashboard', icon: LayoutDashboard }],
-  },
-  {
-    title: 'campaigns',
-    items: [
-      { key: 'campaigns', resource: 'campaigns', href: '/dashboard/campaigns', label: 'campaigns', icon: Megaphone },
-      { key: 'channels', resource: 'campaigns', href: '/dashboard/channels', label: 'channels', icon: Radio },
-      { key: 'ai-optimization', resource: 'ai', href: '/dashboard/ai-optimization', label: 'aiOptimization', icon: Brain },
-      { key: 'anomalies', resource: 'anomalies', href: '/dashboard/anomalies', label: 'anomalies', icon: AlertTriangle },
-    ],
-  },
-  {
-    title: 'analytics',
-    items: [
-      { key: 'analytics', resource: 'analytics', href: '/dashboard/analytics', label: 'analytics', icon: BarChart3 },
-      { key: 'heatmaps', resource: 'heatmaps', href: '/dashboard/heatmaps', label: 'heatmaps', icon: Map },
-      { key: 'benchmarking', resource: 'benchmarks', href: '/dashboard/benchmarking', label: 'benchmarking', icon: TrendingUp },
-      { key: 'storyteller', resource: 'storyteller', href: '/dashboard/storyteller', label: 'storyteller', icon: BookOpen },
-    ],
-  },
-  {
-    title: 'workspace',
-    items: [
-      { key: 'messages', resource: 'messages', href: '/dashboard/messages', label: 'messages', icon: MessageSquare },
-      { key: 'merchant', resource: 'analytics', href: '/dashboard/merchant', label: 'merchant', icon: Store },
-      { key: 'outlets', resource: 'outlets', href: '/dashboard/outlets', label: 'outlets', icon: MapPin },
-      { key: 'team', resource: 'team', href: '/dashboard/team', label: 'team', icon: Users },
-      { key: 'platform-accounts', resource: 'platform_accounts', href: '/dashboard/platform-accounts', label: 'adAccounts', icon: Plug },
-      { key: 'profile', resource: '', href: '/dashboard/profile', label: 'profile', icon: User },
-      { key: 'settings', resource: '', href: '/dashboard/settings', label: 'settings', icon: Settings },
-    ],
-  },
-  {
-    title: 'admin',
-    items: [
-      { key: 'admin-advertisers', resource: 'advertisers', href: '/dashboard/admin/advertisers', label: 'advertiserApprovals', icon: UserCheck },
-      { key: 'admin-moderation', resource: 'moderation', href: '/dashboard/admin/moderation', label: 'reviewModeration', icon: ShieldCheck },
-      { key: 'admin-loyalty', resource: 'loyalty', href: '/dashboard/admin/loyalty', label: 'loyaltyVip', icon: Sparkles },
-      { key: 'site-content', resource: 'site_content', href: '/dashboard/admin/site-content', label: 'siteContent', icon: LayoutTemplate },
-      { key: 'roles-access', resource: 'roles', href: '/dashboard/admin/roles', label: 'roles', icon: KeyRound },
-    ],
-  },
-];
+/** Icons stay here; everything else comes from the shared navigation map. */
+const NAV_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  dashboard: LayoutDashboard,
+  campaigns: Megaphone,
+  channels: Radio,
+  'ai-optimization': Brain,
+  anomalies: AlertTriangle,
+  analytics: BarChart3,
+  heatmaps: Map,
+  benchmarking: TrendingUp,
+  storyteller: BookOpen,
+  messages: MessageSquare,
+  merchant: Store,
+  outlets: MapPin,
+  team: Users,
+  'platform-accounts': Plug,
+  profile: User,
+  settings: Settings,
+  'admin-advertisers': UserCheck,
+  'admin-moderation': ShieldCheck,
+  'admin-loyalty': Sparkles,
+  'site-content': LayoutTemplate,
+  'roles-access': KeyRound,
+};
 
 interface SidebarProps {
   collapsed: boolean;
@@ -123,16 +86,15 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
   // open. Staff accounts carry permissions; consumer accounts do not, so they
   // fall back to the role map alone rather than losing their whole sidebar.
   const usesPermissions = isResolved && permissions.length > 0;
-  const visibleGroups = allNavGroups
-    .map((group) => ({
-      ...group,
-      items: group.items.filter(
-        (item) =>
-          allowedKeys.includes(item.key) &&
-          (!usesPermissions || !item.resource || can(item.resource, 'read'))
-      ),
-    }))
-    .filter((group) => group.items.length > 0);
+  const visibleGroups = NAV_GROUPS.map((title) => ({
+    title,
+    items: NAV_ENTRIES.filter(
+      (item) =>
+        item.group === title &&
+        allowedKeys.includes(item.key) &&
+        (!usesPermissions || !item.resource || can(item.resource, 'read'))
+    ),
+  })).filter((group) => group.items.length > 0);
 
   const handleLogout = () => {
     setMobileOpen(false);
@@ -175,7 +137,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
                     item.href === '/dashboard'
                       ? location.pathname === '/dashboard'
                       : location.pathname.startsWith(item.href);
-                  const Icon = item.icon;
+                  const Icon = NAV_ICONS[item.key] ?? LayoutDashboard;
                   return (
                     <li key={item.href}>
                       <Link

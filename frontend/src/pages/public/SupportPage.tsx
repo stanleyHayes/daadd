@@ -59,17 +59,21 @@ export function SupportPage() {
 
   return (
     <PageTransition>
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
-        <div className="text-center">
-          <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300">
+      <div className="bg-bg-secondary pb-20 dark:bg-slate-950">
+        <section className="relative overflow-hidden bg-primary-700 text-white">
+          <div className="mx-auto max-w-4xl px-4 py-20 text-center sm:px-6 sm:py-24">
+          <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-secondary-400 text-primary-900 shadow-lg">
             <LifeBuoy className="h-6 w-6" />
           </div>
-          <h1 className="mt-3 text-3xl font-bold text-text-primary">{t('support.title')}</h1>
-          <p className="mt-2 text-text-secondary">{t('support.subtitle')}</p>
-        </div>
+          <h1 className="mt-5 text-4xl font-black tracking-[-0.045em] sm:text-6xl">{t('support.title')}</h1>
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-white/65">{t('support.subtitle')}</p>
+          </div>
+        </section>
+
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-10 space-y-8">
 
         {/* FAQ */}
-        <Card>
+        <Card shape="soft" className="shadow-[0_20px_60px_rgba(7,20,49,0.09)]">
           <h2 className="text-lg font-semibold text-text-primary mb-4">{t('support.faqTitle')}</h2>
           <div className="divide-y divide-border-color dark:divide-slate-800">
             {faq.map((item, i) => (
@@ -126,7 +130,7 @@ export function SupportPage() {
         </div>
 
         {/* Form */}
-        <Card>
+        <Card shape="soft" className="shadow-[0_20px_60px_rgba(7,20,49,0.07)]">
           <h2 className="text-lg font-semibold text-text-primary">{deskLabel(activeDesk.key)}</h2>
           <p className="mt-1 mb-4 text-sm text-text-secondary">{deskBlurb(activeDesk.key)}</p>
 
@@ -173,6 +177,7 @@ export function SupportPage() {
             {t('support.submit', { desk: deskLabel(activeDesk.key) })}
           </Button>
         </Card>
+        </div>
       </div>
     </PageTransition>
   );

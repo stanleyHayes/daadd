@@ -4,7 +4,7 @@ import { ROLE_NAV_ITEMS, PERMISSIONS, hasPermission, canAccessRoute } from './rb
 describe('ROLE_NAV_ITEMS', () => {
   it('contains exactly the expected roles', () => {
     expect(Object.keys(ROLE_NAV_ITEMS).sort()).toEqual(
-      ['admin', 'advertiser', 'campaign_manager', 'analyst', 'end_user'].sort()
+      ['admin', 'advertiser', 'campaign_manager', 'analyst', 'merchant', 'end_user'].sort()
     );
   });
 
@@ -58,8 +58,12 @@ describe('canAccessRoute', () => {
     expect(canAccessRoute('ADMIN', '/dashboard')).toBe(false);
   });
 
-  it('returns false for unknown route keys', () => {
-    expect(canAccessRoute('admin', '/dashboard/nonexistent-page')).toBe(false);
+  it('lets an unknown route through so the router can render its 404', () => {
+    // Changed deliberately. This used to redirect to the overview, which made a
+    // typo'd or dead link look like a permissions problem. Real pages are each
+    // wrapped in their own ProtectedRoute, so an unmapped path only ever
+    // matches `path="*"` — letting it through grants access to nothing.
+    expect(canAccessRoute('admin', '/dashboard/nonexistent-page')).toBe(true);
   });
 });
 

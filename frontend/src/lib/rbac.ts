@@ -1,4 +1,5 @@
 import type { UserRole } from '@/types';
+import { navEntryForPath } from '@/lib/navigation';
 
 // Define which sidebar nav keys each role can see
 export const ROLE_NAV_ITEMS: Record<UserRole, string[]> = {
@@ -31,16 +32,20 @@ export function hasPermission(userRole: string, permission: PermissionKey): bool
 }
 
 /**
- * Determines if a user role can access a given dashboard route.
- * end_user cannot access any dashboard routes.
- * Other roles are checked against their ROLE_NAV_ITEMS.
+ * Whether a role may open a dashboard route.
+ *
+ * Resolves the route through the shared navigation map rather than parsing the
+ * URL. The previous version took the first path segment after `/dashboard`,
+ * which for any nested route produced `"admin"` — a key no role holds — so every
+ * `/dashboard/admin/*` page redirected even for a Super Admin who could see the
+ * links in the sidebar.
+ *
+ * An unrecognised route is allowed through so the router can render its own 404
+ * rather than silently bouncing to the overview.
  */
 export function canAccessRoute(userRole: string, route: string): boolean {
-  // Extract the first segment after /dashboard/
-  // e.g. /dashboard/campaigns/new -> "campaigns"
-  // e.g. /dashboard -> "dashboard"
-  const stripped = route.replace(/^\/dashboard\/?/, '');
-  const routeKey = stripped === '' ? 'dashboard' : stripped.split('/')[0];
+  const entry = navEntryForPath(route);
+  if (!entry) return true;
 
-  return ROLE_NAV_ITEMS[userRole as UserRole]?.includes(routeKey) ?? false;
+  return ROLE_NAV_ITEMS[userRole as UserRole]?.includes(entry.key) ?? false;
 }
