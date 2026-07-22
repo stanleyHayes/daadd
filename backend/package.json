@@ -8,7 +8,7 @@
     "typecheck": "tsc --noEmit",
     "start": "node dist/server.js",
     "start:prod": "NODE_ENV=production node dist/server.js",
-    "test": "jest --passWithNoTests",
+    "test": "jest --runInBand",
     "seed": "ts-node --transpile-only src/database/seeds/seed.ts",
     "seed:team": "ts-node --transpile-only src/seed-team.ts",
     "lint": "eslint src"

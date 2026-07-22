@@ -1,10 +1,15 @@
 import { Router, Request, Response } from 'express';
 import { Types } from 'mongoose';
 import PDFDocument from 'pdfkit';
-import { Campaign, Redemption, Review } from '../models';
+import { Campaign, Redemption, Review, DeviceEvent, AdView } from '../models';
 import { authMiddleware } from '../middleware/auth';
 import { success } from '../utils/response';
 import { seededRandom } from '../utils/seeded';
+import {
+  campaignTotals,
+  campaignTimeSeries,
+  campaignTrend,
+} from '../services/campaign-metrics.service';
 
 const router = Router();
 
@@ -81,21 +86,6 @@ function hasValidDateFilters(req: Request, res: Response): boolean {
   return true;
 }
 
-function generateTimeSeries(days = 14) {
-  const data = [];
-  const now = new Date();
-  for (let i = days - 1; i >= 0; i--) {
-    const date = new Date(now);
-    date.setDate(date.getDate() - i);
-    data.push({
-      date: date.toISOString().split('T')[0],
-      impressions: Math.floor(Math.random() * 5000) + 1000,
-      clicks: Math.floor(Math.random() * 300) + 50,
-      conversions: Math.floor(Math.random() * 60) + 5,
-    });
-  }
-  return data;
-}
 
 // NOTE: there is no real event stream in this deployment. Export reports use
 // a DETERMINISTIC SYNTHETIC series seeded from the campaign id so CSV and PDF
@@ -189,24 +179,32 @@ router.get('/merchant', authMiddleware, async (req: Request, res: Response) => {
 router.get('/dashboard', authMiddleware, async (req: Request, res: Response) => {
   try {
     if (!hasValidDateFilters(req, res)) return;
-    const totalCampaigns = await Campaign.countDocuments();
-    const totalSpend = await Campaign.aggregate([
-      { $group: { _id: null, total: { $sum: '$budget_spent' } } },
+    const [totalCampaigns, totalSpend, delivery] = await Promise.all([
+      Campaign.countDocuments(),
+      Campaign.aggregate([{ $group: { _id: null, total: { $sum: '$budget_spent' } } }]),
+      DeviceEvent.aggregate<{ _id: string; count: number }>([
+        { $group: { _id: '$event_type', count: { $sum: 1 } } },
+      ]),
     ]);
+
+    const byType = new Map(delivery.map((d) => [d._id, d.count]));
+    const impressions = (byType.get('impression') ?? 0) + (await AdView.countDocuments());
+    const clicks = byType.get('click') ?? 0;
 
     res.json(success({
       totalCampaigns,
-      totalImpressions: 124000 + Math.floor(Math.random() * 10000),
-      totalClicks: 8400 + Math.floor(Math.random() * 1000),
-      avgCTR: 6.8,
+      totalImpressions: impressions,
+      totalClicks: clicks,
+      avgCTR: impressions > 0 ? Number(((clicks / impressions) * 100).toFixed(2)) : 0,
       totalSpend: totalSpend[0]?.total || 0,
-      campaignChange: 12,
-      impressionChange: 8,
-      clickChange: 15,
-      ctrChange: -2,
-      spendChange: 5,
-      bounceRate: 34,
-      bounceRateChange: -3,
+      hasDeliveryData: impressions > 0 || clicks > 0,
+      // Period-over-period comparison needs a baseline this deployment does not
+      // retain yet. null omits the indicator rather than inventing a trend.
+      campaignChange: null,
+      impressionChange: null,
+      clickChange: null,
+      ctrChange: null,
+      spendChange: null,
     }));
   } catch (err: any) {
     res.status(500).json({ success: false, message: err.message || 'Failed to fetch dashboard metrics' });
@@ -227,23 +225,26 @@ router.get('/dashboard/:campaignId', authMiddleware, async (req: Request, res: R
       return;
     }
 
-    const impressions = Math.floor((campaign.budget_total || 0) * 2.5);
-    const clicks = Math.floor(impressions * 0.068);
-    const money = await campaignMoneyMetrics(campaignId, campaign.budget_spent || 0);
+    const [totals, trend, money] = await Promise.all([
+      campaignTotals(campaignId),
+      campaignTrend(campaignId),
+      campaignMoneyMetrics(campaignId, campaign.budget_spent || 0),
+    ]);
 
     res.json(success({
       totalCampaigns: 1,
-      totalImpressions: impressions,
-      totalClicks: clicks,
-      avgCTR: 6.8,
+      totalImpressions: totals.impressions,
+      totalClicks: totals.clicks,
+      avgCTR: totals.ctr,
       totalSpend: campaign.budget_spent || 0,
-      campaignChange: 0,
-      impressionChange: 4,
-      clickChange: 7,
-      ctrChange: 1,
-      spendChange: -1,
-      bounceRate: 32,
-      bounceRateChange: -1,
+      hasDeliveryData: totals.hasData,
+      // null where there is no prior window to compare against, so the UI can
+      // omit the indicator instead of printing a number derived from nothing.
+      campaignChange: null,
+      impressionChange: trend.impressions,
+      clickChange: trend.clicks,
+      ctrChange: trend.ctr,
+      spendChange: null,
       // Real money metrics from attributed redemptions (recs #1 & #2).
       revenue: money.revenue,
       purchases: money.purchases,
@@ -274,31 +275,72 @@ router.get('/timeseries/:campaignId', authMiddleware, async (req: Request, res: 
       res.status(404).json({ success: false, message: 'Campaign not found' });
       return;
     }
-    res.json(success(generateTimeSeries()));
+    res.json(success(await campaignTimeSeries(campaignId)));
   } catch (err: any) {
     res.status(500).json({ success: false, message: err.message || 'Failed to fetch time series' });
   }
 });
 
-router.get('/funnel/:campaignId', authMiddleware, async (_req: Request, res: Response) => {
+router.get('/funnel/:campaignId', authMiddleware, async (req: Request, res: Response) => {
   try {
+    const campaignId = req.params.campaignId as string;
+    const totals = await campaignTotals(campaignId);
+
+    // An empty array rather than a zeroed funnel: the dashboard already has a
+    // "No funnel data" state, which reads better than three bars of nothing.
+    if (!totals.hasData) {
+      res.json(success([]));
+      return;
+    }
+
     res.json(success([
-      { label: 'Impressions', value: 10000, color: '#1e3a8a' },
-      { label: 'Clicks', value: 680, color: '#d4af37' },
-      { label: 'Conversions', value: 120, color: '#10b981' },
+      { label: 'Impressions', value: totals.impressions, color: '#1e3a8a' },
+      { label: 'Clicks', value: totals.clicks, color: '#d4af37' },
+      { label: 'Conversions', value: totals.conversions, color: '#10b981' },
     ]));
   } catch (err: any) {
     res.status(500).json({ success: false, message: err.message || 'Failed to fetch funnel data' });
   }
 });
 
-router.get('/devices/:campaignId', authMiddleware, async (_req: Request, res: Response) => {
+router.get('/devices/:campaignId', authMiddleware, async (req: Request, res: Response) => {
   try {
-    res.json(success([
-      { device: 'Desktop', impressions: 6200, clicks: 450, ctr: 7.3, percentage: 48 },
-      { device: 'Mobile', impressions: 4800, clicks: 320, ctr: 6.7, percentage: 38 },
-      { device: 'Tablet', impressions: 2000, clicks: 110, ctr: 5.5, percentage: 14 },
-    ]));
+    const campaignId = req.params.campaignId as string;
+    if (!Types.ObjectId.isValid(campaignId)) {
+      res.json(success([]));
+      return;
+    }
+
+    const rows = await DeviceEvent.aggregate<{
+      _id: string;
+      impressions: number;
+      clicks: number;
+    }>([
+      { $match: { campaign_id: new Types.ObjectId(campaignId) } },
+      {
+        $group: {
+          _id: '$device_type',
+          impressions: { $sum: { $cond: [{ $eq: ['$event_type', 'impression'] }, 1, 0] } },
+          clicks: { $sum: { $cond: [{ $eq: ['$event_type', 'click'] }, 1, 0] } },
+        },
+      },
+    ]);
+
+    const total = rows.reduce((sum, r) => sum + r.impressions, 0);
+    res.json(
+      success(
+        rows
+          .filter((r) => r.impressions > 0 || r.clicks > 0)
+          .map((r) => ({
+            device: r._id ? r._id.charAt(0).toUpperCase() + r._id.slice(1) : 'Other',
+            impressions: r.impressions,
+            clicks: r.clicks,
+            ctr: r.impressions > 0 ? Number(((r.clicks / r.impressions) * 100).toFixed(2)) : 0,
+            percentage: total > 0 ? Math.round((r.impressions / total) * 100) : 0,
+          }))
+          .sort((a, b) => b.impressions - a.impressions)
+      )
+    );
   } catch (err: any) {
     res.status(500).json({ success: false, message: err.message || 'Failed to fetch device breakdown' });
   }

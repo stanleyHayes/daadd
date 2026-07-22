@@ -6,6 +6,7 @@ import { Server } from 'socket.io';
 
 import app from './app';
 import { JWT_SECRET } from './middleware/auth';
+import { registerMetricsHandlers } from './services/metrics-stream.service';
 import { Conversation } from './models';
 import { seedDatabase } from './seed';
 import { scanAllActiveCampaigns } from './services/anomaly-detection.service';
@@ -74,10 +75,12 @@ async function startServer(): Promise<void> {
       try {
         const decoded = jwt.verify(token, JWT_SECRET, { algorithms: ['HS256'] }) as {
           userId?: string;
+          role?: string;
           type?: string;
         };
         if (!decoded.userId || decoded.type === 'refresh') return next(new Error('Unauthorized'));
         socket.data.userId = decoded.userId;
+        socket.data.role = decoded.role;
         next();
       } catch {
         next(new Error('Unauthorized'));
@@ -85,6 +88,8 @@ async function startServer(): Promise<void> {
     });
     io.on('connection', (socket) => {
       socket.join(`user:${socket.data.userId}`);
+      // Live campaign metrics (SPECIFICATION.md §12 Phase 2).
+      registerMetricsHandlers(io, socket);
 
       // Relay a "typing" ping to the OTHER participant of the conversation.
       // The sender is verified as a participant; the client throttles emits.
