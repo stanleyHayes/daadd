@@ -8,9 +8,6 @@ import {
   Mail,
   Phone,
   MapPin,
-  MessageCircle,
-  HelpCircle,
-  Users,
   Send,
   CheckCircle,
   ChevronDown,
@@ -20,22 +17,23 @@ import { WatermarkBanner } from '@/components/ui/Watermark';
 import toast from 'react-hot-toast';
 import { cn } from '@/lib/utils';
 import { useTranslation } from 'react-i18next';
+import { useSubmitTicket } from '@/hooks/useSupport';
+import { useSiteContact } from '@/hooks/useSiteContent';
 
 // Channel labels live in the locale files; only addresses, phone numbers and
 // styling stay here. Channels without a literal `value` render a translated one.
-const contactChannels = [
-  { icon: Mail, key: 'email', value: 'hello@daadd.example', href: 'mailto:hello@daadd.example',
+/**
+ * Channel definitions. The values come from the CMS at render time — a channel
+ * whose value is blank is dropped rather than shown with a placeholder, so an
+ * unconfigured install never prints a phone number nobody answers.
+ */
+const CHANNELS = [
+  { icon: Mail, key: 'email', field: 'email', href: (v: string) => `mailto:${v}`,
     color: 'bg-secondary-100 text-secondary-700 dark:bg-secondary-900/30 dark:text-secondary-300' },
-  { icon: Phone, key: 'phone', value: '+1 (555) 123-4567', href: 'tel:+15551234567',
+  { icon: Phone, key: 'phone', field: 'phone', href: (v: string) => `tel:${v.replace(/\s/g, '')}`,
     color: 'bg-accent-100 text-accent-700 dark:bg-accent-900/30 dark:text-accent-300' },
-  { icon: MapPin, key: 'visit', value: '123 AdTech Blvd, Suite 100', href: '#',
+  { icon: MapPin, key: 'visit', field: 'address_line', href: () => '#',
     color: 'bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300' },
-  { icon: MessageCircle, key: 'chat', href: '/login',
-    color: 'bg-warning-100 text-warning-700 dark:bg-warning-900/30 dark:text-warning-300' },
-  { icon: HelpCircle, key: 'help', href: '#',
-    color: 'bg-danger-100 text-danger-700 dark:bg-danger-900/30 dark:text-danger-300' },
-  { icon: Users, key: 'community', href: '#',
-    color: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300' },
 ] as const;
 
 const FAQ_KEYS = ['q1', 'q2', 'q3', 'q4'] as const;
@@ -45,14 +43,42 @@ const TOPIC_KEYS = ['general', 'sales', 'support', 'partners', 'feedback'] as co
 export function ContactPage() {
   const { t } = useTranslation();
   const topicOptions = TOPIC_KEYS.map((k) => ({ value: k, label: t(`contact.topics.${k}`) }));
+  const submitTicket = useSubmitTicket();
+  const { data: siteContact } = useSiteContact();
   const [sent, setSent] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', topic: '', message: '' });
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Only channels the admin has actually filled in.
+  const channels = CHANNELS.map((def) => ({
+    def,
+    value: (siteContact?.[def.field as keyof typeof siteContact] as string) || '',
+  })).filter((c) => c.value);
+
+  const hours = [
+    { label: 'weekdays', value: siteContact?.hours_weekdays || '' },
+    { label: 'saturday', value: siteContact?.hours_saturday || '' },
+    { label: 'sunday', value: siteContact?.hours_sunday || '' },
+  ].filter((h) => h.value);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success(t('contact.sentToast'));
-    setSent(true);
+    try {
+      await submitTicket.mutateAsync({
+        name: form.name,
+        email: form.email,
+        // The public topics map onto the support desks the backend already has.
+        category: form.topic === 'sales' || form.topic === 'partners' ? 'general' : 'general',
+        subject: form.topic
+          ? t(`contact.topics.${form.topic}`)
+          : t('contact.topics.general'),
+        message: form.message,
+      });
+      toast.success(t('contact.sentToast'));
+      setSent(true);
+    } catch {
+      toast.error(t('contact.sendFailed'));
+    }
   };
 
   return (
@@ -73,26 +99,28 @@ export function ContactPage() {
           </div>
         </section>
 
-        {/* Contact channels — bento grid */}
-        <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {contactChannels.map((channel) => (
-              <a
-                key={channel.key}
-                href={channel.href}
-                className="group bg-card-bg dark:bg-slate-900 border border-border-color dark:border-slate-800 rounded-2xl p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all"
-              >
-                <div className={cn('w-12 h-12 rounded-xl flex items-center justify-center mb-4', channel.color)}>
-                  <channel.icon className="h-6 w-6" />
-                </div>
-                <h3 className="font-semibold text-text-primary mb-1 group-hover:text-secondary-600 transition-colors">
-                  {t(`contact.channels.${channel.key}`)}
-                </h3>
-                <p className="text-sm text-text-muted">{'value' in channel ? channel.value : t(`contact.channels.${channel.key}Value`)}</p>
-              </a>
-            ))}
-          </div>
-        </section>
+        {/* Contact channels — whatever the CMS has published, nothing more */}
+        {channels.length > 0 && (
+          <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {channels.map(({ def, value }) => (
+                <a
+                  key={def.key}
+                  href={def.href(value)}
+                  className="group flex flex-col rounded-2xl border border-border-color bg-card-bg p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md dark:border-slate-800 dark:bg-slate-900"
+                >
+                  <div className={cn('mb-4 flex h-12 w-12 items-center justify-center rounded-xl', def.color)}>
+                    <def.icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="mb-1 font-semibold text-text-primary transition-colors group-hover:text-secondary-600">
+                    {t(`contact.channels.${def.key}`)}
+                  </h3>
+                  <p className="mt-auto text-sm text-text-muted">{value}</p>
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Form + map/availability */}
         <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
@@ -143,7 +171,7 @@ export function ContactPage() {
                           className="block w-full rounded-lg border border-border-color dark:border-slate-600 bg-bg-primary dark:bg-slate-800 px-3 py-2.5 text-sm dark:text-white placeholder:text-text-muted focus:border-secondary-500 focus:ring-1 focus:ring-secondary-500 focus:outline-none resize-y"
                         />
                       </div>
-                      <Button type="submit" fullWidth icon={<Send className="h-4 w-4" />}>
+                      <Button type="submit" fullWidth loading={submitTicket.isPending} icon={<Send className="h-4 w-4" />}>
                         {t('contact.submit')}
                       </Button>
                       <p className="text-xs text-text-muted text-center">
@@ -171,36 +199,34 @@ export function ContactPage() {
               </Card>
             </div>
 
-            {/* Side info */}
-            <div className="lg:col-span-2 space-y-6">
-              <Card className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <Clock className="h-5 w-5 text-secondary-600" />
-                  <h3 className="font-semibold text-text-primary">{t('contact.hoursTitle')}</h3>
-                </div>
-                <ul className="space-y-3 text-sm text-text-muted">
-                  <li className="flex justify-between">
-                    <span>{t('contact.weekdays')}</span>
-                    <span className="font-medium text-text-primary">{t('contact.weekdaysHours')}</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>{t('contact.saturday')}</span>
-                    <span className="font-medium text-text-primary">{t('contact.saturdayHours')}</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>{t('contact.sunday')}</span>
-                    <span className="font-medium text-text-primary">{t('contact.closed')}</span>
-                  </li>
-                </ul>
-              </Card>
+            {/* Side info — office hours and address, only if published */}
+            <div className="space-y-6 lg:col-span-2">
+              {hours.length > 0 && (
+                <Card className="p-6">
+                  <div className="mb-4 flex items-center gap-3">
+                    <Clock className="h-5 w-5 text-secondary-600" />
+                    <h3 className="font-semibold text-text-primary">{t('contact.hoursTitle')}</h3>
+                  </div>
+                  <ul className="space-y-3 text-sm text-text-muted">
+                    {hours.map((row) => (
+                      <li key={row.label} className="flex justify-between gap-4">
+                        <span>{t(`contact.${row.label}`)}</span>
+                        <span className="font-medium text-text-primary">{row.value}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </Card>
+              )}
 
-              <div className="rounded-2xl overflow-hidden border border-border-color dark:border-slate-700 h-64 bg-gray-100 dark:bg-slate-800 flex items-center justify-center">
-                <div className="text-center p-6">
-                  <MapPin className="h-10 w-10 text-secondary-600 mx-auto mb-3" />
-                  <p className="font-semibold text-text-primary">123 AdTech Blvd, Suite 100</p>
-                  <p className="text-sm text-text-muted">San Francisco, CA 94105</p>
-                </div>
-              </div>
+              {siteContact?.address_line && (
+                <Card className="flex flex-col items-center p-8 text-center">
+                  <MapPin className="mb-3 h-9 w-9 text-secondary-600" />
+                  <p className="font-semibold text-text-primary">{siteContact.address_line}</p>
+                  {siteContact.address_city && (
+                    <p className="text-sm text-text-muted">{siteContact.address_city}</p>
+                  )}
+                </Card>
+              )}
             </div>
           </div>
         </section>

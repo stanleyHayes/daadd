@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Shield } from 'lucide-react';
 import { PageTransition } from '@/components/ui/PageTransition';
+import { useSiteContact } from '@/hooks/useSiteContent';
+import { useTranslation } from 'react-i18next';
 import { WatermarkBanner } from '@/components/ui/Watermark';
 
 const sections = [
@@ -18,6 +20,8 @@ const sections = [
 ];
 
 export function PrivacyPage() {
+  const { t } = useTranslation();
+  const { data: contact } = useSiteContact();
   return (
     <PageTransition>
       <section className="relative bg-primary-700 text-white py-16 sm:py-20 overflow-hidden">
@@ -188,13 +192,23 @@ export function PrivacyPage() {
             <p className="text-gray-600 dark:text-slate-300 leading-relaxed mb-4">
               If you have questions about this Privacy Policy or our data practices, please contact us:
             </p>
-            <div className="bg-gray-50 dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 p-6 text-sm text-gray-600 dark:text-slate-300 space-y-1">
-              <p><strong className="text-gray-900 dark:text-white">SmartAdDeals Inc.</strong></p>
-              <p>Attn: Data Protection Officer</p>
-              <p>Email: privacy@daadd.com</p>
-              <p>Address: 100 Market Street, Suite 300, San Francisco, CA 94105</p>
-              <p>EU Representative: SmartAdDeals EU Ltd., Dublin, Ireland</p>
-            </div>
+            {contact?.legal_entity ? (
+              <div className="rounded-xl border border-gray-200 bg-gray-50 p-6 text-sm text-gray-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 space-y-1">
+                <p>
+                  <strong className="text-gray-900 dark:text-white">{contact.legal_entity}</strong>
+                </p>
+                <p>{t('legal.attnPrivacy')}</p>
+                {contact.privacy_email && <p>{contact.privacy_email}</p>}
+                {contact.address_line && (
+                  <p>
+                    {contact.address_line}
+                    {contact.address_city ? `, ${contact.address_city}` : ''}
+                  </p>
+                )}
+              </div>
+            ) : (
+              <p className="text-sm text-text-muted">{t('legal.notPublished')}</p>
+            )}
           </section>
         </div>
       </div>

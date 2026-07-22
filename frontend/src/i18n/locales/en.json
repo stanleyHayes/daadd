@@ -303,8 +303,8 @@
     },
     "noRoleTitle": "Don't see your role?",
     "noRoleDesc": "Send us your CV and tell us what you would want to work on.",
-    "applyToast": "Application for {{role}} submitted! We'll be in touch.",
-    "noRoles": "There are no open roles right now."
+    "noRoles": "There are no open roles right now.",
+    "emailUnset": "Careers email not published yet"
   },
   "partners": {
     "title": "Our Partners",
@@ -349,14 +349,11 @@
     "weekdays": "Monday – Friday",
     "saturday": "Saturday",
     "sunday": "Sunday",
-    "closed": "Closed",
     "faqTitle": "Frequently asked questions",
     "nameLabel": "Name",
     "emailLabel": "Email",
     "topicLabel": "Topic",
     "sentToast": "Message sent! We will get back to you soon.",
-    "weekdaysHours": "9:00 AM – 6:00 PM EST",
-    "saturdayHours": "10:00 AM – 2:00 PM EST",
     "faq": {
       "q1": "How quickly do you respond to inquiries?",
       "a1": "We aim to reply to all messages within one business day. Enterprise customers receive priority support.",
@@ -367,7 +364,8 @@
       "q4": "Where can I find technical documentation?",
       "a4": "Registered users can access our docs from the dashboard. You can also request API documentation through this form."
     },
-    "noChannels": "Contact details have not been published yet."
+    "noChannels": "Contact details have not been published yet.",
+    "sendFailed": "Could not send that. Please try again, or email us directly."
   },
   "support": {
     "title": "Support Centre",
@@ -1157,8 +1155,19 @@
         "address_city": "City and postcode",
         "hours_weekdays": "Weekday hours",
         "hours_saturday": "Saturday hours",
-        "hours_sunday": "Sunday hours"
+        "hours_sunday": "Sunday hours",
+        "legal_entity": "Registered company name",
+        "privacy_email": "Privacy contact email",
+        "legal_email": "Legal contact email"
       }
     }
+  },
+  "legal": {
+    "contactHeading": "Contact",
+    "privacyIntro": "If you have questions about this Privacy Policy or how we handle your data, contact us:",
+    "termsIntro": "If you have questions about these Terms of Service, contact us:",
+    "notPublished": "Contact details for this policy have not been published yet.",
+    "attnPrivacy": "Attn: Data Protection",
+    "attnLegal": "Attn: Legal"
   }
 }

@@ -51,6 +51,9 @@ export interface SiteContact {
   hours_saturday: string;
   hours_sunday: string;
   careers_email: string;
+  legal_entity: string;
+  privacy_email: string;
+  legal_email: string;
 }
 
 /** Counts derived from real data, so they cannot drift into marketing fiction. */

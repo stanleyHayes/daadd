@@ -56,6 +56,9 @@ const CONTACT_FIELDS: (keyof SiteContact)[] = [
   'hours_weekdays',
   'hours_saturday',
   'hours_sunday',
+  'legal_entity',
+  'privacy_email',
+  'legal_email',
 ];
 
 function blankDraft(type: SiteContentType): Partial<SiteContentItem> {

@@ -18,6 +18,10 @@ export interface SiteContact {
   hours_saturday: string;
   hours_sunday: string;
   careers_email: string;
+  /** Named on the Privacy and Terms pages. Blank hides the whole block. */
+  legal_entity: string;
+  privacy_email: string;
+  legal_email: string;
 }
 
 /**
@@ -34,6 +38,9 @@ const EMPTY_CONTACT: SiteContact = {
   hours_saturday: '',
   hours_sunday: '',
   careers_email: '',
+  legal_entity: '',
+  privacy_email: '',
+  legal_email: '',
 };
 
 async function readContact(): Promise<SiteContact> {
