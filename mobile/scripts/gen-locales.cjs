@@ -18,6 +18,11 @@ const translations = JSON.parse(
 );
 const en = JSON.parse(fs.readFileSync(path.join(outDir, 'en.json'), 'utf8'));
 
+/** Interpolation placeholders must survive translation, or the string breaks at runtime. */
+function placeholders(value) {
+  return [...String(value).matchAll(/{{\s*([a-zA-Z0-9_]+)\s*}}/g)].map((m) => m[1]).sort().join(',');
+}
+
 /** Rebuilds `translated` in `template`'s shape and order, falling back to it. */
 function shape(template, translated, missing, prefix = '') {
   const out = {};
@@ -27,6 +32,11 @@ function shape(template, translated, missing, prefix = '') {
     if (value && typeof value === 'object' && !Array.isArray(value)) {
       out[key] = shape(value, translated?.[key] ?? {}, missing, p);
     } else if (typeof translated?.[key] === 'string') {
+      if (placeholders(translated[key]) !== placeholders(value)) {
+        throw new Error(
+          `${p}: translation drops or invents an interpolation placeholder\n  en: ${value}\n  xx: ${translated[key]}`
+        );
+      }
       out[key] = translated[key];
     } else {
       out[key] = value;
