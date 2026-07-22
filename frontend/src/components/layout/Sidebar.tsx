@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useTranslation } from 'react-i18next';
+import { usePermissions } from '@/hooks/usePermissions';
 import { useAuthStore } from '@/stores/auth.store';
 import { getInitials } from '@/lib/utils';
 import { ROLE_NAV_ITEMS } from '@/lib/rbac';
@@ -37,6 +38,8 @@ import {
 
 interface NavItem {
   key: string;
+  /** Permission resource gating this item. Empty means always available. */
+  resource: string;
   href: string;
   /** i18n key under `dashboard.nav` */
   label: string;
@@ -52,44 +55,44 @@ interface NavGroup {
 const allNavGroups: NavGroup[] = [
   {
     title: 'overview',
-    items: [{ key: 'dashboard', href: '/dashboard', label: 'dashboard', icon: LayoutDashboard }],
+    items: [{ key: 'dashboard', resource: 'analytics', href: '/dashboard', label: 'dashboard', icon: LayoutDashboard }],
   },
   {
     title: 'campaigns',
     items: [
-      { key: 'campaigns', href: '/dashboard/campaigns', label: 'campaigns', icon: Megaphone },
-      { key: 'ai-optimization', href: '/dashboard/ai-optimization', label: 'aiOptimization', icon: Brain },
-      { key: 'anomalies', href: '/dashboard/anomalies', label: 'anomalies', icon: AlertTriangle },
+      { key: 'campaigns', resource: 'campaigns', href: '/dashboard/campaigns', label: 'campaigns', icon: Megaphone },
+      { key: 'ai-optimization', resource: 'ai', href: '/dashboard/ai-optimization', label: 'aiOptimization', icon: Brain },
+      { key: 'anomalies', resource: 'anomalies', href: '/dashboard/anomalies', label: 'anomalies', icon: AlertTriangle },
     ],
   },
   {
     title: 'analytics',
     items: [
-      { key: 'analytics', href: '/dashboard/analytics', label: 'analytics', icon: BarChart3 },
-      { key: 'heatmaps', href: '/dashboard/heatmaps', label: 'heatmaps', icon: Map },
-      { key: 'benchmarking', href: '/dashboard/benchmarking', label: 'benchmarking', icon: TrendingUp },
-      { key: 'storyteller', href: '/dashboard/storyteller', label: 'storyteller', icon: BookOpen },
+      { key: 'analytics', resource: 'analytics', href: '/dashboard/analytics', label: 'analytics', icon: BarChart3 },
+      { key: 'heatmaps', resource: 'heatmaps', href: '/dashboard/heatmaps', label: 'heatmaps', icon: Map },
+      { key: 'benchmarking', resource: 'benchmarks', href: '/dashboard/benchmarking', label: 'benchmarking', icon: TrendingUp },
+      { key: 'storyteller', resource: 'storyteller', href: '/dashboard/storyteller', label: 'storyteller', icon: BookOpen },
     ],
   },
   {
     title: 'workspace',
     items: [
-      { key: 'messages', href: '/dashboard/messages', label: 'messages', icon: MessageSquare },
-      { key: 'merchant', href: '/dashboard/merchant', label: 'merchant', icon: Store },
-      { key: 'outlets', href: '/dashboard/outlets', label: 'outlets', icon: MapPin },
-      { key: 'team', href: '/dashboard/team', label: 'team', icon: Users },
-      { key: 'platform-accounts', href: '/dashboard/platform-accounts', label: 'adAccounts', icon: Plug },
-      { key: 'profile', href: '/dashboard/profile', label: 'profile', icon: User },
-      { key: 'settings', href: '/dashboard/settings', label: 'settings', icon: Settings },
+      { key: 'messages', resource: 'messages', href: '/dashboard/messages', label: 'messages', icon: MessageSquare },
+      { key: 'merchant', resource: 'analytics', href: '/dashboard/merchant', label: 'merchant', icon: Store },
+      { key: 'outlets', resource: 'outlets', href: '/dashboard/outlets', label: 'outlets', icon: MapPin },
+      { key: 'team', resource: 'team', href: '/dashboard/team', label: 'team', icon: Users },
+      { key: 'platform-accounts', resource: 'platform_accounts', href: '/dashboard/platform-accounts', label: 'adAccounts', icon: Plug },
+      { key: 'profile', resource: '', href: '/dashboard/profile', label: 'profile', icon: User },
+      { key: 'settings', resource: '', href: '/dashboard/settings', label: 'settings', icon: Settings },
     ],
   },
   {
     title: 'admin',
     items: [
-      { key: 'admin-advertisers', href: '/dashboard/admin/advertisers', label: 'advertiserApprovals', icon: UserCheck },
-      { key: 'admin-moderation', href: '/dashboard/admin/moderation', label: 'reviewModeration', icon: ShieldCheck },
-      { key: 'admin-loyalty', href: '/dashboard/admin/loyalty', label: 'loyaltyVip', icon: Sparkles },
-      { key: 'site-content', href: '/dashboard/admin/site-content', label: 'siteContent', icon: LayoutTemplate },
+      { key: 'admin-advertisers', resource: 'advertisers', href: '/dashboard/admin/advertisers', label: 'advertiserApprovals', icon: UserCheck },
+      { key: 'admin-moderation', resource: 'moderation', href: '/dashboard/admin/moderation', label: 'reviewModeration', icon: ShieldCheck },
+      { key: 'admin-loyalty', resource: 'loyalty', href: '/dashboard/admin/loyalty', label: 'loyaltyVip', icon: Sparkles },
+      { key: 'site-content', resource: 'site_content', href: '/dashboard/admin/site-content', label: 'siteContent', icon: LayoutTemplate },
     ],
   },
 ];
@@ -109,11 +112,21 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
 
   const userRole = (user?.role || 'end_user') as UserRole;
   const allowedKeys = ROLE_NAV_ITEMS[userRole] || [];
+  const { can, isResolved, permissions } = usePermissions();
 
+  // Two gates. The coarse account type decides which nav items exist at all,
+  // and the permission set decides which of those this person can actually
+  // open. Staff accounts carry permissions; consumer accounts do not, so they
+  // fall back to the role map alone rather than losing their whole sidebar.
+  const usesPermissions = isResolved && permissions.length > 0;
   const visibleGroups = allNavGroups
     .map((group) => ({
       ...group,
-      items: group.items.filter((item) => allowedKeys.includes(item.key)),
+      items: group.items.filter(
+        (item) =>
+          allowedKeys.includes(item.key) &&
+          (!usesPermissions || !item.resource || can(item.resource, 'read'))
+      ),
     }))
     .filter((group) => group.items.length > 0);
 
