@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Skeleton } from '@/components/ui/Skeleton';
 import { Card, CardHeader } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Can } from '@/components/auth/Can';
@@ -160,7 +161,11 @@ export function SiteContentPage() {
         />
 
         {isLoading ? (
-          <p className="py-8 text-center text-sm text-text-muted">{t('dashboard.common.loading')}</p>
+          <div className="space-y-2">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <Skeleton key={i} className="h-14" />
+            ))}
+          </div>
         ) : rows.length === 0 && !draft ? (
           <EmptyState
             variant="plain"

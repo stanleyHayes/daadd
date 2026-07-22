@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import { Role, User, SiteContent, PlatformSetting } from './models';
-import { ROLE_TEMPLATES, effectivePermissions } from './utils/permissions';
+import { ROLE_TEMPLATES, ACCOUNT_TYPE_ROLES, effectivePermissions } from './utils/permissions';
 
 /**
  * Seeds the roles, the staff accounts and a starting set of website content.
@@ -112,6 +112,30 @@ async function main() {
     );
     roles.set(name, role._id);
     console.log(`role  ${name.padEnd(16)} ${role.permissions.length} permissions`);
+  }
+
+  // --- account-type baselines ---------------------------------------------
+  // Advertisers, merchants and consumers get their permissions from these
+  // rather than from an assigned role, so nobody has to be set up by hand.
+  for (const [accountType, template] of Object.entries(ACCOUNT_TYPE_ROLES)) {
+    const name = accountType
+      .split('_')
+      .map((w) => w[0].toUpperCase() + w.slice(1))
+      .join(' ');
+    const role = await Role.findOneAndUpdate(
+      { account_type: accountType },
+      {
+        $set: {
+          name,
+          description: template.description,
+          permissions: template.permissions,
+          is_system: true,
+          account_type: accountType,
+        },
+      },
+      { upsert: true, new: true, setDefaultsOnInsert: true }
+    );
+    console.log(`base  ${name.padEnd(16)} ${role.permissions.length} permissions (${accountType})`);
   }
 
   // --- staff accounts ------------------------------------------------------

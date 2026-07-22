@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Skeleton } from '@/components/ui/Skeleton';
 import { Card, CardHeader } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -111,7 +112,11 @@ export function OutletsPage() {
       <Card>
         <CardHeader title={t('dashboard.outlets.yourOutlets')} subtitle={`${outlets.length} location${outlets.length === 1 ? '' : 's'}`} />
         {isLoading ? (
-          <p className="py-6 text-center text-sm text-text-muted">{t('dashboard.common.loading')}</p>
+          <div className="space-y-2 py-2">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <Skeleton key={i} className="h-16" />
+            ))}
+          </div>
         ) : outlets.length === 0 ? (
           <EmptyState
             variant="plain"

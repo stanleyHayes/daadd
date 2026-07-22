@@ -1,3 +1,4 @@
+import { Skeleton } from '@/components/ui/Skeleton';
 import { Card, CardHeader } from '@/components/ui/Card';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/Button';
@@ -24,7 +25,11 @@ export function AdminModerationPage() {
           subtitle={t('dashboard.adminModeration.awaitingReview', { count: queue.length })}
         />
         {isLoading ? (
-          <p className="py-8 text-center text-sm text-text-muted">{t('dashboard.common.loading')}</p>
+          <div className="space-y-2">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <Skeleton key={i} className="h-14" />
+            ))}
+          </div>
         ) : queue.length === 0 ? (
           <EmptyState
             variant="plain"

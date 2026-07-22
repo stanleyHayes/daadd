@@ -3,6 +3,7 @@ import {
   effectivePermissions,
   ALL_PERMISSIONS,
   ROLE_TEMPLATES,
+  ACCOUNT_TYPE_ROLES,
 } from '../utils/permissions';
 
 describe('permission normalisation', () => {
@@ -118,6 +119,59 @@ describe('role templates', () => {
 
   it('every template satisfies the write-implies-read rule', () => {
     for (const [name, template] of Object.entries(ROLE_TEMPLATES)) {
+      for (const permission of template.permissions) {
+        const [resource, action] = permission.split(':');
+        if (action !== 'read') {
+          expect(`${name}: ${template.permissions.join(',')}`).toContain(`${resource}:read`);
+        }
+      }
+    }
+  });
+});
+
+describe('account-type baselines', () => {
+  it('covers every account type except admin', () => {
+    // admin deliberately has none: administrators get theirs from a staff role.
+    expect(Object.keys(ACCOUNT_TYPE_ROLES).sort()).toEqual([
+      'advertiser',
+      'analyst',
+      'campaign_manager',
+      'end_user',
+      'merchant',
+    ]);
+  });
+
+  it('matches what the frontend role matrix already allowed', () => {
+    // Folding these in must not change anyone's access, only where the answer
+    // comes from. These assertions mirror lib/rbac.ts PERMISSIONS.
+    const advertiser = ACCOUNT_TYPE_ROLES.advertiser.permissions;
+    expect(advertiser).toContain('campaigns:create');
+    expect(advertiser).toContain('campaigns:delete');
+
+    const manager = ACCOUNT_TYPE_ROLES.campaign_manager.permissions;
+    expect(manager).toContain('campaigns:update');
+    expect(manager).not.toContain('campaigns:create');
+    expect(manager).not.toContain('campaigns:delete');
+
+    const analyst = ACCOUNT_TYPE_ROLES.analyst.permissions;
+    expect(analyst.every((p) => p.endsWith(':read'))).toBe(true);
+  });
+
+  it('keeps consumers out of the dashboard entirely', () => {
+    const consumer = ACCOUNT_TYPE_ROLES.end_user.permissions;
+    expect(consumer).not.toContain('campaigns:read');
+    expect(consumer).not.toContain('analytics:read');
+  });
+
+  it('gives merchants their outlets but not campaigns', () => {
+    const merchant = ACCOUNT_TYPE_ROLES.merchant.permissions;
+    expect(merchant).toContain('outlets:update');
+    expect(merchant).toContain('redemptions:update');
+    expect(merchant).not.toContain('campaigns:read');
+  });
+
+  it('every baseline satisfies the write-implies-read rule', () => {
+    for (const [name, template] of Object.entries(ACCOUNT_TYPE_ROLES)) {
       for (const permission of template.permissions) {
         const [resource, action] = permission.split(':');
         if (action !== 'read') {

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Skeleton } from '@/components/ui/Skeleton';
 import { Card } from '@/components/ui/Card';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/Button';
@@ -10,7 +11,7 @@ import { PageTransition } from '@/components/ui/PageTransition';
 import { cn } from '@/lib/utils';
 import { INDUSTRIES, DEVICE_TYPES, LANGUAGES, REGIONS } from '@/lib/constants';
 import { useCampaign, useUpdateCampaign } from '@/hooks/useCampaigns';
-import { Loader, Check, ChevronLeft, ChevronRight, Save, Info } from 'lucide-react';
+import { Check, ChevronLeft, ChevronRight, Save, Info } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 // i18n keys under `dashboard.campaignEdit.steps`
@@ -166,7 +167,10 @@ export function CampaignEditPage() {
     return (
       <PageTransition>
         <div className="flex items-center justify-center h-96">
-          <Loader className="h-8 w-8 animate-spin text-primary-600" />
+          <div className="w-full space-y-4">
+            <Skeleton className="h-8 w-64" />
+            <Skeleton variant="card" className="h-96" />
+          </div>
         </div>
       </PageTransition>
     );

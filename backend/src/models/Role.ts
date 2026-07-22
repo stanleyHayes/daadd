@@ -20,6 +20,12 @@ export interface IRole extends Document {
    * end up with no way back into the admin area.
    */
   is_system: boolean;
+  /**
+   * Set when this role is the baseline for an account type (advertiser,
+   * merchant, ...). Users of that type inherit it when they have no role of
+   * their own. Empty for staff roles, which are assigned explicitly.
+   */
+  account_type?: string;
   created_at: Date;
   updated_at: Date;
 }
@@ -36,6 +42,7 @@ const RoleSchema = new Schema<IRole>(
       set: (value: unknown) => normalise(value),
     },
     is_system: { type: Boolean, default: false },
+    account_type: { type: String, default: '', index: true },
   },
   { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }
 );

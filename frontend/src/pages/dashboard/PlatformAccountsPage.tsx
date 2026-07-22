@@ -5,8 +5,8 @@ import toast from 'react-hot-toast';
 import api from '@/lib/api';
 import { Button } from '@/components/ui/Button';
 import { PageHeader } from '@/components/layout/PageHeader';
+import { Skeleton } from '@/components/ui/Skeleton';
 import { Card } from '@/components/ui/Card';
-import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { MetricsCard } from '@/components/analytics/MetricsCard';
 import { Plug, AlertTriangle, Globe } from 'lucide-react';
 
@@ -91,7 +91,11 @@ export function PlatformAccountsPage() {
           title={t('dashboard.platformAccounts.title')}
           subtitle={t('dashboard.platformAccounts.subtitle')}
         />
-        <LoadingSpinner size="lg" className="py-16" />
+        <div className="space-y-3">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <Skeleton key={i} className="h-20" />
+          ))}
+        </div>
       </div>
     );
   }

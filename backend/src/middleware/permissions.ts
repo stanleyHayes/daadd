@@ -14,7 +14,12 @@ export async function resolvePermissions(userId: string): Promise<Permission[]> 
   const user = await User.findById(userId).select('role role_id permission_overrides').lean();
   if (!user) return [];
 
-  const role = user.role_id ? await Role.findById(user.role_id).select('permissions').lean() : null;
+  // An explicitly assigned role wins. Otherwise fall back to the baseline for
+  // the account type, so advertisers, merchants and consumers get a permission
+  // set without needing a migration or an admin to assign one by hand.
+  const role = user.role_id
+    ? await Role.findById(user.role_id).select('permissions').lean()
+    : await Role.findOne({ account_type: user.role }).select('permissions').lean();
 
   return effectivePermissions(role?.permissions ?? [], user.permission_overrides ?? {});
 }

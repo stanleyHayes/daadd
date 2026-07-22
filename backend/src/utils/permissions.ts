@@ -206,3 +206,72 @@ export const ROLE_TEMPLATES: Record<string, { description: string; permissions: 
     ]),
   },
 };
+
+/**
+ * Default permissions per ACCOUNT TYPE.
+ *
+ * `admin` is deliberately absent: administrators get their permissions from a
+ * staff role above, which is the whole point of that axis. Every other account
+ * type gets one of these as its baseline, seeded as an editable Role document
+ * so what "Advertiser" may do can be changed without a deploy.
+ *
+ * These mirror what the frontend role matrix (lib/rbac.ts) already allowed, so
+ * folding them in changes nobody's access — it just means all six account types
+ * now answer the same question through the same vocabulary instead of two
+ * systems having to agree.
+ */
+export const ACCOUNT_TYPE_ROLES: Record<
+  string,
+  { description: string; permissions: Permission[] }
+> = {
+  advertiser: {
+    description:
+      'Runs their own campaigns end to end: creatives, budget, targeting, reporting and their own outlets.',
+    permissions: normalise([
+      'campaigns:read', 'campaigns:create', 'campaigns:update', 'campaigns:delete',
+      'ads:read', 'ads:create', 'ads:update', 'ads:delete',
+      'analytics:read', 'heatmaps:read', 'benchmarks:read', 'storyteller:read',
+      'ai:read', 'ai:update',
+      'anomalies:read', 'anomalies:update',
+      'team:read', 'team:create', 'team:update',
+      'platform_accounts:read', 'platform_accounts:create', 'platform_accounts:update',
+      'platform_accounts:delete',
+      'outlets:read', 'outlets:create', 'outlets:update', 'outlets:delete',
+      'messages:read', 'messages:create',
+      'redemptions:read', 'reviews:read', 'rewards:read',
+      'billing:read', 'billing:update',
+    ]),
+  },
+  campaign_manager: {
+    description:
+      'Works on an advertiser\'s campaigns. Can edit them, but not create, delete or touch billing.',
+    permissions: normalise([
+      'campaigns:read', 'campaigns:update',
+      'ads:read', 'ads:update',
+      'analytics:read', 'heatmaps:read',
+      'messages:read', 'messages:create',
+    ]),
+  },
+  analyst: {
+    description: 'A read-only seat on an advertiser\'s account. Reporting only, no changes.',
+    permissions: normalise([
+      'campaigns:read', 'analytics:read', 'heatmaps:read',
+      'benchmarks:read', 'storyteller:read',
+    ]),
+  },
+  merchant: {
+    description:
+      'Redeems tokens at the till. Sees their own outlets, redemptions and customer enquiries.',
+    permissions: normalise([
+      'analytics:read',
+      'outlets:read', 'outlets:create', 'outlets:update', 'outlets:delete',
+      'redemptions:read', 'redemptions:update',
+      'messages:read', 'messages:create',
+      'reviews:read',
+    ]),
+  },
+  end_user: {
+    description: 'A consumer earning and spending tokens. No dashboard access.',
+    permissions: normalise(['rewards:read', 'redemptions:read', 'messages:read', 'messages:create']),
+  },
+};

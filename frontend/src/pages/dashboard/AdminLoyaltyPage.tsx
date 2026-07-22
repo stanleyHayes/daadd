@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card, CardHeader } from '@/components/ui/Card';
+import { Skeleton } from '@/components/ui/Skeleton';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { useVipCriteria, useUpdateVipCriteria, type VipCriteria } from '@/hooks/useAdminTools';
@@ -43,7 +44,11 @@ export function AdminLoyaltyPage() {
         />
 
         {isLoading || !form ? (
-          <p className="py-8 text-center text-sm text-text-muted">{t('dashboard.common.loading')}</p>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <Skeleton key={i} className="h-20" />
+            ))}
+          </div>
         ) : (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
