@@ -305,6 +305,7 @@ npm run seed:team --workspace backend   # roles, staff accounts, starter content
 ```
 
 - [docs/USER_GUIDE.md](docs/USER_GUIDE.md) — what each role can do, and how to do it
+  ([PDF](docs/USER_GUIDE.pdf) for sharing; rebuild with `./scripts/build-docs-pdf.sh docs/USER_GUIDE.md`)
 - [docs/ACCESS_CONTROL.md](docs/ACCESS_CONTROL.md) — how the permission model works
 
 ## Internationalisation
