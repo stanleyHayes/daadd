@@ -36,7 +36,6 @@
     "landing": {
       "hero": {
         "badge": "Nu med AI-genererat kreativt material",
-        "title": "Förändra din annonsering med AI",
         "titleLine1": "Upptäck annonser.",
         "titleEarn": "Tjäna",
         "rotating": {
@@ -46,9 +45,7 @@
           "cashBack": "pengar tillbaka."
         },
         "subtitle": "Nå rätt målgrupp, optimera i realtid och maximera din avkastning.",
-        "blurb": "Den intelligenta annonsplattformen som kopplar samman varumärken med engagerade målgrupper. Bläddra bland utvalda annonser och tjäna riktiga belöningar för din uppmärksamhet.",
         "cta": "Starta gratis provperiod",
-        "ctaAdvertiser": "Jag är annonsör",
         "socialProof": "Betrott av över 12 000 annonsörer"
       },
       "stats": {
@@ -59,9 +56,7 @@
       },
       "featured": {
         "title": "Utvalda annonser",
-        "subtitle": "Handplockade kampanjer med de högsta belöningarna",
         "emptyTitle": "Inga utvalda annonser ännu",
-        "emptyDesc": "Utvalda annonser dyker upp här snart. Titta in igen regelbundet, eller bläddra efter kategori för att hitta annonser redan nu!",
         "emptyAction": "Visa alla annonser"
       },
       "blogTeaser": {
@@ -78,11 +73,8 @@
         }
       },
       "features": {
-        "title": "Allt du behöver",
-        "subtitle": "Kraftfulla verktyg för annonsörer och en givande upplevelse för användare – allt i en plattform.",
         "ai": {
-          "title": "AI-driven optimering",
-          "desc": "Maskininlärning optimerar löpande bud, budgetar och målgruppsstyrning för att maximera din ROAS."
+          "title": "AI-driven optimering"
         },
         "realtime": {
           "title": "Realtidsanalys",
@@ -97,8 +89,7 @@
           "desc": "Visualisera annonsresultat per region med interaktiva värmekartor byggda på platsdata i realtid."
         },
         "anomalies": {
-          "title": "Avvikelsedetektering",
-          "desc": "Få omedelbara varningar vid ovanliga toppar eller fall i nyckeltalen. Upptäck problem innan de kostar dig pengar."
+          "title": "Avvikelsedetektering"
         },
         "attribution": {
           "title": "Attribution över enheter",
@@ -120,7 +111,6 @@
       },
       "how": {
         "title": "Så fungerar det",
-        "subtitle": "Tre enkla steg för att börja tjäna belöningar på annonser du faktiskt bryr dig om.",
         "browse": {
           "title": "Bläddra",
           "desc": "Utforska en utvald katalog med annonser från ledande varumärken i olika branscher. Filtrera efter det som intresserar dig."
@@ -130,13 +120,11 @@
           "desc": "Titta på och interagera med annonser som matchar dina intressen. Din uppmärksamhet är värdefull och belönas."
         },
         "earn": {
-          "title": "Tjäna",
-          "desc": "Få riktiga belöningar för ditt engagemang. Ta ut när du vill eller återinvestera i fler premiumupplevelser."
+          "title": "Tjäna"
         }
       },
       "faq": {
         "title": "Vanliga frågor",
-        "subtitle": "Allt du behöver veta om att tjäna belöningar och annonsera hos oss.",
         "stillHaveQuestions": "Har du fortfarande frågor?",
         "contactUs": "Kontakta oss",
         "q1": "Hur tjänar jag belöningar på annonser?",
@@ -144,7 +132,6 @@
         "q2": "Är det gratis för annonsörer att gå med?",
         "a2": "Ja. Det är gratis att skapa ett annonsörskonto. Du betalar bara för den annonsbudget du avsätter till kampanjer, plus en liten plattformsavgift baserad på resultat.",
         "q3": "Vad skiljer SmartAdDeals från andra annonsnätverk?",
-        "a3": "Vi kombinerar AI-driven optimering, integritetsfokuserad målgruppsstyrning, geografiska värmekartor och en belöningsmodell som värdesätter användarens uppmärksamhet.",
         "q4": "Hur fungerar AI-optimeringen?",
         "a4": "Vår maskininlärningsmotor analyserar kampanjresultat i realtid och föreslår justeringar av bud, budgetar, målgrupper och kreativt material för att förbättra ROAS.",
         "q5": "Kan jag koppla SmartAdDeals till mina befintliga annonskonton?",
@@ -152,7 +139,6 @@
       },
       "categories": {
         "title": "Bläddra efter kategori",
-        "subtitle": "Hitta annonser från branscher du bryr dig om – från underhållning till finans.",
         "entertainment": "Underhållning",
         "sports": "Sport",
         "retail": "Detaljhandel",
@@ -187,8 +173,6 @@
         "disclaimer": "Ingen spam. Avsluta när du vill."
       },
       "finalCta": {
-        "title": "Redo att komma igång?",
-        "desc": "Gå med bland tusentals användare som redan tjänar belöningar på SmartAdDeals. Det tar mindre än en minut att registrera sig.",
         "primary": "Skapa gratiskonto",
         "noCard": "Inget kreditkort krävs",
         "free": "Gratis för alltid"
@@ -200,7 +184,6 @@
         "brandTitleAccent": "intelligenta annonsering",
         "brandBlurb": "Skapa, optimera och analysera annonskampanjer med AI-drivna insikter och realtidsanalys.",
         "title": "Välkommen tillbaka",
-        "subtitle": "Logga in på ditt konto för att fortsätta",
         "email": "E-postadress",
         "emailPlaceholder": "du@företag.se",
         "password": "Lösenord",
@@ -244,7 +227,6 @@
         "testimonialRole": "Marknadschef, TechCorp",
         "trustedBy": "Betrott av över 2 000 företag världen över",
         "title": "Skapa ditt konto",
-        "subtitle": "Kom igång på under en minut",
         "roleLabel": "Jag vill...",
         "roleAdvertiser": "Annonsera",
         "roleAdvertiserDesc": "Skapa och optimera kampanjer",
@@ -297,22 +279,10 @@
     },
     "about": {
       "eyebrow": "Vår historia",
-      "title": "Om SmartAdDeals",
-      "subtitle": "Vi bygger framtidens intelligenta annonsering – där varumärken möter engagerade målgrupper och användare får verkligt värde för sin uppmärksamhet.",
-      "missionTitle": "Vårt uppdrag",
-      "missionP1": "SmartAdDeals föddes ur en enkel idé: annonsering behöver inte vara påträngande, och uppmärksamhet har ett verkligt värde. Vi skapade en tvåsidig plattform som ger annonsörer AI-driven kampanjhantering och samtidigt belönar användare som väljer att engagera sig i innehåll de tycker om.",
-      "missionP2": "Vår plattform kombinerar avancerad analys – geografiska värmekartor, attribution över enheter, avvikelsedetektering och konkurrensjämförelser – med en unik Ad Journey Storyteller som förvandlar rådata till engagerande kampanjberättelser.",
       "sloganLine1": "Bättre annonser.",
       "sloganLine2": "Bättre belöningar.",
       "sloganLine3": "Bättre värld.",
-      "stats": {
-        "campaigns": "Aktiva kampanjer",
-        "adsDaily": "Annonser levererade per dag",
-        "countries": "Länder vi når",
-        "uptime": "Plattformens drifttid"
-      },
       "valuesTitle": "Våra värderingar",
-      "valuesSubtitle": "Principerna som styr allt vi bygger.",
       "values": {
         "precision": {
           "title": "Precision",
@@ -323,8 +293,7 @@
           "desc": "Fullständiga spårloggar, ärlig analys och inga dolda avgifter. Det du ser är det du får."
         },
         "innovation": {
-          "title": "Innovation",
-          "desc": "Från Ad Journey Storyteller till avvikelsedetektering i realtid – vi flyttar gränserna inom adtech."
+          "title": "Innovation"
         },
         "community": {
           "title": "Gemenskap",
@@ -340,7 +309,6 @@
         }
       },
       "journeyTitle": "Vår resa",
-      "journeySubtitle": "Från en idé till en global plattform.",
       "milestones": {
         "beginning": {
           "title": "Början",
@@ -364,7 +332,6 @@
         }
       },
       "teamTitle": "Ledningsgrupp",
-      "teamSubtitle": "Människorna som bygger framtidens annonsering.",
       "roles": {
         "ceo": "Vd och medgrundare",
         "cto": "CTO och medgrundare",
@@ -373,18 +340,13 @@
         "headAi": "Chef för AI/ML",
         "headDesign": "Designchef"
       },
-      "ctaTitle": "Gå med i SmartAdDeals-gemenskapen",
-      "ctaDesc": "Oavsett om du är annonsör som vill ha smartare kampanjer eller användare som vill tjäna på annonser – vi har det du behöver.",
       "ctaPrimary": "Kom igång gratis"
     },
     "careers": {
       "title": "Jobba hos oss",
-      "subtitle": "Hjälp oss bygga framtidens adtech. Vi skapar en plattform där annonsering är transparent, givande och driven av AI.",
-      "perksTitle": "Varför SmartAdDeals?",
       "perks": {
         "remote": {
-          "title": "Distansarbete först",
-          "desc": "Jobba var som helst i världen. Vi tror inte att stor talang begränsas av geografi."
+          "title": "Distansarbete först"
         },
         "equity": {
           "title": "Konkurrenskraftigt aktieprogram",
@@ -406,20 +368,16 @@
         "london": "London"
       },
       "noRoleTitle": "Hittar du inte din roll?",
-      "noRoleDesc": "Vi letar alltid efter duktiga människor. Skicka ditt cv och berätta hur du skulle bidra till SmartAdDeals.",
       "applyToast": "Ansökan till {{role}} har skickats! Vi hör av oss."
     },
     "partners": {
       "eyebrow": "Annonsörer och kreatörer",
       "title": "Våra partner",
-      "subtitle": "Upptäck varumärkena och kreatörerna bakom kampanjerna på SmartAdDeals. Bläddra bland deras profiler för att se vad de annonserar.",
       "rewards": "Belöningar",
       "viewProfile": "Visa profil"
     },
     "contact": {
       "eyebrow": "Kontakt",
-      "title": "Vi hör gärna från dig",
-      "subtitle": "Har du en fråga, feedback eller ett samarbetsförslag? Välj en kanal nedan eller skicka ett meddelande direkt.",
       "channels": {
         "email": "Mejla oss",
         "phone": "Ring oss",
@@ -1243,7 +1201,6 @@
     "landing": {
       "hero": {
         "badge": "Ahora con generación de creatividades por IA",
-        "title": "Transforma tu publicidad con IA",
         "titleLine1": "Descubre anuncios.",
         "titleEarn": "Gana",
         "rotating": {
@@ -1253,9 +1210,7 @@
           "cashBack": "dinero de vuelta."
         },
         "subtitle": "Llega al público adecuado, optimiza en tiempo real y maximiza tu ROI.",
-        "blurb": "La plataforma publicitaria inteligente que conecta marcas con audiencias comprometidas. Explora anuncios seleccionados y gana recompensas reales por tu atención.",
         "cta": "Empezar prueba gratuita",
-        "ctaAdvertiser": "Soy anunciante",
         "socialProof": "Más de 12.000 anunciantes confían en nosotros"
       },
       "stats": {
@@ -1266,9 +1221,7 @@
       },
       "featured": {
         "title": "Anuncios destacados",
-        "subtitle": "Campañas seleccionadas con las mayores recompensas",
         "emptyTitle": "Aún no hay anuncios destacados",
-        "emptyDesc": "Los anuncios destacados aparecerán aquí muy pronto. Vuelve a consultarlo o explora por categoría para descubrir anuncios ahora mismo.",
         "emptyAction": "Ver todos los anuncios"
       },
       "blogTeaser": {
@@ -1285,11 +1238,8 @@
         }
       },
       "features": {
-        "title": "Todo lo que necesitas",
-        "subtitle": "Herramientas potentes para anunciantes y una experiencia gratificante para los usuarios, todo en una plataforma.",
         "ai": {
-          "title": "Optimización con IA",
-          "desc": "Los algoritmos de aprendizaje automático optimizan pujas, presupuestos y segmentación de forma continua para maximizar tu ROAS."
+          "title": "Optimización con IA"
         },
         "realtime": {
           "title": "Analítica en tiempo real",
@@ -1304,8 +1254,7 @@
           "desc": "Visualiza el rendimiento por regiones con mapas de calor interactivos basados en datos de ubicación en tiempo real."
         },
         "anomalies": {
-          "title": "Detección de anomalías",
-          "desc": "Recibe alertas inmediatas ante subidas o caídas inusuales en tus métricas. Detecta problemas antes de que te cuesten dinero."
+          "title": "Detección de anomalías"
         },
         "attribution": {
           "title": "Atribución entre dispositivos",
@@ -1327,7 +1276,6 @@
       },
       "how": {
         "title": "Cómo funciona",
-        "subtitle": "Tres pasos sencillos para empezar a ganar recompensas con anuncios que realmente te interesan.",
         "browse": {
           "title": "Explora",
           "desc": "Descubre un catálogo seleccionado de anuncios de grandes marcas de distintos sectores. Filtra por lo que te interesa."
@@ -1337,13 +1285,11 @@
           "desc": "Mira e interactúa con anuncios que encajan con tus intereses. Tu atención vale y se recompensa."
         },
         "earn": {
-          "title": "Gana",
-          "desc": "Recibe recompensas reales por tu participación. Retíralas cuando quieras o reinviértelas en más experiencias premium."
+          "title": "Gana"
         }
       },
       "faq": {
         "title": "Preguntas frecuentes",
-        "subtitle": "Todo lo que necesitas saber sobre ganar recompensas y anunciarte con nosotros.",
         "stillHaveQuestions": "¿Aún tienes dudas?",
         "contactUs": "Contáctanos",
         "q1": "¿Cómo gano recompensas con los anuncios?",
@@ -1351,7 +1297,6 @@
         "q2": "¿Es gratis para los anunciantes?",
         "a2": "Sí. Crear una cuenta de anunciante es gratuito. Solo pagas el presupuesto publicitario que asignas a tus campañas, más una pequeña comisión de plataforma basada en el rendimiento.",
         "q3": "¿Qué diferencia a SmartAdDeals de otras redes publicitarias?",
-        "a3": "Combinamos optimización con IA, segmentación centrada en la privacidad, mapas de calor geográficos y un modelo de participación con recompensas que valora la atención del usuario.",
         "q4": "¿Cómo funciona la optimización con IA?",
         "a4": "Nuestro motor de aprendizaje automático analiza el rendimiento de las campañas en tiempo real y recomienda ajustes en pujas, presupuestos, audiencias y creatividades para mejorar el ROAS.",
         "q5": "¿Puedo integrar SmartAdDeals con mis cuentas publicitarias actuales?",
@@ -1359,7 +1304,6 @@
       },
       "categories": {
         "title": "Explorar por categoría",
-        "subtitle": "Encuentra anuncios de los sectores que te interesan, del entretenimiento a las finanzas.",
         "entertainment": "Entretenimiento",
         "sports": "Deportes",
         "retail": "Comercio minorista",
@@ -1394,8 +1338,6 @@
         "disclaimer": "Sin spam. Cancela cuando quieras."
       },
       "finalCta": {
-        "title": "¿Listo para empezar?",
-        "desc": "Únete a miles de usuarios que ya ganan recompensas en SmartAdDeals. Registrarse lleva menos de un minuto.",
         "primary": "Crear cuenta gratis",
         "noCard": "No se necesita tarjeta de crédito",
         "free": "Gratis para siempre"
@@ -1407,7 +1349,6 @@
         "brandTitleAccent": "publicidad inteligente",
         "brandBlurb": "Crea, optimiza y analiza campañas publicitarias con información basada en IA y analítica en tiempo real.",
         "title": "Bienvenido de nuevo",
-        "subtitle": "Inicia sesión en tu cuenta para continuar",
         "email": "Correo electrónico",
         "emailPlaceholder": "tu@empresa.com",
         "password": "Contraseña",
@@ -1451,7 +1392,6 @@
         "testimonialRole": "Directora de marketing, TechCorp",
         "trustedBy": "Más de 2.000 empresas de todo el mundo confían en nosotros",
         "title": "Crea tu cuenta",
-        "subtitle": "Empieza en menos de un minuto",
         "roleLabel": "Quiero...",
         "roleAdvertiser": "Anunciarme",
         "roleAdvertiserDesc": "Crear y optimizar campañas",
@@ -1504,22 +1444,10 @@
     },
     "about": {
       "eyebrow": "Nuestra historia",
-      "title": "Sobre SmartAdDeals",
-      "subtitle": "Construimos el futuro de la publicidad inteligente, donde las marcas conectan con audiencias comprometidas y los usuarios obtienen valor real por su atención.",
-      "missionTitle": "Nuestra misión",
-      "missionP1": "SmartAdDeals nació de una idea sencilla: la publicidad no tiene por qué ser intrusiva y la atención tiene un valor real. Creamos una plataforma de doble cara que ofrece a los anunciantes una gestión de campañas basada en IA y, a la vez, recompensa a los usuarios que eligen interactuar con contenido que les interesa.",
-      "missionP2": "Nuestra plataforma combina analítica avanzada (mapas de calor geográficos, atribución entre dispositivos, detección de anomalías y comparativas competitivas) con un Ad Journey Storyteller único que convierte datos brutos en relatos de campaña convincentes.",
       "sloganLine1": "Mejores anuncios.",
       "sloganLine2": "Mejores recompensas.",
       "sloganLine3": "Mejor mundo.",
-      "stats": {
-        "campaigns": "Campañas activas",
-        "adsDaily": "Anuncios servidos al día",
-        "countries": "Países alcanzados",
-        "uptime": "Disponibilidad de la plataforma"
-      },
       "valuesTitle": "Nuestros valores",
-      "valuesSubtitle": "Los principios que guían todo lo que construimos.",
       "values": {
         "precision": {
           "title": "Precisión",
@@ -1530,8 +1458,7 @@
           "desc": "Registros de auditoría completos, analítica honesta y sin comisiones ocultas. Lo que ves es lo que hay."
         },
         "innovation": {
-          "title": "Innovación",
-          "desc": "Del Ad Journey Storyteller a la detección de anomalías en tiempo real, ampliamos los límites del AdTech."
+          "title": "Innovación"
         },
         "community": {
           "title": "Comunidad",
@@ -1547,7 +1474,6 @@
         }
       },
       "journeyTitle": "Nuestro recorrido",
-      "journeySubtitle": "De una idea a una plataforma global.",
       "milestones": {
         "beginning": {
           "title": "El comienzo",
@@ -1571,7 +1497,6 @@
         }
       },
       "teamTitle": "Equipo directivo",
-      "teamSubtitle": "Las personas que construyen el futuro de la publicidad.",
       "roles": {
         "ceo": "CEO y cofundador",
         "cto": "CTO y cofundadora",
@@ -1580,18 +1505,13 @@
         "headAi": "Director de IA/ML",
         "headDesign": "Directora de diseño"
       },
-      "ctaTitle": "Únete a la comunidad de SmartAdDeals",
-      "ctaDesc": "Tanto si eres un anunciante que busca campañas más inteligentes como un usuario que quiere ganar con los anuncios, tenemos lo que necesitas.",
       "ctaPrimary": "Empezar gratis"
     },
     "careers": {
       "title": "Únete a nuestro equipo",
-      "subtitle": "Ayúdanos a construir el futuro del AdTech. Estamos creando una plataforma donde la publicidad es transparente, gratificante y está impulsada por IA.",
-      "perksTitle": "¿Por qué SmartAdDeals?",
       "perks": {
         "remote": {
-          "title": "Remoto ante todo",
-          "desc": "Trabaja desde cualquier lugar del mundo. Creemos que el gran talento no depende de la geografía."
+          "title": "Remoto ante todo"
         },
         "equity": {
           "title": "Participación competitiva",
@@ -1613,20 +1533,16 @@
         "london": "Londres"
       },
       "noRoleTitle": "¿No ves tu puesto?",
-      "noRoleDesc": "Siempre buscamos gente con talento. Envíanos tu currículum y cuéntanos cómo contribuirías a SmartAdDeals.",
       "applyToast": "¡Candidatura para {{role}} enviada! Nos pondremos en contacto."
     },
     "partners": {
       "eyebrow": "Anunciantes y creadores",
       "title": "Nuestros socios",
-      "subtitle": "Descubre las marcas y creadores que impulsan las campañas en SmartAdDeals. Explora sus perfiles para ver qué anuncian.",
       "rewards": "Recompensas",
       "viewProfile": "Ver perfil"
     },
     "contact": {
       "eyebrow": "Contacto",
-      "title": "Nos encantará saber de ti",
-      "subtitle": "¿Tienes una pregunta, comentarios o una idea de colaboración? Elige un canal o escríbenos directamente.",
       "channels": {
         "email": "Escríbenos",
         "phone": "Llámanos",
@@ -2455,7 +2371,6 @@
     "landing": {
       "hero": {
         "badge": "Désormais avec génération de créations par IA",
-        "title": "Transformez votre publicité grâce à l'IA",
         "titleLine1": "Découvrez des annonces.",
         "titleEarn": "Gagnez",
         "rotating": {
@@ -2465,9 +2380,7 @@
           "cashBack": "du cashback."
         },
         "subtitle": "Touchez la bonne audience, optimisez en temps réel, maximisez votre retour sur investissement.",
-        "blurb": "La plateforme publicitaire intelligente qui relie les marques à des audiences engagées. Parcourez des annonces sélectionnées et gagnez de vraies récompenses pour votre attention.",
         "cta": "Essai gratuit",
-        "ctaAdvertiser": "Je suis annonceur",
         "socialProof": "Plus de 12 000 annonceurs nous font confiance"
       },
       "stats": {
@@ -2478,9 +2391,7 @@
       },
       "featured": {
         "title": "Annonces à la une",
-        "subtitle": "Des campagnes sélectionnées avec les meilleures récompenses",
         "emptyTitle": "Pas encore d'annonces à la une",
-        "emptyDesc": "Les annonces à la une arriveront bientôt. Revenez régulièrement ou parcourez par catégorie pour découvrir des annonces dès maintenant.",
         "emptyAction": "Voir toutes les annonces"
       },
       "blogTeaser": {
@@ -2497,11 +2408,8 @@
         }
       },
       "features": {
-        "title": "Tout ce dont vous avez besoin",
-        "subtitle": "Des outils puissants pour les annonceurs et une expérience gratifiante pour les utilisateurs, le tout sur une seule plateforme.",
         "ai": {
-          "title": "Optimisation par IA",
-          "desc": "Des algorithmes d'apprentissage automatique optimisent en continu les enchères, les budgets et le ciblage pour maximiser votre ROAS."
+          "title": "Optimisation par IA"
         },
         "realtime": {
           "title": "Analyse en temps réel",
@@ -2516,8 +2424,7 @@
           "desc": "Visualisez les performances par région grâce à des cartes de chaleur interactives alimentées par des données de localisation en temps réel."
         },
         "anomalies": {
-          "title": "Détection d'anomalies",
-          "desc": "Recevez des alertes immédiates en cas de hausse ou de baisse inhabituelle de vos indicateurs. Repérez les problèmes avant qu'ils ne vous coûtent cher."
+          "title": "Détection d'anomalies"
         },
         "attribution": {
           "title": "Attribution multi-appareils",
@@ -2539,7 +2446,6 @@
       },
       "how": {
         "title": "Comment ça marche",
-        "subtitle": "Trois étapes simples pour commencer à gagner des récompenses avec des annonces qui vous intéressent vraiment.",
         "browse": {
           "title": "Parcourir",
           "desc": "Explorez un catalogue sélectionné d'annonces de grandes marques de différents secteurs. Filtrez selon vos centres d'intérêt."
@@ -2549,13 +2455,11 @@
           "desc": "Regardez les annonces qui correspondent à vos centres d'intérêt et interagissez avec elles. Votre attention a de la valeur et elle est récompensée."
         },
         "earn": {
-          "title": "Gagner",
-          "desc": "Recevez de vraies récompenses pour votre engagement. Retirez-les quand vous voulez ou réinvestissez-les dans d'autres expériences premium."
+          "title": "Gagner"
         }
       },
       "faq": {
         "title": "Questions fréquentes",
-        "subtitle": "Tout ce qu'il faut savoir pour gagner des récompenses et faire de la publicité chez nous.",
         "stillHaveQuestions": "Encore des questions ?",
         "contactUs": "Contactez-nous",
         "q1": "Comment gagner des récompenses avec les annonces ?",
@@ -2563,7 +2467,6 @@
         "q2": "L'inscription est-elle gratuite pour les annonceurs ?",
         "a2": "Oui. La création d'un compte annonceur est gratuite. Vous ne payez que le budget publicitaire que vous allouez à vos campagnes, plus une petite commission de plateforme liée aux performances.",
         "q3": "Qu'est-ce qui distingue SmartAdDeals des autres régies publicitaires ?",
-        "a3": "Nous combinons l'optimisation par IA, un ciblage respectueux de la vie privée, des cartes de chaleur géographiques et un modèle d'engagement par récompenses qui valorise l'attention des utilisateurs.",
         "q4": "Comment fonctionne l'optimisation par IA ?",
         "a4": "Notre moteur d'apprentissage automatique analyse les performances des campagnes en temps réel et recommande des ajustements sur les enchères, les budgets, les audiences et les créations afin d'améliorer le ROAS.",
         "q5": "Puis-je connecter SmartAdDeals à mes comptes publicitaires existants ?",
@@ -2571,7 +2474,6 @@
       },
       "categories": {
         "title": "Parcourir par catégorie",
-        "subtitle": "Trouvez des annonces dans les secteurs qui vous intéressent, du divertissement à la finance.",
         "entertainment": "Divertissement",
         "sports": "Sport",
         "retail": "Commerce de détail",
@@ -2606,8 +2508,6 @@
         "disclaimer": "Pas de spam. Désinscription à tout moment."
       },
       "finalCta": {
-        "title": "Prêt à vous lancer ?",
-        "desc": "Rejoignez les milliers d'utilisateurs qui gagnent déjà des récompenses sur SmartAdDeals. L'inscription prend moins d'une minute.",
         "primary": "Créer un compte gratuit",
         "noCard": "Aucune carte bancaire requise",
         "free": "Gratuit à vie"
@@ -2619,7 +2519,6 @@
         "brandTitleAccent": "publicité intelligente",
         "brandBlurb": "Créez, optimisez et analysez vos campagnes publicitaires grâce à des analyses en temps réel et à des recommandations issues de l'IA.",
         "title": "Bon retour parmi nous",
-        "subtitle": "Connectez-vous à votre compte pour continuer",
         "email": "Adresse e-mail",
         "emailPlaceholder": "vous@entreprise.com",
         "password": "Mot de passe",
@@ -2663,7 +2562,6 @@
         "testimonialRole": "Directrice marketing, TechCorp",
         "trustedBy": "Plus de 2 000 entreprises dans le monde nous font confiance",
         "title": "Créez votre compte",
-        "subtitle": "Prêt en moins d'une minute",
         "roleLabel": "Je souhaite…",
         "roleAdvertiser": "Diffuser des annonces",
         "roleAdvertiserDesc": "Créer et optimiser des campagnes",
@@ -2716,22 +2614,10 @@
     },
     "about": {
       "eyebrow": "Notre histoire",
-      "title": "À propos de SmartAdDeals",
-      "subtitle": "Nous construisons l'avenir de la publicité intelligente, où les marques rencontrent des audiences engagées et où les utilisateurs reçoivent une vraie valeur pour leur attention.",
-      "missionTitle": "Notre mission",
-      "missionP1": "SmartAdDeals est né d'une idée simple : la publicité n'a pas besoin d'être intrusive et l'attention a une valeur réelle. Nous avons créé une plateforme à double face qui offre aux annonceurs une gestion de campagne pilotée par l'IA tout en récompensant les utilisateurs qui choisissent d'interagir avec des contenus qui les intéressent.",
-      "missionP2": "Notre plateforme associe des analyses avancées — cartes de chaleur géographiques, attribution multi-appareils, détection d'anomalies et comparaisons concurrentielles — à un Ad Journey Storyteller unique qui transforme les données brutes en récits de campagne convaincants.",
       "sloganLine1": "De meilleures annonces.",
       "sloganLine2": "De meilleures récompenses.",
       "sloganLine3": "Un monde meilleur.",
-      "stats": {
-        "campaigns": "Campagnes actives",
-        "adsDaily": "Annonces diffusées par jour",
-        "countries": "Pays couverts",
-        "uptime": "Disponibilité de la plateforme"
-      },
       "valuesTitle": "Nos valeurs",
-      "valuesSubtitle": "Les principes qui guident tout ce que nous construisons.",
       "values": {
         "precision": {
           "title": "Précision",
@@ -2742,8 +2628,7 @@
           "desc": "Des journaux d'audit complets, des analyses honnêtes et aucun frais caché. Ce que vous voyez est ce que vous obtenez."
         },
         "innovation": {
-          "title": "Innovation",
-          "desc": "De l'Ad Journey Storyteller à la détection d'anomalies en temps réel, nous repoussons les limites de l'AdTech."
+          "title": "Innovation"
         },
         "community": {
           "title": "Communauté",
@@ -2759,7 +2644,6 @@
         }
       },
       "journeyTitle": "Notre parcours",
-      "journeySubtitle": "D'une idée à une plateforme mondiale.",
       "milestones": {
         "beginning": {
           "title": "Les débuts",
@@ -2783,7 +2667,6 @@
         }
       },
       "teamTitle": "Équipe dirigeante",
-      "teamSubtitle": "Celles et ceux qui construisent l'avenir de la publicité.",
       "roles": {
         "ceo": "PDG et cofondateur",
         "cto": "Directrice technique et cofondatrice",
@@ -2792,18 +2675,13 @@
         "headAi": "Directeur IA/ML",
         "headDesign": "Directrice design"
       },
-      "ctaTitle": "Rejoignez la communauté SmartAdDeals",
-      "ctaDesc": "Que vous soyez annonceur à la recherche de campagnes plus intelligentes ou utilisateur souhaitant gagner grâce aux annonces, nous avons ce qu'il vous faut.",
       "ctaPrimary": "Commencer gratuitement"
     },
     "careers": {
       "title": "Rejoignez notre équipe",
-      "subtitle": "Aidez-nous à construire l'avenir de l'AdTech. Nous créons une plateforme où la publicité est transparente, gratifiante et pilotée par l'IA.",
-      "perksTitle": "Pourquoi SmartAdDeals ?",
       "perks": {
         "remote": {
-          "title": "Télétravail avant tout",
-          "desc": "Travaillez depuis n'importe où dans le monde. Nous pensons que le talent ne connaît pas de frontières."
+          "title": "Télétravail avant tout"
         },
         "equity": {
           "title": "Participation attractive",
@@ -2825,20 +2703,16 @@
         "london": "Londres"
       },
       "noRoleTitle": "Vous ne trouvez pas votre poste ?",
-      "noRoleDesc": "Nous recherchons en permanence des personnes talentueuses. Envoyez-nous votre CV et expliquez-nous comment vous contribueriez à SmartAdDeals.",
       "applyToast": "Candidature pour {{role}} envoyée ! Nous reviendrons vers vous."
     },
     "partners": {
       "eyebrow": "Annonceurs et créateurs",
       "title": "Nos partenaires",
-      "subtitle": "Découvrez les marques et créateurs à l'origine des campagnes sur SmartAdDeals. Parcourez leurs profils pour voir ce qu'ils annoncent.",
       "rewards": "Récompenses",
       "viewProfile": "Voir le profil"
     },
     "contact": {
       "eyebrow": "Contact",
-      "title": "Nous serions ravis d'avoir de vos nouvelles",
-      "subtitle": "Une question, un avis ou une idée de partenariat ? Choisissez un canal ci-dessous ou écrivez-nous directement.",
       "channels": {
         "email": "Écrivez-nous",
         "phone": "Appelez-nous",
@@ -3667,7 +3541,6 @@
     "landing": {
       "hero": {
         "badge": "Jetzt mit KI-Creative-Generierung",
-        "title": "Verwandle deine Werbung mit KI",
         "titleLine1": "Anzeigen entdecken.",
         "titleEarn": "Verdiene",
         "rotating": {
@@ -3677,9 +3550,7 @@
           "cashBack": "Cashback."
         },
         "subtitle": "Erreiche die richtige Zielgruppe, optimiere in Echtzeit, maximiere deinen ROI.",
-        "blurb": "Die intelligente Werbeplattform, die Marken mit engagierten Zielgruppen verbindet. Entdecke kuratierte Anzeigen und verdiene echte Prämien für deine Aufmerksamkeit.",
         "cta": "Kostenlos testen",
-        "ctaAdvertiser": "Ich bin Werbetreibender",
         "socialProof": "Über 12.000 Werbetreibende vertrauen uns"
       },
       "stats": {
@@ -3690,9 +3561,7 @@
       },
       "featured": {
         "title": "Empfohlene Anzeigen",
-        "subtitle": "Handverlesene Kampagnen mit den höchsten Prämien",
         "emptyTitle": "Noch keine empfohlenen Anzeigen",
-        "emptyDesc": "Empfohlene Anzeigen erscheinen hier in Kürze. Schau regelmäßig vorbei oder stöbere nach Kategorie, um jetzt schon Anzeigen zu entdecken!",
         "emptyAction": "Alle Anzeigen ansehen"
       },
       "blogTeaser": {
@@ -3709,11 +3578,8 @@
         }
       },
       "features": {
-        "title": "Alles, was du brauchst",
-        "subtitle": "Leistungsstarke Werkzeuge für Werbetreibende und ein lohnendes Erlebnis für Nutzer – alles auf einer Plattform.",
         "ai": {
-          "title": "KI-gestützte Optimierung",
-          "desc": "Machine-Learning-Algorithmen optimieren Gebote, Budgets und Targeting laufend, um deinen ROAS zu maximieren."
+          "title": "KI-gestützte Optimierung"
         },
         "realtime": {
           "title": "Echtzeit-Analysen",
@@ -3728,8 +3594,7 @@
           "desc": "Visualisiere die Anzeigenleistung nach Regionen mit interaktiven Heatmaps auf Basis von Standortdaten in Echtzeit."
         },
         "anomalies": {
-          "title": "Anomalieerkennung",
-          "desc": "Erhalte sofort Warnungen bei ungewöhnlichen Ausschlägen oder Einbrüchen. Erkenne Probleme, bevor sie Geld kosten."
+          "title": "Anomalieerkennung"
         },
         "attribution": {
           "title": "Geräteübergreifende Attribution",
@@ -3751,7 +3616,6 @@
       },
       "how": {
         "title": "So funktioniert es",
-        "subtitle": "Drei einfache Schritte, um mit Anzeigen zu verdienen, die dich wirklich interessieren.",
         "browse": {
           "title": "Stöbern",
           "desc": "Entdecke einen kuratierten Katalog mit Anzeigen führender Marken aus verschiedenen Branchen. Filtere nach deinen Interessen."
@@ -3761,13 +3625,11 @@
           "desc": "Sieh dir Anzeigen an, die zu deinen Interessen passen, und interagiere mit ihnen. Deine Aufmerksamkeit ist wertvoll und wird belohnt."
         },
         "earn": {
-          "title": "Verdienen",
-          "desc": "Erhalte echte Prämien für dein Engagement. Lass dir jederzeit auszahlen oder investiere in weitere Premium-Erlebnisse."
+          "title": "Verdienen"
         }
       },
       "faq": {
         "title": "Häufig gestellte Fragen",
-        "subtitle": "Alles, was du über Prämien und Werbung bei uns wissen musst.",
         "stillHaveQuestions": "Noch Fragen?",
         "contactUs": "Kontaktiere uns",
         "q1": "Wie verdiene ich Prämien mit Anzeigen?",
@@ -3775,7 +3637,6 @@
         "q2": "Ist der Einstieg für Werbetreibende kostenlos?",
         "a2": "Ja. Ein Werbekonto anzulegen ist kostenlos. Du zahlst nur für das Werbebudget, das du Kampagnen zuweist, plus eine kleine leistungsabhängige Plattformgebühr.",
         "q3": "Was unterscheidet SmartAdDeals von anderen Werbenetzwerken?",
-        "a3": "Wir verbinden KI-gestützte Optimierung, datenschutzfreundliches Targeting, geografische Heatmaps und ein Prämienmodell, das die Aufmerksamkeit der Nutzer wertschätzt.",
         "q4": "Wie funktioniert die KI-Optimierung?",
         "a4": "Unsere Machine-Learning-Engine analysiert die Kampagnenleistung in Echtzeit und empfiehlt Anpassungen an Geboten, Budgets, Zielgruppen und Creatives, um den ROAS zu verbessern.",
         "q5": "Kann ich SmartAdDeals mit meinen bestehenden Werbekonten verbinden?",
@@ -3783,7 +3644,6 @@
       },
       "categories": {
         "title": "Nach Kategorie stöbern",
-        "subtitle": "Finde Anzeigen aus Branchen, die dich interessieren – von Unterhaltung bis Finanzen.",
         "entertainment": "Unterhaltung",
         "sports": "Sport",
         "retail": "Einzelhandel",
@@ -3818,8 +3678,6 @@
         "disclaimer": "Kein Spam. Jederzeit abbestellbar."
       },
       "finalCta": {
-        "title": "Bereit loszulegen?",
-        "desc": "Schließe dich Tausenden Nutzern an, die bereits auf SmartAdDeals verdienen. Die Registrierung dauert weniger als eine Minute.",
         "primary": "Kostenloses Konto erstellen",
         "noCard": "Keine Kreditkarte erforderlich",
         "free": "Dauerhaft kostenlos"
@@ -3831,7 +3689,6 @@
         "brandTitleAccent": "intelligenter Werbung",
         "brandBlurb": "Erstelle, optimiere und analysiere Werbekampagnen mit KI-gestützten Insights und Echtzeit-Analysen.",
         "title": "Willkommen zurück",
-        "subtitle": "Melde dich an, um fortzufahren",
         "email": "E-Mail-Adresse",
         "emailPlaceholder": "du@firma.de",
         "password": "Passwort",
@@ -3875,7 +3732,6 @@
         "testimonialRole": "Marketingleiterin, TechCorp",
         "trustedBy": "Über 2.000 Unternehmen weltweit vertrauen uns",
         "title": "Konto erstellen",
-        "subtitle": "In weniger als einer Minute startklar",
         "roleLabel": "Ich möchte …",
         "roleAdvertiser": "Werben",
         "roleAdvertiserDesc": "Kampagnen erstellen und optimieren",
@@ -3928,22 +3784,10 @@
     },
     "about": {
       "eyebrow": "Unsere Geschichte",
-      "title": "Über SmartAdDeals",
-      "subtitle": "Wir bauen die Zukunft intelligenter Werbung – in der Marken engagierte Zielgruppen erreichen und Nutzer echten Wert für ihre Aufmerksamkeit erhalten.",
-      "missionTitle": "Unsere Mission",
-      "missionP1": "SmartAdDeals entstand aus einer einfachen Idee: Werbung muss nicht aufdringlich sein, und Aufmerksamkeit hat echten Wert. Wir haben eine zweiseitige Plattform geschaffen, die Werbetreibenden KI-gestütztes Kampagnenmanagement bietet und gleichzeitig Nutzer belohnt, die sich bewusst mit Inhalten beschäftigen, die sie interessieren.",
-      "missionP2": "Unsere Plattform verbindet fortschrittliche Analysen – geografische Heatmaps, geräteübergreifende Attribution, Anomalieerkennung und Wettbewerbsvergleiche – mit einem einzigartigen Ad Journey Storyteller, der Rohdaten in überzeugende Kampagnengeschichten verwandelt.",
       "sloganLine1": "Bessere Anzeigen.",
       "sloganLine2": "Bessere Prämien.",
       "sloganLine3": "Bessere Welt.",
-      "stats": {
-        "campaigns": "Aktive Kampagnen",
-        "adsDaily": "Ausgelieferte Anzeigen pro Tag",
-        "countries": "Erreichte Länder",
-        "uptime": "Plattform-Verfügbarkeit"
-      },
       "valuesTitle": "Unsere Werte",
-      "valuesSubtitle": "Die Prinzipien hinter allem, was wir bauen.",
       "values": {
         "precision": {
           "title": "Präzision",
@@ -3954,8 +3798,7 @@
           "desc": "Vollständige Prüfprotokolle, ehrliche Analysen und keine versteckten Gebühren. Was du siehst, bekommst du auch."
         },
         "innovation": {
-          "title": "Innovation",
-          "desc": "Vom Ad Journey Storyteller bis zur Anomalieerkennung in Echtzeit – wir verschieben die Grenzen der AdTech."
+          "title": "Innovation"
         },
         "community": {
           "title": "Gemeinschaft",
@@ -3971,7 +3814,6 @@
         }
       },
       "journeyTitle": "Unser Weg",
-      "journeySubtitle": "Von einer Idee zur globalen Plattform.",
       "milestones": {
         "beginning": {
           "title": "Der Anfang",
@@ -3995,7 +3837,6 @@
         }
       },
       "teamTitle": "Führungsteam",
-      "teamSubtitle": "Die Menschen, die die Zukunft der Werbung bauen.",
       "roles": {
         "ceo": "CEO und Mitgründer",
         "cto": "CTO und Mitgründerin",
@@ -4004,18 +3845,13 @@
         "headAi": "Leitung KI/ML",
         "headDesign": "Leitung Design"
       },
-      "ctaTitle": "Werde Teil der SmartAdDeals-Community",
-      "ctaDesc": "Ob du als Werbetreibender klügere Kampagnen suchst oder als Nutzer mit Anzeigen verdienen willst – bei uns bist du richtig.",
       "ctaPrimary": "Kostenlos loslegen"
     },
     "careers": {
       "title": "Werde Teil unseres Teams",
-      "subtitle": "Hilf uns, die Zukunft der AdTech zu bauen. Wir schaffen eine Plattform, auf der Werbung transparent, lohnend und KI-gestützt ist.",
-      "perksTitle": "Warum SmartAdDeals?",
       "perks": {
         "remote": {
-          "title": "Remote-First",
-          "desc": "Arbeite von überall auf der Welt. Wir glauben nicht, dass großes Talent an Geografie gebunden ist."
+          "title": "Remote-First"
         },
         "equity": {
           "title": "Attraktive Beteiligung",
@@ -4037,20 +3873,16 @@
         "london": "London"
       },
       "noRoleTitle": "Deine Rolle ist nicht dabei?",
-      "noRoleDesc": "Wir suchen immer nach talentierten Menschen. Schick uns deinen Lebenslauf und erzähl uns, wie du SmartAdDeals voranbringen würdest.",
       "applyToast": "Bewerbung für {{role}} eingereicht! Wir melden uns."
     },
     "partners": {
       "eyebrow": "Werbetreibende und Creator",
       "title": "Unsere Partner",
-      "subtitle": "Entdecke die Marken und Creator hinter den Kampagnen auf SmartAdDeals. Stöbere durch ihre Profile, um zu sehen, wofür sie werben.",
       "rewards": "Prämien",
       "viewProfile": "Profil ansehen"
     },
     "contact": {
       "eyebrow": "Kontakt",
-      "title": "Wir freuen uns, von dir zu hören",
-      "subtitle": "Hast du eine Frage, Feedback oder eine Partnerschaftsidee? Wähle unten einen Kanal oder schreib uns direkt.",
       "channels": {
         "email": "Schreib uns",
         "phone": "Ruf uns an",
@@ -4879,7 +4711,6 @@
     "landing": {
       "hero": {
         "badge": "Agora com geração de criativos por IA",
-        "title": "Transforme a sua publicidade com IA",
         "titleLine1": "Descubra anúncios.",
         "titleEarn": "Ganhe",
         "rotating": {
@@ -4889,9 +4720,7 @@
           "cashBack": "dinheiro de volta."
         },
         "subtitle": "Chegue ao público certo, otimize em tempo real e maximize o seu retorno.",
-        "blurb": "A plataforma publicitária inteligente que liga marcas a audiências envolvidas. Explore anúncios selecionados e ganhe recompensas reais pela sua atenção.",
         "cta": "Iniciar teste gratuito",
-        "ctaAdvertiser": "Sou anunciante",
         "socialProof": "Mais de 12 000 anunciantes confiam em nós"
       },
       "stats": {
@@ -4902,9 +4731,7 @@
       },
       "featured": {
         "title": "Anúncios em destaque",
-        "subtitle": "Campanhas selecionadas com as maiores recompensas",
         "emptyTitle": "Ainda não há anúncios em destaque",
-        "emptyDesc": "Os anúncios em destaque aparecerão aqui em breve. Volte com regularidade ou explore por categoria para descobrir anúncios já.",
         "emptyAction": "Ver todos os anúncios"
       },
       "blogTeaser": {
@@ -4921,11 +4748,8 @@
         }
       },
       "features": {
-        "title": "Tudo o que precisa",
-        "subtitle": "Ferramentas poderosas para anunciantes e uma experiência recompensadora para os utilizadores, tudo numa só plataforma.",
         "ai": {
-          "title": "Otimização com IA",
-          "desc": "Algoritmos de aprendizagem automática otimizam continuamente licitações, orçamentos e segmentação para maximizar o seu ROAS."
+          "title": "Otimização com IA"
         },
         "realtime": {
           "title": "Análise em tempo real",
@@ -4940,8 +4764,7 @@
           "desc": "Visualize o desempenho por região com mapas de calor interativos alimentados por dados de localização em tempo real."
         },
         "anomalies": {
-          "title": "Deteção de anomalias",
-          "desc": "Receba alertas imediatos perante subidas ou quedas invulgares nas métricas. Detete problemas antes que lhe custem dinheiro."
+          "title": "Deteção de anomalias"
         },
         "attribution": {
           "title": "Atribuição entre dispositivos",
@@ -4963,7 +4786,6 @@
       },
       "how": {
         "title": "Como funciona",
-        "subtitle": "Três passos simples para começar a ganhar recompensas com anúncios que realmente lhe interessam.",
         "browse": {
           "title": "Explore",
           "desc": "Descubra um catálogo selecionado de anúncios de grandes marcas de vários setores. Filtre pelo que lhe interessa."
@@ -4973,13 +4795,11 @@
           "desc": "Veja e interaja com anúncios que correspondem aos seus interesses. A sua atenção tem valor e é recompensada."
         },
         "earn": {
-          "title": "Ganhe",
-          "desc": "Receba recompensas reais pelo seu envolvimento. Levante quando quiser ou reinvista em mais experiências premium."
+          "title": "Ganhe"
         }
       },
       "faq": {
         "title": "Perguntas frequentes",
-        "subtitle": "Tudo o que precisa de saber sobre ganhar recompensas e anunciar connosco.",
         "stillHaveQuestions": "Ainda tem dúvidas?",
         "contactUs": "Contacte-nos",
         "q1": "Como ganho recompensas com os anúncios?",
@@ -4987,7 +4807,6 @@
         "q2": "É gratuito para os anunciantes aderirem?",
         "a2": "Sim. Criar uma conta de anunciante é gratuito. Paga apenas o orçamento publicitário que atribui às campanhas, mais uma pequena comissão de plataforma com base no desempenho.",
         "q3": "O que distingue a SmartAdDeals das outras redes publicitárias?",
-        "a3": "Combinamos otimização por IA, segmentação centrada na privacidade, mapas de calor geográficos e um modelo de envolvimento com recompensas que valoriza a atenção do utilizador.",
         "q4": "Como funciona a otimização por IA?",
         "a4": "O nosso motor de aprendizagem automática analisa o desempenho das campanhas em tempo real e recomenda ajustes a licitações, orçamentos, audiências e criativos para melhorar o ROAS.",
         "q5": "Posso integrar a SmartAdDeals com as minhas contas publicitárias atuais?",
@@ -4995,7 +4814,6 @@
       },
       "categories": {
         "title": "Explorar por categoria",
-        "subtitle": "Encontre anúncios dos setores que lhe interessam, do entretenimento às finanças.",
         "entertainment": "Entretenimento",
         "sports": "Desporto",
         "retail": "Retalho",
@@ -5030,8 +4848,6 @@
         "disclaimer": "Sem spam. Cancele quando quiser."
       },
       "finalCta": {
-        "title": "Pronto para começar?",
-        "desc": "Junte-se a milhares de utilizadores que já ganham recompensas na SmartAdDeals. O registo demora menos de um minuto.",
         "primary": "Criar conta gratuita",
         "noCard": "Não é necessário cartão de crédito",
         "free": "Gratuito para sempre"
@@ -5043,7 +4859,6 @@
         "brandTitleAccent": "publicidade inteligente",
         "brandBlurb": "Crie, otimize e analise campanhas publicitárias com informações baseadas em IA e análise em tempo real.",
         "title": "Bem-vindo de volta",
-        "subtitle": "Inicie sessão na sua conta para continuar",
         "email": "Endereço de e-mail",
         "emailPlaceholder": "voce@empresa.com",
         "password": "Palavra-passe",
@@ -5087,7 +4902,6 @@
         "testimonialRole": "Diretora de marketing, TechCorp",
         "trustedBy": "Mais de 2 000 empresas em todo o mundo confiam em nós",
         "title": "Crie a sua conta",
-        "subtitle": "Fica pronto em menos de um minuto",
         "roleLabel": "Quero...",
         "roleAdvertiser": "Anunciar",
         "roleAdvertiserDesc": "Criar e otimizar campanhas",
@@ -5140,22 +4954,10 @@
     },
     "about": {
       "eyebrow": "A nossa história",
-      "title": "Sobre a SmartAdDeals",
-      "subtitle": "Estamos a construir o futuro da publicidade inteligente, onde as marcas se ligam a audiências envolvidas e os utilizadores recebem valor real pela sua atenção.",
-      "missionTitle": "A nossa missão",
-      "missionP1": "A SmartAdDeals nasceu de uma ideia simples: a publicidade não tem de ser intrusiva e a atenção tem valor real. Criámos uma plataforma de dois lados que dá aos anunciantes uma gestão de campanhas baseada em IA e, ao mesmo tempo, recompensa os utilizadores que escolhem interagir com conteúdos que lhes interessam.",
-      "missionP2": "A nossa plataforma combina análise avançada — mapas de calor geográficos, atribuição entre dispositivos, deteção de anomalias e comparações competitivas — com um Ad Journey Storyteller único que transforma dados brutos em narrativas de campanha convincentes.",
       "sloganLine1": "Melhores anúncios.",
       "sloganLine2": "Melhores recompensas.",
       "sloganLine3": "Um mundo melhor.",
-      "stats": {
-        "campaigns": "Campanhas ativas",
-        "adsDaily": "Anúncios entregues por dia",
-        "countries": "Países alcançados",
-        "uptime": "Disponibilidade da plataforma"
-      },
       "valuesTitle": "Os nossos valores",
-      "valuesSubtitle": "Os princípios que orientam tudo o que construímos.",
       "values": {
         "precision": {
           "title": "Precisão",
@@ -5166,8 +4968,7 @@
           "desc": "Registos de auditoria completos, análises honestas e sem custos ocultos. O que vê é o que recebe."
         },
         "innovation": {
-          "title": "Inovação",
-          "desc": "Do Ad Journey Storyteller à deteção de anomalias em tempo real, alargamos as fronteiras da AdTech."
+          "title": "Inovação"
         },
         "community": {
           "title": "Comunidade",
@@ -5183,7 +4984,6 @@
         }
       },
       "journeyTitle": "O nosso percurso",
-      "journeySubtitle": "De uma ideia a uma plataforma global.",
       "milestones": {
         "beginning": {
           "title": "O início",
@@ -5207,7 +5007,6 @@
         }
       },
       "teamTitle": "Equipa de liderança",
-      "teamSubtitle": "As pessoas que estão a construir o futuro da publicidade.",
       "roles": {
         "ceo": "CEO e cofundador",
         "cto": "CTO e cofundadora",
@@ -5216,18 +5015,13 @@
         "headAi": "Diretor de IA/ML",
         "headDesign": "Diretora de design"
       },
-      "ctaTitle": "Junte-se à comunidade SmartAdDeals",
-      "ctaDesc": "Quer seja um anunciante à procura de campanhas mais inteligentes ou um utilizador que quer ganhar com anúncios, temos o que precisa.",
       "ctaPrimary": "Começar gratuitamente"
     },
     "careers": {
       "title": "Junte-se à nossa equipa",
-      "subtitle": "Ajude-nos a construir o futuro da AdTech. Estamos a criar uma plataforma onde a publicidade é transparente, recompensadora e impulsionada por IA.",
-      "perksTitle": "Porquê a SmartAdDeals?",
       "perks": {
         "remote": {
-          "title": "Remoto em primeiro lugar",
-          "desc": "Trabalhe a partir de qualquer lugar do mundo. Acreditamos que o grande talento não se limita à geografia."
+          "title": "Remoto em primeiro lugar"
         },
         "equity": {
           "title": "Participação competitiva",
@@ -5249,20 +5043,16 @@
         "london": "Londres"
       },
       "noRoleTitle": "Não encontra a sua função?",
-      "noRoleDesc": "Estamos sempre à procura de pessoas talentosas. Envie-nos o seu currículo e diga-nos como contribuiria para a SmartAdDeals.",
       "applyToast": "Candidatura a {{role}} enviada! Entraremos em contacto."
     },
     "partners": {
       "eyebrow": "Anunciantes e criadores",
       "title": "Os nossos parceiros",
-      "subtitle": "Descubra as marcas e criadores por trás das campanhas na SmartAdDeals. Explore os seus perfis para ver o que estão a anunciar.",
       "rewards": "Recompensas",
       "viewProfile": "Ver perfil"
     },
     "contact": {
       "eyebrow": "Contacto",
-      "title": "Gostaríamos muito de o ouvir",
-      "subtitle": "Tem uma pergunta, comentários ou uma ideia de parceria? Escolha um canal abaixo ou escreva-nos diretamente.",
       "channels": {
         "email": "Escreva-nos",
         "phone": "Ligue-nos",

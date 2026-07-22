@@ -77,14 +77,7 @@ export function PublicLayout() {
  <div className="min-h-screen bg-bg-primary dark:bg-slate-950 flex flex-col relative overflow-x-hidden">
 
  {/* Utility bar */}
- <div className="hidden md:flex items-center justify-between px-6 py-2 bg-primary-800 text-white/80 text-xs">
- <div className="flex items-center gap-2">
- <span className="relative flex h-2 w-2">
- <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary-400 opacity-75" />
- <span className="relative inline-flex rounded-full h-2 w-2 bg-secondary-500" />
- </span>
- <span>{t('header.status')}</span>
- </div>
+ <div className="hidden md:flex items-center justify-end px-6 py-2 bg-primary-800 text-white/80 text-xs">
  <div className="flex items-center gap-4">
  <Link to="/about" className="hover:text-white transition-colors">{t('header.nav.about')}</Link>
  <Link to="/careers" className="hover:text-white transition-colors">{t('header.nav.careers')}</Link>

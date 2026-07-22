@@ -29,59 +29,28 @@
     "signup": "Registrera dig",
     "dashboard": "Översikt",
     "logout": "Logga ut",
-    "searchPlaceholder": "Sök annonser...",
-    "status": "Plattformen är i drift — v1.0 live"
+    "searchPlaceholder": "Sök annonser..."
   },
   "landing": {
     "hero": {
-      "badge": "Nu med AI-genererat kreativt material",
-      "title": "Förändra din annonsering med AI",
-      "titleLine1": "Upptäck annonser.",
-      "titleEarn": "Tjäna",
-      "rotating": {
-        "rewards": "belöningar.",
-        "tokens": "token.",
-        "giftCards": "presentkort.",
-        "cashBack": "pengar tillbaka."
-      },
-      "subtitle": "Nå rätt målgrupp, optimera i realtid och maximera din avkastning.",
-      "blurb": "Den intelligenta annonsplattformen som kopplar samman varumärken med engagerade målgrupper. Bläddra bland utvalda annonser och tjäna riktiga belöningar för din uppmärksamhet.",
-      "cta": "Starta gratis provperiod",
-      "ctaAdvertiser": "Jag är annonsör",
-      "socialProof": "Betrott av över 12 000 annonsörer"
-    },
-    "stats": {
-      "campaigns": "Aktiva kampanjer",
-      "impressions": "Annonsvisningar per dag",
-      "uptime": "Plattformens drifttid",
-      "countries": "Länder vi når"
+      "title": "Get paid for the ads you choose to watch",
+      "blurb": "Browse ads from brands you care about, earn tokens for your attention, and spend them with the merchants running the campaign.",
+      "ctaAdvertiser": "I want to advertise",
+      "noCard": "Free to join. No credit card needed."
     },
     "featured": {
       "title": "Utvalda annonser",
-      "subtitle": "Handplockade kampanjer med de högsta belöningarna",
+      "subtitle": "Campaigns running right now, with the tokens each one pays.",
       "emptyTitle": "Inga utvalda annonser ännu",
-      "emptyDesc": "Utvalda annonser dyker upp här snart. Titta in igen regelbundet, eller bläddra efter kategori för att hitta annonser redan nu!",
+      "emptyDesc": "No campaigns are featured at the moment. Browse everything that is live instead.",
       "emptyAction": "Visa alla annonser"
     },
-    "blogTeaser": {
-      "title": "Senaste från bloggen",
-      "subtitle": "Insikter, fallstudier och plattformsnyheter från vårt team.",
-      "viewAll": "Visa alla artiklar",
-      "posts": {
-        "p3title": "Så ökade FitLife sina konverteringar med 340 % med SmartAdDeals",
-        "p3excerpt": "En djupdykning i hur ett träningsvarumärke använde AI-optimering och belöningsbaserat engagemang.",
-        "p1title": "Framtiden för geomålstyrd annonsering 2026",
-        "p1excerpt": "Integritetsfokuserad målgruppsstyrning och ny teknik som formar om lokal annonsering i stor skala.",
-        "p2title": "Vi presenterar Ad Journey Storyteller",
-        "p2excerpt": "Förvandla rå kampanjdata till engagerande berättelser för intressenter."
-      }
-    },
     "features": {
-      "title": "Allt du behöver",
-      "subtitle": "Kraftfulla verktyg för annonsörer och en givande upplevelse för användare – allt i en plattform.",
+      "title": "What advertisers get",
+      "subtitle": "The reporting side of the platform, for the people paying for the campaigns.",
       "ai": {
         "title": "AI-driven optimering",
-        "desc": "Maskininlärning optimerar löpande bud, budgetar och målgruppsstyrning för att maximera din ROAS."
+        "desc": "Bid, budget and targeting adjustments are proposed from live campaign data. You approve them, or let the campaign apply them automatically."
       },
       "realtime": {
         "title": "Realtidsanalys",
@@ -97,29 +66,16 @@
       },
       "anomalies": {
         "title": "Avvikelsedetektering",
-        "desc": "Få omedelbara varningar vid ovanliga toppar eller fall i nyckeltalen. Upptäck problem innan de kostar dig pengar."
+        "desc": "Alerts when clicks, spend or traffic move outside their usual range, so a broken campaign does not run all weekend."
       },
       "attribution": {
         "title": "Attribution över enheter",
         "desc": "Följ användarnas resa mellan dator, mobil och surfplatta för att attribuera konverteringar korrekt."
       }
     },
-    "cases": {
-      "title": "Framgångshistorier",
-      "subtitle": "Se hur varumärken lyckas med AI-driven annonsering.",
-      "cta": "Läs fallstudier",
-      "items": {
-        "fitlifeLabel": "ökning av konverteringar",
-        "fitlifeQuote": "SmartAdDeals AI-optimering och belöningsbaserade engagemang förändrade helt hur vi tänker kring annonsering.",
-        "fitlifeAuthor": "Jessica Park, marknadschef",
-        "techstartLabel": "avkastning på annonsbudget",
-        "techstartQuote": "De geografiska värmekartorna och avvikelsedetekteringen i realtid sparade oss tusentals kronor i annonsbudget.",
-        "techstartAuthor": "Marcus Chen, tillväxtansvarig"
-      }
-    },
     "how": {
       "title": "Så fungerar det",
-      "subtitle": "Tre enkla steg för att börja tjäna belöningar på annonser du faktiskt bryr dig om.",
+      "subtitle": "How the tokens get from a campaign budget into your pocket.",
       "browse": {
         "title": "Bläddra",
         "desc": "Utforska en utvald katalog med annonser från ledande varumärken i olika branscher. Filtrera efter det som intresserar dig."
@@ -130,12 +86,12 @@
       },
       "earn": {
         "title": "Tjäna",
-        "desc": "Få riktiga belöningar för ditt engagemang. Ta ut när du vill eller återinvestera i fler premiumupplevelser."
+        "desc": "Tokens land in your balance. Spend them as a discount at the merchant, or keep stacking them."
       }
     },
     "faq": {
       "title": "Vanliga frågor",
-      "subtitle": "Allt du behöver veta om att tjäna belöningar och annonsera hos oss.",
+      "subtitle": "Tokens, budgets and what the platform does with your data.",
       "stillHaveQuestions": "Har du fortfarande frågor?",
       "contactUs": "Kontakta oss",
       "q1": "Hur tjänar jag belöningar på annonser?",
@@ -143,7 +99,7 @@
       "q2": "Är det gratis för annonsörer att gå med?",
       "a2": "Ja. Det är gratis att skapa ett annonsörskonto. Du betalar bara för den annonsbudget du avsätter till kampanjer, plus en liten plattformsavgift baserad på resultat.",
       "q3": "Vad skiljer SmartAdDeals från andra annonsnätverk?",
-      "a3": "Vi kombinerar AI-driven optimering, integritetsfokuserad målgruppsstyrning, geografiska värmekartor och en belöningsmodell som värdesätter användarens uppmärksamhet.",
+      "a3": "Consumers get paid for their attention instead of being tracked for it, and the merchant funding the campaign is the one who redeems the reward. The analytics side is ordinary: heatmaps, attribution and anomaly alerts.",
       "q4": "Hur fungerar AI-optimeringen?",
       "a4": "Vår maskininlärningsmotor analyserar kampanjresultat i realtid och föreslår justeringar av bud, budgetar, målgrupper och kreativt material för att förbättra ROAS.",
       "q5": "Kan jag koppla SmartAdDeals till mina befintliga annonskonton?",
@@ -151,7 +107,7 @@
     },
     "categories": {
       "title": "Bläddra efter kategori",
-      "subtitle": "Hitta annonser från branscher du bryr dig om – från underhållning till finans.",
+      "subtitle": "Jump straight to the industries you are interested in.",
       "entertainment": "Underhållning",
       "sports": "Sport",
       "retail": "Detaljhandel",
@@ -159,47 +115,17 @@
       "health": "Hälsa",
       "finance": "Finans"
     },
-    "testimonials": {
-      "title": "Uppskattat av annonsörer",
-      "subtitle": "Se vad branschledarna säger om SmartAdDeals.",
-      "t1role": "Marknadschef, FitLife",
-      "t1text": "Vi ökade konverteringarna med 340 % med SmartAdDeals AI-optimering. Den belöningsbaserade modellen förändrade helt hur vi ser på annonsering.",
-      "t2role": "Tillväxtansvarig, TechStart",
-      "t2text": "De geografiska värmekartorna och avvikelsedetekteringen i realtid sparade oss tusentals kronor i annonsbudget. Den bästa analysplattform vi använt.",
-      "t3role": "Digitalchef, RetailMax",
-      "t3text": "Vårt team älskar Ad Journey Storyteller. Den förvandlar torr kampanjdata till berättelser vi faktiskt vill dela med intressenterna."
-    },
-    "integrations": {
-      "title": "Integrerat med ledande programmatiska plattformar",
-      "subtitle": "Vårt ekosystem ansluter till världens främsta demand-side-plattformar, supply-side-plattformar och annonsbörser.",
-      "trustedBy": "Används av team hos"
-    },
-    "developer": {
-      "title": "Redo för utvecklare",
-      "desc": "Anslut din befintliga programmatiska stack, synka kampanjdata och bygg egna arbetsflöden med vårt REST-API, webhooks och OAuth-anslutna plattformskonton.",
-      "cta": "Få API-åtkomst",
-      "ctaSecondary": "Prata med ingenjörsteamet"
-    },
-    "newsletter": {
-      "title": "Ligg steget före inom adtech",
-      "desc": "Få de senaste plattformsnyheterna, fallstudierna och annonstipsen till din inkorg varannan vecka.",
-      "disclaimer": "Ingen spam. Avsluta när du vill."
-    },
     "finalCta": {
-      "title": "Redo att komma igång?",
-      "desc": "Gå med bland tusentals användare som redan tjänar belöningar på SmartAdDeals. Det tar mindre än en minut att registrera sig.",
+      "title": "Ready to start?",
+      "desc": "Sign up as a consumer to start earning, or as an advertiser to run your first campaign.",
       "primary": "Skapa gratiskonto",
-      "noCard": "Inget kreditkort krävs",
-      "free": "Gratis för alltid"
+      "noCard": "Inget kreditkort krävs"
     }
   },
   "auth": {
     "login": {
-      "brandTitle": "Framtidens",
-      "brandTitleAccent": "intelligenta annonsering",
-      "brandBlurb": "Skapa, optimera och analysera annonskampanjer med AI-drivna insikter och realtidsanalys.",
       "title": "Välkommen tillbaka",
-      "subtitle": "Logga in på ditt konto för att fortsätta",
+      "subtitle": "Sign in to continue",
       "email": "E-postadress",
       "emailPlaceholder": "du@företag.se",
       "password": "Lösenord",
@@ -211,39 +137,12 @@
       "createAccount": "Skapa gratiskonto",
       "successToast": "Välkommen tillbaka!",
       "errorToast": "Ogiltiga uppgifter. Försök igen.",
-      "features": {
-        "analytics": {
-          "title": "Realtidsanalys",
-          "desc": "Följ visningar, klick, CTR och konverteringar i realtidsöversikter"
-        },
-        "ai": {
-          "title": "AI-optimering",
-          "desc": "Låt AI finjustera dina kampanjer automatiskt för maximal avkastning"
-        },
-        "anomaly": {
-          "title": "Avvikelsedetektering",
-          "desc": "Omedelbara varningar för bottrafik, CTR-toppar och misstänkt aktivitet"
-        },
-        "rewards": {
-          "title": "Belöningssystem",
-          "desc": "Engagera användare med riktiga belöningar för att se och interagera med annonser"
-        }
-      },
-      "stats": {
-        "campaigns": "Aktiva kampanjer",
-        "uptime": "Drifttid enligt SLA",
-        "adsDaily": "Annonser levererade per dag"
-      }
+      "panelTitle": "Campaign reporting that shows where the budget went",
+      "panelBlurb": "Impressions, clicks, conversions and spend, plus heatmaps and anomaly alerts when something moves out of range."
     },
     "register": {
-      "brandTitle": "Börja din",
-      "brandTitleAccent": "annonsresa idag",
-      "brandBlurb": "Gå med tusentals annonsörer och användare på marknadens mest intelligenta adtech-plattform.",
-      "testimonial": "SmartAdDeals AI-optimering ökade vår CTR med 340 % första månaden. Ad Journey Storyteller är helt unik på marknaden.",
-      "testimonialRole": "Marknadschef, TechCorp",
-      "trustedBy": "Betrott av över 2 000 företag världen över",
       "title": "Skapa ditt konto",
-      "subtitle": "Kom igång på under en minut",
+      "subtitle": "Takes about a minute",
       "roleLabel": "Jag vill...",
       "roleAdvertiser": "Annonsera",
       "roleAdvertiserDesc": "Skapa och optimera kampanjer",
@@ -270,7 +169,9 @@
       "haveAccount": "Har du redan ett konto?",
       "signIn": "Logga in",
       "successToast": "Kontot har skapats! Logga in.",
-      "errorToast": "Registreringen misslyckades. E-postadressen kan redan vara registrerad."
+      "errorToast": "Registreringen misslyckades. E-postadressen kan redan vara registrerad.",
+      "panelTitle": "Two ways in",
+      "panelBlurb": "Run campaigns and track what they return, or browse ads and earn tokens you can spend at the merchant."
     },
     "forgot": {
       "backToLogin": "Tillbaka till inloggningen",
@@ -295,23 +196,13 @@
     }
   },
   "about": {
-    "eyebrow": "Vår historia",
-    "title": "Om SmartAdDeals",
-    "subtitle": "Vi bygger framtidens intelligenta annonsering – där varumärken möter engagerade målgrupper och användare får verkligt värde för sin uppmärksamhet.",
-    "missionTitle": "Vårt uppdrag",
-    "missionP1": "SmartAdDeals föddes ur en enkel idé: annonsering behöver inte vara påträngande, och uppmärksamhet har ett verkligt värde. Vi skapade en tvåsidig plattform som ger annonsörer AI-driven kampanjhantering och samtidigt belönar användare som väljer att engagera sig i innehåll de tycker om.",
-    "missionP2": "Vår plattform kombinerar avancerad analys – geografiska värmekartor, attribution över enheter, avvikelsedetektering och konkurrensjämförelser – med en unik Ad Journey Storyteller som förvandlar rådata till engagerande kampanjberättelser.",
-    "sloganLine1": "Bättre annonser.",
-    "sloganLine2": "Bättre belöningar.",
-    "sloganLine3": "Bättre värld.",
-    "stats": {
-      "campaigns": "Aktiva kampanjer",
-      "adsDaily": "Annonser levererade per dag",
-      "countries": "Länder vi når",
-      "uptime": "Plattformens drifttid"
-    },
+    "title": "About SmartAdDeals",
+    "subtitle": "An advertising platform where the person watching the ad gets paid for it.",
+    "missionTitle": "Why we built it",
+    "missionP1": "Online advertising pays everyone except the person actually watching. We wanted to try the other arrangement: the advertiser sets aside part of their discount, the consumer earns it by engaging, and the merchant hands it back at the till.",
+    "missionP2": "The advertiser side is a normal analytics product. Campaign reporting, geographic heatmaps, cross-device attribution, anomaly alerts, and a narrative view that turns a campaign into something you can hand to a stakeholder.",
     "valuesTitle": "Våra värderingar",
-    "valuesSubtitle": "Principerna som styr allt vi bygger.",
+    "valuesSubtitle": "What we optimise for when the two sides disagree.",
     "values": {
       "precision": {
         "title": "Precision",
@@ -323,7 +214,7 @@
       },
       "innovation": {
         "title": "Innovation",
-        "desc": "Från Ad Journey Storyteller till avvikelsedetektering i realtid – vi flyttar gränserna inom adtech."
+        "desc": "We would rather ship an unusual mechanic that works than a familiar one that does not."
       },
       "community": {
         "title": "Gemenskap",
@@ -339,7 +230,7 @@
       }
     },
     "journeyTitle": "Vår resa",
-    "journeySubtitle": "Från en idé till en global plattform.",
+    "journeySubtitle": "Where the product has got to so far.",
     "milestones": {
       "beginning": {
         "title": "Början",
@@ -363,7 +254,7 @@
       }
     },
     "teamTitle": "Ledningsgrupp",
-    "teamSubtitle": "Människorna som bygger framtidens annonsering.",
+    "teamSubtitle": "The people building it.",
     "roles": {
       "ceo": "Vd och medgrundare",
       "cto": "CTO och medgrundare",
@@ -372,18 +263,24 @@
       "headAi": "Chef för AI/ML",
       "headDesign": "Designchef"
     },
-    "ctaTitle": "Gå med i SmartAdDeals-gemenskapen",
-    "ctaDesc": "Oavsett om du är annonsör som vill ha smartare kampanjer eller användare som vill tjäna på annonser – vi har det du behöver.",
-    "ctaPrimary": "Kom igång gratis"
+    "ctaTitle": "Get started",
+    "ctaDesc": "Advertisers run campaigns and see where the budget went. Consumers browse ads and earn tokens they can actually spend.",
+    "ctaPrimary": "Kom igång gratis",
+    "stats": {
+      "campaigns": "Campaigns run",
+      "advertisers": "Advertisers",
+      "adViews": "Ad views",
+      "cities": "Towns and cities"
+    }
   },
   "careers": {
     "title": "Jobba hos oss",
-    "subtitle": "Hjälp oss bygga framtidens adtech. Vi skapar en plattform där annonsering är transparent, givande och driven av AI.",
-    "perksTitle": "Varför SmartAdDeals?",
+    "subtitle": "We are building an ad platform that pays the audience. If that sounds like a problem worth working on, get in touch.",
+    "perksTitle": "How we work",
     "perks": {
       "remote": {
         "title": "Distansarbete först",
-        "desc": "Jobba var som helst i världen. Vi tror inte att stor talang begränsas av geografi."
+        "desc": "Work from wherever you are. We hire for the work, not the postcode."
       },
       "equity": {
         "title": "Konkurrenskraftigt aktieprogram",
@@ -405,20 +302,19 @@
       "london": "London"
     },
     "noRoleTitle": "Hittar du inte din roll?",
-    "noRoleDesc": "Vi letar alltid efter duktiga människor. Skicka ditt cv och berätta hur du skulle bidra till SmartAdDeals.",
-    "applyToast": "Ansökan till {{role}} har skickats! Vi hör av oss."
+    "noRoleDesc": "Send us your CV and tell us what you would want to work on.",
+    "applyToast": "Ansökan till {{role}} har skickats! Vi hör av oss.",
+    "noRoles": "There are no open roles right now."
   },
   "partners": {
-    "eyebrow": "Annonsörer och kreatörer",
     "title": "Våra partner",
-    "subtitle": "Upptäck varumärkena och kreatörerna bakom kampanjerna på SmartAdDeals. Bläddra bland deras profiler för att se vad de annonserar.",
+    "subtitle": "The brands and creators running campaigns on SmartAdDeals. Open a profile to see what they are advertising.",
     "rewards": "Belöningar",
     "viewProfile": "Visa profil"
   },
   "contact": {
-    "eyebrow": "Kontakt",
-    "title": "Vi hör gärna från dig",
-    "subtitle": "Har du en fråga, feedback eller ett samarbetsförslag? Välj en kanal nedan eller skicka ett meddelande direkt.",
+    "title": "Get in touch",
+    "subtitle": "A question, a bug, or a partnership idea. Pick whichever route suits.",
     "channels": {
       "email": "Mejla oss",
       "phone": "Ring oss",
@@ -470,7 +366,8 @@
       "a3": "Ja. Vi erbjuder anpassade avtal för byråer och stora annonsörer. Kontakta vårt säljteam för priser och introduktion.",
       "q4": "Var hittar jag teknisk dokumentation?",
       "a4": "Registrerade användare når dokumentationen från översikten. Du kan även begära API-dokumentation via det här formuläret."
-    }
+    },
+    "noChannels": "Contact details have not been published yet."
   },
   "support": {
     "title": "Supportcenter",
@@ -530,7 +427,6 @@
     }
   },
   "notFound": {
-    "eyebrow": "404-fel",
     "title": "Sidan hittades inte",
     "body": "Tyvärr, vi kunde inte hitta sidan du letar efter. Den kan ha flyttats, bytt namn eller aldrig ha funnits."
   },
@@ -621,7 +517,8 @@
       "logOut": "Logga ut",
       "expand": "Expandera",
       "collapse": "Fäll ihop",
-      "openMenu": "Öppna menyn"
+      "openMenu": "Öppna menyn",
+      "siteContent": "Website Content"
     },
     "home": {
       "title": "Översikt",
@@ -1202,6 +1099,66 @@
       "minScoreHint": "Viktad poäng utifrån besök, köp, omdömen, visningar och streaks.",
       "save": "Spara kriterier",
       "reset": "Återställ till standard"
+    },
+    "siteContent": {
+      "title": "Website Content",
+      "intro": "Everything the public marketing site shows about the company. Nothing here is published until you say so, and each section stays hidden on the site while it is empty.",
+      "add": "Add",
+      "saved": "Saved",
+      "saveFailed": "Could not save that",
+      "removed": "Removed",
+      "removeFailed": "Could not remove that",
+      "untitled": "Untitled",
+      "live": "Live on the site",
+      "hidden": "Hidden",
+      "publish": "Publish",
+      "unpublish": "Hide from the site",
+      "publishNow": "Show this on the site",
+      "emptyTitle": "Nothing here yet",
+      "emptyDesc": "Add an entry to start. The matching section stays off the marketing site until at least one item is published.",
+      "tabs": {
+        "testimonials": "Testimonials",
+        "caseStudies": "Case studies",
+        "team": "Team",
+        "milestones": "Milestones",
+        "jobs": "Job openings"
+      },
+      "hints": {
+        "testimonials": "Real quotes from real customers, with their permission.",
+        "caseStudies": "A headline result you can evidence if a customer asks.",
+        "team": "Shown on the About page.",
+        "milestones": "The timeline on the About page.",
+        "jobs": "Listed on the Careers page."
+      },
+      "fields": {
+        "name": "Name",
+        "role": "Job title",
+        "company": "Company",
+        "body": "Quote or description",
+        "avatar_url": "Photo URL",
+        "metric": "Headline figure",
+        "metric_label": "What it measures",
+        "year": "Year",
+        "title": "Title",
+        "department": "Department",
+        "location": "Location",
+        "apply_url": "Where Apply links to",
+        "order": "Order",
+        "orderHint": "Lower numbers appear first."
+      },
+      "contactTitle": "Contact details",
+      "contactSubtitle": "Shown on the Contact page and in the footer",
+      "contactHint": "Leave a field blank and the site simply omits that channel. Nothing is invented to fill a gap.",
+      "contact": {
+        "email": "Email address",
+        "phone": "Phone number",
+        "careers_email": "Careers email",
+        "address_line": "Street address",
+        "address_city": "City and postcode",
+        "hours_weekdays": "Weekday hours",
+        "hours_saturday": "Saturday hours",
+        "hours_sunday": "Sunday hours"
+      }
     }
   }
 }

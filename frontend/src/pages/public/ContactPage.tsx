@@ -63,7 +63,6 @@ export function ContactPage() {
           <WatermarkBanner icon={<Mail />} />
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
             <div className="max-w-2xl">
-              <p className="text-secondary-300 font-semibold tracking-wide uppercase text-sm mb-3">{t('contact.eyebrow')}</p>
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-5 leading-tight">
                 {t('contact.title')}
               </h1>

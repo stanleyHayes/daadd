@@ -19,9 +19,6 @@ export function NotFoundPage() {
             <Compass className="h-10 w-10 text-secondary-500" />
           </div>
 
-          <p className="text-sm font-semibold uppercase tracking-widest text-secondary-600 dark:text-secondary-400">
-            {t('notFound.eyebrow')}
-          </p>
           <h1 className="mt-3 text-4xl font-bold tracking-tight text-primary-900 dark:text-white sm:text-5xl">
             {t('notFound.title')}
           </h1>

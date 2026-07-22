@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
 import { useLogin } from '@/hooks/useAuth';
-import { Mail, Lock, Eye, EyeOff, Zap, ArrowRight, BarChart3, Shield, TrendingUp, Gift } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, Zap, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 // Validation messages are resolved through i18next at render time, so the
@@ -20,13 +20,6 @@ const buildSchema = (t: (k: string) => string) =>
  });
 
 type LoginForm = z.infer<ReturnType<typeof buildSchema>>;
-
-const FEATURES = [
- { icon: BarChart3, key: 'analytics' },
- { icon: TrendingUp, key: 'ai' },
- { icon: Shield, key: 'anomaly' },
- { icon: Gift, key: 'rewards' },
-] as const;
 
 export function LoginPage() {
  const { t } = useTranslation();
@@ -70,7 +63,6 @@ export function LoginPage() {
  <span className="text-xl font-bold tracking-tight">SmartAdDeals</span>
  </motion.div>
 
- {/* Hero text */}
  <div>
  <motion.h1
  initial={{ opacity: 0, y: 20 }}
@@ -78,62 +70,19 @@ export function LoginPage() {
  transition={{ duration: 0.6, delay: 0.1 }}
  className="text-4xl font-extrabold leading-tight mb-4"
  >
- {t('auth.login.brandTitle')}
- <br />
- <span className="text-accent-400">{t('auth.login.brandTitleAccent')}</span>
+ {t('auth.login.panelTitle')}
  </motion.h1>
  <motion.p
  initial={{ opacity: 0, y: 20 }}
  animate={{ opacity: 1, y: 0 }}
  transition={{ duration: 0.6, delay: 0.2 }}
- className="text-primary-100 text-lg max-w-md mb-10"
+ className="text-primary-100 text-lg max-w-md"
  >
- {t('auth.login.brandBlurb')}
+ {t('auth.login.panelBlurb')}
  </motion.p>
-
- {/* Feature list */}
- <div className="space-y-5">
- {FEATURES.map((f, i) => {
- const Icon = f.icon;
- return (
- <motion.div
- key={f.key}
- initial={{ opacity: 0, x: -20 }}
- animate={{ opacity: 1, x: 0 }}
- transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
- className="flex items-start gap-4"
- >
- <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-white/10 backdrop-blur-sm flex items-center justify-center">
- <Icon className="h-5 w-5 text-accent-400" />
- </div>
- <div>
- <h3 className="font-semibold text-sm">{t(`auth.login.features.${f.key}.title`)}</h3>
- <p className="text-primary-200 text-xs mt-0.5 leading-relaxed">{t(`auth.login.features.${f.key}.desc`)}</p>
- </div>
- </motion.div>
- );
- })}
- </div>
  </div>
 
- {/* Bottom stats */}
- <motion.div
- initial={{ opacity: 0 }}
- animate={{ opacity: 1 }}
- transition={{ duration: 0.5, delay: 0.8 }}
- className="flex gap-8"
- >
- {[
- { value: '12K+', label: t('auth.login.stats.campaigns') },
- { value: '98.5%', label: t('auth.login.stats.uptime') },
- { value: '2.3M', label: t('auth.login.stats.adsDaily') },
- ].map((stat) => (
- <div key={stat.label}>
- <p className="text-2xl font-extrabold">{stat.value}</p>
- <p className="text-primary-200 text-xs mt-0.5">{stat.label}</p>
- </div>
- ))}
- </motion.div>
+ <div />
  </div>
  </div>
 

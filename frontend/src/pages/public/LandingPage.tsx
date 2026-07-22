@@ -1,885 +1,287 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
- ArrowRight, Eye, Gift, TrendingUp, BarChart3, Cpu, ShoppingBag,
- Film, Trophy, Heart, Sparkles, Star, Quote, ChevronLeft,
- ChevronRight, CheckCircle2, Shield, Zap, MousePointerClick,
- MapPin, ArrowUpRight, Globe, ChevronDown, Code, Mail
+  ArrowRight, Eye, Gift, TrendingUp, BarChart3, Cpu, ShoppingBag,
+  Film, Trophy, Heart, MapPin, ArrowUpRight, ChevronDown, Shield,
+  MousePointerClick, Zap,
 } from 'lucide-react';
-import toast from 'react-hot-toast';
-import { WatermarkBanner } from '@/components/ui/Watermark';
-import { motion, useInView, useMotionValue, useTransform, animate } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { PageTransition } from '@/components/ui/PageTransition';
 import { EmptyState } from '@/components/ui/EmptyState';
-import { SplitText } from '@/components/ui/SplitText';
-import { RotatingWords } from '@/components/ui/RotatingWords';
-import { GradientText } from '@/components/ui/GradientText';
-import { MagneticButton } from '@/components/ui/MagneticButton';
-import { CursorGlow } from '@/components/ui/CursorGlow';
-import { AuroraBackground } from '@/components/ui/AuroraBackground';
-import { ParticleField } from '@/components/ui/ParticleField';
-import { Marquee } from '@/components/ui/Marquee';
-import { ScrambleText } from '@/components/ui/ScrambleText';
 import { useFeaturedAds } from '@/hooks/usePublicAds';
 import { AdCard } from '@/components/ads/AdCard';
-import { cn } from '@/lib/utils';
 import { SkeletonAdCard } from '@/components/ui/Skeleton';
-import { PROGRAMMATIC_PARTNERS } from '@/lib/constants';
-import { useTranslation } from 'react-i18next';
+import { cn } from '@/lib/utils';
 
 const categories = [
- { key: 'entertainment', icon: Film, gradient: 'from-secondary-500 to-secondary-700', glow: 'shadow-secondary-500/30', iconColor: 'text-secondary-600 dark:text-secondary-400' },
- { key: 'sports', icon: Trophy, gradient: 'from-danger-500 to-rose-600', glow: 'shadow-danger-500/30', iconColor: 'text-danger-600 dark:text-danger-400' },
- { key: 'retail', icon: ShoppingBag, gradient: 'from-warning-400 to-orange-500', glow: 'shadow-warning-500/30', iconColor: 'text-warning-600 dark:text-warning-400' },
- { key: 'technology', icon: Cpu, gradient: 'from-primary-500 to-primary-700', glow: 'shadow-primary-500/30', iconColor: 'text-primary-600 dark:text-primary-400' },
- { key: 'health', icon: Heart, gradient: 'from-pink-500 to-rose-500', glow: 'shadow-pink-500/30', iconColor: 'text-pink-600 dark:text-pink-400' },
- { key: 'finance', icon: BarChart3, gradient: 'from-accent-500 to-emerald-600', glow: 'shadow-accent-500/30', iconColor: 'text-accent-600 dark:text-accent-400' },
-];
+  { key: 'entertainment', icon: Film },
+  { key: 'sports', icon: Trophy },
+  { key: 'retail', icon: ShoppingBag },
+  { key: 'technology', icon: Cpu },
+  { key: 'health', icon: Heart },
+  { key: 'finance', icon: BarChart3 },
+] as const;
 
 const features = [
- {
- icon: Zap,
- key: 'ai',
- color: 'from-primary-500 to-primary-600',
- bg: 'bg-primary-50 dark:bg-primary-900/20',
- iconColor: 'text-primary-600 dark:text-primary-400',
- },
- {
- icon: MapPin,
- key: 'heatmaps',
- color: 'from-secondary-500 to-secondary-600',
- bg: 'bg-secondary-50 dark:bg-secondary-900/20',
- iconColor: 'text-secondary-600 dark:text-secondary-400',
- },
- {
- icon: Shield,
- key: 'anomalies',
- color: 'from-accent-500 to-accent-600',
- bg: 'bg-accent-50 dark:bg-accent-900/20',
- iconColor: 'text-accent-600 dark:text-accent-400',
- },
- {
- icon: MousePointerClick,
- key: 'attribution',
- color: 'from-warning-500 to-warning-600',
- bg: 'bg-warning-50 dark:bg-warning-900/20',
- iconColor: 'text-warning-600 dark:text-warning-400',
- },
-];
+  { icon: Zap, key: 'ai' },
+  { icon: MapPin, key: 'heatmaps' },
+  { icon: Shield, key: 'anomalies' },
+  { icon: MousePointerClick, key: 'attribution' },
+] as const;
 
-const testimonials = [
- {
- key: 't1',
- name: 'Jessica Park',
- avatar: 'JP',
- rating: 5,
- },
- {
- key: 't2',
- name: 'Marcus Chen',
- avatar: 'MC',
- rating: 5,
- },
- {
- key: 't3',
- name: 'Sarah Williams',
- avatar: 'SW',
- rating: 5,
- },
-];
+const steps = [
+  { step: 1, key: 'browse', icon: Eye },
+  { step: 2, key: 'engage', icon: TrendingUp },
+  { step: 3, key: 'earn', icon: Gift },
+] as const;
 
-const stats = [
- { value: 12500, suffix: '+', key: 'campaigns', icon: Zap },
- { value: 2.3, suffix: 'M', key: 'impressions', icon: Eye },
- { value: 98, suffix: '%', key: 'uptime', icon: Shield },
- { value: 150, suffix: '+', key: 'countries', icon: Globe },
-];
-
-function AnimatedCounter({ value, suffix }: { value: number; suffix: string }) {
- const ref = useRef<HTMLSpanElement>(null);
- const isInView = useInView(ref, { once: true });
- const motionValue = useMotionValue(0);
- const rounded = useTransform(motionValue, (v) => {
- if (value < 10) return v.toFixed(1);
- return Math.floor(v).toLocaleString();
- });
- const [display, setDisplay] = useState('0');
-
- useEffect(() => {
- if (isInView) {
- const controls = animate(motionValue, value, {
- duration: 2,
- ease: 'easeOut',
- });
- const unsub = rounded.on('change', (v) => setDisplay(String(v)));
- return () => {
- controls.stop();
- unsub();
- };
- }
- }, [isInView, value, motionValue, rounded]);
-
- return (
- <span ref={ref}>
- {display}
- {suffix}
- </span>
- );
-}
-
-function FloatingBlob({ className, delay = 0 }: { className?: string; delay?: number }) {
- return (
- <motion.div
- className={cn('absolute rounded-full blur-3xl opacity-30 pointer-events-none', className)}
- animate={{
- y: [0, -30, 0],
- x: [0, 15, 0],
- scale: [1, 1.1, 1],
- }}
- transition={{
- duration: 8,
- repeat: Infinity,
- delay,
- ease: 'easeInOut',
- }}
- />
- );
-}
+const FAQ_KEYS = [1, 2, 3, 4, 5] as const;
 
 export function LandingPage() {
- const { t } = useTranslation();
- const navigate = useNavigate();
- const { data: featuredAds, isLoading: featuredLoading } = useFeaturedAds();
- const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { data: featuredAds, isLoading: featuredLoading } = useFeaturedAds();
 
- const nextTestimonial = () => setActiveTestimonial((p) => (p + 1) % testimonials.length);
- const prevTestimonial = () => setActiveTestimonial((p) => (p - 1 + testimonials.length) % testimonials.length);
-
- return (
- <PageTransition>
- <div>
- {/* ========== HERO ========== */}
- <section className="relative overflow-hidden bg-primary-700 text-white">
-          <WatermarkBanner icon={<Zap />} />
- {/* Layered animated background: aurora gradients + particle network + cursor spotlight */}
- <AuroraBackground />
- <ParticleField className="opacity-60" />
- <CursorGlow className="bg-accent-400/15" />
-
-
- <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 relative">
- <div className="max-w-3xl">
- {/* Badge */}
- <motion.div
- initial={{ opacity: 0, y: 20 }}
- animate={{ opacity: 1, y: 0 }}
- transition={{ duration: 0.5 }}
- className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-sm font-medium mb-8"
- >
- <Sparkles className="h-4 w-4 text-accent-300" />
- <span>{t('landing.hero.badge')}</span>
- <ArrowRight className="h-4 w-4" />
- </motion.div>
-
- <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold leading-[1.1] tracking-tight">
- <SplitText text={t('landing.hero.titleLine1')} mode="words" stagger={0.14} delay={0.1} />
- <br />
- <GradientText className="from-accent-300 via-secondary-300 to-accent-300">
- {t('landing.hero.titleEarn')}{' '}
- <RotatingWords
- words={[
- t('landing.hero.rotating.rewards'),
- t('landing.hero.rotating.tokens'),
- t('landing.hero.rotating.giftCards'),
- t('landing.hero.rotating.cashBack'),
- ]}
- />
- </GradientText>
- </h1>
-
- <motion.p
- initial={{ opacity: 0, y: 20 }}
- animate={{ opacity: 1, y: 0 }}
- transition={{ duration: 0.6, delay: 0.2 }}
- className="mt-6 text-lg sm:text-xl text-primary-100 max-w-2xl leading-relaxed"
- >
- {t('landing.hero.blurb')}
- </motion.p>
-
- <motion.div
- initial={{ opacity: 0, y: 20 }}
- animate={{ opacity: 1, y: 0 }}
- transition={{ duration: 0.6, delay: 0.3 }}
- className="mt-10 flex flex-col sm:flex-row gap-4"
- >
- <MagneticButton>
- <button
- onClick={() => navigate('/ads')}
- className="inline-flex items-center justify-center gap-2 rounded-xl font-semibold px-8 py-4 text-base bg-white text-primary-700 hover:bg-gray-50 shadow-xl shadow-black/10 active:scale-[0.97] transition-all"
- >
- {t('common.browseAds')} <ArrowRight className="h-5 w-5" />
- </button>
- </MagneticButton>
- <MagneticButton>
- <button
- onClick={() => navigate('/register')}
- className="inline-flex items-center justify-center gap-2 rounded-xl font-semibold px-8 py-4 text-base border-2 border-white/30 text-white hover:bg-white/10 active:scale-[0.97] transition-all backdrop-blur-sm"
- >
- {t('landing.hero.ctaAdvertiser')}
- </button>
- </MagneticButton>
- </motion.div>
-
- {/* Social proof mini */}
- <motion.div
- initial={{ opacity: 0 }}
- animate={{ opacity: 1 }}
- transition={{ duration: 0.8, delay: 0.6 }}
- className="mt-10 flex items-center gap-4"
- >
- <div className="flex -space-x-3">
- {['JP', 'MC', 'SW', 'AC'].map((initials, i) => (
- <div
- key={i}
- className="w-10 h-10 rounded-full border-2 border-primary-600 flex items-center justify-center text-xs font-bold text-white bg-primary-400"
- >
- {initials}
- </div>
- ))}
- </div>
- <div className="text-sm">
- <div className="flex items-center gap-1">
- {Array.from({ length: 5 }).map((_, i) => (
- <Star key={i} className="h-4 w-4 fill-amber-300 text-amber-300" />
- ))}
- </div>
- <p className="text-primary-200">{t('landing.hero.socialProof')}</p>
- </div>
- </motion.div>
- </div>
- </div>
-
- {/* Bottom wave */}
- <div className="absolute bottom-0 left-0 right-0">
- <svg viewBox="0 0 1440 80" fill="none" className="w-full">
- <path
- d="M0 80V40C240 80 480 0 720 0C960 0 1200 80 1440 40V80H0Z"
- className="fill-gray-50 dark:fill-slate-900"
- />
- </svg>
- </div>
- </section>
-
- {/* ========== STATS BAR ========== */}
- <section className="bg-gray-50 dark:bg-slate-900 py-12">
- <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
- <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
- {stats.map((stat) => {
- const Icon = stat.icon;
- return (
- <motion.div
- key={stat.key}
- initial={{ opacity: 0, y: 20 }}
- whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true }}
- className="text-center"
- >
- <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary-50 dark:bg-primary-900/20 mb-3">
- <Icon className="h-6 w-6 text-primary-600 dark:text-primary-400" />
- </div>
- <p className="text-3xl font-extrabold text-gray-900 dark:text-white">
- <AnimatedCounter value={stat.value} suffix={stat.suffix} />
- </p>
- <p className="text-sm text-gray-500 dark:text-slate-400 mt-1">{t(`landing.stats.${stat.key}`)}</p>
- </motion.div>
- );
- })}
- </div>
- </div>
- </section>
-
- {/* ========== FEATURED ADS ========== */}
- <section className="py-20 bg-white dark:bg-slate-900">
- <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
- <div className="flex items-end justify-between mb-10">
- <div>
- <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{t('landing.featured.title')}</h2>
- <p className="text-gray-500 dark:text-slate-400 mt-2">{t('landing.featured.subtitle')}</p>
- </div>
- <Link
- to="/ads"
- className="hidden sm:inline-flex items-center gap-1 text-sm font-semibold text-primary-600 hover:text-primary-700 transition-colors"
- >
- {t('common.viewAll')} <ArrowUpRight className="h-4 w-4" />
- </Link>
- </div>
-
- {featuredLoading ? (
- <div className="flex gap-6 overflow-x-auto pb-6 pt-2 -mx-2 px-2 scrollbar-thin">
- {Array.from({ length: 4 }).map((_, i) => (
- <div key={i} className="flex-none w-72 sm:w-80">
- <SkeletonAdCard />
- </div>
- ))}
- </div>
- ) : featuredAds && featuredAds.length > 0 ? (
- <div className="flex gap-6 overflow-x-auto pb-6 pt-2 -mx-2 px-2 scrollbar-thin">
- {featuredAds.map((ad) => (
- <div key={ad.id} className="flex-none w-72 sm:w-80">
- <AdCard ad={ad} featured />
- </div>
- ))}
- </div>
- ) : (
- <EmptyState
- icon={<Sparkles className="h-12 w-12" />}
- title={t('landing.featured.emptyTitle')}
- description={t('landing.featured.emptyDesc')}
- actionLabel={t('landing.featured.emptyAction')}
- onAction={() => navigate('/ads')}
- size="md"
- />
- )}
- </div>
- </section>
-
- {/* ========== LATEST BLOG ========== */}
-    <section className="py-20 bg-gray-50 dark:bg-slate-800/30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-end justify-between mb-10">
-          <div>
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{t('landing.blogTeaser.title')}</h2>
-            <p className="text-gray-500 dark:text-slate-400 mt-2">{t('landing.blogTeaser.subtitle')}</p>
-          </div>
-          <Link
-            to="/blog"
-            className="hidden sm:inline-flex items-center gap-1 text-sm font-semibold text-primary-600 hover:text-primary-700 transition-colors"
-          >
-            {t('landing.blogTeaser.viewAll')} <ArrowUpRight className="h-4 w-4" />
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[
-            { id: 3, key: 'p3', date: 'February 28, 2026', category: 'cases' },
-            { id: 1, key: 'p1', date: 'March 10, 2026', category: 'trends' },
-            { id: 2, key: 'p2', date: 'March 5, 2026', category: 'updates' },
-          ].map((post, index) => (
-            <motion.article
-              key={post.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              onClick={() => navigate(`/blog/${post.id}`)}
-              className="group bg-white dark:bg-slate-800 rounded-2xl border border-gray-200/80 dark:border-slate-700/80 p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer"
-            >
-              <span className="inline-block px-2.5 py-1 rounded-full text-xs font-medium bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300 border border-primary-100 dark:border-primary-900/30 mb-4">
-                {t(`blog.category.${post.category}`)}
-              </span>
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-primary-700 dark:group-hover:text-secondary-400 transition-colors">
-                {t(`landing.blogTeaser.posts.${post.key}title`)}
-              </h3>
-              <p className="text-sm text-gray-500 dark:text-slate-400 line-clamp-3 leading-relaxed mb-4">
-                {t(`landing.blogTeaser.posts.${post.key}excerpt`)}
+  return (
+    <PageTransition>
+      <div>
+        {/* Hero */}
+        <section className="bg-primary-700 text-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
+            <div className="max-w-2xl">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.1] tracking-tight text-balance">
+                {t('landing.hero.title')}
+              </h1>
+              <p className="mt-6 text-lg text-primary-100 leading-relaxed">
+                {t('landing.hero.blurb')}
               </p>
-              <div className="flex items-center justify-between text-xs text-gray-400 dark:text-slate-500">
-                <span>{post.date}</span>
-                <span className="flex items-center gap-1 text-primary-600 dark:text-secondary-400 font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
-                  Read more <ArrowUpRight className="h-3 w-3" />
-                </span>
+              <div className="mt-9 flex flex-col sm:flex-row gap-3">
+                <button
+                  onClick={() => navigate('/ads')}
+                  className="inline-flex items-center justify-center gap-2 rounded-xl font-semibold px-7 py-3.5 text-base bg-white text-primary-700 hover:bg-gray-50 active:scale-[0.98] transition-all"
+                >
+                  {t('common.browseAds')} <ArrowRight className="h-5 w-5" />
+                </button>
+                <button
+                  onClick={() => navigate('/register')}
+                  className="inline-flex items-center justify-center gap-2 rounded-xl font-semibold px-7 py-3.5 text-base border-2 border-white/30 text-white hover:bg-white/10 active:scale-[0.97] transition-all"
+                >
+                  {t('landing.hero.ctaAdvertiser')}
+                </button>
               </div>
-            </motion.article>
-          ))}
-        </div>
-
-        <div className="mt-10 text-center sm:hidden">
-          <Link
-            to="/blog"
-            className="inline-flex items-center justify-center gap-1 rounded-md px-4 py-2 text-sm font-medium bg-primary-700 text-white hover:bg-primary-800 transition-colors"
-          >
-            {t('landing.blogTeaser.viewAll')} <ArrowUpRight className="h-4 w-4" />
-          </Link>
-        </div>
-      </div>
-    </section>
-
-    {/* ========== FEATURES ========== */}
- <section className="py-20 bg-gray-50 dark:bg-slate-800/30">
- <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
- <div className="text-center max-w-2xl mx-auto mb-16">
- <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{t('landing.features.title')}</h2>
- <p className="text-gray-500 dark:text-slate-400 mt-3">
- {t('landing.features.subtitle')}
- </p>
- </div>
-
- <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
- {features.map((feat, i) => {
- const Icon = feat.icon;
- return (
- <motion.div
- key={feat.key}
- initial={{ opacity: 0, y: 30 }}
- whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, margin: '-50px' }}
- transition={{ delay: i * 0.1 }}
- className="group relative bg-white dark:bg-slate-800 rounded-2xl p-8 border border-gray-200/80 dark:border-slate-700/80 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
- >
- <div className={cn('w-14 h-14 rounded-xl flex items-center justify-center mb-5', feat.bg)}>
- <Icon className={cn('h-7 w-7', feat.iconColor)} />
- </div>
- <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{t(`landing.features.${feat.key}.title`)}</h3>
- <p className="text-gray-500 dark:text-slate-400 leading-relaxed">{t(`landing.features.${feat.key}.desc`)}</p>
- <div className={cn(
- 'absolute top-8 right-8 w-24 h-24 rounded-full blur-3xl opacity-0 group-hover:opacity-40 transition-opacity duration-500 bg-primary-600',
- feat.color
- )} />
- </motion.div>
- );
- })}
- </div>
- </div>
- </section>
-
- {/* ========== CASE STUDIES ========== */}
-    <section className="py-20 bg-white dark:bg-slate-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-end justify-between mb-10">
-          <div>
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{t('landing.cases.title')}</h2>
-            <p className="text-gray-500 dark:text-slate-400 mt-2">{t('landing.cases.subtitle')}</p>
+              <p className="mt-5 text-sm text-primary-200">{t('landing.hero.noCard')}</p>
+            </div>
           </div>
-          <Link
-            to="/blog?category=Case Studies"
-            className="hidden sm:inline-flex items-center gap-1 text-sm font-semibold text-primary-600 hover:text-primary-700 transition-colors"
-          >
-            {t('landing.cases.cta')} <ArrowUpRight className="h-4 w-4" />
-          </Link>
-        </div>
+        </section>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {[
-            { brand: 'FitLife', key: 'fitlife', metric: '+340%', color: 'from-accent-500 to-accent-600' },
-            { brand: 'TechStart', key: 'techstart', metric: '4.8x', color: 'from-primary-500 to-primary-600' },
-          ].map((study, i) => (
-            <motion.div
-              key={study.brand}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="relative overflow-hidden rounded-2xl bg-primary-700 text-white p-8"
-            >
-              <div className={cn('absolute top-0 right-0 w-64 h-64 rounded-full blur-3xl opacity-30', study.color)} />
-              <div className="relative">
-                <div className="flex items-start justify-between mb-6">
-                  <div>
-                    <p className="text-sm text-primary-200 font-medium uppercase tracking-wider">{study.brand}</p>
-                    <p className="text-5xl font-extrabold mt-1">{study.metric}</p>
-                    <p className="text-sm text-primary-200">{t(`landing.cases.items.${study.key}Label`)}</p>
+        {/* Featured ads — real campaigns, so this section is the proof */}
+        <section className="py-20 bg-white dark:bg-slate-900">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-end justify-between mb-10">
+              <div>
+                <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+                  {t('landing.featured.title')}
+                </h2>
+                <p className="text-gray-500 dark:text-slate-400 mt-2">
+                  {t('landing.featured.subtitle')}
+                </p>
+              </div>
+              <Link
+                to="/ads"
+                className="hidden sm:inline-flex items-center gap-1 text-sm font-semibold text-primary-600 hover:text-primary-700 transition-colors"
+              >
+                {t('common.viewAll')} <ArrowUpRight className="h-4 w-4" />
+              </Link>
+            </div>
+
+            {featuredLoading ? (
+              <div className="flex gap-6 overflow-x-auto pb-6 pt-2 -mx-2 px-2 scrollbar-thin">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="flex-none w-72 sm:w-80">
+                    <SkeletonAdCard />
                   </div>
-                  <Quote className="h-8 w-8 text-white/30" />
-                </div>
-                <p className="text-lg text-white/90 leading-relaxed mb-6">&ldquo;{t(`landing.cases.items.${study.key}Quote`)}&rdquo;</p>
-                <p className="text-sm text-primary-200">— {t(`landing.cases.items.${study.key}Author`)}</p>
+                ))}
               </div>
-            </motion.div>
-          ))}
-        </div>
-
-        <div className="mt-10 text-center sm:hidden">
-          <Link
-            to="/blog?category=Case Studies"
-            className="inline-flex items-center justify-center gap-1 rounded-md px-4 py-2 text-sm font-medium bg-primary-700 text-white hover:bg-primary-800 transition-colors"
-          >
-            {t('landing.cases.cta')} <ArrowUpRight className="h-4 w-4" />
-          </Link>
-        </div>
-      </div>
-    </section>
-
-    {/* ========== HOW IT WORKS ========== */}
- <section className="py-20 bg-white dark:bg-slate-900">
- <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
- <div className="text-center max-w-2xl mx-auto mb-16">
- <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{t('landing.how.title')}</h2>
- <p className="text-gray-500 dark:text-slate-400 mt-3">
- {t('landing.how.subtitle')}
- </p>
- </div>
-
- <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
- {/* Connecting line */}
- <div className="hidden md:block absolute top-16 left-[20%] right-[20%] h-0.5 bg-primary-200 dark:from-primary-900/40 dark:/40 dark:to-accent-900/40" />
-
- {[
- { step: 1, key: 'browse', icon: Eye, color: 'bg-primary-600', lightColor: 'bg-primary-50 dark:bg-primary-900/20', textColor: 'text-primary-600 dark:text-primary-400' },
- { step: 2, key: 'engage', icon: TrendingUp, color: 'bg-secondary-600', lightColor: 'bg-secondary-50 dark:bg-secondary-900/20', textColor: 'text-secondary-600 dark:text-secondary-400' },
- { step: 3, key: 'earn', icon: Gift, color: 'bg-accent-600', lightColor: 'bg-accent-50 dark:bg-accent-900/20', textColor: 'text-accent-600 dark:text-accent-400' },
- ].map((item) => {
- const Icon = item.icon;
- return (
- <motion.div
- key={item.step}
- initial={{ opacity: 0, y: 20 }}
- whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true }}
- transition={{ delay: item.step * 0.15 }}
- className="relative text-center"
- >
- <div className="relative inline-flex items-center justify-center mb-6">
- <div className={cn('w-20 h-20 rounded-2xl flex items-center justify-center shadow-lg', item.color)}>
- <Icon className="h-9 w-9 text-white" />
- </div>
- <div className={cn('absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white', item.color)}>
- {item.step}
- </div>
- </div>
- <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{t(`landing.how.${item.key}.title`)}</h3>
- <p className="text-gray-500 dark:text-slate-400 max-w-xs mx-auto leading-relaxed">{t(`landing.how.${item.key}.desc`)}</p>
- </motion.div>
- );
- })}
- </div>
- </div>
- </section>
-
- {/* ========== FAQ ========== */}
-    <section className="py-20 bg-white dark:bg-slate-900">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{t('landing.faq.title')}</h2>
-          <p className="text-gray-500 dark:text-slate-400 mt-3">{t('landing.faq.subtitle')}</p>
-        </div>
-
-        <div className="space-y-4">
-          {[1, 2, 3, 4, 5].map((n) => ({ q: `landing.faq.q${n}`, a: `landing.faq.a${n}` })).map((item, i) => (
-            <details
-              key={i}
-              className="group bg-gray-50 dark:bg-slate-800/50 rounded-xl border border-gray-200 dark:border-slate-700 open:bg-white dark:open:bg-slate-800 transition-colors"
-            >
-              <summary className="flex items-center justify-between cursor-pointer p-5 text-left font-semibold text-gray-900 dark:text-white list-none">
-                {t(item.q)}
-                <span className="ml-4 shrink-0 w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300 flex items-center justify-center group-open:rotate-180 transition-transform">
-                  <ChevronDown className="h-4 w-4" />
-                </span>
-              </summary>
-              <div className="px-5 pb-5 text-sm text-gray-600 dark:text-slate-400 leading-relaxed">
-                {t(item.a)}
+            ) : featuredAds && featuredAds.length > 0 ? (
+              <div className="flex gap-6 overflow-x-auto pb-6 pt-2 -mx-2 px-2 scrollbar-thin">
+                {featuredAds.map((ad) => (
+                  <div key={ad.id} className="flex-none w-72 sm:w-80">
+                    <AdCard ad={ad} featured />
+                  </div>
+                ))}
               </div>
-            </details>
-          ))}
-        </div>
+            ) : (
+              <EmptyState
+                icon={<Gift className="h-12 w-12" />}
+                title={t('landing.featured.emptyTitle')}
+                description={t('landing.featured.emptyDesc')}
+                actionLabel={t('landing.featured.emptyAction')}
+                onAction={() => navigate('/ads')}
+                size="md"
+              />
+            )}
+          </div>
+        </section>
 
-        <div className="mt-10 text-center">
-          <Link
-            to="/contact"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-primary-600 hover:text-primary-700 transition-colors"
-          >
-            {t('landing.faq.stillHaveQuestions')} {t('landing.faq.contactUs')} <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-      </div>
-    </section>
-
-    {/* ========== CATEGORIES ========== */}
- <section className="py-20 bg-gray-50 dark:bg-slate-800/30">
- <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
- <div className="text-center max-w-2xl mx-auto mb-12">
- <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{t('landing.categories.title')}</h2>
- <p className="text-gray-500 dark:text-slate-400 mt-3">
- {t('landing.categories.subtitle')}
- </p>
- </div>
-
- <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-5">
- {categories.map((cat) => {
- const Icon = cat.icon;
- return (
- <Link
- key={cat.key}
- to={`/ads?industry=${cat.key}`}
- className="group relative overflow-hidden flex flex-col items-center gap-4 p-6 rounded-2xl bg-white dark:bg-slate-800/80 border border-gray-200/80 dark:border-slate-700/80 hover:border-transparent transition-all duration-300 hover:-translate-y-1"
- >
- <div className={cn('absolute inset-0 bg-primary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300', cat.gradient)} />
- <div className={cn('absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-xl', cat.glow)} />
-
- <div className="relative">
- <div className={cn('absolute inset-0 rounded-2xl blur-lg opacity-40 group-hover:opacity-0 transition-opacity bg-primary-600', cat.gradient)} />
- <div className={cn(
- 'relative w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-300',
- 'bg-gray-50 to-white dark:from-slate-900 dark:to-slate-800',
- 'ring-1 ring-gray-200/80 dark:ring-slate-700/80',
- 'group-hover:ring-white/40 group-hover:bg-white/15 group-hover:from-white/15 group-hover:to-white/5',
- 'group-hover:scale-110 group-hover:rotate-[-4deg]'
- )}>
- <Icon className={cn('h-7 w-7 transition-colors duration-300', cat.iconColor, 'group-hover:text-white')} />
- </div>
- </div>
-
- <span className="relative text-sm font-semibold text-gray-700 dark:text-slate-200 group-hover:text-white transition-colors duration-300">
- {t(`landing.categories.${cat.key}`)}
- </span>
-
- <div className="relative flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-white/90 opacity-0 -mt-2 group-hover:opacity-100 group-hover:mt-0 transition-all duration-300">
- {t('common.explore')} <ArrowRight className="h-3 w-3" />
- </div>
- </Link>
- );
- })}
- </div>
- </div>
- </section>
-
- {/* ========== TESTIMONIALS ========== */}
- <section className="py-20 bg-white dark:bg-slate-900 overflow-hidden">
- <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
- <div className="text-center max-w-2xl mx-auto mb-12">
- <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{t('landing.testimonials.title')}</h2>
- <p className="text-gray-500 dark:text-slate-400 mt-3">
- {t('landing.testimonials.subtitle')}
- </p>
- </div>
-
- <div className="relative">
- <div className="overflow-hidden">
- <motion.div
- className="flex"
- animate={{ x: `-${activeTestimonial * 100}%` }}
- transition={{ type: 'spring', stiffness: 300, damping: 30 }}
- >
- {testimonials.map((item, i) => (
- <div key={i} className="w-full flex-shrink-0 px-4">
- <div className="bg-gray-50 dark:bg-slate-800/50 rounded-2xl p-8 md:p-10 border border-gray-200/80 dark:border-slate-700/80">
- <Quote className="h-10 w-10 text-primary-200 dark:text-primary-900 mb-4" />
- <p className="text-lg md:text-xl text-gray-700 dark:text-slate-300 leading-relaxed mb-6">
- &ldquo;{t(`landing.testimonials.${item.key}text`)}&rdquo;
- </p>
- <div className="flex items-center gap-4">
- <div className="w-12 h-12 rounded-full overflow-hidden bg-primary-500 ring-2 ring-white dark:ring-slate-800 shadow-sm flex items-center justify-center text-white font-bold">
- {item.avatar}
- </div>
- <div>
- <p className="font-semibold text-gray-900 dark:text-white">{item.name}</p>
- <p className="text-sm text-gray-500 dark:text-slate-400">{t(`landing.testimonials.${item.key}role`)}</p>
- </div>
- <div className="ml-auto flex gap-0.5">
- {Array.from({ length: item.rating }).map((_, j) => (
- <Star key={j} className="h-5 w-5 fill-amber-400 text-amber-400" />
- ))}
- </div>
- </div>
- </div>
- </div>
- ))}
- </motion.div>
- </div>
-
- {/* Navigation */}
- <div className="flex items-center justify-center gap-3 mt-8">
- <button
- onClick={prevTestimonial}
- className="w-10 h-10 rounded-full border border-gray-300 dark:border-slate-600 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
- >
- <ChevronLeft className="h-5 w-5" />
- </button>
- <div className="flex gap-2">
- {testimonials.map((_, i) => (
- <button
- key={i}
- onClick={() => setActiveTestimonial(i)}
- className={cn(
- 'h-2 rounded-full transition-all duration-300',
- i === activeTestimonial ? 'w-8 bg-primary-600' : 'w-2 bg-gray-300 dark:bg-slate-600'
- )}
- />
- ))}
- </div>
- <button
- onClick={nextTestimonial}
- className="w-10 h-10 rounded-full border border-gray-300 dark:border-slate-600 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
- >
- <ChevronRight className="h-5 w-5" />
- </button>
- </div>
- </div>
- </div>
- </section>
-
- {/* ========== PROGRAMMATIC PARTNERS ========== */}
- <section className="py-16 bg-gray-50 dark:bg-slate-800/30 border-y border-gray-200 dark:border-slate-700/50">
- <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
- <div className="text-center max-w-2xl mx-auto mb-10">
- <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
- {t('landing.integrations.title')}
- </h2>
- <p className="text-gray-500 dark:text-slate-400 mt-3">
- {t('landing.integrations.subtitle')}
- </p>
- </div>
-
- <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
- {PROGRAMMATIC_PARTNERS.map((partner, i) => {
- const initials = partner.name
- .split(' ')
- .filter((w) => !['the', 'and', 'of'].includes(w.toLowerCase()))
- .slice(0, 2)
- .map((w) => w[0])
- .join('')
- .toUpperCase();
- return (
- <motion.div
- key={partner.name}
- initial={{ opacity: 0, y: 20 }}
- whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true }}
- transition={{ delay: i * 0.05 }}
- className="group flex items-center gap-3 rounded-2xl bg-white dark:bg-slate-800/80 border border-gray-200/70 dark:border-slate-700/70 p-4 hover:shadow-lg hover:shadow-primary-900/5 hover:-translate-y-1 hover:border-primary-200 dark:hover:border-primary-800 transition-all duration-300"
- >
- <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary-700 to-secondary-500 text-white text-sm font-bold shadow-sm shadow-primary-900/20 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
- {initials}
- </div>
- <span className="text-sm font-semibold text-gray-800 dark:text-slate-200 leading-snug line-clamp-2">
- {partner.name}
- </span>
- </motion.div>
- );
- })}
- </div>
- </div>
- </section>
-
- {/* ========== TRUST BADGES ========== */}
- <section className="py-16 bg-white dark:bg-slate-900">
- <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
- <p className="text-center text-sm font-medium text-gray-400 dark:text-slate-500 uppercase tracking-wider mb-8">
- {t('landing.integrations.trustedBy')}
- </p>
- <Marquee duration={30} className="opacity-50 grayscale dark:opacity-40 [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
- {['FitLife', 'TechStart', 'RetailMax', 'GreenEnergy', 'MediaHub', 'CloudNine'].map((name) => (
- <span key={name} className="mx-8 text-xl font-bold text-gray-700 dark:text-slate-300 whitespace-nowrap">
- {name}
- </span>
- ))}
- </Marquee>
- </div>
- </section>
-
- {/* ========== API / DEVELOPER TEASER ========== */}
-    <section className="py-20 bg-gray-50 dark:bg-slate-800/30">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-2xl bg-primary-800 dark:bg-primary-900 p-8 md:p-12">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-secondary-500/10 rounded-full blur-3xl" />
-          <div className="relative grid md:grid-cols-2 gap-10 items-center">
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white text-xs font-semibold uppercase tracking-wider mb-4">
-                <Code className="h-3.5 w-3.5" />
-                {t('landing.developer.title')}
-              </div>
-              <h2 className="text-3xl font-bold text-white mb-4">
-                <ScrambleText text="Built for Integrations" />
+        {/* How it works — a genuine three-step sequence, so the numbers carry information */}
+        <section className="py-20 bg-gray-50 dark:bg-slate-800/40">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-2xl mb-12">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+                {t('landing.how.title')}
               </h2>
-              <p className="text-primary-100 leading-relaxed mb-6">
-                {t('landing.developer.desc')}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3">
-                <Link
-                  to="/register"
-                  className="inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-semibold bg-secondary-500 text-primary-900 hover:bg-secondary-400 transition-colors"
-                >
-                  {t('landing.developer.cta')}
-                </Link>
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-semibold border border-white/30 text-white hover:bg-white/10 transition-colors"
-                >
-                  {t('landing.developer.ctaSecondary')}
-                </Link>
-              </div>
+              <p className="text-gray-500 dark:text-slate-400 mt-3">{t('landing.how.subtitle')}</p>
             </div>
-            <div className="bg-black/30 rounded-xl p-5 font-mono text-xs sm:text-sm text-green-300 overflow-hidden">
-              <p className="text-white/50 mb-2">// Fetch campaign performance</p>
-              <p>GET /api/v1/campaigns/&#123;campaignId&#125;/analytics</p>
-              <p className="mt-2 text-white/70">Authorization: Bearer &#123;token&#125;</p>
-              <div className="mt-4 space-y-1 text-white/80">
-                <p>&#123;</p>
-                <p className="pl-4">"impressions": 2450000,</p>
-                <p className="pl-4">"clicks": 48200,</p>
-                <p className="pl-4">"ctr": 1.97,</p>
-                <p className="pl-4">"conversions": 1840</p>
-                <p>&#125;</p>
-              </div>
+
+            <ol className="grid grid-cols-1 md:grid-cols-3 gap-10">
+              {steps.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <motion.li
+                    key={item.step}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: item.step * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <div className="flex items-center gap-3 mb-4">
+                      <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary-600 text-sm font-bold text-white">
+                        {item.step}
+                      </span>
+                      <Icon className="h-5 w-5 text-primary-600 dark:text-primary-400" />
+                    </div>
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
+                      {t(`landing.how.${item.key}.title`)}
+                    </h3>
+                    <p className="text-gray-500 dark:text-slate-400 leading-relaxed">
+                      {t(`landing.how.${item.key}.desc`)}
+                    </p>
+                  </motion.li>
+                );
+              })}
+            </ol>
+          </div>
+        </section>
+
+        {/* What advertisers get */}
+        <section className="py-20 bg-white dark:bg-slate-900">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-2xl mb-12">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+                {t('landing.features.title')}
+              </h2>
+              <p className="text-gray-500 dark:text-slate-400 mt-3">
+                {t('landing.features.subtitle')}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-9">
+              {features.map((feat) => {
+                const Icon = feat.icon;
+                return (
+                  <div key={feat.key} className="flex gap-4">
+                    <Icon className="h-5 w-5 shrink-0 mt-1 text-primary-600 dark:text-primary-400" />
+                    <div>
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1.5">
+                        {t(`landing.features.${feat.key}.title`)}
+                      </h3>
+                      <p className="text-sm text-gray-500 dark:text-slate-400 leading-relaxed">
+                        {t(`landing.features.${feat.key}.desc`)}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
-        </div>
+        </section>
+
+        {/* Categories */}
+        <section className="py-20 bg-gray-50 dark:bg-slate-800/40">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-2xl mb-10">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+                {t('landing.categories.title')}
+              </h2>
+              <p className="text-gray-500 dark:text-slate-400 mt-3">
+                {t('landing.categories.subtitle')}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+              {categories.map((cat) => {
+                const Icon = cat.icon;
+                return (
+                  <Link
+                    key={cat.key}
+                    to={`/ads?industry=${cat.key}`}
+                    className={cn(
+                      'group flex flex-col items-center gap-3 rounded-xl border p-5 transition-colors',
+                      'border-gray-200 bg-white hover:border-primary-300 hover:bg-primary-50/50',
+                      'dark:border-slate-700 dark:bg-slate-800 dark:hover:border-primary-700 dark:hover:bg-slate-700/60'
+                    )}
+                  >
+                    <Icon className="h-6 w-6 text-gray-400 transition-colors group-hover:text-primary-600 dark:text-slate-500 dark:group-hover:text-primary-400" />
+                    <span className="text-sm font-medium text-gray-700 dark:text-slate-200">
+                      {t(`landing.categories.${cat.key}`)}
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section className="py-20 bg-white dark:bg-slate-900">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="mb-10">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+                {t('landing.faq.title')}
+              </h2>
+              <p className="text-gray-500 dark:text-slate-400 mt-3">{t('landing.faq.subtitle')}</p>
+            </div>
+
+            <div className="divide-y divide-gray-200 border-y border-gray-200 dark:divide-slate-700 dark:border-slate-700">
+              {FAQ_KEYS.map((n) => (
+                <details key={n} className="group py-1">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-left font-semibold text-gray-900 dark:text-white">
+                    {t(`landing.faq.q${n}`)}
+                    <ChevronDown className="h-5 w-5 shrink-0 text-gray-400 transition-transform group-open:rotate-180" />
+                  </summary>
+                  <p className="pb-4 text-sm leading-relaxed text-gray-600 dark:text-slate-400">
+                    {t(`landing.faq.a${n}`)}
+                  </p>
+                </details>
+              ))}
+            </div>
+
+            <p className="mt-8 text-sm text-gray-500 dark:text-slate-400">
+              {t('landing.faq.stillHaveQuestions')}{' '}
+              <Link
+                to="/contact"
+                className="font-semibold text-primary-600 transition-colors hover:text-primary-700"
+              >
+                {t('landing.faq.contactUs')}
+              </Link>
+            </p>
+          </div>
+        </section>
+
+        {/* Close */}
+        <section className="bg-primary-700 text-white">
+          <div className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 lg:px-8">
+            <h2 className="text-3xl font-bold">{t('landing.finalCta.title')}</h2>
+            <p className="mt-3 text-primary-100">{t('landing.finalCta.desc')}</p>
+            <button
+              onClick={() => navigate('/register')}
+              className="mt-8 inline-flex items-center justify-center gap-2 rounded-xl bg-white px-7 py-3.5 text-base font-semibold text-primary-700 transition-all hover:bg-gray-50 active:scale-[0.98]"
+            >
+              {t('landing.finalCta.primary')} <ArrowRight className="h-5 w-5" />
+            </button>
+          </div>
+        </section>
       </div>
-    </section>
-
-    {/* ========== NEWSLETTER ========== */}
-    <section className="py-16 bg-primary-700 text-white">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <Mail className="h-8 w-8 mx-auto mb-4 text-secondary-400" />
-        <h2 className="text-2xl sm:text-3xl font-bold mb-3">{t('landing.newsletter.title')}</h2>
-        <p className="text-primary-100 mb-6 max-w-xl mx-auto">
-          {t('landing.newsletter.desc')}
-        </p>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            toast.success('Thanks for subscribing!');
-          }}
-          className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
-        >
-          <input
-            type="email"
-            required
-            placeholder={t('common.emailPlaceholder')}
-            className="flex-1 px-4 py-3 rounded-md bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-secondary-500/50"
-          />
-          <button
-            type="submit"
-            className="px-6 py-3 rounded-md font-semibold bg-secondary-500 text-primary-900 hover:bg-secondary-400 transition-colors"
-          >
-            {t('common.subscribe')}
-          </button>
-        </form>
-        <p className="text-xs text-primary-200 mt-3">{t('landing.newsletter.disclaimer')}</p>
-      </div>
-    </section>
-
-    {/* ========== CTA ========== */}
- <section className="relative py-24 overflow-hidden">
- <div className="absolute inset-0 bg-primary-600" />
- <FloatingBlob className="top-0 left-1/4 w-72 h-72 bg-white/10" delay={0} />
- <FloatingBlob className="bottom-0 right-1/4 w-64 h-64 bg-white/10" delay={3} />
-
- <div className="relative max-w-3xl mx-auto px-4 text-center">
- <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">{t('landing.finalCta.title')}</h2>
- <p className="text-primary-100 text-lg mb-10 max-w-xl mx-auto">
- {t('landing.finalCta.desc')}
- </p>
- <div className="flex flex-col sm:flex-row justify-center gap-4">
- <button
- onClick={() => navigate('/register')}
- className="inline-flex items-center justify-center gap-2 rounded-xl font-semibold px-8 py-4 text-base bg-white text-primary-700 hover:bg-gray-50 shadow-xl active:scale-[0.97] transition-all"
- >
- {t('landing.finalCta.primary')}
- </button>
- <button
- onClick={() => navigate('/ads')}
- className="inline-flex items-center justify-center gap-2 rounded-xl font-semibold px-8 py-4 text-base border-2 border-white/40 text-white hover:bg-white/15 active:scale-[0.97] transition-all"
- >
- {t('common.browseAds')}
- </button>
- </div>
- <div className="mt-8 flex items-center justify-center gap-6 text-sm text-primary-200">
- <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4" /> {t('landing.finalCta.noCard')}</span>
- <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4" /> {t('landing.finalCta.free')}</span>
- </div>
- </div>
- </section>
- </div>
- </PageTransition>
- );
+    </PageTransition>
+  );
 }

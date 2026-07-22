@@ -26,6 +26,7 @@ import {
   UserCheck,
   ShieldCheck,
   Sparkles,
+  LayoutTemplate,
   ChevronLeft,
   ChevronRight,
   Zap,
@@ -88,6 +89,7 @@ const allNavGroups: NavGroup[] = [
       { key: 'admin-advertisers', href: '/dashboard/admin/advertisers', label: 'advertiserApprovals', icon: UserCheck },
       { key: 'admin-moderation', href: '/dashboard/admin/moderation', label: 'reviewModeration', icon: ShieldCheck },
       { key: 'admin-loyalty', href: '/dashboard/admin/loyalty', label: 'loyaltyVip', icon: Sparkles },
+      { key: 'site-content', href: '/dashboard/admin/site-content', label: 'siteContent', icon: LayoutTemplate },
     ],
   },
 ];

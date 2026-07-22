@@ -72,7 +72,7 @@ export function PartnersPage() {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-sm font-medium mb-6"
             >
               <Megaphone className="h-4 w-4 text-secondary-400" />
-              <span>{t('partners.eyebrow')}</span>
+              
             </motion.div>
             <motion.h1
               initial={{ opacity: 0, y: 20 }}

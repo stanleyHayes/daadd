@@ -29,59 +29,28 @@
     "signup": "Registar",
     "dashboard": "Painel",
     "logout": "Terminar sessão",
-    "searchPlaceholder": "Procurar anúncios...",
-    "status": "Plataforma operacional — v1.0 ativa"
+    "searchPlaceholder": "Procurar anúncios..."
   },
   "landing": {
     "hero": {
-      "badge": "Agora com geração de criativos por IA",
-      "title": "Transforme a sua publicidade com IA",
-      "titleLine1": "Descubra anúncios.",
-      "titleEarn": "Ganhe",
-      "rotating": {
-        "rewards": "recompensas.",
-        "tokens": "tokens.",
-        "giftCards": "cartões-presente.",
-        "cashBack": "dinheiro de volta."
-      },
-      "subtitle": "Chegue ao público certo, otimize em tempo real e maximize o seu retorno.",
-      "blurb": "A plataforma publicitária inteligente que liga marcas a audiências envolvidas. Explore anúncios selecionados e ganhe recompensas reais pela sua atenção.",
-      "cta": "Iniciar teste gratuito",
-      "ctaAdvertiser": "Sou anunciante",
-      "socialProof": "Mais de 12 000 anunciantes confiam em nós"
-    },
-    "stats": {
-      "campaigns": "Campanhas ativas",
-      "impressions": "Impressões por dia",
-      "uptime": "Disponibilidade da plataforma",
-      "countries": "Países alcançados"
+      "title": "Get paid for the ads you choose to watch",
+      "blurb": "Browse ads from brands you care about, earn tokens for your attention, and spend them with the merchants running the campaign.",
+      "ctaAdvertiser": "I want to advertise",
+      "noCard": "Free to join. No credit card needed."
     },
     "featured": {
       "title": "Anúncios em destaque",
-      "subtitle": "Campanhas selecionadas com as maiores recompensas",
+      "subtitle": "Campaigns running right now, with the tokens each one pays.",
       "emptyTitle": "Ainda não há anúncios em destaque",
-      "emptyDesc": "Os anúncios em destaque aparecerão aqui em breve. Volte com regularidade ou explore por categoria para descobrir anúncios já.",
+      "emptyDesc": "No campaigns are featured at the moment. Browse everything that is live instead.",
       "emptyAction": "Ver todos os anúncios"
     },
-    "blogTeaser": {
-      "title": "As novidades do blogue",
-      "subtitle": "Análises, casos de estudo e novidades da plataforma pela nossa equipa.",
-      "viewAll": "Ver todos os artigos",
-      "posts": {
-        "p3title": "Como a FitLife aumentou as conversões em 340 % com a SmartAdDeals",
-        "p3excerpt": "Uma análise aprofundada de como uma marca de fitness aproveitou a otimização por IA e o envolvimento com recompensas.",
-        "p1title": "O futuro da publicidade geolocalizada em 2026",
-        "p1excerpt": "Segmentação centrada na privacidade e novas tecnologias que estão a transformar a publicidade local em grande escala.",
-        "p2title": "Apresentamos o Ad Journey Storyteller",
-        "p2excerpt": "Transforme os dados brutos das suas campanhas em narrativas convincentes para os decisores."
-      }
-    },
     "features": {
-      "title": "Tudo o que precisa",
-      "subtitle": "Ferramentas poderosas para anunciantes e uma experiência recompensadora para os utilizadores, tudo numa só plataforma.",
+      "title": "What advertisers get",
+      "subtitle": "The reporting side of the platform, for the people paying for the campaigns.",
       "ai": {
         "title": "Otimização com IA",
-        "desc": "Algoritmos de aprendizagem automática otimizam continuamente licitações, orçamentos e segmentação para maximizar o seu ROAS."
+        "desc": "Bid, budget and targeting adjustments are proposed from live campaign data. You approve them, or let the campaign apply them automatically."
       },
       "realtime": {
         "title": "Análise em tempo real",
@@ -97,29 +66,16 @@
       },
       "anomalies": {
         "title": "Deteção de anomalias",
-        "desc": "Receba alertas imediatos perante subidas ou quedas invulgares nas métricas. Detete problemas antes que lhe custem dinheiro."
+        "desc": "Alerts when clicks, spend or traffic move outside their usual range, so a broken campaign does not run all weekend."
       },
       "attribution": {
         "title": "Atribuição entre dispositivos",
         "desc": "Acompanhe os percursos dos utilizadores entre computador, telemóvel e tablet para atribuir conversões com rigor."
       }
     },
-    "cases": {
-      "title": "Casos de sucesso",
-      "subtitle": "Veja como as marcas estão a vencer com publicidade impulsionada por IA.",
-      "cta": "Ler casos de estudo",
-      "items": {
-        "fitlifeLabel": "mais conversões",
-        "fitlifeQuote": "A otimização por IA e o envolvimento com recompensas da SmartAdDeals mudaram por completo a nossa forma de pensar a publicidade.",
-        "fitlifeAuthor": "Jessica Park, diretora de marketing",
-        "techstartLabel": "de retorno do investimento publicitário",
-        "techstartQuote": "Os mapas de calor geográficos e a deteção de anomalias em tempo real pouparam-nos milhares em investimento publicitário.",
-        "techstartAuthor": "Marcus Chen, responsável de crescimento"
-      }
-    },
     "how": {
       "title": "Como funciona",
-      "subtitle": "Três passos simples para começar a ganhar recompensas com anúncios que realmente lhe interessam.",
+      "subtitle": "How the tokens get from a campaign budget into your pocket.",
       "browse": {
         "title": "Explore",
         "desc": "Descubra um catálogo selecionado de anúncios de grandes marcas de vários setores. Filtre pelo que lhe interessa."
@@ -130,12 +86,12 @@
       },
       "earn": {
         "title": "Ganhe",
-        "desc": "Receba recompensas reais pelo seu envolvimento. Levante quando quiser ou reinvista em mais experiências premium."
+        "desc": "Tokens land in your balance. Spend them as a discount at the merchant, or keep stacking them."
       }
     },
     "faq": {
       "title": "Perguntas frequentes",
-      "subtitle": "Tudo o que precisa de saber sobre ganhar recompensas e anunciar connosco.",
+      "subtitle": "Tokens, budgets and what the platform does with your data.",
       "stillHaveQuestions": "Ainda tem dúvidas?",
       "contactUs": "Contacte-nos",
       "q1": "Como ganho recompensas com os anúncios?",
@@ -143,7 +99,7 @@
       "q2": "É gratuito para os anunciantes aderirem?",
       "a2": "Sim. Criar uma conta de anunciante é gratuito. Paga apenas o orçamento publicitário que atribui às campanhas, mais uma pequena comissão de plataforma com base no desempenho.",
       "q3": "O que distingue a SmartAdDeals das outras redes publicitárias?",
-      "a3": "Combinamos otimização por IA, segmentação centrada na privacidade, mapas de calor geográficos e um modelo de envolvimento com recompensas que valoriza a atenção do utilizador.",
+      "a3": "Consumers get paid for their attention instead of being tracked for it, and the merchant funding the campaign is the one who redeems the reward. The analytics side is ordinary: heatmaps, attribution and anomaly alerts.",
       "q4": "Como funciona a otimização por IA?",
       "a4": "O nosso motor de aprendizagem automática analisa o desempenho das campanhas em tempo real e recomenda ajustes a licitações, orçamentos, audiências e criativos para melhorar o ROAS.",
       "q5": "Posso integrar a SmartAdDeals com as minhas contas publicitárias atuais?",
@@ -151,7 +107,7 @@
     },
     "categories": {
       "title": "Explorar por categoria",
-      "subtitle": "Encontre anúncios dos setores que lhe interessam, do entretenimento às finanças.",
+      "subtitle": "Jump straight to the industries you are interested in.",
       "entertainment": "Entretenimento",
       "sports": "Desporto",
       "retail": "Retalho",
@@ -159,47 +115,17 @@
       "health": "Saúde",
       "finance": "Finanças"
     },
-    "testimonials": {
-      "title": "Adorado pelos anunciantes",
-      "subtitle": "Veja o que os líderes do setor dizem sobre a SmartAdDeals.",
-      "t1role": "Diretora de marketing, FitLife",
-      "t1text": "Aumentámos as conversões em 340 % com a otimização por IA da SmartAdDeals. O modelo de envolvimento com recompensas mudou por completo a nossa forma de pensar a publicidade.",
-      "t2role": "Responsável de crescimento, TechStart",
-      "t2text": "Os mapas de calor geográficos e a deteção de anomalias em tempo real pouparam-nos milhares em investimento publicitário. A melhor plataforma de análise que já usámos.",
-      "t3role": "Diretora de digital, RetailMax",
-      "t3text": "A nossa equipa adora o Ad Journey Storyteller. Transforma dados áridos de campanha em narrativas que queremos mesmo partilhar com os decisores."
-    },
-    "integrations": {
-      "title": "Integrado com as principais plataformas programáticas",
-      "subtitle": "O nosso ecossistema liga-se às melhores plataformas de procura e de oferta e aos principais ad exchanges do mundo.",
-      "trustedBy": "Com a confiança de equipas da"
-    },
-    "developer": {
-      "title": "Pronto para programadores",
-      "desc": "Ligue a sua stack programática atual, sincronize dados de campanha e crie fluxos personalizados com a nossa API REST, webhooks e contas de plataforma compatíveis com OAuth.",
-      "cta": "Obter acesso à API",
-      "ctaSecondary": "Falar com a engenharia"
-    },
-    "newsletter": {
-      "title": "Fique à frente na AdTech",
-      "desc": "Receba de duas em duas semanas as últimas novidades da plataforma, casos de estudo e dicas de publicidade na sua caixa de entrada.",
-      "disclaimer": "Sem spam. Cancele quando quiser."
-    },
     "finalCta": {
-      "title": "Pronto para começar?",
-      "desc": "Junte-se a milhares de utilizadores que já ganham recompensas na SmartAdDeals. O registo demora menos de um minuto.",
+      "title": "Ready to start?",
+      "desc": "Sign up as a consumer to start earning, or as an advertiser to run your first campaign.",
       "primary": "Criar conta gratuita",
-      "noCard": "Não é necessário cartão de crédito",
-      "free": "Gratuito para sempre"
+      "noCard": "Não é necessário cartão de crédito"
     }
   },
   "auth": {
     "login": {
-      "brandTitle": "O futuro da",
-      "brandTitleAccent": "publicidade inteligente",
-      "brandBlurb": "Crie, otimize e analise campanhas publicitárias com informações baseadas em IA e análise em tempo real.",
       "title": "Bem-vindo de volta",
-      "subtitle": "Inicie sessão na sua conta para continuar",
+      "subtitle": "Sign in to continue",
       "email": "Endereço de e-mail",
       "emailPlaceholder": "voce@empresa.com",
       "password": "Palavra-passe",
@@ -211,39 +137,12 @@
       "createAccount": "Criar conta gratuita",
       "successToast": "Bem-vindo de volta!",
       "errorToast": "Credenciais inválidas. Tente novamente.",
-      "features": {
-        "analytics": {
-          "title": "Análise em tempo real",
-          "desc": "Acompanhe impressões, cliques, CTR e conversões em painéis em direto"
-        },
-        "ai": {
-          "title": "Otimização por IA",
-          "desc": "Deixe a IA afinar automaticamente as suas campanhas para maximizar o retorno"
-        },
-        "anomaly": {
-          "title": "Deteção de anomalias",
-          "desc": "Alertas imediatos para tráfego de bots, picos de CTR e atividade suspeita"
-        },
-        "rewards": {
-          "title": "Sistema de recompensas",
-          "desc": "Envolva os utilizadores com recompensas reais por verem e interagirem com anúncios"
-        }
-      },
-      "stats": {
-        "campaigns": "Campanhas ativas",
-        "uptime": "Disponibilidade garantida",
-        "adsDaily": "Anúncios entregues por dia"
-      }
+      "panelTitle": "Campaign reporting that shows where the budget went",
+      "panelBlurb": "Impressions, clicks, conversions and spend, plus heatmaps and anomaly alerts when something moves out of range."
     },
     "register": {
-      "brandTitle": "Comece hoje",
-      "brandTitleAccent": "o seu percurso publicitário",
-      "brandBlurb": "Junte-se a milhares de anunciantes e utilizadores na plataforma de AdTech mais inteligente.",
-      "testimonial": "A otimização por IA da SmartAdDeals aumentou o nosso CTR em 340 % logo no primeiro mês. O Ad Journey Storyteller não tem paralelo no mercado.",
-      "testimonialRole": "Diretora de marketing, TechCorp",
-      "trustedBy": "Mais de 2 000 empresas em todo o mundo confiam em nós",
       "title": "Crie a sua conta",
-      "subtitle": "Fica pronto em menos de um minuto",
+      "subtitle": "Takes about a minute",
       "roleLabel": "Quero...",
       "roleAdvertiser": "Anunciar",
       "roleAdvertiserDesc": "Criar e otimizar campanhas",
@@ -270,7 +169,9 @@
       "haveAccount": "Já tem conta?",
       "signIn": "Iniciar sessão",
       "successToast": "Conta criada! Inicie sessão.",
-      "errorToast": "Falha no registo. O e-mail pode já estar em utilização."
+      "errorToast": "Falha no registo. O e-mail pode já estar em utilização.",
+      "panelTitle": "Two ways in",
+      "panelBlurb": "Run campaigns and track what they return, or browse ads and earn tokens you can spend at the merchant."
     },
     "forgot": {
       "backToLogin": "Voltar ao início de sessão",
@@ -295,23 +196,13 @@
     }
   },
   "about": {
-    "eyebrow": "A nossa história",
-    "title": "Sobre a SmartAdDeals",
-    "subtitle": "Estamos a construir o futuro da publicidade inteligente, onde as marcas se ligam a audiências envolvidas e os utilizadores recebem valor real pela sua atenção.",
-    "missionTitle": "A nossa missão",
-    "missionP1": "A SmartAdDeals nasceu de uma ideia simples: a publicidade não tem de ser intrusiva e a atenção tem valor real. Criámos uma plataforma de dois lados que dá aos anunciantes uma gestão de campanhas baseada em IA e, ao mesmo tempo, recompensa os utilizadores que escolhem interagir com conteúdos que lhes interessam.",
-    "missionP2": "A nossa plataforma combina análise avançada — mapas de calor geográficos, atribuição entre dispositivos, deteção de anomalias e comparações competitivas — com um Ad Journey Storyteller único que transforma dados brutos em narrativas de campanha convincentes.",
-    "sloganLine1": "Melhores anúncios.",
-    "sloganLine2": "Melhores recompensas.",
-    "sloganLine3": "Um mundo melhor.",
-    "stats": {
-      "campaigns": "Campanhas ativas",
-      "adsDaily": "Anúncios entregues por dia",
-      "countries": "Países alcançados",
-      "uptime": "Disponibilidade da plataforma"
-    },
+    "title": "About SmartAdDeals",
+    "subtitle": "An advertising platform where the person watching the ad gets paid for it.",
+    "missionTitle": "Why we built it",
+    "missionP1": "Online advertising pays everyone except the person actually watching. We wanted to try the other arrangement: the advertiser sets aside part of their discount, the consumer earns it by engaging, and the merchant hands it back at the till.",
+    "missionP2": "The advertiser side is a normal analytics product. Campaign reporting, geographic heatmaps, cross-device attribution, anomaly alerts, and a narrative view that turns a campaign into something you can hand to a stakeholder.",
     "valuesTitle": "Os nossos valores",
-    "valuesSubtitle": "Os princípios que orientam tudo o que construímos.",
+    "valuesSubtitle": "What we optimise for when the two sides disagree.",
     "values": {
       "precision": {
         "title": "Precisão",
@@ -323,7 +214,7 @@
       },
       "innovation": {
         "title": "Inovação",
-        "desc": "Do Ad Journey Storyteller à deteção de anomalias em tempo real, alargamos as fronteiras da AdTech."
+        "desc": "We would rather ship an unusual mechanic that works than a familiar one that does not."
       },
       "community": {
         "title": "Comunidade",
@@ -339,7 +230,7 @@
       }
     },
     "journeyTitle": "O nosso percurso",
-    "journeySubtitle": "De uma ideia a uma plataforma global.",
+    "journeySubtitle": "Where the product has got to so far.",
     "milestones": {
       "beginning": {
         "title": "O início",
@@ -363,7 +254,7 @@
       }
     },
     "teamTitle": "Equipa de liderança",
-    "teamSubtitle": "As pessoas que estão a construir o futuro da publicidade.",
+    "teamSubtitle": "The people building it.",
     "roles": {
       "ceo": "CEO e cofundador",
       "cto": "CTO e cofundadora",
@@ -372,18 +263,24 @@
       "headAi": "Diretor de IA/ML",
       "headDesign": "Diretora de design"
     },
-    "ctaTitle": "Junte-se à comunidade SmartAdDeals",
-    "ctaDesc": "Quer seja um anunciante à procura de campanhas mais inteligentes ou um utilizador que quer ganhar com anúncios, temos o que precisa.",
-    "ctaPrimary": "Começar gratuitamente"
+    "ctaTitle": "Get started",
+    "ctaDesc": "Advertisers run campaigns and see where the budget went. Consumers browse ads and earn tokens they can actually spend.",
+    "ctaPrimary": "Começar gratuitamente",
+    "stats": {
+      "campaigns": "Campaigns run",
+      "advertisers": "Advertisers",
+      "adViews": "Ad views",
+      "cities": "Towns and cities"
+    }
   },
   "careers": {
     "title": "Junte-se à nossa equipa",
-    "subtitle": "Ajude-nos a construir o futuro da AdTech. Estamos a criar uma plataforma onde a publicidade é transparente, recompensadora e impulsionada por IA.",
-    "perksTitle": "Porquê a SmartAdDeals?",
+    "subtitle": "We are building an ad platform that pays the audience. If that sounds like a problem worth working on, get in touch.",
+    "perksTitle": "How we work",
     "perks": {
       "remote": {
         "title": "Remoto em primeiro lugar",
-        "desc": "Trabalhe a partir de qualquer lugar do mundo. Acreditamos que o grande talento não se limita à geografia."
+        "desc": "Work from wherever you are. We hire for the work, not the postcode."
       },
       "equity": {
         "title": "Participação competitiva",
@@ -405,20 +302,19 @@
       "london": "Londres"
     },
     "noRoleTitle": "Não encontra a sua função?",
-    "noRoleDesc": "Estamos sempre à procura de pessoas talentosas. Envie-nos o seu currículo e diga-nos como contribuiria para a SmartAdDeals.",
-    "applyToast": "Candidatura a {{role}} enviada! Entraremos em contacto."
+    "noRoleDesc": "Send us your CV and tell us what you would want to work on.",
+    "applyToast": "Candidatura a {{role}} enviada! Entraremos em contacto.",
+    "noRoles": "There are no open roles right now."
   },
   "partners": {
-    "eyebrow": "Anunciantes e criadores",
     "title": "Os nossos parceiros",
-    "subtitle": "Descubra as marcas e criadores por trás das campanhas na SmartAdDeals. Explore os seus perfis para ver o que estão a anunciar.",
+    "subtitle": "The brands and creators running campaigns on SmartAdDeals. Open a profile to see what they are advertising.",
     "rewards": "Recompensas",
     "viewProfile": "Ver perfil"
   },
   "contact": {
-    "eyebrow": "Contacto",
-    "title": "Gostaríamos muito de o ouvir",
-    "subtitle": "Tem uma pergunta, comentários ou uma ideia de parceria? Escolha um canal abaixo ou escreva-nos diretamente.",
+    "title": "Get in touch",
+    "subtitle": "A question, a bug, or a partnership idea. Pick whichever route suits.",
     "channels": {
       "email": "Escreva-nos",
       "phone": "Ligue-nos",
@@ -470,7 +366,8 @@
       "a3": "Sim. Oferecemos planos à medida para agências e grandes anunciantes. Contacte a nossa equipa comercial para conhecer preços e opções de adesão.",
       "q4": "Onde encontro a documentação técnica?",
       "a4": "Os utilizadores registados podem aceder à documentação a partir do painel. Também pode pedir a documentação da API através deste formulário."
-    }
+    },
+    "noChannels": "Contact details have not been published yet."
   },
   "support": {
     "title": "Centro de apoio",
@@ -530,7 +427,6 @@
     }
   },
   "notFound": {
-    "eyebrow": "Erro 404",
     "title": "Página não encontrada",
     "body": "Lamentamos, não encontrámos a página que procura. Pode ter sido movida, renomeada ou nunca ter existido."
   },
@@ -621,7 +517,8 @@
       "logOut": "Terminar sessão",
       "expand": "Expandir",
       "collapse": "Recolher",
-      "openMenu": "Abrir menu"
+      "openMenu": "Abrir menu",
+      "siteContent": "Website Content"
     },
     "home": {
       "title": "Painel",
@@ -1202,6 +1099,66 @@
       "minScoreHint": "Pontuação ponderada de visitas, compras, avaliações, visualizações e sequências.",
       "save": "Guardar critérios",
       "reset": "Repor predefinições"
+    },
+    "siteContent": {
+      "title": "Website Content",
+      "intro": "Everything the public marketing site shows about the company. Nothing here is published until you say so, and each section stays hidden on the site while it is empty.",
+      "add": "Add",
+      "saved": "Saved",
+      "saveFailed": "Could not save that",
+      "removed": "Removed",
+      "removeFailed": "Could not remove that",
+      "untitled": "Untitled",
+      "live": "Live on the site",
+      "hidden": "Hidden",
+      "publish": "Publish",
+      "unpublish": "Hide from the site",
+      "publishNow": "Show this on the site",
+      "emptyTitle": "Nothing here yet",
+      "emptyDesc": "Add an entry to start. The matching section stays off the marketing site until at least one item is published.",
+      "tabs": {
+        "testimonials": "Testimonials",
+        "caseStudies": "Case studies",
+        "team": "Team",
+        "milestones": "Milestones",
+        "jobs": "Job openings"
+      },
+      "hints": {
+        "testimonials": "Real quotes from real customers, with their permission.",
+        "caseStudies": "A headline result you can evidence if a customer asks.",
+        "team": "Shown on the About page.",
+        "milestones": "The timeline on the About page.",
+        "jobs": "Listed on the Careers page."
+      },
+      "fields": {
+        "name": "Name",
+        "role": "Job title",
+        "company": "Company",
+        "body": "Quote or description",
+        "avatar_url": "Photo URL",
+        "metric": "Headline figure",
+        "metric_label": "What it measures",
+        "year": "Year",
+        "title": "Title",
+        "department": "Department",
+        "location": "Location",
+        "apply_url": "Where Apply links to",
+        "order": "Order",
+        "orderHint": "Lower numbers appear first."
+      },
+      "contactTitle": "Contact details",
+      "contactSubtitle": "Shown on the Contact page and in the footer",
+      "contactHint": "Leave a field blank and the site simply omits that channel. Nothing is invented to fill a gap.",
+      "contact": {
+        "email": "Email address",
+        "phone": "Phone number",
+        "careers_email": "Careers email",
+        "address_line": "Street address",
+        "address_city": "City and postcode",
+        "hours_weekdays": "Weekday hours",
+        "hours_saturday": "Saturday hours",
+        "hours_sunday": "Sunday hours"
+      }
     }
   }
 }
