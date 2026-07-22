@@ -1,5 +1,8 @@
 # Access control
 
+This is the model. For what each role can actually do day to day, see
+[USER_GUIDE.md](USER_GUIDE.md).
+
 There are **three separate things called "role"** in this codebase. Confusing
 them is the main way access gets misconfigured.
 

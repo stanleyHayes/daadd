@@ -294,6 +294,19 @@ Run these from the repository root:
 | `npm run docker:down` | Stop all Docker Compose services                       |
 | `npm run db:seed`     | Seed the database with sample data                     |
 
+## Roles and access
+
+Three separate things are called "role": the account type someone signs up as,
+their role on a single campaign, and — for SmartAdDeals staff only — what they
+may touch in the admin dashboard.
+
+```bash
+npm run seed:team --workspace backend   # roles, staff accounts, starter content
+```
+
+- [docs/USER_GUIDE.md](docs/USER_GUIDE.md) — what each role can do, and how to do it
+- [docs/ACCESS_CONTROL.md](docs/ACCESS_CONTROL.md) — how the permission model works
+
 ## Internationalisation
 
 The web and mobile apps ship in **English, Swedish, German, Spanish, French and

@@ -10,7 +10,7 @@
     "start:prod": "NODE_ENV=production node dist/server.js",
     "test": "jest --runInBand",
     "seed": "ts-node --transpile-only src/database/seeds/seed.ts",
-    "seed:team": "ts-node --transpile-only src/seed-team.ts",
+    "seed:team": "tsup src/seed-team.ts --format cjs --out-dir dist-seed --target node20 --silent --external @aws-sdk/client-s3 && node dist-seed/seed-team.js",
     "lint": "eslint src"
   },
   "dependencies": {

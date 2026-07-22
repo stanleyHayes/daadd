@@ -59,3 +59,10 @@ ios/
 
 # Vercel
 .vercel/
+
+# Generated credentials. Passwords must never reach the remote — this file is
+# produced by `npm run seed:team`, read once, shared privately, then deleted.
+TEAM_CREDENTIALS.md
+*credentials*.md
+*.credentials
+backend/dist-seed/
