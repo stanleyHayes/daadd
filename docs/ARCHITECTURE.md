@@ -1,4 +1,4 @@
-# SmartDeals Architecture Document
+# SmartAdDeals Architecture Document
 
 **Status:** ✅ ALL 6 IMPLEMENTATION PHASES COMPLETE (May 19, 2026)  
 **Last Updated:** May 19, 2026  
@@ -6,7 +6,7 @@
 
 ## 1. System Overview
 
-This is the authoritative code map for SmartDeals. Updated with every commit.
+This is the authoritative code map for SmartAdDeals. Updated with every commit.
 
 > **CURRENT STATUS:** Platform is fully implemented and production-ready. All core features, research features, and advanced capabilities are complete and tested. Ready for deployment to staging/production.
 

@@ -1,8 +1,8 @@
-# SmartDeals Technical Specification
+# SmartAdDeals Technical Specification
 
 ## 1. Overview
 
-**SmartDeals** (Data-driven Ad Analytics & Decision Dashboard) is a two-sided AdTech platform for managing, analyzing, and optimizing advertising campaigns across multiple digital channels.
+**SmartAdDeals** (Data-driven Ad Analytics & Decision Dashboard) is a two-sided AdTech platform for managing, analyzing, and optimizing advertising campaigns across multiple digital channels.
 
 **Users:**
 - **Advertisers:** Create campaigns, connect platform accounts, monitor metrics, receive AI-driven optimization recommendations
@@ -22,7 +22,7 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    SmartDeals Platform                     │
+│                    SmartAdDeals Platform                     │
 ├─────────────────────────────────────────────────────────────┤
 │
 ├─ Backend (Express.js + Node.js + MongoDB)
@@ -334,7 +334,7 @@ ANTHROPIC_API_KEY=<for AI Creative generation>
 **Frontend (.env):**
 ```
 VITE_API_URL=https://api.daadd.com/api/v1
-VITE_APP_NAME=SmartDeals
+VITE_APP_NAME=SmartAdDeals
 ```
 
 ---

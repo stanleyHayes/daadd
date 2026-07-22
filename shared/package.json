@@ -1,7 +1,7 @@
 {
   "name": "@daadd/shared",
   "version": "1.0.0",
-  "description": "Shared types and utilities for the SmartDeals AdTech platform",
+  "description": "Shared types and utilities for the SmartAdDeals AdTech platform",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {

@@ -1,4 +1,4 @@
-# SmartDeals — Resources Guide
+# SmartAdDeals — Resources Guide
 
 Every external account, API key, platform, and local dependency needed to run this monorepo (backend + frontend + mobile) end-to-end. Split by "required to boot" vs "required for specific features" vs "production-only."
 

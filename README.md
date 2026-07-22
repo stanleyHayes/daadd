@@ -1,8 +1,8 @@
-# SmartDeals
+# SmartAdDeals
 
 ## Overview
 
-SmartDeals is a two-sided AdTech and analytics platform. It connects advertisers with publishers through intelligent campaign management, real-time analytics, geographic heatmaps, AI-powered optimization, and cross-device attribution. The platform ships as three packages: an Express.js API server, a React web dashboard, and a React Native mobile app -- all sharing a common TypeScript type layer.
+SmartAdDeals is a two-sided AdTech and analytics platform. It connects advertisers with publishers through intelligent campaign management, real-time analytics, geographic heatmaps, AI-powered optimization, and cross-device attribution. The platform ships as three packages: an Express.js API server, a React web dashboard, and a React Native mobile app -- all sharing a common TypeScript type layer.
 
 ## Recent Updates (May 2026)
 

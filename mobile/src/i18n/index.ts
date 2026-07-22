@@ -8,6 +8,7 @@ import esTranslation from './locales/es.json';
 import frTranslation from './locales/fr.json';
 import deTranslation from './locales/de.json';
 import ptTranslation from './locales/pt.json';
+import svTranslation from './locales/sv.json';
 
 export const LANGUAGE_STORAGE_KEY = 'daadd-language';
 
@@ -17,6 +18,7 @@ export const languages: Record<string, { name: string; flag: string }> = {
   fr: { name: 'Français', flag: '🇫🇷' },
   de: { name: 'Deutsch', flag: '🇩🇪' },
   pt: { name: 'Português', flag: '🇵🇹' },
+  sv: { name: 'Svenska', flag: '🇸🇪' },
 };
 
 const resources = {
@@ -25,6 +27,7 @@ const resources = {
   fr: { translation: frTranslation },
   de: { translation: deTranslation },
   pt: { translation: ptTranslation },
+  sv: { translation: svTranslation },
 };
 
 function getDeviceLanguage(): string {

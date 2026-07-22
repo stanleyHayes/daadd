@@ -1,4 +1,4 @@
-# 🚀 SmartDeals Deployment Checklist
+# 🚀 SmartAdDeals Deployment Checklist
 
 **Status:** Production-Ready for Testing  
 **Last Updated:** May 19, 2026  

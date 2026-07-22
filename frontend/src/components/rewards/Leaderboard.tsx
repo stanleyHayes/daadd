@@ -154,7 +154,7 @@ export function Leaderboard() {
 
   return (
     <Card>
-      <CardHeader title="Leaderboards" subtitle="Top members across SmartDeals" />
+      <CardHeader title="Leaderboards" subtitle="Top members across SmartAdDeals" />
 
       <div className="mb-3 flex flex-wrap gap-1.5">
         {BOARDS.map((b) => (

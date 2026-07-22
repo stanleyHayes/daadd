@@ -126,7 +126,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
         </div>
         {!collapsed && (
           <div className="flex flex-col">
-            <span className="text-lg font-bold text-white tracking-tight">SmartDeals</span>
+            <span className="text-lg font-bold text-white tracking-tight">SmartAdDeals</span>
             <span className="text-[10px] text-secondary-300 uppercase tracking-[0.15em] font-semibold">Workspace</span>
           </div>
         )}
@@ -270,7 +270,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
               className="md:hidden fixed left-0 top-0 h-screen w-[264px] bg-gradient-to-b from-primary-800 to-primary-900 dark:from-primary-900 dark:to-slate-950 z-50 flex flex-col shadow-2xl border-r border-white/5"
             >
               <div className="flex items-center justify-between px-4 h-[72px] border-b border-white/10 bg-gradient-to-r from-primary-800 to-primary-900">
-                <span className="text-lg font-bold text-white tracking-tight">SmartDeals</span>
+                <span className="text-lg font-bold text-white tracking-tight">SmartAdDeals</span>
                 <button onClick={() => setMobileOpen(false)} className="p-2 rounded-lg text-white/70 hover:bg-white/10">
                   <X className="h-5 w-5" />
                 </button>

@@ -1,6 +1,6 @@
-# Contributing to SmartDeals
+# Contributing to SmartAdDeals
 
-This document outlines the development workflow, testing standards, and code quality expectations for the SmartDeals platform.
+This document outlines the development workflow, testing standards, and code quality expectations for the SmartAdDeals platform.
 
 ## Table of Contents
 

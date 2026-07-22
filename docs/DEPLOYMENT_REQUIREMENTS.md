@@ -1,4 +1,4 @@
-# 🚀 SmartDeals Deployment Requirements
+# 🚀 SmartAdDeals Deployment Requirements
 
 **Last Updated:** May 19, 2026  
 **Status:** Production-Ready
@@ -52,7 +52,7 @@ REDIS_URL=redis://:password@host:6379  # alternative single-var format
 # ===== SERVER =====
 NODE_ENV=production
 PORT=4000
-APP_NAME=SmartDeals
+APP_NAME=SmartAdDeals
 
 # ===== AUTHENTICATION =====
 JWT_SECRET=generate-a-long-random-string-here-min-32-chars
@@ -116,7 +116,7 @@ STRIPE_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxx
 
 ```bash
 VITE_API_URL=https://api.yourdomain.com/api/v1
-VITE_APP_NAME=SmartDeals
+VITE_APP_NAME=SmartAdDeals
 ```
 
 ### Mobile (EAS Build config)
@@ -124,7 +124,7 @@ VITE_APP_NAME=SmartDeals
 ```json
 {
   "expo": {
-    "name": "SmartDeals",
+    "name": "SmartAdDeals",
     "build": {
       "production": {
         "env": {

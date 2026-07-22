@@ -1,4 +1,4 @@
-# SmartDeals — Quick Start Guide
+# SmartAdDeals — Quick Start Guide
 
 **Status:** ✅ Fully Operational  
 **Last Updated:** May 19, 2026
@@ -399,5 +399,5 @@ For questions or issues:
 
 ---
 
-**Built with ❤️ on SmartDeals**  
+**Built with ❤️ on SmartAdDeals**  
 *Intelligent Ad Management Platform*

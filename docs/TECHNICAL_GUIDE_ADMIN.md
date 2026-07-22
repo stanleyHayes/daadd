@@ -1,6 +1,6 @@
-# SmartDeals — Technical Guide for Admins
+# SmartAdDeals — Technical Guide for Admins
 
-**Platform:** SmartDeals (Two-Sided AdTech Platform)  
+**Platform:** SmartAdDeals (Two-Sided AdTech Platform)  
 **Role:** Admin (Platform Administration & Team Management)  
 **Last Updated:** May 2026  
 **Audience:** Platform administrators, team leads, account managers

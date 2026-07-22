@@ -1,6 +1,19 @@
 {
+  "common": {
+    "loading": "Loading…",
+    "viewAll": "View all",
+    "readMore": "Read more",
+    "getStarted": "Get Started",
+    "browseAds": "Browse Ads",
+    "explore": "Explore",
+    "apply": "Apply",
+    "subscribe": "Subscribe",
+    "emailPlaceholder": "Enter your email",
+    "goBack": "Go back",
+    "returnHome": "Return home"
+  },
   "header": {
-    "logo": "SmartDeals",
+    "logo": "SmartAdDeals",
     "tagline": "Gestion Intelligente des Annonces",
     "nav": {
       "home": "Accueil",
@@ -8,18 +21,56 @@
       "about": "À propos",
       "blog": "Blog",
       "careers": "Carrières",
-      "partners": "Partners"
+      "partners": "Partners",
+      "contact": "Contact"
     },
-    "cta": "Commencer"
+    "cta": "Commencer",
+    "login": "Log in",
+    "signup": "Sign up",
+    "dashboard": "Dashboard",
+    "logout": "Logout",
+    "searchPlaceholder": "Search ads...",
+    "status": "Platform operational — v1.0 live"
   },
   "landing": {
     "hero": {
+      "badge": "Now with AI Creative Generation",
       "title": "Transformez Votre Publicité avec l'IA",
+      "titleLine1": "Discover Ads.",
+      "titleEarn": "Earn",
+      "rotating": {
+        "rewards": "Rewards.",
+        "tokens": "Tokens.",
+        "giftCards": "Gift Cards.",
+        "cashBack": "Cash Back."
+      },
       "subtitle": "Atteignez le bon public, optimisez en temps réel, maximisez votre ROI.",
-      "cta": "Essai Gratuit"
+      "blurb": "The intelligent advertising platform that connects brands with engaged audiences. Browse curated ads and earn real rewards for your attention.",
+      "cta": "Essai Gratuit",
+      "ctaAdvertiser": "I'm an Advertiser",
+      "socialProof": "Trusted by 12,000+ advertisers"
+    },
+    "stats": {
+      "campaigns": "Active Campaigns",
+      "impressions": "Daily Ad Impressions",
+      "uptime": "Platform Uptime",
+      "countries": "Countries Reached"
+    },
+    "featured": {
+      "title": "Featured Ads",
+      "subtitle": "Hand-picked campaigns with the highest rewards",
+      "emptyTitle": "No Featured Ads Yet",
+      "emptyDesc": "Featured ads will appear here soon. Check back regularly or browse by category to discover ads right now!",
+      "emptyAction": "Browse All Ads"
+    },
+    "blogTeaser": {
+      "title": "Latest from the Blog",
+      "subtitle": "Insights, case studies, and platform updates from our team.",
+      "viewAll": "View all articles"
     },
     "features": {
-      "title": "Pourquoi Choisir SmartDeals?",
+      "title": "Pourquoi Choisir SmartAdDeals?",
+      "subtitle": "Powerful tools for advertisers and a rewarding experience for users — all in one platform.",
       "ai": {
         "title": "Optimisation Alimentée par l'IA",
         "desc": "Ajustements automatiques des enchères, ciblage d'audience et optimisation créative basés sur les données de performance en temps réel."
@@ -31,11 +82,396 @@
       "rewards": {
         "title": "Engagement Basé sur les Récompenses",
         "desc": "Incitez les actions des utilisateurs et construisez la fidélité avec notre système de récompenses intégré."
+      },
+      "heatmaps": {
+        "title": "Geographic Heatmaps",
+        "desc": "Visualize ad performance across regions with interactive heatmaps powered by real-time location data."
+      },
+      "anomalies": {
+        "title": "Anomaly Detection",
+        "desc": "Get instant alerts for unusual spikes or drops in metrics. Catch issues before they cost you money."
+      },
+      "attribution": {
+        "title": "Cross-Device Attribution",
+        "desc": "Track user journeys across desktop, mobile, and tablet to attribute conversions accurately."
       }
+    },
+    "cases": {
+      "title": "Success Stories",
+      "subtitle": "See how brands are winning with AI-powered advertising.",
+      "cta": "Read case studies"
+    },
+    "how": {
+      "title": "How It Works",
+      "subtitle": "Three simple steps to start earning rewards from ads you actually care about.",
+      "browse": {
+        "title": "Browse",
+        "desc": "Explore a curated catalog of ads from top brands across various industries. Filter by what interests you."
+      },
+      "engage": {
+        "title": "Engage",
+        "desc": "View and interact with ads that match your interests. Your attention is valued and rewarded."
+      },
+      "earn": {
+        "title": "Earn",
+        "desc": "Receive real rewards for your engagement. Cash out anytime or reinvest in more premium experiences."
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Everything you need to know about earning rewards and advertising with us.",
+      "stillHaveQuestions": "Still have questions?",
+      "contactUs": "Contact us",
+      "q1": "How do I earn rewards from ads?",
+      "a1": "Simply browse ads that interest you, view the content, and claim the reward shown. Rewards are credited to your account and can be cashed out once you reach the minimum balance.",
+      "q2": "Is it free for advertisers to join?",
+      "a2": "Yes. Creating an advertiser account is free. You only pay for the ad budget you allocate to campaigns, plus a small platform fee based on performance.",
+      "q3": "What makes SmartAdDeals different from other ad networks?",
+      "a3": "We combine AI-powered optimization, privacy-first targeting, geographic heatmaps, and a reward-based engagement model that values user attention.",
+      "q4": "How does the AI optimization work?",
+      "a4": "Our machine learning engine analyzes campaign performance in real time and recommends adjustments to bids, budgets, audiences, and creatives to improve ROAS.",
+      "q5": "Can I integrate SmartAdDeals with my existing ad accounts?",
+      "a5": "Yes. We offer integrations with major programmatic platforms and ad exchanges. Visit our developer docs to learn more about API and OAuth connections."
+    },
+    "categories": {
+      "title": "Browse by Category",
+      "subtitle": "Find ads from industries you care about — from entertainment to finance."
+    },
+    "testimonials": {
+      "title": "Loved by Advertisers",
+      "subtitle": "See what industry leaders are saying about SmartAdDeals."
+    },
+    "integrations": {
+      "title": "Integrated with Leading Programmatic Platforms",
+      "subtitle": "Our ecosystem connects with the world's top demand-side platforms, supply-side platforms, and ad exchanges.",
+      "trustedBy": "Trusted by teams at"
+    },
+    "developer": {
+      "title": "Developer Ready",
+      "desc": "Connect your existing programmatic stack, sync campaign data, and build custom workflows with our REST API, webhooks, and OAuth-enabled platform accounts.",
+      "cta": "Get API Access",
+      "ctaSecondary": "Talk to Engineering"
+    },
+    "newsletter": {
+      "title": "Stay Ahead of AdTech",
+      "desc": "Get the latest platform updates, case studies, and advertising tips delivered to your inbox every two weeks.",
+      "disclaimer": "No spam. Unsubscribe anytime."
+    },
+    "finalCta": {
+      "title": "Ready to Get Started?",
+      "desc": "Join thousands of users already earning rewards on SmartAdDeals. It takes less than a minute to sign up.",
+      "primary": "Create Free Account",
+      "noCard": "No credit card required",
+      "free": "Free forever"
     }
   },
+  "auth": {
+    "login": {
+      "brandTitle": "The Future of",
+      "brandTitleAccent": "Intelligent Advertising",
+      "brandBlurb": "Create, optimize, and analyze ad campaigns with AI-powered insights and real-time analytics.",
+      "title": "Welcome back",
+      "subtitle": "Sign in to your account to continue",
+      "email": "Email address",
+      "emailPlaceholder": "you@company.com",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "forgotPassword": "Forgot password?",
+      "remember": "Remember me for 30 days",
+      "submit": "Sign in",
+      "noAccount": "Don't have an account?",
+      "createAccount": "Create free account",
+      "successToast": "Welcome back!",
+      "errorToast": "Invalid credentials. Please try again.",
+      "features": {
+        "analytics": {
+          "title": "Real-time Analytics",
+          "desc": "Track impressions, clicks, CTR, and conversions with live dashboards"
+        },
+        "ai": {
+          "title": "AI Optimization",
+          "desc": "Let AI fine-tune your campaigns for maximum ROI automatically"
+        },
+        "anomaly": {
+          "title": "Anomaly Detection",
+          "desc": "Instant alerts for bot traffic, CTR spikes, and suspicious activity"
+        },
+        "rewards": {
+          "title": "Reward System",
+          "desc": "Engage users with real rewards for viewing and interacting with ads"
+        }
+      },
+      "stats": {
+        "campaigns": "Active Campaigns",
+        "uptime": "Uptime SLA",
+        "adsDaily": "Ads Served Daily"
+      }
+    },
+    "register": {
+      "brandTitle": "Start Your",
+      "brandTitleAccent": "Ad Journey Today",
+      "brandBlurb": "Join thousands of advertisers and users on the most intelligent AdTech platform.",
+      "testimonial": "SmartAdDeals's AI optimization increased our CTR by 340% in the first month. The Ad Journey Storyteller is unlike anything else in the market.",
+      "testimonialRole": "Marketing Director, TechCorp",
+      "trustedBy": "Trusted by 2,000+ companies worldwide",
+      "title": "Create your account",
+      "subtitle": "Get started in less than a minute",
+      "roleLabel": "I want to...",
+      "roleAdvertiser": "Run Ads",
+      "roleAdvertiserDesc": "Create & optimize campaigns",
+      "roleUser": "Earn Rewards",
+      "roleUserDesc": "Browse ads & get paid",
+      "name": "Full name",
+      "namePlaceholder": "John Doe",
+      "email": "Email address",
+      "emailPlaceholder": "you@company.com",
+      "password": "Password",
+      "passwordPlaceholder": "Create a strong password",
+      "confirmPassword": "Confirm password",
+      "confirmPasswordPlaceholder": "Re-enter your password",
+      "checks": {
+        "length": "At least 8 characters",
+        "number": "Contains a number",
+        "uppercase": "Contains uppercase letter"
+      },
+      "termsPrefix": "I agree to the",
+      "termsOfService": "Terms of Service",
+      "termsAnd": "and",
+      "privacyPolicy": "Privacy Policy",
+      "submit": "Create account",
+      "haveAccount": "Already have an account?",
+      "signIn": "Sign in",
+      "successToast": "Account created! Please sign in.",
+      "errorToast": "Registration failed. Email may already be in use."
+    },
+    "forgot": {
+      "backToLogin": "Back to login",
+      "title": "Reset Password",
+      "subtitle": "Enter your email address and we'll send you a link to reset your password.",
+      "emailPlaceholder": "your@email.com",
+      "submit": "Send Reset Link",
+      "submitting": "Sending...",
+      "sentTitle": "Check Your Email",
+      "sentBody": "We've sent a password reset link to {{email}}. The link expires in 15 minutes.",
+      "sentHint": "Didn't receive the email? Check your spam folder.",
+      "errorToast": "Failed to process request"
+    },
+    "errors": {
+      "emailInvalid": "Please enter a valid email",
+      "passwordMin6": "Password must be at least 6 characters",
+      "passwordMin8": "Password must be at least 8 characters",
+      "nameMin2": "Name must be at least 2 characters",
+      "roleRequired": "Please select a role",
+      "termsRequired": "You must accept the terms",
+      "passwordsMismatch": "Passwords do not match"
+    }
+  },
+  "about": {
+    "eyebrow": "Our Story",
+    "title": "About SmartAdDeals",
+    "subtitle": "We're building the future of intelligent advertising — where brands connect with engaged audiences and users earn real value for their attention.",
+    "missionTitle": "Our Mission",
+    "missionP1": "SmartAdDeals was born from a simple idea: advertising doesn't have to be intrusive, and attention has real value. We created a two-sided platform that empowers advertisers with AI-driven campaign management while rewarding users who choose to engage with content that interests them.",
+    "missionP2": "Our platform combines advanced analytics — geographic heatmaps, cross-device attribution, anomaly detection, and competitive benchmarking — with a unique Ad Journey Storyteller that transforms raw data into compelling campaign narratives.",
+    "sloganLine1": "Better Ads.",
+    "sloganLine2": "Better Rewards.",
+    "sloganLine3": "Better World.",
+    "stats": {
+      "campaigns": "Active Campaigns",
+      "adsDaily": "Ads Served Daily",
+      "countries": "Countries Reached",
+      "uptime": "Platform Uptime"
+    },
+    "valuesTitle": "Our Values",
+    "valuesSubtitle": "The principles that guide everything we build.",
+    "values": {
+      "precision": {
+        "title": "Precision",
+        "desc": "Every ad reaches the right audience through intelligent targeting and AI-driven optimization."
+      },
+      "transparency": {
+        "title": "Transparency",
+        "desc": "Full audit trails, honest analytics, and no hidden fees. What you see is what you get."
+      },
+      "innovation": {
+        "title": "Innovation",
+        "desc": "From the Ad Journey Storyteller to real-time anomaly detection, we push the boundaries of AdTech."
+      },
+      "community": {
+        "title": "Community",
+        "desc": "We believe users deserve value for their attention. Our reward system makes advertising a two-way street."
+      },
+      "trust": {
+        "title": "Trust",
+        "desc": "We protect advertiser data and user privacy with enterprise-grade security and compliance."
+      },
+      "creativity": {
+        "title": "Creativity",
+        "desc": "Our AI Creative Generator helps brands produce compelling ad variations at scale."
+      }
+    },
+    "journeyTitle": "Our Journey",
+    "journeySubtitle": "From an idea to a global platform.",
+    "milestones": {
+      "beginning": {
+        "title": "The Beginning",
+        "desc": "SmartAdDeals founded with a mission to make advertising rewarding for everyone."
+      },
+      "beta": {
+        "title": "Beta Launch",
+        "desc": "First 1,000 advertisers onboarded. AI optimization engine goes live."
+      },
+      "global": {
+        "title": "Global Expansion",
+        "desc": "Expanded to 50+ countries. Cross-device attribution launched."
+      },
+      "creative": {
+        "title": "AI Creative Suite",
+        "desc": "Introduced AI-powered creative generation and A/B testing tools."
+      },
+      "scale": {
+        "title": "2M+ Daily Impressions",
+        "desc": "Reached 2.3 million daily ad impressions across 150+ countries."
+      }
+    },
+    "teamTitle": "Leadership Team",
+    "teamSubtitle": "The people building the future of advertising.",
+    "roles": {
+      "ceo": "CEO & Co-founder",
+      "cto": "CTO & Co-founder",
+      "vpEng": "VP of Engineering",
+      "headProduct": "Head of Product",
+      "headAi": "Head of AI/ML",
+      "headDesign": "Head of Design"
+    },
+    "ctaTitle": "Join the SmartAdDeals Community",
+    "ctaDesc": "Whether you're an advertiser looking for smarter campaigns or a user who wants to earn from ads, we've got you covered.",
+    "ctaPrimary": "Get Started Free"
+  },
+  "careers": {
+    "title": "Join Our Team",
+    "subtitle": "Help us build the future of AdTech. We are creating a platform where advertising is transparent, rewarding, and powered by AI.",
+    "perksTitle": "Why SmartAdDeals?",
+    "perks": {
+      "remote": {
+        "title": "Remote-First",
+        "desc": "Work from anywhere in the world. We believe great talent is not limited by geography."
+      },
+      "equity": {
+        "title": "Competitive Equity",
+        "desc": "All full-time employees receive meaningful equity so you share in the success you help build."
+      },
+      "learning": {
+        "title": "Learning Budget",
+        "desc": "$2,000 annual learning budget for courses, conferences, books, or any growth opportunity."
+      },
+      "flexible": {
+        "title": "Flexible Hours",
+        "desc": "We care about output, not hours logged. Structure your day around your life."
+      }
+    },
+    "openPositions": "Open Positions",
+    "locations": {
+      "remote": "Remote",
+      "newYork": "New York",
+      "london": "London"
+    },
+    "noRoleTitle": "Don't see your role?",
+    "noRoleDesc": "We are always looking for talented people. Send us your resume and tell us how you would contribute to SmartAdDeals."
+  },
+  "partners": {
+    "eyebrow": "Advertisers & Creators",
+    "title": "Our Partners",
+    "subtitle": "Discover the brands and creators powering campaigns on SmartAdDeals. Browse their profiles to see what they are advertising.",
+    "rewards": "Rewards",
+    "viewProfile": "View profile"
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "We would love to hear from you",
+    "subtitle": "Have a question, feedback, or a partnership idea? Pick a channel below or send us a message directly.",
+    "channels": {
+      "email": "Email us",
+      "phone": "Call us",
+      "visit": "Visit us",
+      "chat": "Live chat",
+      "chatValue": "Available in-app for registered users",
+      "help": "Help Center",
+      "helpValue": "Browse answers to common questions",
+      "community": "Community",
+      "communityValue": "Join the SmartAdDeals community"
+    },
+    "formTitle": "Send us a message",
+    "formSubtitle": "Fill out the form and we will respond as soon as possible.",
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "you@example.com",
+    "topicPlaceholder": "Choose a topic",
+    "messageLabel": "Message",
+    "messagePlaceholder": "How can we help you?",
+    "submit": "Send Message",
+    "disclaimer": "By submitting, you agree to our privacy policy and terms of service.",
+    "sentTitle": "Message Sent!",
+    "sentBody": "Thank you for reaching out. We have received your message and will respond shortly.",
+    "sendAnother": "Send another message",
+    "topics": {
+      "general": "General inquiry",
+      "sales": "Sales demo",
+      "support": "Technical support",
+      "partners": "Partnerships",
+      "feedback": "Feedback"
+    },
+    "hoursTitle": "Office hours",
+    "weekdays": "Monday – Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday",
+    "closed": "Closed",
+    "faqTitle": "Frequently asked questions"
+  },
+  "support": {
+    "title": "Support Centre",
+    "subtitle": "Find a quick answer below, or send the right team a message.",
+    "faqTitle": "Frequently asked questions",
+    "desksTitle": "Who can help?",
+    "desks": {
+      "general": {
+        "label": "Contact Support",
+        "blurb": "General questions about your account."
+      },
+      "problem": {
+        "label": "Report a Problem",
+        "blurb": "Something is broken or a reward looks wrong."
+      },
+      "fraud": {
+        "label": "Report Fraud or Abuse",
+        "blurb": "Suspicious merchants, scams or misuse."
+      },
+      "campaign": {
+        "label": "Campaign Assistance",
+        "blurb": "Help running or optimising a campaign."
+      },
+      "merchant": {
+        "label": "Merchant Assistance",
+        "blurb": "Redemptions, outlets and QR scanning."
+      },
+      "billing": {
+        "label": "Billing",
+        "blurb": "Budgets, top-ups and invoices."
+      }
+    },
+    "nameLabel": "Your name",
+    "namePlaceholder": "Ama Mensah",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "emailHint": "We'll reply here.",
+    "subjectLabel": "Subject",
+    "subjectPlaceholder": "Briefly, what's this about?",
+    "messageLabel": "Message",
+    "messagePlaceholderIncident": "Include the receipt number, merchant and date if you have them.",
+    "messagePlaceholder": "Tell us a bit more...",
+    "submit": "Send to {{desk}}"
+  },
   "blog": {
-    "title": "Blog SmartDeals",
+    "title": "Blog SmartAdDeals",
     "subtitle": "Aperçus, mises à jour et histoires du monde de la publicité intelligente.",
     "allPosts": "Tous les Articles",
     "noResults": "Aucun article trouvé dans cette catégorie.",
@@ -48,12 +484,654 @@
       "guides": "Conseils et Guides"
     }
   },
+  "notFound": {
+    "eyebrow": "404 error",
+    "title": "Page not found",
+    "body": "Sorry, we couldn't find the page you're looking for. It may have been moved, renamed, or never existed."
+  },
   "footer": {
-    "copyright": "© 2026 SmartDeals. Tous droits réservés.",
+    "blurb": "The intelligent advertising platform that connects brands with engaged audiences. Browse curated ads and earn real rewards for your attention.",
+    "platform": {
+      "title": "Platform",
+      "browseAds": "Browse Ads",
+      "partners": "Partners",
+      "forAdvertisers": "For Advertisers",
+      "earnRewards": "Earn Rewards",
+      "blog": "Blog"
+    },
+    "company": {
+      "title": "Company",
+      "about": "About",
+      "careers": "Careers",
+      "blog": "Blog",
+      "contact": "Contact"
+    },
+    "legal": {
+      "title": "Legal"
+    },
+    "copyright": "© 2026 SmartAdDeals. Tous droits réservés.",
     "links": {
       "privacy": "Politique de Confidentialité",
       "terms": "Conditions de Service",
       "cookies": "Politique de Cookies"
+    }
+  },
+  "dashboard": {
+    "common": {
+      "selectCampaign": "Select a campaign",
+      "selectCampaignTitle": "Select a Campaign",
+      "loading": "Loading…",
+      "saving": "Saving...",
+      "retry": "Retry",
+      "cancel": "Cancel",
+      "save": "Save",
+      "back": "Back",
+      "next": "Next",
+      "previous": "Previous",
+      "viewAll": "View all",
+      "email": "Email",
+      "status": "Status",
+      "budget": "Budget",
+      "industry": "Industry",
+      "actions": "Actions",
+      "campaign": "Campaign",
+      "name": "Name",
+      "date": "Date",
+      "amount": "Amount",
+      "role": "Role",
+      "description": "Description",
+      "apply": "Apply",
+      "dismiss": "Dismiss",
+      "approve": "Approve",
+      "reject": "Reject",
+      "remove": "Remove",
+      "exportPdf": "Export PDF",
+      "exportCsv": "Export CSV",
+      "exportHtml": "Export HTML"
+    },
+    "nav": {
+      "overview": "Overview",
+      "campaigns": "Campaigns",
+      "analytics": "Analytics",
+      "workspace": "Workspace",
+      "admin": "Admin",
+      "dashboard": "Dashboard",
+      "aiOptimization": "AI Optimization",
+      "anomalies": "Anomalies",
+      "heatmaps": "Heatmaps",
+      "benchmarking": "Benchmarking",
+      "storyteller": "Storyteller",
+      "messages": "Messages",
+      "merchant": "Merchant Performance",
+      "outlets": "Outlets",
+      "team": "Team",
+      "adAccounts": "Ad Accounts",
+      "profile": "My Profile",
+      "settings": "Settings",
+      "advertiserApprovals": "Advertiser Approvals",
+      "reviewModeration": "Review Moderation",
+      "loyaltyVip": "Loyalty & VIP",
+      "workspaceLabel": "Workspace",
+      "logOut": "Log out",
+      "expand": "Expand",
+      "collapse": "Collapse",
+      "openMenu": "Open menu"
+    },
+    "home": {
+      "title": "Dashboard",
+      "subtitle": "Overview of your advertising performance",
+      "newCampaign": "New Campaign",
+      "loadError": "Failed to load dashboard metrics. Please try again later.",
+      "emptyTitle": "No Campaigns Yet",
+      "emptyDesc": "Start by creating your first campaign to see performance metrics and insights on this dashboard.",
+      "chartTitle": "Performance (Last 30 Days)",
+      "chartSubtitle": "Impressions, clicks, and conversions over time",
+      "noSeriesTitle": "No Time Series Data",
+      "noSeriesDesc": "Performance data will appear here once your campaigns start running and collecting events.",
+      "recentTitle": "Recent Campaigns",
+      "recentEmptyTitle": "No campaigns yet",
+      "recentEmptyDesc": "Create your first campaign to get started.",
+      "campaignsError": "Failed to load campaigns.",
+      "quickActions": "Quick Actions",
+      "actions": {
+        "createCampaign": "Create Campaign",
+        "createCampaignDesc": "Launch a new ad campaign",
+        "viewAnalytics": "View Analytics",
+        "viewAnalyticsDesc": "Deep dive into performance",
+        "checkAnomalies": "Check Anomalies",
+        "checkAnomaliesDesc": "Monitor campaign health",
+        "aiInsights": "AI Insights",
+        "aiInsightsDesc": "Review AI recommendations"
+      }
+    },
+    "metrics": {
+      "impressions": "Impressions",
+      "clicks": "Clicks",
+      "conversions": "Conversions",
+      "ctr": "CTR",
+      "cpc": "CPC",
+      "cpa": "CPA",
+      "totalSpend": "Total Spend",
+      "bounceRate": "Bounce Rate",
+      "convRate": "Conv. Rate",
+      "revenue": "Revenue",
+      "purchases": "Purchases",
+      "profit": "Profit",
+      "customersAcquired": "Customers Acquired",
+      "discountsIssued": "Discounts Issued",
+      "budgetRemaining": "Budget Remaining",
+      "roas": "ROAS",
+      "roi": "ROI"
+    },
+    "status": {
+      "draft": "Draft",
+      "active": "Active",
+      "paused": "Paused",
+      "completed": "Completed",
+      "archived": "Archived",
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "resolved": "Resolved"
+    },
+    "campaigns": {
+      "title": "Campaigns",
+      "subtitle": "Manage and monitor your ad campaigns",
+      "create": "Create Campaign",
+      "total": "Total Campaigns",
+      "searchPlaceholder": "Search campaigns...",
+      "allStatuses": "All Statuses",
+      "allIndustries": "All Industries",
+      "empty": "No campaigns found",
+      "loadError": "Failed to load campaigns",
+      "loadErrorHint": "Please try again later.",
+      "start": "Start",
+      "view": "View",
+      "edit": "Edit",
+      "clone": "Clone",
+      "delete": "Delete",
+      "itemsPerPage": "Items per page:",
+      "prev": "Prev",
+      "next": "Next",
+      "deleted": "Campaign deleted",
+      "deleteFailed": "Failed to delete campaign",
+      "cloneFailed": "Failed to clone campaign"
+    },
+    "campaignCreate": {
+      "title": "Create Campaign",
+      "subtitle": "Set up a new advertising campaign",
+      "stepDetails": "Campaign Details",
+      "stepBudget": "Budget & Targeting",
+      "name": "Campaign Name",
+      "namePlaceholder": "Enter campaign name",
+      "descPlaceholder": "Describe your campaign objectives...",
+      "selectIndustry": "Select an industry",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "budget": "Budget ($)",
+      "rewardValue": "Reward Value ($)",
+      "discountShared": "Discount Shared (%)",
+      "discountSharedHint": "Percent of a customer's purchase shared back as their discount at redemption.",
+      "rewardEconomics": "Reward economics",
+      "rewardEconomicsHint": "How much of your discount is shared with consumers as tokens, and how many tokens each interaction earns. The campaign pauses automatically once the token pool is spent.",
+      "consumerShare": "Shared with consumers (%)",
+      "consumerShareHint": "Portion of the discount handed back as reward tokens.",
+      "maxTokens": "Max tokens (0 = uncapped)",
+      "maxTokensHint": "Total reward tokens this campaign may issue.",
+      "perView": "Tokens per view",
+      "perClick": "Tokens per click",
+      "perReview": "Tokens per review",
+      "perPhoto": "Tokens per photo",
+      "business": "Business & contact",
+      "businessHint": "Shown on this campaign's adverts so customers can find and reach you.",
+      "location": "Location",
+      "contactPhone": "Contact Phone",
+      "contactEmail": "Contact Email",
+      "website": "Website",
+      "businessCategory": "Business category",
+      "openingHours": "Opening hours",
+      "logoUrl": "Business logo URL",
+      "logoHint": "Shown on your adverts; defaults to your profile avatar.",
+      "ageRange": "Age Range",
+      "min": "Minimum",
+      "max": "Maximum",
+      "regions": "Target Regions",
+      "devices": "Target Devices",
+      "languages": "Languages",
+      "localizedTargeting": "Enable Localized Targeting",
+      "localizedTargetingHint": "Target users based on precise location data",
+      "minBudget": "Min $500 budget",
+      "uploadFiles": "Upload Files",
+      "aiGenerator": "AI Generator",
+      "bothOptions": "Both Options",
+      "dropFiles": "Drop files here or click to upload",
+      "dropFilesHint": "Support images (PNG, JPG) and videos (MP4, MOV)",
+      "ageRestricted": "Age-Restricted Content",
+      "ageRestrictedHint": "Viewers will need to verify their age before viewing",
+      "enableAi": "Enable AI Optimization",
+      "enableAiHint": "Let our AI automatically optimize your campaign for better performance. Available after 48 hours of runtime.",
+      "saveDraft": "Save as Draft",
+      "verifyToLaunch": "Verify account to launch",
+      "launch": "Launch Campaign",
+      "onboardingToast": "Finish onboarding to launch campaigns.",
+      "createdToast": "Campaign created successfully!",
+      "createFailedToast": "Failed to create campaign",
+      "draftToast": "Campaign saved as draft",
+      "draftFailedToast": "Failed to save draft"
+    },
+    "campaignEdit": {
+      "title": "Edit Campaign",
+      "subtitle": "Update campaign details",
+      "backToCampaign": "Back to campaign",
+      "notFound": "Campaign not found",
+      "backToCampaigns": "Back to Campaigns",
+      "basicInfo": "Basic Information",
+      "namePlaceholder": "e.g., Summer Sale 2026",
+      "descPlaceholder": "Describe your campaign...",
+      "totalBudget": "Total Budget ($)",
+      "logoHint": "Defaults to your profile avatar.",
+      "consumerShareHint": "Portion of the discount handed back as tokens.",
+      "economicsHint": "The campaign pauses automatically once the token pool is spent — top it up from the campaign page.",
+      "targetingHint": "Adjust targeting to reach different audiences",
+      "reviewChanges": "Review Changes",
+      "devices": "Devices",
+      "regions": "Regions",
+      "saveChanges": "Save Changes",
+      "updatedToast": "Campaign updated successfully",
+      "updateFailedToast": "Failed to update campaign"
+    },
+    "campaignDetail": {
+      "notFound": "Campaign Not Found",
+      "notFoundDesc": "The campaign could not be loaded.",
+      "backToCampaigns": "Back to campaigns",
+      "tabs": {
+        "overview": "Overview",
+        "analytics": "Analytics",
+        "creatives": "Creatives",
+        "heatmap": "Heatmap",
+        "ai": "AI Insights",
+        "team": "Team"
+      },
+      "noMetricsTitle": "No Metrics Yet",
+      "noMetricsDesc": "Campaign metrics will appear here once events are tracked and data is collected.",
+      "perfTitle": "Performance Over Time",
+      "noPerfTitle": "No Performance Data",
+      "noPerfDesc": "Performance trends will display here once your campaign starts receiving impressions and clicks.",
+      "info": "Campaign Info",
+      "budgetProgress": "Budget Progress",
+      "rewardValue": "Reward Value",
+      "toggleAi": "Toggle AI optimization",
+      "toggleAiFailed": "Failed to update AI optimization",
+      "analyticsTitle": "Detailed Analytics",
+      "analyticsSubtitle": "View comprehensive analytics on the Analytics page",
+      "analyticsBody": "Detailed campaign analytics are available on the dedicated Analytics page with advanced filtering and export options.",
+      "goAnalytics": "Go to Analytics",
+      "heatmapTitle": "Geographic Heatmap",
+      "heatmapSubtitle": "View engagement heatmap on the Heatmaps page",
+      "heatmapBody": "Geographic engagement data is available on the dedicated Heatmaps page.",
+      "goHeatmaps": "Go to Heatmaps",
+      "aiTitle": "AI Optimization",
+      "aiSubtitle": "View AI recommendations on the AI Optimization page",
+      "aiBody": "AI-powered recommendations and audit logs are available on the dedicated AI Optimization page.",
+      "goAi": "Go to AI Optimization",
+      "teamSubtitle": "Manage team on the Team page",
+      "teamBody": "Team management features are available on the dedicated Team page.",
+      "goTeam": "Go to Team"
+    },
+    "analytics": {
+      "title": "Analytics",
+      "subtitle": "Deep dive into your advertising performance",
+      "selectPrompt": "Choose a campaign above to view its analytics.",
+      "loadError": "Failed to load analytics data. Please try again later.",
+      "seriesTitle": "Performance Over Time",
+      "seriesSubtitle": "Impressions, clicks, and conversions",
+      "noSeriesTitle": "No Time Series Data",
+      "noSeriesDesc": "Performance trends will appear here as your campaigns run and collect events over time.",
+      "funnelTitle": "Conversion Funnel",
+      "noFunnelTitle": "No Funnel Data",
+      "noFunnelDesc": "Your conversion funnel will display here once campaigns have collected conversion data.",
+      "devicesTitle": "Device Breakdown",
+      "noDevicesTitle": "No Device Data",
+      "noDevicesDesc": "Device breakdown analytics will appear here once you have campaign impressions from different devices."
+    },
+    "ai": {
+      "title": "AI Optimization",
+      "subtitle": "AI-powered recommendations for campaign performance",
+      "selectPrompt": "Choose a campaign above to view AI recommendations.",
+      "loadError": "Failed to load AI recommendations. Please try again later.",
+      "mode": "AI Mode",
+      "autoAdjust": "Auto-Adjust",
+      "recommendationOnly": "Recommendation Only",
+      "recommendations": "Recommendations",
+      "allCaughtUp": "All Caught Up",
+      "noPending": "No pending AI recommendations for this campaign.",
+      "auditTitle": "AI Audit Log",
+      "auditSubtitle": "History of AI-driven changes",
+      "auditEmpty": "No AI changes yet",
+      "auditEmptyDesc": "Once AI recommendations are applied, a versioned history of all changes will appear here.",
+      "modeUpdated": "AI mode updated",
+      "modeFailed": "Failed to update AI mode",
+      "applied": "Recommendation applied",
+      "applyFailed": "Failed to apply recommendation",
+      "dismissed": "Recommendation dismissed",
+      "dismissFailed": "Failed to dismiss recommendation"
+    },
+    "anomalies": {
+      "title": "Anomaly Detection",
+      "subtitle": "Monitor and respond to campaign anomalies",
+      "selectPrompt": "Choose a campaign above to view its anomalies.",
+      "loadError": "Failed to load anomalies. Please try again later.",
+      "total": "Total Anomalies",
+      "highCritical": "High / Critical",
+      "autoPaused": "Auto-Paused",
+      "activeTitle": "Active Anomalies",
+      "allClear": "All Clear",
+      "allClearDesc": "No anomalies detected for this campaign.",
+      "resolve": "Resolve",
+      "resolvedToast": "Anomaly resolved",
+      "resolveFailed": "Failed to resolve anomaly",
+      "severity": {
+        "low": "LOW",
+        "medium": "MEDIUM",
+        "high": "HIGH",
+        "critical": "CRITICAL"
+      }
+    },
+    "heatmap": {
+      "title": "Heatmaps",
+      "subtitle": "Geographic engagement visualization",
+      "selectPrompt": "Choose a campaign above to view its geographic heatmap.",
+      "loadError": "Failed to load heatmap data. Please try again later.",
+      "totalViews": "Total Views",
+      "activeRegions": "Active Regions",
+      "avgCtr": "Avg CTR",
+      "aggregation": "Aggregation",
+      "city": "City",
+      "country": "Country",
+      "summary": "Summary",
+      "topRegions": "Top Regions",
+      "avgCtrByRegion": "Avg CTR by Region",
+      "noRegionTitle": "No Region Data",
+      "noRegionDesc": "Geographic data will appear once your campaign reaches 100+ impressions across regions."
+    },
+    "benchmarking": {
+      "title": "Benchmarking",
+      "subtitle": "Compare your performance against industry averages",
+      "selectPrompt": "Choose a campaign above to view its benchmarks.",
+      "loadError": "Failed to load benchmark data. Please try again later.",
+      "advertisersInIndustry": "Advertisers in Industry",
+      "comparisons": "Comparisons",
+      "aboveAverage": "Above Average",
+      "insufficient": "Insufficient Data",
+      "noDataTitle": "No Benchmark Data",
+      "noDataDesc": "Benchmark comparison requires at least 3 advertiser campaigns with similar data. More advertisers will unlock competitive insights.",
+      "yoursVsIndustry": "Your Metrics vs Industry Average"
+    },
+    "storyteller": {
+      "title": "Ad Journey Storyteller",
+      "subtitle": "The narrative of your campaign's journey",
+      "selectPrompt": "Choose a campaign above to view its story.",
+      "loadError": "Failed to load story data. Please try again later.",
+      "chapters": "Chapters",
+      "keyInsights": "Key Insights",
+      "recommendations": "Recommendations",
+      "campaignAge": "Campaign Age",
+      "noStoryTitle": "No Story Yet",
+      "noStoryDesc": "Generate an AI-powered narrative of your campaign's performance. Stories are created once campaigns have collected sufficient performance data.",
+      "preliminaryTitle": "Preliminary Insights",
+      "preliminaryDesc": "Your campaign is less than 24 hours old. Full story chapters will be available once more data is collected. Here's what we know so far...",
+      "exportingPdf": "Exporting PDF...",
+      "exportingHtml": "Exporting HTML..."
+    },
+    "team": {
+      "title": "Team Management",
+      "subtitle": "Manage team members and their permissions",
+      "selectPrompt": "Choose a campaign above to manage its team.",
+      "loadError": "Failed to load team data. Please try again later.",
+      "members": "Team Members",
+      "admins": "Admins",
+      "editors": "Editors",
+      "inviteTitle": "Invite Team Member",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "colleague@company.com",
+      "sendInvite": "Send Invite",
+      "currentTeam": "Current Team",
+      "noMembers": "No Team Members",
+      "noMembersDesc": "Invite team members to collaborate on this campaign.",
+      "member": "Member",
+      "joined": "Joined",
+      "auditTitle": "Audit Log",
+      "auditEmpty": "No activity yet",
+      "auditEmptyDesc": "Changes to campaigns, roles, and settings will appear here as they happen.",
+      "action": "Action",
+      "oldValue": "Old Value",
+      "newValue": "New Value",
+      "when": "When",
+      "roles": {
+        "viewer": "Viewer",
+        "editor": "Editor",
+        "admin": "Admin"
+      },
+      "inviteSent": "Invitation sent!",
+      "inviteFailed": "Failed to send invitation",
+      "memberRemoved": "Member removed",
+      "removeFailed": "Failed to remove member",
+      "roleUpdated": "Role updated",
+      "roleFailed": "Failed to update role"
+    },
+    "merchant": {
+      "title": "Merchant Performance",
+      "subtitle": "The business value SmartAdDeals generated for your outlets.",
+      "emptyTitle": "No redemptions yet",
+      "emptyDesc": "Once customers redeem tokens at your outlets, their visits, spend and satisfaction will show up here.",
+      "visits": "Customer Visits",
+      "redemptions": "QR Redemptions",
+      "revenue": "Revenue Generated",
+      "customers": "Unique Customers",
+      "discountsGiven": "Discounts Given",
+      "discountsRedeemed": "Discounts Redeemed",
+      "avgSpend": "Avg Customer Spend",
+      "avgDiscount": "Avg Discount / Customer",
+      "repeatRate": "Repeat Customer Rate",
+      "satisfaction": "Satisfaction ({{count}} reviews)"
+    },
+    "outlets": {
+      "title": "Outlets & Branches",
+      "yourOutlets": "Your outlets",
+      "emptyTitle": "No outlets yet",
+      "emptyDesc": "Add your first branch so customers can tell you where they shopped.",
+      "name": "Outlet name",
+      "namePlaceholder": "Osu Branch",
+      "city": "City",
+      "cityPlaceholder": "Accra",
+      "address": "Address",
+      "addressPlaceholder": "123 High St",
+      "phone": "Phone",
+      "phonePlaceholder": "+233 20 000 0000",
+      "hours": "Opening hours",
+      "hoursPlaceholder": "Mon–Sat 9am–7pm",
+      "nameRequired": "Outlet name is required",
+      "updated": "Outlet updated",
+      "added": "Outlet added",
+      "saveFailed": "Could not save the outlet",
+      "removed": "Outlet removed",
+      "removeFailed": "Could not remove the outlet"
+    },
+    "platformAccounts": {
+      "title": "Platform Accounts",
+      "subtitle": "Connect your ad platform accounts to enable metrics sync",
+      "loadError": "Failed to load platform accounts.",
+      "connected": "Connected",
+      "syncErrors": "Sync Errors",
+      "connectedAccounts": "Connected Accounts",
+      "availablePlatforms": "Available Platforms",
+      "connectNew": "Connect New Platform",
+      "disconnect": "Disconnect",
+      "howItWorks": "How it works",
+      "how1": "Click \"Connect\" on any platform to authorize access to your account",
+      "how2": "Your access tokens are encrypted and stored securely",
+      "how3": "Metrics are synced automatically based on your selected frequency",
+      "how4": "Use the \"Test\" button to verify your connection at any time",
+      "disconnected": "Platform account disconnected",
+      "disconnectFailed": "Failed to disconnect account",
+      "verified": "Connection verified",
+      "verifyFailed": "Connection failed"
+    },
+    "profile": {
+      "title": "My Profile",
+      "subtitle": "Manage your account, track ads you have viewed, and control your rewards.",
+      "edit": "Edit Profile",
+      "tabs": {
+        "overview": "Overview",
+        "rewards": "Rewards & History",
+        "settings": "Settings",
+        "security": "Security"
+      },
+      "adsViewed": "Ads Viewed",
+      "totalEarned": "Total Earned",
+      "balance": "Balance",
+      "pending": "Pending",
+      "activityTitle": "Recent Activity",
+      "activitySubtitle": "Your latest ad views, rewards, and account updates",
+      "activityEmpty": "No activity yet",
+      "activityEmptyDesc": "Your ad views, rewards, and account updates will show up here.",
+      "loadingActivity": "Loading activity...",
+      "browseAds": "Browse Ads",
+      "quickActions": "Quick Actions",
+      "quickActionsSubtitle": "Shortcuts to common tasks",
+      "viewRewardHistory": "View Reward History",
+      "editPreferences": "Edit Preferences",
+      "logOut": "Log Out",
+      "rewardsTitle": "Reward History",
+      "rewardsSubtitle": "All rewards you have earned from viewing ads",
+      "rewardsEmpty": "No rewards yet",
+      "rewardsEmptyDesc": "Start browsing ads to earn your first reward. Every view counts.",
+      "loadingRewards": "Loading rewards...",
+      "infoTitle": "Profile Information",
+      "infoSubtitle": "Update your name and avatar",
+      "fullName": "Full Name",
+      "avatarUrl": "Avatar URL",
+      "preferencesTitle": "Preferences",
+      "preferencesSubtitle": "Customize your experience",
+      "theme": "Theme",
+      "language": "Language",
+      "emailNotifications": "Email notifications",
+      "savePreferences": "Save Preferences",
+      "passwordTitle": "Change Password",
+      "passwordSubtitle": "Update your password to keep your account secure",
+      "currentPassword": "Current Password",
+      "newPassword": "New Password",
+      "confirmNewPassword": "Confirm New Password",
+      "updating": "Updating...",
+      "sessionTitle": "Session",
+      "sessionSubtitle": "Sign out of your account on this device",
+      "sessionBody": "Logging out will end your current session and require you to sign in again.",
+      "updated": "Profile updated",
+      "updateFailed": "Failed to update profile",
+      "passwordsMismatch": "Passwords do not match",
+      "passwordMin8": "Password must be at least 8 characters",
+      "passwordChanged": "Password changed",
+      "passwordFailed": "Failed to change password. Check your current password."
+    },
+    "settings": {
+      "title": "Settings",
+      "subtitle": "Manage your account, preferences, and security",
+      "tabs": {
+        "profile": "Profile",
+        "preferences": "Preferences",
+        "notifications": "Notifications",
+        "security": "Security"
+      },
+      "infoTitle": "Profile Information",
+      "infoSubtitle": "Update your personal details",
+      "fullName": "Full Name",
+      "emailImmutable": "Email address cannot be changed",
+      "appearanceTitle": "Appearance",
+      "appearanceSubtitle": "Customize how SmartAdDeals looks",
+      "theme": "Theme",
+      "animations": "Enable Animations",
+      "animationsHint": "Smooth transitions and micro-interactions",
+      "compactNumbers": "Compact Numbers",
+      "compactNumbersHint": "Show 1.2K instead of 1,200",
+      "regionalTitle": "Regional Settings",
+      "regionalSubtitle": "Configure locale and formats",
+      "language": "Language",
+      "timezone": "Timezone",
+      "currency": "Currency",
+      "dateFormat": "Date Format",
+      "dashboardTitle": "Dashboard",
+      "dashboardSubtitle": "Customize your dashboard experience",
+      "autoRefresh": "Auto-refresh Dashboard",
+      "autoRefreshHint": "Keep metrics up to date automatically",
+      "refreshInterval": "Refresh Interval",
+      "campaignAlerts": "Campaign Alerts",
+      "campaignAlertsSubtitle": "Stay informed about your campaigns",
+      "generalNotifications": "General Notifications",
+      "generalNotificationsSubtitle": "Other notification preferences",
+      "savePreferences": "Save Preferences",
+      "preferencesSaved": "Preferences saved",
+      "passwordTitle": "Change Password",
+      "passwordSubtitle": "Update your password regularly for security",
+      "currentPassword": "Current Password",
+      "newPassword": "New Password",
+      "confirmNewPassword": "Confirm New Password",
+      "changing": "Changing...",
+      "dangerZone": "Danger Zone",
+      "deleteAccount": "Delete Account",
+      "deleteAccountHint": "Permanently delete your account and all data",
+      "deleteRequiresEmail": "Account deletion requires email confirmation",
+      "intervals": {
+        "s15": "Every 15 seconds",
+        "s30": "Every 30 seconds",
+        "m1": "Every 1 minute",
+        "m5": "Every 5 minutes"
+      },
+      "alerts": {
+        "anomaly": "Anomaly Alerts",
+        "anomalyDesc": "CTR drops, traffic spikes, and bot detection",
+        "ai": "AI Recommendations",
+        "aiDesc": "When AI generates optimization suggestions",
+        "budget": "Budget Alerts",
+        "budgetDesc": "When campaigns reach 80% or 100% budget",
+        "campaignStatus": "Campaign Status Changes",
+        "campaignStatusDesc": "Paused, completed, or suspended campaigns",
+        "email": "Email Notifications",
+        "emailDesc": "Receive important updates via email",
+        "team": "Team Activity",
+        "teamDesc": "Updates about team member actions",
+        "weekly": "Weekly Reports",
+        "weeklyDesc": "Performance summary every Monday",
+        "reward": "Reward Earned",
+        "rewardDesc": "When users earn rewards from your ads"
+      }
+    },
+    "adminAdvertisers": {
+      "title": "Advertiser Approvals",
+      "subtitle": "Review and approve advertiser accounts before they can run ads.",
+      "billing": "Billing",
+      "actionFailed": "Action failed"
+    },
+    "adminModeration": {
+      "title": "Review Moderation",
+      "pendingMedia": "Pending media",
+      "emptyTitle": "Nothing to moderate",
+      "emptyDesc": "Uploaded review photos and videos will queue up here."
+    },
+    "adminLoyalty": {
+      "title": "Loyalty & VIP",
+      "intro": "Members qualify for VIP automatically when they meet every requirement below. Set a value to 0 to ignore that requirement.",
+      "criteriaTitle": "VIP qualification criteria",
+      "criteriaSubtitle": "Applies to every member the next time their status is evaluated",
+      "minVisits": "Minimum merchant visits",
+      "minVisitsHint": "Distinct merchants the member has bought from.",
+      "minPurchases": "Minimum purchases",
+      "minPurchasesHint": "Completed redemptions.",
+      "minReviews": "Minimum reviews",
+      "minReviewsHint": "Reviews they have submitted.",
+      "minScore": "Minimum engagement score",
+      "minScoreHint": "Weighted score across visits, purchases, reviews, views and streaks.",
+      "save": "Save criteria",
+      "reset": "Reset to defaults"
     }
   }
 }

@@ -1,0 +1,419 @@
+{
+  "mobile": {
+    "common": {
+      "back": "Tillbaka",
+      "cancel": "Avbryt",
+      "ok": "OK",
+      "error": "Fel",
+      "success": "Klart",
+      "loading": "Laddar...",
+      "comingSoon": "Den här funktionen kommer snart!",
+      "trending": "Populärt"
+    },
+    "tabs": {
+      "home": "Hem",
+      "search": "Sök",
+      "rewards": "Belöningar",
+      "profile": "Profil",
+      "dashboard": "Översikt"
+    },
+    "splash": {
+      "subtitle": "Upptäck annonser. Tjäna belöningar.",
+      "tagline": "Intelligent annonsplattform"
+    },
+    "auth": {
+      "tagline": "Titta på annonser. Tjäna belöningar. Så enkelt är det.",
+      "welcomeBack": "Välkommen tillbaka",
+      "signInSubtitle": "Logga in på ditt konto för att fortsätta",
+      "email": "E-post",
+      "emailPlaceholder": "Ange din e-postadress",
+      "password": "Lösenord",
+      "passwordPlaceholder": "Ange ditt lösenord",
+      "forgotPassword": "Glömt lösenordet?",
+      "signIn": "Logga in",
+      "noAccount": "Har du inget konto?",
+      "createAccount": "Skapa konto",
+      "createAccountSubtitle": "Gå med i SmartAdDeals och börja tjäna belöningar genom att titta på annonser",
+      "fullName": "Fullständigt namn",
+      "fullNamePlaceholder": "Ange ditt fullständiga namn",
+      "createPasswordPlaceholder": "Skapa ett lösenord",
+      "confirmPassword": "Bekräfta lösenord",
+      "confirmPasswordPlaceholder": "Bekräfta ditt lösenord",
+      "termsPrefix": "Genom att skapa ett konto godkänner du våra",
+      "termsOfService": "användarvillkor",
+      "termsAnd": "och",
+      "privacyPolicy": "integritetspolicy",
+      "alreadyHaveAccount": "Har du redan ett konto?",
+      "resetPasswordTitle": "Återställ lösenord",
+      "resetPasswordMessage": "En länk för att återställa lösenordet skickas till din e-postadress.",
+      "sendLink": "Skicka länk",
+      "sentTitle": "Skickat!",
+      "sentMessage": "Kolla din inkorg efter återställningslänken.",
+      "errors": {
+        "emailRequired": "E-postadress krävs",
+        "emailInvalid": "Ange en giltig e-postadress",
+        "passwordRequired": "Lösenord krävs",
+        "passwordMin6": "Lösenordet måste vara minst 6 tecken",
+        "passwordMin8": "Lösenordet måste vara minst 8 tecken",
+        "nameRequired": "Namn krävs",
+        "confirmRequired": "Bekräfta ditt lösenord",
+        "passwordsMismatch": "Lösenorden matchar inte",
+        "invalidCredentials": "Fel e-postadress eller lösenord",
+        "registrationFailed": "Registreringen misslyckades. Försök igen."
+      }
+    },
+    "home": {
+      "welcomeTo": "Välkommen till",
+      "featuredAds": "Utvalda annonser",
+      "trendingNow": "Populärt just nu",
+      "seeAll": "Visa alla",
+      "browseByCategory": "Bläddra efter kategori",
+      "recentAds": "Senaste annonserna",
+      "browseAll": "Visa alla",
+      "loadingAds": "Laddar annonser..."
+    },
+    "search": {
+      "title": "Sök annonser",
+      "placeholder": "Sök annonser, varumärken, kategorier...",
+      "sortBy": "Sortera efter:",
+      "sort": {
+        "trending": "Populärt",
+        "newest": "Senaste",
+        "rewardValue": "Belöningens värde"
+      },
+      "adsFound": "{{count}} annonser hittades",
+      "noAdsFound": "Inga annonser hittades",
+      "noAdsMessage": "Justera din sökning eller dina filter för att hitta fler annonser.",
+      "clearFilters": "Rensa filter",
+      "loadingMore": "Laddar fler annonser...",
+      "searching": "Söker annonser..."
+    },
+    "rewards": {
+      "title": "Mina belöningar",
+      "availableBalance": "Tillgängligt saldo",
+      "redeemRewards": "Lös in belöningar",
+      "history": "Belöningshistorik",
+      "noRewardsYet": "Inga belöningar ännu",
+      "noRewardsMessage": "Börja titta på annonser för att tjäna belöningar!",
+      "loading": "Laddar belöningar...",
+      "filter": {
+        "all": "Alla",
+        "pending": "Väntande",
+        "credited": "Insatt",
+        "redeemed": "Inlöst"
+      },
+      "status": {
+        "pending": "Väntande",
+        "credited": "Insatt",
+        "redeemed": "Inlöst",
+        "expired": "Utgången"
+      }
+    },
+    "profile": {
+      "title": "Profil",
+      "defaultUser": "Användare",
+      "stats": {
+        "adsViewed": "Sedda annonser",
+        "earned": "Intjänat",
+        "joined": "Medlem sedan"
+      },
+      "linkedDevices": "Kopplade enheter",
+      "currentDevice": "Nuvarande",
+      "lastActive": "Senast aktiv:",
+      "devices": {
+        "iphone": "iPhone",
+        "android": "Android-enhet",
+        "other": "Den här enheten"
+      },
+      "settings": "Inställningar",
+      "items": {
+        "appearance": "Utseende",
+        "notifications": "Aviseringar",
+        "messages": "Meddelanden",
+        "purchases": "Köphistorik",
+        "merchantScan": "Handlare: Skanna kundens QR-kod",
+        "language": "Språk",
+        "privacy": "Integritet",
+        "help": "Hjälp och support",
+        "about": "Om SmartAdDeals",
+        "tokenCalculator": "Tokenkalkylator"
+      },
+      "theme": {
+        "light": "Ljust",
+        "dark": "Mörkt",
+        "system": "System"
+      },
+      "logout": "Logga ut",
+      "logoutConfirm": "Är du säker på att du vill logga ut?",
+      "languageModal": {
+        "title": "Välj språk"
+      }
+    },
+    "adDetail": {
+      "loading": "Laddar annons...",
+      "earnReward": "Tjäna {{amount}} {{currency}}",
+      "viewToClaim": "Titta på annonsen för att hämta din belöning",
+      "views": "{{count}} tn visningar",
+      "ageRestricted": "Åldersgräns: endast {{age}}+",
+      "shareAd": "Dela den här annonsen",
+      "reviewsTitle": "Omdömen och betyg",
+      "reviewCount_one": "{{count}} omdöme",
+      "reviewCount_other": "{{count}} omdömen",
+      "noReviews": "Inga omdömen ännu. Bli den första att dela dina tankar!",
+      "reward": "Belöning",
+      "claimReward": "Hämta belöning",
+      "claimedTitle": "Belöning hämtad!",
+      "claimedMessage": "Du har tjänat {{amount}} från {{advertiser}}. Beloppet sätts in på ditt saldo inom kort.",
+      "claimedButton": "Toppen!",
+      "claimError": "Det gick inte att hämta belöningen. Försök igen.",
+      "ageVerifyError": "Ogiltig eller utgången verifieringskod. Försök igen.",
+      "shareMessage": "Kolla in den här annonsen på SmartAdDeals: {{title}} – Tjäna {{amount}}!",
+      "advertiserFallback": "Annonsör",
+      "businessTitle": "Företag och kontakt",
+      "messageCompany": "Skicka meddelande till företaget",
+      "noContact": "Inga kontaktuppgifter har angetts för den här kampanjen.",
+      "rewardsTitle": "Det här kan du tjäna",
+      "rewardPool": "{{remaining}} av {{total}} kampanjtoken återstår",
+      "expectationsTitle": "Planerar du ett besök? Notera vad du förväntar dig",
+      "expectationsSaved": "Förväntningar sparade – berätta hur det gick efter ditt besök",
+      "expectationsHint": "Efter besöket kan du jämföra det här med hur det faktiskt blev.",
+      "expExperience": "Upplevelse",
+      "expService": "Service",
+      "expProduct": "Produkt",
+      "saveExpectations": "Spara förväntningar"
+    },
+    "chat": {
+      "title": "Meddelanden",
+      "emptyTitle": "Inga meddelanden ännu",
+      "emptyMessage": "Förfrågningar du skickar eller tar emot visas här.",
+      "startPrompt": "Skicka ett meddelande för att starta konversationen.",
+      "inputPlaceholder": "Skriv ett meddelande…",
+      "typing": "skriver…"
+    },
+    "purchases": {
+      "title": "Köphistorik",
+      "tokens": "token",
+      "receipt": "Kvitto",
+      "emptyTitle": "Inga köp ännu",
+      "emptyMessage": "Lös in token hos en handlare så visas dina köp här."
+    },
+    "ageGate": {
+      "title": "Åldersverifiering krävs",
+      "description": "Den här annonsen är begränsad till tittare som är {{minAge}} år eller äldre. Ange den 6-siffriga verifieringskoden som skickats till ditt registrerade telefonnummer.",
+      "verify": "Verifiera",
+      "devCode": "Utvecklarkod: {{code}}"
+    },
+    "redeem": {
+      "title": "Lös in token",
+      "availableBalance": "Tillgängligt saldo",
+      "maxTokens": "Max {{count}} token (1 token = 0,05 $)",
+      "expiredMessage": "Din QR-kod har gått ut. Skapa en ny nedan.",
+      "tokensToRedeem": "Token att lösa in",
+      "placeholder": "Ange 1 – {{max}}",
+      "balanceTooLow": "Ditt saldo är för lågt för att lösa in token.",
+      "enterWholeNumber": "Ange ett heltal mellan 1 och {{max}}.",
+      "generateQR": "Skapa QR-kod",
+      "generateError": "Det gick inte att skapa QR-koden. Försök igen.",
+      "tokensValue": "{{count}} token ({{amount}} $)",
+      "showToMerchant": "Visa den här för handlaren. Token dras först efter handlarens godkännande.",
+      "selectOutlet": "Vilken filial är du på?",
+      "searchOutlet": "Sök på filial, varumärke eller stad",
+      "purchaseAmountOptional": "Köpbelopp (valfritt)"
+    },
+    "merchantScan": {
+      "title": "Skanna kundens QR-kod",
+      "cameraAccessNeeded": "Kameraåtkomst krävs",
+      "cameraAccessMessage": "Tillåt kameraåtkomst för att kunna skanna kundernas QR-koder.",
+      "grantPermission": "Ge behörighet",
+      "pointCamera": "Rikta kameran mot kundens QR-kod för inlösen",
+      "scanFailed": "Skanningen misslyckades",
+      "scanAgain": "Skanna igen",
+      "scanAnother": "Skanna en till",
+      "invalidQR": "Ogiltig QR-kod. Skanna en giltig QR-kod för kundinlösen.",
+      "qrExpired": "Den här QR-koden har gått ut, är ogiltig eller redan använd.",
+      "redeeming": "Löser in",
+      "tokens": "{{count}} token",
+      "countTowardCampaign": "Räkna mot kampanjen",
+      "purchaseAmount": "Köpbelopp ($)",
+      "continue": "Fortsätt",
+      "validateError": "Det gick inte att validera inlösen. Försök igen.",
+      "confirmError": "Det gick inte att bekräfta inlösen. Försök igen.",
+      "summary": {
+        "title": "Sammanfattning av inlösen",
+        "customer": "Kund",
+        "purchase": "Köp",
+        "tokensUsed": "Använda token",
+        "discount": "Rabatt",
+        "customerPays": "Kunden betalar"
+      },
+      "approvedTitle": "Inlösen godkänd",
+      "approvedMessage": "{{tokens}} token ({{discount}} $) har dragits. Kundens nya saldo: {{balance}} $.",
+      "approveRedemption": "Godkänn inlösen",
+      "itemsTitle": "Köpta artiklar (valfritt)",
+      "itemName": "Artikel",
+      "itemQty": "Antal",
+      "itemPrice": "Styckpris",
+      "addItem": "Lägg till artikel",
+      "itemsTotal": "Summa artiklar",
+      "receipt": "Kvitto"
+    },
+    "notifications": {
+      "title": "Aviseringar",
+      "markAllRead": "Markera alla som lästa",
+      "empty": "Inga aviseringar",
+      "emptyMessage": "Du är helt uppdaterad! Kom tillbaka senare för nyheter."
+    },
+    "editProfile": {
+      "title": "Redigera profil",
+      "emailAddress": "E-postadress",
+      "noEmailOnFile": "Ingen e-postadress registrerad",
+      "emailCannotChange": "E-postadressen kan inte ändras",
+      "saveChanges": "Spara ändringar",
+      "saving": "Sparar...",
+      "changePassword": "Byt lösenord",
+      "currentPassword": "Nuvarande lösenord",
+      "currentPasswordPlaceholder": "Ange nuvarande lösenord",
+      "newPassword": "Nytt lösenord",
+      "newPasswordPlaceholder": "Ange nytt lösenord",
+      "confirmNewPassword": "Bekräfta nytt lösenord",
+      "confirmNewPasswordPlaceholder": "Ange det nya lösenordet igen",
+      "updatePassword": "Uppdatera lösenord",
+      "updating": "Uppdaterar...",
+      "errors": {
+        "nameEmpty": "Namnet får inte vara tomt",
+        "notLoggedIn": "Du måste vara inloggad för att uppdatera din profil",
+        "profileUpdated": "Profilen har uppdaterats",
+        "updateFailed": "Det gick inte att uppdatera profilen",
+        "fillPasswordFields": "Fyll i alla lösenordsfält",
+        "passwordMin6": "Det nya lösenordet måste vara minst 6 tecken",
+        "passwordsMismatch": "De nya lösenorden matchar inte",
+        "passwordUpdated": "Lösenordet har uppdaterats",
+        "passwordFailed": "Det gick inte att uppdatera lösenordet"
+      }
+    },
+    "industries": {
+      "technology": "Teknik",
+      "food_beverage": "Mat och dryck",
+      "fashion": "Mode",
+      "health": "Hälsa",
+      "finance": "Finans",
+      "entertainment": "Underhållning",
+      "travel": "Resor",
+      "education": "Utbildning",
+      "sports": "Sport",
+      "automotive": "Fordon",
+      "real_estate": "Fastigheter",
+      "retail": "Detaljhandel"
+    },
+    "dashboard": {
+      "title": "Översikt",
+      "campaignTitle": "Kampanj",
+      "campaignsTitle": "Dina kampanjer",
+      "noCampaigns": "Inga kampanjer ännu",
+      "noCampaignsMessage": "Kampanjer du skapar visas här.",
+      "campaignNotFound": "Kampanjen hittades inte",
+      "spentOf": "{{spent}} av {{total}} förbrukat",
+      "kpi": {
+        "impressions": "Visningar",
+        "clicks": "Klick",
+        "ctr": "CTR",
+        "spend": "Kostnad"
+      },
+      "status": {
+        "draft": "Utkast",
+        "active": "Aktiv",
+        "paused": "Pausad",
+        "completed": "Avslutad",
+        "archived": "Arkiverad"
+      },
+      "tabs": {
+        "overview": "Översikt",
+        "ai": "AI",
+        "anomalies": "Avvikelser",
+        "story": "Berättelse",
+        "team": "Team",
+        "attribution": "Attribution"
+      },
+      "overview": {
+        "metrics": "Resultat",
+        "info": "Kampanjinformation",
+        "budgetTotal": "Total budget",
+        "budgetSpent": "Förbrukad budget",
+        "startDate": "Startdatum",
+        "endDate": "Slutdatum",
+        "industry": "Bransch",
+        "benchmarks": "Branschriktmärken",
+        "aboveAvg": "Över genomsnittet",
+        "belowAvg": "Under genomsnittet",
+        "yoursVsIndustry": "Din: {{yours}} · Bransch: {{industry}}"
+      },
+      "ai": {
+        "empty": "Inga rekommendationer",
+        "emptyMessage": "AI-rekommendationer för den här kampanjen visas här.",
+        "apply": "Tillämpa",
+        "dismiss": "Avfärda",
+        "confidence": "{{value}} % säkerhet",
+        "status": {
+          "pending": "Väntande",
+          "applied": "Tillämpad",
+          "dismissed": "Avfärdad"
+        }
+      },
+      "anomalies": {
+        "empty": "Inga avvikelser upptäckta",
+        "emptyMessage": "Kampanjen presterar inom förväntade nivåer.",
+        "resolve": "Åtgärda",
+        "resolved": "Åtgärdad",
+        "metric": "Mätvärde",
+        "currentValue": "Aktuellt värde",
+        "threshold": "Tröskelvärde",
+        "detectedAt": "Upptäckt",
+        "severity": {
+          "low": "Låg",
+          "medium": "Medel",
+          "high": "Hög",
+          "critical": "Kritisk"
+        }
+      },
+      "story": {
+        "empty": "Ingen berättelse tillgänglig ännu",
+        "preliminary": "Preliminära insikter – berättelsen blir mer detaljerad när mer data kommer in.",
+        "chapter": "Kapitel {{number}}",
+        "keyInsights": "Viktigaste insikterna",
+        "recommendations": "Rekommendationer"
+      },
+      "team": {
+        "empty": "Inga teammedlemmar",
+        "roles": {
+          "admin": "Administratör",
+          "editor": "Redaktör",
+          "viewer": "Läsare"
+        }
+      },
+      "attribution": {
+        "empty": "Ingen attributionsdata",
+        "emptyMessage": "Enhetsfördelning och vägar mellan enheter är inte tillgängliga ännu.",
+        "devices": "Enhetsfördelning",
+        "crossDevicePaths": "Vägar mellan enheter",
+        "ctr": "CTR",
+        "clicksConversions": "{{clicks}} klick · {{conversions}} konverteringar",
+        "conversions": "{{count}} konverteringar"
+      }
+    },
+    "tokenCalc": {
+      "title": "Tokenkalkylator",
+      "tokenValue": "Aktuellt tokenvärde",
+      "token": "token",
+      "tokens": "token",
+      "tokensEach": "token styck",
+      "yourTokens": "Dina token",
+      "estimateTitle": "Uppskatta dina intäkter",
+      "perView": "Sedda annonser",
+      "perClick": "Klickade annonser",
+      "perReview": "Skrivna omdömen",
+      "perPhoto": "Uppladdade foton",
+      "estimatedTotal": "Uppskattad summa",
+      "disclaimer": "Uppskattningarna bygger på genomsnittet för aktiva kampanjer. Varje kampanj sätter sina egna belöningar."
+    }
+  }
+}

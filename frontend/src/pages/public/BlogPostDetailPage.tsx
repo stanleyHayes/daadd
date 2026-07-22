@@ -44,7 +44,7 @@ const blogPostsDatabase = {
     <p><strong>3. Real-Time Geofencing for Mobile-First Brands</strong></p>
     <p>Retail and hospitality brands are leveraging real-time geofencing to reach users entering competitor locations or high-value shopping zones. The timing, precision, and privacy aspects are now mature enough for mass adoption.</p>
 
-    <h2>What SmartDeals Offers</h2>
+    <h2>What SmartAdDeals Offers</h2>
     <p>Our geographic heatmap feature gives advertisers a real-time view of where their ads are performing best. Combined with our AI optimization engine, we automatically adjust targeting and creative based on regional performance—without ever touching raw location data.</p>
 
     <p>As privacy regulations tighten, the brands that master privacy-first geographic targeting will be the ones winning with local audiences in 2026 and beyond.</p>
@@ -86,7 +86,7 @@ const blogPostsDatabase = {
     `,
   },
   3: {
-    title: 'How FitLife Increased Conversions by 340% with SmartDeals',
+    title: 'How FitLife Increased Conversions by 340% with SmartAdDeals',
     author: 'David Mensah',
     date: 'February 28, 2026',
     readTime: '8 min read',
@@ -110,10 +110,10 @@ const blogPostsDatabase = {
     <p>We helped FitLife restructure their campaigns by audience segment (Android vs iOS, age, region) and enabled creative A/B testing. They tested 12 new creative variations within 2 weeks.</p>
 
     <p><strong>2. AI Optimization</strong></p>
-    <p>Using SmartDeals's AI engine, we configured automated recommendations for bid adjustments, audience expansion, and budget reallocation. The AI identified that their "Results Testimonials" creative was 3x more likely to drive installs than their "Feature Showcase" ads.</p>
+    <p>Using SmartAdDeals's AI engine, we configured automated recommendations for bid adjustments, audience expansion, and budget reallocation. The AI identified that their "Results Testimonials" creative was 3x more likely to drive installs than their "Feature Showcase" ads.</p>
 
     <p><strong>3. Reward-Based Incentives</strong></p>
-    <p>We integrated SmartDeals's reward system, offering new users a 50% discount on their first month if they installed and opened the app within 24 hours. This increased post-install engagement significantly.</p>
+    <p>We integrated SmartAdDeals's reward system, offering new users a 50% discount on their first month if they installed and opened the app within 24 hours. This increased post-install engagement significantly.</p>
 
     <h2>The Results</h2>
     <p>Over 90 days:</p>
@@ -237,7 +237,7 @@ const blogPostsDatabase = {
     <h2>The Bottom Line</h2>
     <p>Privacy regulations aren't going away—they're the future. The advertisers and platforms that embrace privacy-first approaches now will be better positioned for the next decade of advertising.</p>
 
-    <p>SmartDeals is built on privacy-first principles: we use heatmaps instead of raw location tracking, we rely on contextual signals alongside audience data, and we never sell user data to third parties.</p>
+    <p>SmartAdDeals is built on privacy-first principles: we use heatmaps instead of raw location tracking, we rely on contextual signals alongside audience data, and we never sell user data to third parties.</p>
     `,
   },
   6: {
@@ -406,11 +406,11 @@ export function BlogPostDetailPage() {
                   </div>
                   <div>
                     <p className="font-semibold text-text-primary">{post.author}</p>
-                    <p className="text-xs text-text-secondary">SmartDeals Team</p>
+                    <p className="text-xs text-text-secondary">SmartAdDeals Team</p>
                   </div>
                 </div>
                 <p className="text-sm text-text-secondary mb-6">
-                  Expert insights from the SmartDeals team on advertising trends, platform updates, and industry best practices.
+                  Expert insights from the SmartAdDeals team on advertising trends, platform updates, and industry best practices.
                 </p>
 
                 <div className="h-px bg-border-color mb-6" />

@@ -46,14 +46,14 @@ export function TermsPage() {
 
         <div className="prose-container space-y-10">
           <p className="text-gray-600 dark:text-slate-300 leading-relaxed">
-            Welcome to SmartDeals. These Terms of Service ("Terms") govern your access to and use of the SmartDeals platform, including our website, mobile applications, and all related services (collectively, the "Service"). By accessing or using the Service, you agree to be bound by these Terms.
+            Welcome to SmartAdDeals. These Terms of Service ("Terms") govern your access to and use of the SmartAdDeals platform, including our website, mobile applications, and all related services (collectively, the "Service"). By accessing or using the Service, you agree to be bound by these Terms.
           </p>
 
           {/* 1 */}
           <section id="acceptance">
             <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">1. Acceptance of Terms</h2>
             <p className="text-gray-600 dark:text-slate-300 leading-relaxed mb-4">
-              By creating an account, accessing, or using SmartDeals, you confirm that you are at least 16 years of age, have the legal capacity to enter into a binding agreement, and agree to comply with these Terms and our Privacy Policy. If you are using SmartDeals on behalf of a company or organization, you represent that you have the authority to bind that entity to these Terms.
+              By creating an account, accessing, or using SmartAdDeals, you confirm that you are at least 16 years of age, have the legal capacity to enter into a binding agreement, and agree to comply with these Terms and our Privacy Policy. If you are using SmartAdDeals on behalf of a company or organization, you represent that you have the authority to bind that entity to these Terms.
             </p>
             <p className="text-gray-600 dark:text-slate-300 leading-relaxed">
               We reserve the right to modify these Terms at any time. We will notify you of material changes via email or platform notification. Continued use of the Service after changes take effect constitutes acceptance of the revised Terms.
@@ -64,10 +64,10 @@ export function TermsPage() {
           <section id="account-registration">
             <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">2. Account Registration</h2>
             <p className="text-gray-600 dark:text-slate-300 leading-relaxed mb-4">
-              You must register for an account to access most features of SmartDeals. You agree to provide accurate, current, and complete information during registration and to keep your account information up to date. You are responsible for maintaining the confidentiality of your login credentials and for all activities that occur under your account.
+              You must register for an account to access most features of SmartAdDeals. You agree to provide accurate, current, and complete information during registration and to keep your account information up to date. You are responsible for maintaining the confidentiality of your login credentials and for all activities that occur under your account.
             </p>
             <p className="text-gray-600 dark:text-slate-300 leading-relaxed">
-              SmartDeals offers two account types: Advertiser accounts (for creating and managing ad campaigns) and User accounts (for browsing ads and earning rewards). Some features, including AI optimization, anomaly detection, and benchmarking, are available only to Advertiser accounts with the appropriate subscription tier.
+              SmartAdDeals offers two account types: Advertiser accounts (for creating and managing ad campaigns) and User accounts (for browsing ads and earning rewards). Some features, including AI optimization, anomaly detection, and benchmarking, are available only to Advertiser accounts with the appropriate subscription tier.
             </p>
           </section>
 
@@ -80,11 +80,11 @@ export function TermsPage() {
             </p>
             <h3 className="text-base font-semibold text-gray-800 dark:text-slate-200 mb-2">Budget & Billing</h3>
             <p className="text-gray-600 dark:text-slate-300 leading-relaxed mb-4">
-              Campaign budgets are set by the advertiser and charged based on engagement (cost per view or cost per click, depending on campaign configuration). You authorize SmartDeals to charge your payment method for all campaign costs incurred. Budget caps are enforced in real time; however, due to processing delays, actual spend may exceed your daily budget by up to 10%.
+              Campaign budgets are set by the advertiser and charged based on engagement (cost per view or cost per click, depending on campaign configuration). You authorize SmartAdDeals to charge your payment method for all campaign costs incurred. Budget caps are enforced in real time; however, due to processing delays, actual spend may exceed your daily budget by up to 10%.
             </p>
             <h3 className="text-base font-semibold text-gray-800 dark:text-slate-200 mb-2">Content Guidelines</h3>
             <p className="text-gray-600 dark:text-slate-300 leading-relaxed">
-              Ad creatives must not contain misleading claims, prohibited products (illegal substances, weapons), hate speech, sexually explicit content, or content that infringes on third-party intellectual property. Age-restricted content (alcohol, gambling) must be properly flagged and will only be shown to verified users above the applicable age threshold. SmartDeals reserves the right to remove any ad that violates these guidelines without refund.
+              Ad creatives must not contain misleading claims, prohibited products (illegal substances, weapons), hate speech, sexually explicit content, or content that infringes on third-party intellectual property. Age-restricted content (alcohol, gambling) must be properly flagged and will only be shown to verified users above the applicable age threshold. SmartAdDeals reserves the right to remove any ad that violates these guidelines without refund.
             </p>
           </section>
 
@@ -93,11 +93,11 @@ export function TermsPage() {
             <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">4. User Terms</h2>
             <h3 className="text-base font-semibold text-gray-800 dark:text-slate-200 mb-2">Reward Earning</h3>
             <p className="text-gray-600 dark:text-slate-300 leading-relaxed mb-4">
-              Users earn rewards by viewing and engaging with ads on the SmartDeals platform. Reward amounts are set by advertisers and displayed before engagement. Rewards are credited to your SmartDeals wallet upon verified engagement. Engagement must be genuine; automated viewing, scripts, or other inauthentic engagement methods will result in reward forfeiture and potential account termination.
+              Users earn rewards by viewing and engaging with ads on the SmartAdDeals platform. Reward amounts are set by advertisers and displayed before engagement. Rewards are credited to your SmartAdDeals wallet upon verified engagement. Engagement must be genuine; automated viewing, scripts, or other inauthentic engagement methods will result in reward forfeiture and potential account termination.
             </p>
             <h3 className="text-base font-semibold text-gray-800 dark:text-slate-200 mb-2">Eligibility</h3>
             <p className="text-gray-600 dark:text-slate-300 leading-relaxed">
-              To earn and redeem rewards, you must be at least 16 years old, have a verified account, and reside in a supported country. Reward payouts are subject to minimum balance requirements ($5.00 minimum) and may be processed via bank transfer, PayPal, or platform credit. SmartDeals reserves the right to withhold payouts pending fraud review.
+              To earn and redeem rewards, you must be at least 16 years old, have a verified account, and reside in a supported country. Reward payouts are subject to minimum balance requirements ($5.00 minimum) and may be processed via bank transfer, PayPal, or platform credit. SmartAdDeals reserves the right to withhold payouts pending fraud review.
             </p>
           </section>
 
@@ -108,8 +108,8 @@ export function TermsPage() {
             <ul className="list-disc pl-6 space-y-2 text-gray-600 dark:text-slate-300">
               <li>Use bots, scripts, or automated tools to view ads, claim rewards, or interact with the platform.</li>
               <li>Create multiple accounts to artificially inflate reward earnings.</li>
-              <li>Attempt to reverse-engineer, decompile, or access the source code of the SmartDeals platform.</li>
-              <li>Interfere with or disrupt the platform, servers, or networks connected to SmartDeals.</li>
+              <li>Attempt to reverse-engineer, decompile, or access the source code of the SmartAdDeals platform.</li>
+              <li>Interfere with or disrupt the platform, servers, or networks connected to SmartAdDeals.</li>
               <li>Engage in click fraud or artificially inflate campaign metrics.</li>
               <li>Use the platform to distribute malware, phishing content, or other harmful materials.</li>
               <li>Scrape or harvest user data from the platform.</li>
@@ -121,10 +121,10 @@ export function TermsPage() {
           <section id="intellectual-property">
             <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">6. Intellectual Property</h2>
             <p className="text-gray-600 dark:text-slate-300 leading-relaxed mb-4">
-              The SmartDeals platform, including its design, features, code, analytics tools (heatmaps, anomaly detection, Ad Journey Storyteller), and branding, is the intellectual property of SmartDeals Inc. and is protected by copyright, trademark, and other intellectual property laws. You may not copy, modify, or distribute any part of the platform without our written consent.
+              The SmartAdDeals platform, including its design, features, code, analytics tools (heatmaps, anomaly detection, Ad Journey Storyteller), and branding, is the intellectual property of SmartAdDeals Inc. and is protected by copyright, trademark, and other intellectual property laws. You may not copy, modify, or distribute any part of the platform without our written consent.
             </p>
             <p className="text-gray-600 dark:text-slate-300 leading-relaxed">
-              Advertisers retain ownership of their creative assets. By uploading content to SmartDeals, you grant us a non-exclusive, worldwide license to display, distribute, and analyze your creatives for the purpose of operating the Service and providing campaign analytics.
+              Advertisers retain ownership of their creative assets. By uploading content to SmartAdDeals, you grant us a non-exclusive, worldwide license to display, distribute, and analyze your creatives for the purpose of operating the Service and providing campaign analytics.
             </p>
           </section>
 
@@ -135,7 +135,7 @@ export function TermsPage() {
               All fees are quoted in US Dollars unless otherwise specified. Advertiser campaign charges are billed monthly or upon reaching your billing threshold, whichever comes first. Invoices are due within 15 days of issuance. Late payments may incur a 1.5% monthly interest charge.
             </p>
             <p className="text-gray-600 dark:text-slate-300 leading-relaxed">
-              User reward payouts are processed within 5 business days of a withdrawal request. SmartDeals is not responsible for delays caused by third-party payment processors or banking institutions. Rewards are non-transferable and have no cash value until redeemed through the official payout process.
+              User reward payouts are processed within 5 business days of a withdrawal request. SmartAdDeals is not responsible for delays caused by third-party payment processors or banking institutions. Rewards are non-transferable and have no cash value until redeemed through the official payout process.
             </p>
           </section>
 
@@ -146,7 +146,7 @@ export function TermsPage() {
               TO THE MAXIMUM EXTENT PERMITTED BY LAW, ADPLATFORM AND ITS OFFICERS, DIRECTORS, EMPLOYEES, AND AGENTS SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING LOST PROFITS, DATA LOSS, OR BUSINESS INTERRUPTION, ARISING FROM YOUR USE OF THE SERVICE.
             </p>
             <p className="text-gray-600 dark:text-slate-300 leading-relaxed">
-              Our total liability for any claim arising from or related to the Service shall not exceed the greater of (a) the amount you paid to SmartDeals in the 12 months preceding the claim, or (b) $100. The Service is provided "as is" without warranties of any kind, express or implied.
+              Our total liability for any claim arising from or related to the Service shall not exceed the greater of (a) the amount you paid to SmartAdDeals in the 12 months preceding the claim, or (b) $100. The Service is provided "as is" without warranties of any kind, express or implied.
             </p>
           </section>
 
@@ -157,7 +157,7 @@ export function TermsPage() {
               You may terminate your account at any time through the Settings page or by contacting support. For advertisers, termination will stop all active campaigns; you remain responsible for any charges incurred before termination. Remaining reward balances for users will be paid out if they meet the minimum payout threshold.
             </p>
             <p className="text-gray-600 dark:text-slate-300 leading-relaxed">
-              SmartDeals may suspend or terminate your account at any time for violation of these Terms, suspected fraud, or at our discretion with 30 days' notice. Upon termination, your right to use the Service ceases immediately. Provisions that by their nature should survive (including intellectual property, limitation of liability, and governing law) will remain in effect.
+              SmartAdDeals may suspend or terminate your account at any time for violation of these Terms, suspected fraud, or at our discretion with 30 days' notice. Upon termination, your right to use the Service ceases immediately. Provisions that by their nature should survive (including intellectual property, limitation of liability, and governing law) will remain in effect.
             </p>
           </section>
 
@@ -176,7 +176,7 @@ export function TermsPage() {
               If you have questions about these Terms of Service, please contact us:
             </p>
             <div className="bg-gray-50 dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 p-6 text-sm text-gray-600 dark:text-slate-300 space-y-1">
-              <p><strong className="text-gray-900 dark:text-white">SmartDeals Inc.</strong></p>
+              <p><strong className="text-gray-900 dark:text-white">SmartAdDeals Inc.</strong></p>
               <p>Attn: Legal Department</p>
               <p>Email: legal@daadd.com</p>
               <p>Address: 100 Market Street, Suite 300, San Francisco, CA 94105</p>

@@ -1,8 +1,8 @@
-# SmartDeals Architecture Document
+# SmartAdDeals Architecture Document
 
 ## 1. System Overview
 
-This is the authoritative code map for SmartDeals. It describes the code **as it exists** — not planned or removed architecture. (The former DI/repository layer — `container.ts`, `entities/`, `repositories/`, platform adapters, Bull queues — was dead code importing ~45 nonexistent modules and was deleted in July 2026. Live routes use Mongoose models directly.)
+This is the authoritative code map for SmartAdDeals. It describes the code **as it exists** — not planned or removed architecture. (The former DI/repository layer — `container.ts`, `entities/`, `repositories/`, platform adapters, Bull queues — was dead code importing ~45 nonexistent modules and was deleted in July 2026. Live routes use Mongoose models directly.)
 
 > **Honesty note:** several read-heavy endpoints still return deterministic synthetic data (see §6). Those are marked below.
 

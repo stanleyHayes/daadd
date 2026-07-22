@@ -193,7 +193,7 @@ export function SettingsPage() {
  {activeTab === 'preferences' && (
  <div className="space-y-6">
  <Card>
- <CardHeader title="Appearance" subtitle="Customize how SmartDeals looks" />
+ <CardHeader title="Appearance" subtitle="Customize how SmartAdDeals looks" />
  <div className="space-y-5">
  <div>
  <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">Theme</label>

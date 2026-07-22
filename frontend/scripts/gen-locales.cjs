@@ -1,12 +1,13 @@
-// Regenerates the mobile locale files from `mobile-translations.json`.
+// Regenerates the web locale files from `web-translations.json`.
 //
 // `en.json` is the source of truth: it defines both the key set and the key
 // order. Every other locale is rebuilt from it, so a translator only ever edits
-// `mobile-translations.json` and re-runs this script. Keys with no translation
-// yet fall back to the English string (i18next would do the same at runtime,
-// but writing them out keeps the files diffable and makes gaps visible).
+// `web-translations.json` and re-runs this script. Keys with no translation yet
+// fall back to the English string (i18next would do the same at runtime, but
+// writing them out keeps the files diffable and makes the gaps visible).
 //
 // Usage: node scripts/gen-locales.cjs  (safe to re-run; output is deterministic)
+// Exits non-zero when any locale still has untranslated keys.
 const fs = require('fs');
 const path = require('path');
 
@@ -14,7 +15,7 @@ const LANGS = ['es', 'fr', 'de', 'pt', 'sv'];
 
 const outDir = path.resolve(__dirname, '../src/i18n/locales');
 const translations = JSON.parse(
-  fs.readFileSync(path.join(__dirname, 'mobile-translations.json'), 'utf8')
+  fs.readFileSync(path.join(__dirname, 'web-translations.json'), 'utf8')
 );
 const en = JSON.parse(fs.readFileSync(path.join(outDir, 'en.json'), 'utf8'));
 
@@ -39,12 +40,11 @@ function shape(template, translated, missing, prefix = '') {
 let failed = false;
 for (const lang of LANGS) {
   const missing = [];
-  const locale = { mobile: shape(en.mobile, translations[lang], missing, 'mobile') };
+  const locale = shape(en, translations[lang], missing);
   fs.writeFileSync(
     path.join(outDir, `${lang}.json`),
     JSON.stringify(locale, null, 2) + '\n'
   );
-  const extra = Object.keys(translations[lang] ?? {}).length === 0;
   console.log(
     `${lang}.json: ${missing.length === 0 ? 'complete' : `${missing.length} untranslated`}`
   );
@@ -52,7 +52,6 @@ for (const lang of LANGS) {
     failed = true;
     console.log('  ' + missing.join('\n  '));
   }
-  if (extra) failed = true;
 }
 
 process.exit(failed ? 1 : 0);

@@ -1,0 +1,1375 @@
+{
+  "sv": {
+    "common": {
+      "loading": "Laddar…",
+      "viewAll": "Visa alla",
+      "readMore": "Läs mer",
+      "getStarted": "Kom igång",
+      "browseAds": "Bläddra bland annonser",
+      "explore": "Utforska",
+      "apply": "Ansök",
+      "subscribe": "Prenumerera",
+      "emailPlaceholder": "Ange din e-postadress",
+      "goBack": "Tillbaka",
+      "returnHome": "Till startsidan"
+    },
+    "header": {
+      "logo": "SmartAdDeals",
+      "tagline": "Intelligent annonshantering",
+      "nav": {
+        "home": "Hem",
+        "ads": "Bläddra bland annonser",
+        "about": "Om oss",
+        "blog": "Blogg",
+        "careers": "Jobb",
+        "partners": "Partner",
+        "contact": "Kontakt"
+      },
+      "cta": "Kom igång",
+      "login": "Logga in",
+      "signup": "Registrera dig",
+      "dashboard": "Översikt",
+      "logout": "Logga ut",
+      "searchPlaceholder": "Sök annonser...",
+      "status": "Plattformen är i drift — v1.0 live"
+    },
+    "landing": {
+      "hero": {
+        "badge": "Nu med AI-genererat kreativt material",
+        "title": "Förändra din annonsering med AI",
+        "titleLine1": "Upptäck annonser.",
+        "titleEarn": "Tjäna",
+        "rotating": {
+          "rewards": "belöningar.",
+          "tokens": "token.",
+          "giftCards": "presentkort.",
+          "cashBack": "pengar tillbaka."
+        },
+        "subtitle": "Nå rätt målgrupp, optimera i realtid och maximera din avkastning.",
+        "blurb": "Den intelligenta annonsplattformen som kopplar samman varumärken med engagerade målgrupper. Bläddra bland utvalda annonser och tjäna riktiga belöningar för din uppmärksamhet.",
+        "cta": "Starta gratis provperiod",
+        "ctaAdvertiser": "Jag är annonsör",
+        "socialProof": "Betrott av över 12 000 annonsörer"
+      },
+      "stats": {
+        "campaigns": "Aktiva kampanjer",
+        "impressions": "Annonsvisningar per dag",
+        "uptime": "Plattformens drifttid",
+        "countries": "Länder vi når"
+      },
+      "featured": {
+        "title": "Utvalda annonser",
+        "subtitle": "Handplockade kampanjer med de högsta belöningarna",
+        "emptyTitle": "Inga utvalda annonser ännu",
+        "emptyDesc": "Utvalda annonser dyker upp här snart. Titta in igen regelbundet, eller bläddra efter kategori för att hitta annonser redan nu!",
+        "emptyAction": "Visa alla annonser"
+      },
+      "blogTeaser": {
+        "title": "Senaste från bloggen",
+        "subtitle": "Insikter, fallstudier och plattformsnyheter från vårt team.",
+        "viewAll": "Visa alla artiklar"
+      },
+      "features": {
+        "title": "Allt du behöver",
+        "subtitle": "Kraftfulla verktyg för annonsörer och en givande upplevelse för användare – allt i en plattform.",
+        "ai": {
+          "title": "AI-driven optimering",
+          "desc": "Maskininlärning optimerar löpande bud, budgetar och målgruppsstyrning för att maximera din ROAS."
+        },
+        "realtime": {
+          "title": "Realtidsanalys",
+          "desc": "Följ kampanjresultat, upptäck avvikelser och agera direkt via vår intuitiva översikt."
+        },
+        "rewards": {
+          "title": "Belöningsbaserat engagemang",
+          "desc": "Uppmuntra användarna att agera och bygg lojalitet med vårt inbyggda belöningssystem."
+        },
+        "heatmaps": {
+          "title": "Geografiska värmekartor",
+          "desc": "Visualisera annonsresultat per region med interaktiva värmekartor byggda på platsdata i realtid."
+        },
+        "anomalies": {
+          "title": "Avvikelsedetektering",
+          "desc": "Få omedelbara varningar vid ovanliga toppar eller fall i nyckeltalen. Upptäck problem innan de kostar dig pengar."
+        },
+        "attribution": {
+          "title": "Attribution över enheter",
+          "desc": "Följ användarnas resa mellan dator, mobil och surfplatta för att attribuera konverteringar korrekt."
+        }
+      },
+      "cases": {
+        "title": "Framgångshistorier",
+        "subtitle": "Se hur varumärken lyckas med AI-driven annonsering.",
+        "cta": "Läs fallstudier"
+      },
+      "how": {
+        "title": "Så fungerar det",
+        "subtitle": "Tre enkla steg för att börja tjäna belöningar på annonser du faktiskt bryr dig om.",
+        "browse": {
+          "title": "Bläddra",
+          "desc": "Utforska en utvald katalog med annonser från ledande varumärken i olika branscher. Filtrera efter det som intresserar dig."
+        },
+        "engage": {
+          "title": "Engagera dig",
+          "desc": "Titta på och interagera med annonser som matchar dina intressen. Din uppmärksamhet är värdefull och belönas."
+        },
+        "earn": {
+          "title": "Tjäna",
+          "desc": "Få riktiga belöningar för ditt engagemang. Ta ut när du vill eller återinvestera i fler premiumupplevelser."
+        }
+      },
+      "faq": {
+        "title": "Vanliga frågor",
+        "subtitle": "Allt du behöver veta om att tjäna belöningar och annonsera hos oss.",
+        "stillHaveQuestions": "Har du fortfarande frågor?",
+        "contactUs": "Kontakta oss",
+        "q1": "Hur tjänar jag belöningar på annonser?",
+        "a1": "Bläddra bland annonser som intresserar dig, titta på innehållet och hämta belöningen som visas. Belöningarna sätts in på ditt konto och kan tas ut när du nått lägsta saldo.",
+        "q2": "Är det gratis för annonsörer att gå med?",
+        "a2": "Ja. Det är gratis att skapa ett annonsörskonto. Du betalar bara för den annonsbudget du avsätter till kampanjer, plus en liten plattformsavgift baserad på resultat.",
+        "q3": "Vad skiljer SmartAdDeals från andra annonsnätverk?",
+        "a3": "Vi kombinerar AI-driven optimering, integritetsfokuserad målgruppsstyrning, geografiska värmekartor och en belöningsmodell som värdesätter användarens uppmärksamhet.",
+        "q4": "Hur fungerar AI-optimeringen?",
+        "a4": "Vår maskininlärningsmotor analyserar kampanjresultat i realtid och föreslår justeringar av bud, budgetar, målgrupper och kreativt material för att förbättra ROAS.",
+        "q5": "Kan jag koppla SmartAdDeals till mina befintliga annonskonton?",
+        "a5": "Ja. Vi erbjuder integrationer med större programmatiska plattformar och annonsbörser. Läs mer om API- och OAuth-anslutningar i vår utvecklardokumentation."
+      },
+      "categories": {
+        "title": "Bläddra efter kategori",
+        "subtitle": "Hitta annonser från branscher du bryr dig om – från underhållning till finans."
+      },
+      "testimonials": {
+        "title": "Uppskattat av annonsörer",
+        "subtitle": "Se vad branschledarna säger om SmartAdDeals."
+      },
+      "integrations": {
+        "title": "Integrerat med ledande programmatiska plattformar",
+        "subtitle": "Vårt ekosystem ansluter till världens främsta demand-side-plattformar, supply-side-plattformar och annonsbörser.",
+        "trustedBy": "Används av team hos"
+      },
+      "developer": {
+        "title": "Redo för utvecklare",
+        "desc": "Anslut din befintliga programmatiska stack, synka kampanjdata och bygg egna arbetsflöden med vårt REST-API, webhooks och OAuth-anslutna plattformskonton.",
+        "cta": "Få API-åtkomst",
+        "ctaSecondary": "Prata med ingenjörsteamet"
+      },
+      "newsletter": {
+        "title": "Ligg steget före inom adtech",
+        "desc": "Få de senaste plattformsnyheterna, fallstudierna och annonstipsen till din inkorg varannan vecka.",
+        "disclaimer": "Ingen spam. Avsluta när du vill."
+      },
+      "finalCta": {
+        "title": "Redo att komma igång?",
+        "desc": "Gå med bland tusentals användare som redan tjänar belöningar på SmartAdDeals. Det tar mindre än en minut att registrera sig.",
+        "primary": "Skapa gratiskonto",
+        "noCard": "Inget kreditkort krävs",
+        "free": "Gratis för alltid"
+      }
+    },
+    "auth": {
+      "login": {
+        "brandTitle": "Framtidens",
+        "brandTitleAccent": "intelligenta annonsering",
+        "brandBlurb": "Skapa, optimera och analysera annonskampanjer med AI-drivna insikter och realtidsanalys.",
+        "title": "Välkommen tillbaka",
+        "subtitle": "Logga in på ditt konto för att fortsätta",
+        "email": "E-postadress",
+        "emailPlaceholder": "du@företag.se",
+        "password": "Lösenord",
+        "passwordPlaceholder": "Ange ditt lösenord",
+        "forgotPassword": "Glömt lösenordet?",
+        "remember": "Håll mig inloggad i 30 dagar",
+        "submit": "Logga in",
+        "noAccount": "Har du inget konto?",
+        "createAccount": "Skapa gratiskonto",
+        "successToast": "Välkommen tillbaka!",
+        "errorToast": "Ogiltiga uppgifter. Försök igen.",
+        "features": {
+          "analytics": {
+            "title": "Realtidsanalys",
+            "desc": "Följ visningar, klick, CTR och konverteringar i realtidsöversikter"
+          },
+          "ai": {
+            "title": "AI-optimering",
+            "desc": "Låt AI finjustera dina kampanjer automatiskt för maximal avkastning"
+          },
+          "anomaly": {
+            "title": "Avvikelsedetektering",
+            "desc": "Omedelbara varningar för bottrafik, CTR-toppar och misstänkt aktivitet"
+          },
+          "rewards": {
+            "title": "Belöningssystem",
+            "desc": "Engagera användare med riktiga belöningar för att se och interagera med annonser"
+          }
+        },
+        "stats": {
+          "campaigns": "Aktiva kampanjer",
+          "uptime": "Drifttid enligt SLA",
+          "adsDaily": "Annonser levererade per dag"
+        }
+      },
+      "register": {
+        "brandTitle": "Börja din",
+        "brandTitleAccent": "annonsresa idag",
+        "brandBlurb": "Gå med tusentals annonsörer och användare på marknadens mest intelligenta adtech-plattform.",
+        "testimonial": "SmartAdDeals AI-optimering ökade vår CTR med 340 % första månaden. Ad Journey Storyteller är helt unik på marknaden.",
+        "testimonialRole": "Marknadschef, TechCorp",
+        "trustedBy": "Betrott av över 2 000 företag världen över",
+        "title": "Skapa ditt konto",
+        "subtitle": "Kom igång på under en minut",
+        "roleLabel": "Jag vill...",
+        "roleAdvertiser": "Annonsera",
+        "roleAdvertiserDesc": "Skapa och optimera kampanjer",
+        "roleUser": "Tjäna belöningar",
+        "roleUserDesc": "Bläddra bland annonser och få betalt",
+        "name": "Fullständigt namn",
+        "namePlaceholder": "Anna Andersson",
+        "email": "E-postadress",
+        "emailPlaceholder": "du@företag.se",
+        "password": "Lösenord",
+        "passwordPlaceholder": "Skapa ett starkt lösenord",
+        "confirmPassword": "Bekräfta lösenord",
+        "confirmPasswordPlaceholder": "Ange lösenordet igen",
+        "checks": {
+          "length": "Minst 8 tecken",
+          "number": "Innehåller en siffra",
+          "uppercase": "Innehåller en versal"
+        },
+        "termsPrefix": "Jag godkänner",
+        "termsOfService": "användarvillkoren",
+        "termsAnd": "och",
+        "privacyPolicy": "integritetspolicyn",
+        "submit": "Skapa konto",
+        "haveAccount": "Har du redan ett konto?",
+        "signIn": "Logga in",
+        "successToast": "Kontot har skapats! Logga in.",
+        "errorToast": "Registreringen misslyckades. E-postadressen kan redan vara registrerad."
+      },
+      "forgot": {
+        "backToLogin": "Tillbaka till inloggningen",
+        "title": "Återställ lösenord",
+        "subtitle": "Ange din e-postadress så skickar vi en länk för att återställa lösenordet.",
+        "emailPlaceholder": "din@epost.se",
+        "submit": "Skicka återställningslänk",
+        "submitting": "Skickar...",
+        "sentTitle": "Kolla din e-post",
+        "sentBody": "Vi har skickat en återställningslänk till {{email}}. Länken går ut om 15 minuter.",
+        "sentHint": "Fick du inget mejl? Kolla skräpposten.",
+        "errorToast": "Det gick inte att behandla förfrågan"
+      },
+      "errors": {
+        "emailInvalid": "Ange en giltig e-postadress",
+        "passwordMin6": "Lösenordet måste vara minst 6 tecken",
+        "passwordMin8": "Lösenordet måste vara minst 8 tecken",
+        "nameMin2": "Namnet måste vara minst 2 tecken",
+        "roleRequired": "Välj en roll",
+        "termsRequired": "Du måste godkänna villkoren",
+        "passwordsMismatch": "Lösenorden matchar inte"
+      }
+    },
+    "about": {
+      "eyebrow": "Vår historia",
+      "title": "Om SmartAdDeals",
+      "subtitle": "Vi bygger framtidens intelligenta annonsering – där varumärken möter engagerade målgrupper och användare får verkligt värde för sin uppmärksamhet.",
+      "missionTitle": "Vårt uppdrag",
+      "missionP1": "SmartAdDeals föddes ur en enkel idé: annonsering behöver inte vara påträngande, och uppmärksamhet har ett verkligt värde. Vi skapade en tvåsidig plattform som ger annonsörer AI-driven kampanjhantering och samtidigt belönar användare som väljer att engagera sig i innehåll de tycker om.",
+      "missionP2": "Vår plattform kombinerar avancerad analys – geografiska värmekartor, attribution över enheter, avvikelsedetektering och konkurrensjämförelser – med en unik Ad Journey Storyteller som förvandlar rådata till engagerande kampanjberättelser.",
+      "sloganLine1": "Bättre annonser.",
+      "sloganLine2": "Bättre belöningar.",
+      "sloganLine3": "Bättre värld.",
+      "stats": {
+        "campaigns": "Aktiva kampanjer",
+        "adsDaily": "Annonser levererade per dag",
+        "countries": "Länder vi når",
+        "uptime": "Plattformens drifttid"
+      },
+      "valuesTitle": "Våra värderingar",
+      "valuesSubtitle": "Principerna som styr allt vi bygger.",
+      "values": {
+        "precision": {
+          "title": "Precision",
+          "desc": "Varje annons når rätt målgrupp genom intelligent målgruppsstyrning och AI-driven optimering."
+        },
+        "transparency": {
+          "title": "Transparens",
+          "desc": "Fullständiga spårloggar, ärlig analys och inga dolda avgifter. Det du ser är det du får."
+        },
+        "innovation": {
+          "title": "Innovation",
+          "desc": "Från Ad Journey Storyteller till avvikelsedetektering i realtid – vi flyttar gränserna inom adtech."
+        },
+        "community": {
+          "title": "Gemenskap",
+          "desc": "Vi tror att användare förtjänar värde för sin uppmärksamhet. Vårt belöningssystem gör annonsering till en tvåvägsrelation."
+        },
+        "trust": {
+          "title": "Förtroende",
+          "desc": "Vi skyddar annonsörernas data och användarnas integritet med säkerhet och efterlevnad på företagsnivå."
+        },
+        "creativity": {
+          "title": "Kreativitet",
+          "desc": "Vår AI Creative Generator hjälper varumärken att producera slagkraftiga annonsvarianter i stor skala."
+        }
+      },
+      "journeyTitle": "Vår resa",
+      "journeySubtitle": "Från en idé till en global plattform.",
+      "milestones": {
+        "beginning": {
+          "title": "Början",
+          "desc": "SmartAdDeals grundades med uppdraget att göra annonsering givande för alla."
+        },
+        "beta": {
+          "title": "Betalansering",
+          "desc": "De första 1 000 annonsörerna kom ombord. AI-optimeringsmotorn gick live."
+        },
+        "global": {
+          "title": "Global expansion",
+          "desc": "Expanderade till över 50 länder. Attribution över enheter lanserades."
+        },
+        "creative": {
+          "title": "AI Creative Suite",
+          "desc": "Introducerade AI-driven generering av kreativt material och verktyg för A/B-tester."
+        },
+        "scale": {
+          "title": "Över 2 miljoner visningar per dag",
+          "desc": "Nådde 2,3 miljoner annonsvisningar per dag i över 150 länder."
+        }
+      },
+      "teamTitle": "Ledningsgrupp",
+      "teamSubtitle": "Människorna som bygger framtidens annonsering.",
+      "roles": {
+        "ceo": "Vd och medgrundare",
+        "cto": "CTO och medgrundare",
+        "vpEng": "Utvecklingschef",
+        "headProduct": "Produktchef",
+        "headAi": "Chef för AI/ML",
+        "headDesign": "Designchef"
+      },
+      "ctaTitle": "Gå med i SmartAdDeals-gemenskapen",
+      "ctaDesc": "Oavsett om du är annonsör som vill ha smartare kampanjer eller användare som vill tjäna på annonser – vi har det du behöver.",
+      "ctaPrimary": "Kom igång gratis"
+    },
+    "careers": {
+      "title": "Jobba hos oss",
+      "subtitle": "Hjälp oss bygga framtidens adtech. Vi skapar en plattform där annonsering är transparent, givande och driven av AI.",
+      "perksTitle": "Varför SmartAdDeals?",
+      "perks": {
+        "remote": {
+          "title": "Distansarbete först",
+          "desc": "Jobba var som helst i världen. Vi tror inte att stor talang begränsas av geografi."
+        },
+        "equity": {
+          "title": "Konkurrenskraftigt aktieprogram",
+          "desc": "Alla heltidsanställda får en meningsfull andel i bolaget och delar därmed den framgång de bidrar till."
+        },
+        "learning": {
+          "title": "Utbildningsbudget",
+          "desc": "2 000 dollar per år till kurser, konferenser, böcker eller annan utveckling."
+        },
+        "flexible": {
+          "title": "Flexibla arbetstider",
+          "desc": "Vi bryr oss om resultat, inte loggade timmar. Lägg upp din dag efter ditt liv."
+        }
+      },
+      "openPositions": "Lediga tjänster",
+      "locations": {
+        "remote": "Distans",
+        "newYork": "New York",
+        "london": "London"
+      },
+      "noRoleTitle": "Hittar du inte din roll?",
+      "noRoleDesc": "Vi letar alltid efter duktiga människor. Skicka ditt cv och berätta hur du skulle bidra till SmartAdDeals."
+    },
+    "partners": {
+      "eyebrow": "Annonsörer och kreatörer",
+      "title": "Våra partner",
+      "subtitle": "Upptäck varumärkena och kreatörerna bakom kampanjerna på SmartAdDeals. Bläddra bland deras profiler för att se vad de annonserar.",
+      "rewards": "Belöningar",
+      "viewProfile": "Visa profil"
+    },
+    "contact": {
+      "eyebrow": "Kontakt",
+      "title": "Vi hör gärna från dig",
+      "subtitle": "Har du en fråga, feedback eller ett samarbetsförslag? Välj en kanal nedan eller skicka ett meddelande direkt.",
+      "channels": {
+        "email": "Mejla oss",
+        "phone": "Ring oss",
+        "visit": "Besök oss",
+        "chat": "Livechatt",
+        "chatValue": "Tillgänglig i appen för registrerade användare",
+        "help": "Hjälpcenter",
+        "helpValue": "Bläddra bland svar på vanliga frågor",
+        "community": "Gemenskap",
+        "communityValue": "Gå med i SmartAdDeals-gemenskapen"
+      },
+      "formTitle": "Skicka ett meddelande",
+      "formSubtitle": "Fyll i formuläret så svarar vi så snart vi kan.",
+      "namePlaceholder": "Ditt namn",
+      "emailPlaceholder": "du@exempel.se",
+      "topicPlaceholder": "Välj ett ämne",
+      "messageLabel": "Meddelande",
+      "messagePlaceholder": "Hur kan vi hjälpa dig?",
+      "submit": "Skicka meddelande",
+      "disclaimer": "Genom att skicka godkänner du vår integritetspolicy och våra användarvillkor.",
+      "sentTitle": "Meddelandet har skickats!",
+      "sentBody": "Tack för att du hörde av dig. Vi har tagit emot ditt meddelande och återkommer inom kort.",
+      "sendAnother": "Skicka ett meddelande till",
+      "topics": {
+        "general": "Allmän fråga",
+        "sales": "Säljdemo",
+        "support": "Teknisk support",
+        "partners": "Samarbeten",
+        "feedback": "Feedback"
+      },
+      "hoursTitle": "Öppettider",
+      "weekdays": "Måndag – fredag",
+      "saturday": "Lördag",
+      "sunday": "Söndag",
+      "closed": "Stängt",
+      "faqTitle": "Vanliga frågor"
+    },
+    "support": {
+      "title": "Supportcenter",
+      "subtitle": "Hitta ett snabbt svar nedan, eller skicka ett meddelande till rätt team.",
+      "faqTitle": "Vanliga frågor",
+      "desksTitle": "Vem kan hjälpa till?",
+      "desks": {
+        "general": {
+          "label": "Kontakta supporten",
+          "blurb": "Allmänna frågor om ditt konto."
+        },
+        "problem": {
+          "label": "Rapportera ett problem",
+          "blurb": "Något är trasigt eller en belöning ser fel ut."
+        },
+        "fraud": {
+          "label": "Anmäl bedrägeri eller missbruk",
+          "blurb": "Misstänkta handlare, bluffar eller missbruk."
+        },
+        "campaign": {
+          "label": "Kampanjhjälp",
+          "blurb": "Hjälp att driva eller optimera en kampanj."
+        },
+        "merchant": {
+          "label": "Handlarsupport",
+          "blurb": "Inlösen, filialer och QR-skanning."
+        },
+        "billing": {
+          "label": "Fakturering",
+          "blurb": "Budgetar, påfyllningar och fakturor."
+        }
+      },
+      "nameLabel": "Ditt namn",
+      "namePlaceholder": "Anna Andersson",
+      "emailLabel": "E-post",
+      "emailPlaceholder": "du@exempel.se",
+      "emailHint": "Vi svarar hit.",
+      "subjectLabel": "Ämne",
+      "subjectPlaceholder": "Kort — vad gäller det?",
+      "messageLabel": "Meddelande",
+      "messagePlaceholderIncident": "Ange kvittonummer, handlare och datum om du har dem.",
+      "messagePlaceholder": "Berätta lite mer...",
+      "submit": "Skicka till {{desk}}"
+    },
+    "blog": {
+      "title": "SmartAdDeals-bloggen",
+      "subtitle": "Insikter, nyheter och berättelser från den intelligenta annonseringens värld.",
+      "allPosts": "Alla inlägg",
+      "noResults": "Inga inlägg hittades i den här kategorin.",
+      "readMore": "Läs hela artikeln",
+      "readTime": "min läsning",
+      "category": {
+        "trends": "Adtech-trender",
+        "updates": "Plattformsnyheter",
+        "cases": "Fallstudier",
+        "guides": "Tips och guider"
+      }
+    },
+    "notFound": {
+      "eyebrow": "404-fel",
+      "title": "Sidan hittades inte",
+      "body": "Tyvärr, vi kunde inte hitta sidan du letar efter. Den kan ha flyttats, bytt namn eller aldrig ha funnits."
+    },
+    "footer": {
+      "blurb": "Den intelligenta annonsplattformen som kopplar samman varumärken med engagerade målgrupper. Bläddra bland utvalda annonser och tjäna riktiga belöningar för din uppmärksamhet.",
+      "platform": {
+        "title": "Plattform",
+        "browseAds": "Bläddra bland annonser",
+        "partners": "Partner",
+        "forAdvertisers": "För annonsörer",
+        "earnRewards": "Tjäna belöningar",
+        "blog": "Blogg"
+      },
+      "company": {
+        "title": "Företaget",
+        "about": "Om oss",
+        "careers": "Jobb",
+        "blog": "Blogg",
+        "contact": "Kontakt"
+      },
+      "legal": {
+        "title": "Juridik"
+      },
+      "copyright": "© 2026 SmartAdDeals. Med ensamrätt.",
+      "links": {
+        "privacy": "Integritetspolicy",
+        "terms": "Användarvillkor",
+        "cookies": "Cookiepolicy"
+      }
+    },
+    "dashboard": {
+      "common": {
+        "selectCampaign": "Välj en kampanj",
+        "selectCampaignTitle": "Välj en kampanj",
+        "loading": "Laddar…",
+        "saving": "Sparar...",
+        "retry": "Försök igen",
+        "cancel": "Avbryt",
+        "save": "Spara",
+        "back": "Tillbaka",
+        "next": "Nästa",
+        "previous": "Föregående",
+        "viewAll": "Visa alla",
+        "email": "E-post",
+        "status": "Status",
+        "budget": "Budget",
+        "industry": "Bransch",
+        "actions": "Åtgärder",
+        "campaign": "Kampanj",
+        "name": "Namn",
+        "date": "Datum",
+        "amount": "Belopp",
+        "role": "Roll",
+        "description": "Beskrivning",
+        "apply": "Tillämpa",
+        "dismiss": "Avfärda",
+        "approve": "Godkänn",
+        "reject": "Avslå",
+        "remove": "Ta bort",
+        "exportPdf": "Exportera PDF",
+        "exportCsv": "Exportera CSV",
+        "exportHtml": "Exportera HTML"
+      },
+      "nav": {
+        "overview": "Översikt",
+        "campaigns": "Kampanjer",
+        "analytics": "Analys",
+        "workspace": "Arbetsyta",
+        "admin": "Administration",
+        "dashboard": "Översikt",
+        "aiOptimization": "AI-optimering",
+        "anomalies": "Avvikelser",
+        "heatmaps": "Värmekartor",
+        "benchmarking": "Jämförelser",
+        "storyteller": "Storyteller",
+        "messages": "Meddelanden",
+        "merchant": "Handlarresultat",
+        "outlets": "Filialer",
+        "team": "Team",
+        "adAccounts": "Annonskonton",
+        "profile": "Min profil",
+        "settings": "Inställningar",
+        "advertiserApprovals": "Godkännande av annonsörer",
+        "reviewModeration": "Moderering av omdömen",
+        "loyaltyVip": "Lojalitet och VIP",
+        "workspaceLabel": "Arbetsyta",
+        "logOut": "Logga ut",
+        "expand": "Expandera",
+        "collapse": "Fäll ihop",
+        "openMenu": "Öppna menyn"
+      },
+      "home": {
+        "title": "Översikt",
+        "subtitle": "Överblick över dina annonsresultat",
+        "newCampaign": "Ny kampanj",
+        "loadError": "Det gick inte att läsa in nyckeltalen. Försök igen senare.",
+        "emptyTitle": "Inga kampanjer ännu",
+        "emptyDesc": "Börja med att skapa din första kampanj för att se resultat och insikter här.",
+        "chartTitle": "Resultat (senaste 30 dagarna)",
+        "chartSubtitle": "Visningar, klick och konverteringar över tid",
+        "noSeriesTitle": "Ingen tidsseriedata",
+        "noSeriesDesc": "Resultatdata visas här när dina kampanjer börjar köra och samla in händelser.",
+        "recentTitle": "Senaste kampanjerna",
+        "recentEmptyTitle": "Inga kampanjer ännu",
+        "recentEmptyDesc": "Skapa din första kampanj för att komma igång.",
+        "campaignsError": "Det gick inte att läsa in kampanjerna.",
+        "quickActions": "Snabbåtgärder",
+        "actions": {
+          "createCampaign": "Skapa kampanj",
+          "createCampaignDesc": "Starta en ny annonskampanj",
+          "viewAnalytics": "Visa analys",
+          "viewAnalyticsDesc": "Fördjupa dig i resultaten",
+          "checkAnomalies": "Kontrollera avvikelser",
+          "checkAnomaliesDesc": "Bevaka kampanjhälsan",
+          "aiInsights": "AI-insikter",
+          "aiInsightsDesc": "Granska AI-rekommendationer"
+        }
+      },
+      "metrics": {
+        "impressions": "Visningar",
+        "clicks": "Klick",
+        "conversions": "Konverteringar",
+        "ctr": "CTR",
+        "cpc": "CPC",
+        "cpa": "CPA",
+        "totalSpend": "Total kostnad",
+        "bounceRate": "Avvisningsfrekvens",
+        "convRate": "Konv.grad",
+        "revenue": "Intäkter",
+        "purchases": "Köp",
+        "profit": "Vinst",
+        "customersAcquired": "Nya kunder",
+        "discountsIssued": "Utfärdade rabatter",
+        "budgetRemaining": "Återstående budget",
+        "roas": "ROAS",
+        "roi": "ROI"
+      },
+      "status": {
+        "draft": "Utkast",
+        "active": "Aktiv",
+        "paused": "Pausad",
+        "completed": "Avslutad",
+        "archived": "Arkiverad",
+        "pending": "Väntande",
+        "approved": "Godkänd",
+        "rejected": "Avslagen",
+        "resolved": "Åtgärdad"
+      },
+      "campaigns": {
+        "title": "Kampanjer",
+        "subtitle": "Hantera och bevaka dina annonskampanjer",
+        "create": "Skapa kampanj",
+        "total": "Totalt antal kampanjer",
+        "searchPlaceholder": "Sök kampanjer...",
+        "allStatuses": "Alla statusar",
+        "allIndustries": "Alla branscher",
+        "empty": "Inga kampanjer hittades",
+        "loadError": "Det gick inte att läsa in kampanjerna",
+        "loadErrorHint": "Försök igen senare.",
+        "start": "Start",
+        "view": "Visa",
+        "edit": "Redigera",
+        "clone": "Duplicera",
+        "delete": "Ta bort",
+        "itemsPerPage": "Rader per sida:",
+        "prev": "Föreg.",
+        "next": "Nästa",
+        "deleted": "Kampanjen har tagits bort",
+        "deleteFailed": "Det gick inte att ta bort kampanjen",
+        "cloneFailed": "Det gick inte att duplicera kampanjen"
+      },
+      "campaignCreate": {
+        "title": "Skapa kampanj",
+        "subtitle": "Sätt upp en ny annonskampanj",
+        "stepDetails": "Kampanjuppgifter",
+        "stepBudget": "Budget och målgrupp",
+        "name": "Kampanjnamn",
+        "namePlaceholder": "Ange kampanjnamn",
+        "descPlaceholder": "Beskriv kampanjens mål...",
+        "selectIndustry": "Välj en bransch",
+        "startDate": "Startdatum",
+        "endDate": "Slutdatum",
+        "budget": "Budget ($)",
+        "rewardValue": "Belöningsvärde ($)",
+        "discountShared": "Delad rabatt (%)",
+        "discountSharedHint": "Andel av kundens köp som ges tillbaka som rabatt vid inlösen.",
+        "rewardEconomics": "Belöningsekonomi",
+        "rewardEconomicsHint": "Hur stor del av din rabatt som delas med konsumenterna som token, och hur många token varje interaktion ger. Kampanjen pausas automatiskt när tokenpotten är slut.",
+        "consumerShare": "Delas med konsumenter (%)",
+        "consumerShareHint": "Den del av rabatten som ges tillbaka som belöningstoken.",
+        "maxTokens": "Max antal token (0 = obegränsat)",
+        "maxTokensHint": "Totalt antal belöningstoken kampanjen får dela ut.",
+        "perView": "Token per visning",
+        "perClick": "Token per klick",
+        "perReview": "Token per omdöme",
+        "perPhoto": "Token per foto",
+        "business": "Företag och kontakt",
+        "businessHint": "Visas på kampanjens annonser så att kunderna kan hitta och nå dig.",
+        "location": "Plats",
+        "contactPhone": "Telefon",
+        "contactEmail": "E-post",
+        "website": "Webbplats",
+        "businessCategory": "Företagskategori",
+        "openingHours": "Öppettider",
+        "logoUrl": "URL till företagslogotyp",
+        "logoHint": "Visas på dina annonser; annars används din profilbild.",
+        "ageRange": "Åldersintervall",
+        "min": "Minimum",
+        "max": "Maximum",
+        "regions": "Målregioner",
+        "devices": "Målenheter",
+        "languages": "Språk",
+        "localizedTargeting": "Aktivera lokal målgruppsstyrning",
+        "localizedTargetingHint": "Rikta dig till användare utifrån exakta platsdata",
+        "minBudget": "Minst 500 $ i budget",
+        "uploadFiles": "Ladda upp filer",
+        "aiGenerator": "AI-generator",
+        "bothOptions": "Båda alternativen",
+        "dropFiles": "Släpp filer här eller klicka för att ladda upp",
+        "dropFilesHint": "Stöder bilder (PNG, JPG) och video (MP4, MOV)",
+        "ageRestricted": "Åldersbegränsat innehåll",
+        "ageRestrictedHint": "Tittarna måste verifiera sin ålder innan de kan se annonsen",
+        "enableAi": "Aktivera AI-optimering",
+        "enableAiHint": "Låt vår AI optimera kampanjen automatiskt för bättre resultat. Tillgängligt efter 48 timmars körtid.",
+        "saveDraft": "Spara som utkast",
+        "verifyToLaunch": "Verifiera kontot för att starta",
+        "launch": "Starta kampanjen",
+        "onboardingToast": "Slutför introduktionen för att kunna starta kampanjer.",
+        "createdToast": "Kampanjen har skapats!",
+        "createFailedToast": "Det gick inte att skapa kampanjen",
+        "draftToast": "Kampanjen sparades som utkast",
+        "draftFailedToast": "Det gick inte att spara utkastet"
+      },
+      "campaignEdit": {
+        "title": "Redigera kampanj",
+        "subtitle": "Uppdatera kampanjuppgifterna",
+        "backToCampaign": "Tillbaka till kampanjen",
+        "notFound": "Kampanjen hittades inte",
+        "backToCampaigns": "Tillbaka till kampanjer",
+        "basicInfo": "Grunduppgifter",
+        "namePlaceholder": "t.ex. Sommarrea 2026",
+        "descPlaceholder": "Beskriv din kampanj...",
+        "totalBudget": "Total budget ($)",
+        "logoHint": "Annars används din profilbild.",
+        "consumerShareHint": "Den del av rabatten som ges tillbaka som token.",
+        "economicsHint": "Kampanjen pausas automatiskt när tokenpotten är slut – fyll på den från kampanjsidan.",
+        "targetingHint": "Justera målgruppen för att nå andra användare",
+        "reviewChanges": "Granska ändringar",
+        "devices": "Enheter",
+        "regions": "Regioner",
+        "saveChanges": "Spara ändringar",
+        "updatedToast": "Kampanjen har uppdaterats",
+        "updateFailedToast": "Det gick inte att uppdatera kampanjen"
+      },
+      "campaignDetail": {
+        "notFound": "Kampanjen hittades inte",
+        "notFoundDesc": "Kampanjen kunde inte läsas in.",
+        "backToCampaigns": "Tillbaka till kampanjer",
+        "tabs": {
+          "overview": "Översikt",
+          "analytics": "Analys",
+          "creatives": "Annonsmaterial",
+          "heatmap": "Värmekarta",
+          "ai": "AI-insikter",
+          "team": "Team"
+        },
+        "noMetricsTitle": "Inga nyckeltal ännu",
+        "noMetricsDesc": "Kampanjens nyckeltal visas här när händelser börjar spåras och data samlas in.",
+        "perfTitle": "Resultat över tid",
+        "noPerfTitle": "Ingen resultatdata",
+        "noPerfDesc": "Resultattrender visas här när kampanjen börjar få visningar och klick.",
+        "info": "Kampanjinformation",
+        "budgetProgress": "Budgetförbrukning",
+        "rewardValue": "Belöningsvärde",
+        "toggleAi": "Slå på/av AI-optimering",
+        "toggleAiFailed": "Det gick inte att uppdatera AI-optimeringen",
+        "analyticsTitle": "Detaljerad analys",
+        "analyticsSubtitle": "Se fullständig analys på analyssidan",
+        "analyticsBody": "Detaljerad kampanjanalys finns på den dedikerade analyssidan med avancerad filtrering och exportalternativ.",
+        "goAnalytics": "Gå till analys",
+        "heatmapTitle": "Geografisk värmekarta",
+        "heatmapSubtitle": "Se engagemangets värmekarta på värmekartsidan",
+        "heatmapBody": "Geografisk engagemangsdata finns på den dedikerade värmekartsidan.",
+        "goHeatmaps": "Gå till värmekartor",
+        "aiTitle": "AI-optimering",
+        "aiSubtitle": "Se AI-rekommendationer på AI-optimeringssidan",
+        "aiBody": "AI-drivna rekommendationer och spårloggar finns på den dedikerade AI-optimeringssidan.",
+        "goAi": "Gå till AI-optimering",
+        "teamSubtitle": "Hantera teamet på teamsidan",
+        "teamBody": "Teamhantering finns på den dedikerade teamsidan.",
+        "goTeam": "Gå till teamet"
+      },
+      "analytics": {
+        "title": "Analys",
+        "subtitle": "Fördjupa dig i dina annonsresultat",
+        "selectPrompt": "Välj en kampanj ovan för att se dess analys.",
+        "loadError": "Det gick inte att läsa in analysdata. Försök igen senare.",
+        "seriesTitle": "Resultat över tid",
+        "seriesSubtitle": "Visningar, klick och konverteringar",
+        "noSeriesTitle": "Ingen tidsseriedata",
+        "noSeriesDesc": "Resultattrender visas här allteftersom dina kampanjer körs och samlar in händelser.",
+        "funnelTitle": "Konverteringstratt",
+        "noFunnelTitle": "Ingen trattdata",
+        "noFunnelDesc": "Din konverteringstratt visas här när kampanjerna samlat in konverteringsdata.",
+        "devicesTitle": "Fördelning per enhet",
+        "noDevicesTitle": "Ingen enhetsdata",
+        "noDevicesDesc": "Fördelningen per enhet visas här när du fått kampanjvisningar från olika enheter."
+      },
+      "ai": {
+        "title": "AI-optimering",
+        "subtitle": "AI-drivna rekommendationer för kampanjresultat",
+        "selectPrompt": "Välj en kampanj ovan för att se AI-rekommendationer.",
+        "loadError": "Det gick inte att läsa in AI-rekommendationerna. Försök igen senare.",
+        "mode": "AI-läge",
+        "autoAdjust": "Justera automatiskt",
+        "recommendationOnly": "Endast rekommendationer",
+        "recommendations": "Rekommendationer",
+        "allCaughtUp": "Allt är avklarat",
+        "noPending": "Inga väntande AI-rekommendationer för den här kampanjen.",
+        "auditTitle": "AI-spårlogg",
+        "auditSubtitle": "Historik över AI-drivna ändringar",
+        "auditEmpty": "Inga AI-ändringar ännu",
+        "auditEmptyDesc": "När AI-rekommendationer tillämpas visas en versionshistorik över alla ändringar här.",
+        "modeUpdated": "AI-läget har uppdaterats",
+        "modeFailed": "Det gick inte att uppdatera AI-läget",
+        "applied": "Rekommendationen har tillämpats",
+        "applyFailed": "Det gick inte att tillämpa rekommendationen",
+        "dismissed": "Rekommendationen har avfärdats",
+        "dismissFailed": "Det gick inte att avfärda rekommendationen"
+      },
+      "anomalies": {
+        "title": "Avvikelsedetektering",
+        "subtitle": "Bevaka och åtgärda avvikelser i kampanjerna",
+        "selectPrompt": "Välj en kampanj ovan för att se dess avvikelser.",
+        "loadError": "Det gick inte att läsa in avvikelserna. Försök igen senare.",
+        "total": "Totalt antal avvikelser",
+        "highCritical": "Hög / kritisk",
+        "autoPaused": "Autopausade",
+        "activeTitle": "Aktiva avvikelser",
+        "allClear": "Allt är lugnt",
+        "allClearDesc": "Inga avvikelser upptäckta för den här kampanjen.",
+        "resolve": "Åtgärda",
+        "resolvedToast": "Avvikelsen är åtgärdad",
+        "resolveFailed": "Det gick inte att åtgärda avvikelsen",
+        "severity": {
+          "low": "LÅG",
+          "medium": "MEDEL",
+          "high": "HÖG",
+          "critical": "KRITISK"
+        }
+      },
+      "heatmap": {
+        "title": "Värmekartor",
+        "subtitle": "Visualisering av geografiskt engagemang",
+        "selectPrompt": "Välj en kampanj ovan för att se dess geografiska värmekarta.",
+        "loadError": "Det gick inte att läsa in värmekartan. Försök igen senare.",
+        "totalViews": "Totalt antal visningar",
+        "activeRegions": "Aktiva regioner",
+        "avgCtr": "Snitt-CTR",
+        "aggregation": "Aggregering",
+        "city": "Stad",
+        "country": "Land",
+        "summary": "Sammanfattning",
+        "topRegions": "Toppregioner",
+        "avgCtrByRegion": "Snitt-CTR per region",
+        "noRegionTitle": "Ingen regiondata",
+        "noRegionDesc": "Geografisk data visas när kampanjen når 100+ visningar fördelat över regioner."
+      },
+      "benchmarking": {
+        "title": "Jämförelser",
+        "subtitle": "Jämför dina resultat mot branschgenomsnittet",
+        "selectPrompt": "Välj en kampanj ovan för att se dess jämförelser.",
+        "loadError": "Det gick inte att läsa in jämförelsedata. Försök igen senare.",
+        "advertisersInIndustry": "Annonsörer i branschen",
+        "comparisons": "Jämförelser",
+        "aboveAverage": "Över genomsnittet",
+        "insufficient": "Otillräckliga data",
+        "noDataTitle": "Ingen jämförelsedata",
+        "noDataDesc": "Jämförelser kräver minst 3 annonsörskampanjer med liknande data. Fler annonsörer låser upp konkurrensinsikter.",
+        "yoursVsIndustry": "Dina nyckeltal mot branschgenomsnittet"
+      },
+      "storyteller": {
+        "title": "Ad Journey Storyteller",
+        "subtitle": "Berättelsen om din kampanjs resa",
+        "selectPrompt": "Välj en kampanj ovan för att se dess berättelse.",
+        "loadError": "Det gick inte att läsa in berättelsen. Försök igen senare.",
+        "chapters": "Kapitel",
+        "keyInsights": "Viktigaste insikterna",
+        "recommendations": "Rekommendationer",
+        "campaignAge": "Kampanjens ålder",
+        "noStoryTitle": "Ingen berättelse ännu",
+        "noStoryDesc": "Skapa en AI-driven berättelse om kampanjens resultat. Berättelser skapas när kampanjerna samlat in tillräckligt med resultatdata.",
+        "preliminaryTitle": "Preliminära insikter",
+        "preliminaryDesc": "Din kampanj är yngre än 24 timmar. Fullständiga kapitel blir tillgängliga när mer data samlats in. Så här ser det ut hittills...",
+        "exportingPdf": "Exporterar PDF...",
+        "exportingHtml": "Exporterar HTML..."
+      },
+      "team": {
+        "title": "Teamhantering",
+        "subtitle": "Hantera teammedlemmar och deras behörigheter",
+        "selectPrompt": "Välj en kampanj ovan för att hantera dess team.",
+        "loadError": "Det gick inte att läsa in teamdata. Försök igen senare.",
+        "members": "Teammedlemmar",
+        "admins": "Administratörer",
+        "editors": "Redaktörer",
+        "inviteTitle": "Bjud in teammedlem",
+        "emailLabel": "E-postadress",
+        "emailPlaceholder": "kollega@företag.se",
+        "sendInvite": "Skicka inbjudan",
+        "currentTeam": "Nuvarande team",
+        "noMembers": "Inga teammedlemmar",
+        "noMembersDesc": "Bjud in teammedlemmar för att samarbeta kring den här kampanjen.",
+        "member": "Medlem",
+        "joined": "Gick med",
+        "auditTitle": "Spårlogg",
+        "auditEmpty": "Ingen aktivitet ännu",
+        "auditEmptyDesc": "Ändringar av kampanjer, roller och inställningar visas här när de sker.",
+        "action": "Åtgärd",
+        "oldValue": "Tidigare värde",
+        "newValue": "Nytt värde",
+        "when": "När",
+        "roles": {
+          "viewer": "Läsare",
+          "editor": "Redaktör",
+          "admin": "Administratör"
+        },
+        "inviteSent": "Inbjudan skickad!",
+        "inviteFailed": "Det gick inte att skicka inbjudan",
+        "memberRemoved": "Medlemmen har tagits bort",
+        "removeFailed": "Det gick inte att ta bort medlemmen",
+        "roleUpdated": "Rollen har uppdaterats",
+        "roleFailed": "Det gick inte att uppdatera rollen"
+      },
+      "merchant": {
+        "title": "Handlarresultat",
+        "subtitle": "Affärsvärdet SmartAdDeals har skapat för dina filialer.",
+        "emptyTitle": "Inga inlösen ännu",
+        "emptyDesc": "När kunder löser in token i dina filialer visas deras besök, köp och nöjdhet här.",
+        "visits": "Kundbesök",
+        "redemptions": "QR-inlösen",
+        "revenue": "Genererade intäkter",
+        "customers": "Unika kunder",
+        "discountsGiven": "Givna rabatter",
+        "discountsRedeemed": "Inlösta rabatter",
+        "avgSpend": "Snittköp per kund",
+        "avgDiscount": "Snittrabatt per kund",
+        "repeatRate": "Andel återkommande kunder",
+        "satisfaction": "Nöjdhet ({{count}} omdömen)"
+      },
+      "outlets": {
+        "title": "Filialer och butiker",
+        "yourOutlets": "Dina filialer",
+        "emptyTitle": "Inga filialer ännu",
+        "emptyDesc": "Lägg till din första filial så att kunderna kan ange var de handlade.",
+        "name": "Filialens namn",
+        "namePlaceholder": "Filial Söder",
+        "city": "Stad",
+        "cityPlaceholder": "Stockholm",
+        "address": "Adress",
+        "addressPlaceholder": "Storgatan 12",
+        "phone": "Telefon",
+        "phonePlaceholder": "+46 70 000 00 00",
+        "hours": "Öppettider",
+        "hoursPlaceholder": "Mån–lör 9–19",
+        "nameRequired": "Filialens namn krävs",
+        "updated": "Filialen har uppdaterats",
+        "added": "Filialen har lagts till",
+        "saveFailed": "Det gick inte att spara filialen",
+        "removed": "Filialen har tagits bort",
+        "removeFailed": "Det gick inte att ta bort filialen"
+      },
+      "platformAccounts": {
+        "title": "Plattformskonton",
+        "subtitle": "Anslut dina annonsplattformskonton för att synka nyckeltal",
+        "loadError": "Det gick inte att läsa in plattformskontona.",
+        "connected": "Anslutna",
+        "syncErrors": "Synkfel",
+        "connectedAccounts": "Anslutna konton",
+        "availablePlatforms": "Tillgängliga plattformar",
+        "connectNew": "Anslut ny plattform",
+        "disconnect": "Koppla från",
+        "howItWorks": "Så fungerar det",
+        "how1": "Klicka på \"Anslut\" hos en plattform för att ge åtkomst till ditt konto",
+        "how2": "Dina åtkomsttoken krypteras och lagras säkert",
+        "how3": "Nyckeltal synkas automatiskt utifrån den frekvens du valt",
+        "how4": "Använd knappen \"Testa\" för att verifiera anslutningen när som helst",
+        "disconnected": "Plattformskontot har kopplats från",
+        "disconnectFailed": "Det gick inte att koppla från kontot",
+        "verified": "Anslutningen är verifierad",
+        "verifyFailed": "Anslutningen misslyckades"
+      },
+      "profile": {
+        "title": "Min profil",
+        "subtitle": "Hantera ditt konto, följ annonser du sett och styr dina belöningar.",
+        "edit": "Redigera profil",
+        "tabs": {
+          "overview": "Översikt",
+          "rewards": "Belöningar och historik",
+          "settings": "Inställningar",
+          "security": "Säkerhet"
+        },
+        "adsViewed": "Sedda annonser",
+        "totalEarned": "Totalt intjänat",
+        "balance": "Saldo",
+        "pending": "Väntande",
+        "activityTitle": "Senaste aktivitet",
+        "activitySubtitle": "Dina senaste annonsvisningar, belöningar och kontoändringar",
+        "activityEmpty": "Ingen aktivitet ännu",
+        "activityEmptyDesc": "Dina annonsvisningar, belöningar och kontoändringar visas här.",
+        "loadingActivity": "Laddar aktivitet...",
+        "browseAds": "Bläddra bland annonser",
+        "quickActions": "Snabbåtgärder",
+        "quickActionsSubtitle": "Genvägar till vanliga uppgifter",
+        "viewRewardHistory": "Visa belöningshistorik",
+        "editPreferences": "Redigera inställningar",
+        "logOut": "Logga ut",
+        "rewardsTitle": "Belöningshistorik",
+        "rewardsSubtitle": "Alla belöningar du tjänat på att se annonser",
+        "rewardsEmpty": "Inga belöningar ännu",
+        "rewardsEmptyDesc": "Börja bläddra bland annonser för att tjäna din första belöning. Varje visning räknas.",
+        "loadingRewards": "Laddar belöningar...",
+        "infoTitle": "Profiluppgifter",
+        "infoSubtitle": "Uppdatera ditt namn och din profilbild",
+        "fullName": "Fullständigt namn",
+        "avatarUrl": "URL till profilbild",
+        "preferencesTitle": "Inställningar",
+        "preferencesSubtitle": "Anpassa din upplevelse",
+        "theme": "Tema",
+        "language": "Språk",
+        "emailNotifications": "E-postaviseringar",
+        "savePreferences": "Spara inställningar",
+        "passwordTitle": "Byt lösenord",
+        "passwordSubtitle": "Uppdatera lösenordet för att hålla kontot säkert",
+        "currentPassword": "Nuvarande lösenord",
+        "newPassword": "Nytt lösenord",
+        "confirmNewPassword": "Bekräfta nytt lösenord",
+        "updating": "Uppdaterar...",
+        "sessionTitle": "Session",
+        "sessionSubtitle": "Logga ut från ditt konto på den här enheten",
+        "sessionBody": "Om du loggar ut avslutas din session och du måste logga in igen.",
+        "updated": "Profilen har uppdaterats",
+        "updateFailed": "Det gick inte att uppdatera profilen",
+        "passwordsMismatch": "Lösenorden matchar inte",
+        "passwordMin8": "Lösenordet måste vara minst 8 tecken",
+        "passwordChanged": "Lösenordet har ändrats",
+        "passwordFailed": "Det gick inte att ändra lösenordet. Kontrollera ditt nuvarande lösenord."
+      },
+      "settings": {
+        "title": "Inställningar",
+        "subtitle": "Hantera ditt konto, dina inställningar och din säkerhet",
+        "tabs": {
+          "profile": "Profil",
+          "preferences": "Inställningar",
+          "notifications": "Aviseringar",
+          "security": "Säkerhet"
+        },
+        "infoTitle": "Profiluppgifter",
+        "infoSubtitle": "Uppdatera dina personuppgifter",
+        "fullName": "Fullständigt namn",
+        "emailImmutable": "E-postadressen kan inte ändras",
+        "appearanceTitle": "Utseende",
+        "appearanceSubtitle": "Anpassa hur SmartAdDeals ser ut",
+        "theme": "Tema",
+        "animations": "Aktivera animationer",
+        "animationsHint": "Mjuka övergångar och mikrointeraktioner",
+        "compactNumbers": "Kompakta tal",
+        "compactNumbersHint": "Visa 1,2 tn i stället för 1 200",
+        "regionalTitle": "Regionala inställningar",
+        "regionalSubtitle": "Ställ in språkområde och format",
+        "language": "Språk",
+        "timezone": "Tidszon",
+        "currency": "Valuta",
+        "dateFormat": "Datumformat",
+        "dashboardTitle": "Översikt",
+        "dashboardSubtitle": "Anpassa din översiktsvy",
+        "autoRefresh": "Uppdatera översikten automatiskt",
+        "autoRefreshHint": "Håll nyckeltalen aktuella automatiskt",
+        "refreshInterval": "Uppdateringsintervall",
+        "campaignAlerts": "Kampanjaviseringar",
+        "campaignAlertsSubtitle": "Håll dig informerad om dina kampanjer",
+        "generalNotifications": "Allmänna aviseringar",
+        "generalNotificationsSubtitle": "Övriga aviseringsinställningar",
+        "savePreferences": "Spara inställningar",
+        "preferencesSaved": "Inställningarna har sparats",
+        "passwordTitle": "Byt lösenord",
+        "passwordSubtitle": "Uppdatera lösenordet regelbundet för säkerhets skull",
+        "currentPassword": "Nuvarande lösenord",
+        "newPassword": "Nytt lösenord",
+        "confirmNewPassword": "Bekräfta nytt lösenord",
+        "changing": "Ändrar...",
+        "dangerZone": "Riskzon",
+        "deleteAccount": "Radera konto",
+        "deleteAccountHint": "Radera ditt konto och all data permanent",
+        "deleteRequiresEmail": "Radering av konto kräver bekräftelse via e-post",
+        "intervals": {
+          "s15": "Var 15:e sekund",
+          "s30": "Var 30:e sekund",
+          "m1": "Varje minut",
+          "m5": "Var 5:e minut"
+        },
+        "alerts": {
+          "anomaly": "Avvikelsevarningar",
+          "anomalyDesc": "CTR-fall, trafiktoppar och botdetektering",
+          "ai": "AI-rekommendationer",
+          "aiDesc": "När AI genererar optimeringsförslag",
+          "budget": "Budgetvarningar",
+          "budgetDesc": "När kampanjer når 80 % eller 100 % av budgeten",
+          "campaignStatus": "Ändrad kampanjstatus",
+          "campaignStatusDesc": "Pausade, avslutade eller stoppade kampanjer",
+          "email": "E-postaviseringar",
+          "emailDesc": "Få viktiga uppdateringar via e-post",
+          "team": "Teamaktivitet",
+          "teamDesc": "Uppdateringar om teammedlemmarnas åtgärder",
+          "weekly": "Veckorapporter",
+          "weeklyDesc": "Resultatsammanfattning varje måndag",
+          "reward": "Belöning intjänad",
+          "rewardDesc": "När användare tjänar belöningar från dina annonser"
+        }
+      },
+      "adminAdvertisers": {
+        "title": "Godkännande av annonsörer",
+        "subtitle": "Granska och godkänn annonsörskonton innan de får annonsera.",
+        "billing": "Fakturering",
+        "actionFailed": "Åtgärden misslyckades"
+      },
+      "adminModeration": {
+        "title": "Moderering av omdömen",
+        "pendingMedia": "Väntande media",
+        "emptyTitle": "Inget att moderera",
+        "emptyDesc": "Uppladdade foton och videor från omdömen hamnar i kö här."
+      },
+      "adminLoyalty": {
+        "title": "Lojalitet och VIP",
+        "intro": "Medlemmar kvalificerar sig automatiskt för VIP när de uppfyller alla krav nedan. Sätt ett värde till 0 för att bortse från det kravet.",
+        "criteriaTitle": "Kvalifikationskrav för VIP",
+        "criteriaSubtitle": "Gäller varje medlem nästa gång deras status utvärderas",
+        "minVisits": "Minsta antal handlarbesök",
+        "minVisitsHint": "Antal olika handlare medlemmen har handlat hos.",
+        "minPurchases": "Minsta antal köp",
+        "minPurchasesHint": "Genomförda inlösen.",
+        "minReviews": "Minsta antal omdömen",
+        "minReviewsHint": "Omdömen de har skickat in.",
+        "minScore": "Minsta engagemangspoäng",
+        "minScoreHint": "Viktad poäng utifrån besök, köp, omdömen, visningar och streaks.",
+        "save": "Spara kriterier",
+        "reset": "Återställ till standard"
+      }
+    }
+  },
+  "es": {
+    "header": {
+      "logo": "SmartAdDeals",
+      "tagline": "Gestión Inteligente de Anuncios",
+      "nav": {
+        "home": "Inicio",
+        "ads": "Explorar Anuncios",
+        "about": "Acerca de",
+        "blog": "Blog",
+        "careers": "Carreras",
+        "partners": "Partners"
+      },
+      "cta": "Comenzar"
+    },
+    "landing": {
+      "hero": {
+        "title": "Transforma tu Publicidad con IA",
+        "subtitle": "Llega a la audiencia correcta, optimiza en tiempo real, maximiza tu ROI.",
+        "cta": "Prueba Gratuita"
+      },
+      "features": {
+        "title": "¿Por qué elegir SmartAdDeals?",
+        "ai": {
+          "title": "Optimización Impulsada por IA",
+          "desc": "Ajustes automáticos de ofertas, orientación de audiencia y optimización creativa basada en datos de rendimiento en tiempo real."
+        },
+        "realtime": {
+          "title": "Análisis en Tiempo Real",
+          "desc": "Supervisa el rendimiento de campañas, detecta anomalías y actúa al instante con nuestro panel intuitivo."
+        },
+        "rewards": {
+          "title": "Compromiso Basado en Recompensas",
+          "desc": "Incentiva acciones del usuario y construye lealtad con nuestro sistema de recompensas integrado."
+        }
+      }
+    },
+    "blog": {
+      "title": "Blog de SmartAdDeals",
+      "subtitle": "Información, actualizaciones e historias del mundo de la publicidad inteligente.",
+      "allPosts": "Todos los Artículos",
+      "noResults": "No se encontraron artículos en esta categoría.",
+      "readMore": "Leer Artículo Completo",
+      "readTime": "min de lectura",
+      "category": {
+        "trends": "Tendencias de AdTech",
+        "updates": "Actualizaciones de Plataforma",
+        "cases": "Casos de Estudio",
+        "guides": "Consejos y Guías"
+      }
+    },
+    "footer": {
+      "copyright": "© 2026 SmartAdDeals. Todos los derechos reservados.",
+      "links": {
+        "privacy": "Política de Privacidad",
+        "terms": "Términos de Servicio",
+        "cookies": "Política de Cookies"
+      }
+    }
+  },
+  "fr": {
+    "header": {
+      "logo": "SmartAdDeals",
+      "tagline": "Gestion Intelligente des Annonces",
+      "nav": {
+        "home": "Accueil",
+        "ads": "Parcourir les Annonces",
+        "about": "À propos",
+        "blog": "Blog",
+        "careers": "Carrières",
+        "partners": "Partners"
+      },
+      "cta": "Commencer"
+    },
+    "landing": {
+      "hero": {
+        "title": "Transformez Votre Publicité avec l'IA",
+        "subtitle": "Atteignez le bon public, optimisez en temps réel, maximisez votre ROI.",
+        "cta": "Essai Gratuit"
+      },
+      "features": {
+        "title": "Pourquoi Choisir SmartAdDeals?",
+        "ai": {
+          "title": "Optimisation Alimentée par l'IA",
+          "desc": "Ajustements automatiques des enchères, ciblage d'audience et optimisation créative basés sur les données de performance en temps réel."
+        },
+        "realtime": {
+          "title": "Analyses en Temps Réel",
+          "desc": "Surveillez les performances de campagne, détectez les anomalies et agissez instantanément avec notre tableau de bord intuitif."
+        },
+        "rewards": {
+          "title": "Engagement Basé sur les Récompenses",
+          "desc": "Incitez les actions des utilisateurs et construisez la fidélité avec notre système de récompenses intégré."
+        }
+      }
+    },
+    "blog": {
+      "title": "Blog SmartAdDeals",
+      "subtitle": "Aperçus, mises à jour et histoires du monde de la publicité intelligente.",
+      "allPosts": "Tous les Articles",
+      "noResults": "Aucun article trouvé dans cette catégorie.",
+      "readMore": "Lire l'Article Complet",
+      "readTime": "min de lecture",
+      "category": {
+        "trends": "Tendances AdTech",
+        "updates": "Mises à Jour de Plateforme",
+        "cases": "Études de Cas",
+        "guides": "Conseils et Guides"
+      }
+    },
+    "footer": {
+      "copyright": "© 2026 SmartAdDeals. Tous droits réservés.",
+      "links": {
+        "privacy": "Politique de Confidentialité",
+        "terms": "Conditions de Service",
+        "cookies": "Politique de Cookies"
+      }
+    }
+  },
+  "de": {
+    "header": {
+      "logo": "SmartAdDeals",
+      "tagline": "Intelligente Anzeigenverwaltung",
+      "nav": {
+        "home": "Startseite",
+        "ads": "Anzeigen durchsuchen",
+        "about": "Über uns",
+        "blog": "Blog",
+        "careers": "Karriere",
+        "partners": "Partners"
+      },
+      "cta": "Jetzt Starten"
+    },
+    "landing": {
+      "hero": {
+        "title": "Verwandeln Sie Ihre Werbung mit KI",
+        "subtitle": "Erreichen Sie die richtige Zielgruppe, optimieren Sie in Echtzeit, maximieren Sie Ihren ROI.",
+        "cta": "Kostenlose Testversion"
+      },
+      "features": {
+        "title": "Warum SmartAdDeals Wählen?",
+        "ai": {
+          "title": "KI-gestützte Optimierung",
+          "desc": "Automatische Gebotsanpassungen, Zielgruppenausrichtung und kreative Optimierung basierend auf Echtzeitleistungsdaten."
+        },
+        "realtime": {
+          "title": "Echtzeit-Analysen",
+          "desc": "Überwachen Sie die Kampagnenleistung, erkennen Sie Anomalien und handeln Sie sofort mit unserem intuitiven Dashboard."
+        },
+        "rewards": {
+          "title": "Belohnungsbasiertes Engagement",
+          "desc": "Incentivieren Sie Benutzeraktionen und bauen Sie Loyalität mit unserem integrierten Belohnungssystem auf."
+        }
+      }
+    },
+    "blog": {
+      "title": "SmartAdDeals Blog",
+      "subtitle": "Einblicke, Updates und Geschichten aus der Welt der intelligenten Werbung.",
+      "allPosts": "Alle Artikel",
+      "noResults": "Keine Artikel in dieser Kategorie gefunden.",
+      "readMore": "Vollständigen Artikel Lesen",
+      "readTime": "min Lesezeit",
+      "category": {
+        "trends": "AdTech-Trends",
+        "updates": "Plattform-Updates",
+        "cases": "Fallstudien",
+        "guides": "Tipps & Anleitungen"
+      }
+    },
+    "footer": {
+      "copyright": "© 2026 SmartAdDeals. Alle Rechte vorbehalten.",
+      "links": {
+        "privacy": "Datenschutzrichtlinie",
+        "terms": "Nutzungsbedingungen",
+        "cookies": "Cookie-Richtlinie"
+      }
+    }
+  },
+  "pt": {
+    "header": {
+      "logo": "SmartAdDeals",
+      "tagline": "Gerenciamento Inteligente de Anúncios",
+      "nav": {
+        "home": "Início",
+        "ads": "Navegar por Anúncios",
+        "about": "Sobre",
+        "blog": "Blog",
+        "careers": "Carreiras",
+        "partners": "Partners"
+      },
+      "cta": "Começar"
+    },
+    "landing": {
+      "hero": {
+        "title": "Transforme Sua Publicidade com IA",
+        "subtitle": "Alcance o público certo, otimize em tempo real, maximize seu ROI.",
+        "cta": "Teste Gratuito"
+      },
+      "features": {
+        "title": "Por Que Escolher SmartAdDeals?",
+        "ai": {
+          "title": "Otimização Alimentada por IA",
+          "desc": "Ajustes automáticos de lances, direcionamento de audiência e otimização criativa com base em dados de desempenho em tempo real."
+        },
+        "realtime": {
+          "title": "Análise em Tempo Real",
+          "desc": "Monitore o desempenho da campanha, detecte anomalias e aja instantaneamente com nosso painel intuitivo."
+        },
+        "rewards": {
+          "title": "Engajamento Baseado em Recompensas",
+          "desc": "Incentive ações do usuário e crie lealdade com nosso sistema de recompensas integrado."
+        }
+      }
+    },
+    "blog": {
+      "title": "Blog SmartAdDeals",
+      "subtitle": "Insights, atualizações e histórias do mundo da publicidade inteligente.",
+      "allPosts": "Todos os Artigos",
+      "noResults": "Nenhum artigo encontrado nesta categoria.",
+      "readMore": "Ler Artigo Completo",
+      "readTime": "min de leitura",
+      "category": {
+        "trends": "Tendências de AdTech",
+        "updates": "Atualizações de Plataforma",
+        "cases": "Estudos de Caso",
+        "guides": "Dicas e Guias"
+      }
+    },
+    "footer": {
+      "copyright": "© 2026 SmartAdDeals. Todos os direitos reservados.",
+      "links": {
+        "privacy": "Política de Privacidade",
+        "terms": "Termos de Serviço",
+        "cookies": "Política de Cookies"
+      }
+    }
+  }
+}

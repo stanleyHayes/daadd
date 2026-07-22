@@ -63,7 +63,7 @@ const blogPosts = [
   },
   {
     id: 3,
-    title: 'How FitLife Increased Conversions by 340% with SmartDeals',
+    title: 'How FitLife Increased Conversions by 340% with SmartAdDeals',
     excerpt: 'A deep dive into how a fitness brand leveraged our AI optimization engine and reward-based engagement to achieve record-breaking results.',
     date: 'February 28, 2026',
     author: 'David Mensah',

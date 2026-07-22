@@ -92,7 +92,7 @@ export default function LoginScreen() {
               <Text
                 style={[typography.displayLarge, { color: colors.primary }]}
               >
-                SmartDeals
+                SmartAdDeals
               </Text>
               <Text
                 style={[

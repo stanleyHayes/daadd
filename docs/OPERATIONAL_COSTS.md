@@ -1,4 +1,4 @@
-# SmartDeals — Operational Costs Analysis
+# SmartAdDeals — Operational Costs Analysis
 
 **Analysis Date:** May 2026  
 **Testing Tier:** Basic Paid (no free tier)  

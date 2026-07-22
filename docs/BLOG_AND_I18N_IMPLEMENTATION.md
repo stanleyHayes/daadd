@@ -105,7 +105,7 @@ Complete blog posts with original, professional content:
 ```json
 {
   "header": {
-    "logo": "SmartDeals",
+    "logo": "SmartAdDeals",
     "tagline": "Intelligent Ad Management",
     "nav": { "home", "ads", "about", "blog", "careers" },
     "cta": "Get Started"
@@ -115,7 +115,7 @@ Complete blog posts with original, professional content:
     "features": { "title", "ai", "realtime", "rewards" }
   },
   "blog": {
-    "title": "SmartDeals Blog",
+    "title": "SmartAdDeals Blog",
     "subtitle": "Insights, updates...",
     "allPosts": "All Posts",
     "noResults": "No posts found",
@@ -123,7 +123,7 @@ Complete blog posts with original, professional content:
     "category": { "trends", "updates", "cases", "guides" }
   },
   "footer": {
-    "copyright": "© 2026 SmartDeals...",
+    "copyright": "© 2026 SmartAdDeals...",
     "links": { "privacy", "terms", "cookies" }
   }
 }
@@ -309,7 +309,7 @@ frontend/
 
 ## Summary
 
-The SmartDeals blog system is now fully functional with:
+The SmartAdDeals blog system is now fully functional with:
 - **6 professionally written blog posts** covering industry trends, platform updates, case studies, and guides
 - **Comprehensive internationalization** supporting 5 languages (English, Spanish, French, German, Portuguese)
 - **Intuitive language switcher** in the header with persistent user preferences

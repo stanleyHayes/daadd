@@ -107,7 +107,7 @@ export function PublicLayout() {
  <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-secondary-500 shadow-lg shadow-secondary-500/25 group-hover:shadow-secondary-500/40 transition-shadow">
  <Zap className="h-5 w-5 text-primary-900" />
  </div>
- <span className="text-lg font-bold gradient-text">SmartDeals</span>
+ <span className="text-lg font-bold gradient-text">SmartAdDeals</span>
  </Link>
 
  {/* Pill navbar */}
@@ -285,7 +285,7 @@ export function PublicLayout() {
  <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-secondary-400">
  <Zap className="h-5 w-5 text-primary-900" />
  </div>
- <span className="text-xl font-bold">SmartDeals</span>
+ <span className="text-xl font-bold">SmartAdDeals</span>
  </div>
  <p className="text-sm leading-relaxed max-w-sm mb-6 text-white/70">
  The intelligent advertising platform that connects brands with engaged audiences.

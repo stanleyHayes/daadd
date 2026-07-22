@@ -528,7 +528,7 @@ export default function ProfileScreen() {
             },
           ]}
         >
-          SmartDeals v1.0.0
+          SmartAdDeals v1.0.0
         </Text>
       </ScrollView>
 

@@ -33,7 +33,7 @@
       "signIn": "Iniciar sesión",
       "noAccount": "¿No tienes una cuenta?",
       "createAccount": "Crear cuenta",
-      "createAccountSubtitle": "Únete a SmartDeals y empieza a ganar recompensas viendo anuncios",
+      "createAccountSubtitle": "Únete a SmartAdDeals y empieza a ganar recompensas viendo anuncios",
       "fullName": "Nombre completo",
       "fullNamePlaceholder": "Ingresa tu nombre completo",
       "createPasswordPlaceholder": "Crea una contraseña",
@@ -133,7 +133,10 @@
         "language": "Idioma",
         "privacy": "Privacidad",
         "help": "Ayuda y soporte",
-        "about": "Acerca de SmartDeals"
+        "about": "Acerca de SmartAdDeals",
+        "messages": "Mensajes",
+        "purchases": "Historial de compras",
+        "tokenCalculator": "Calculadora de tokens"
       },
       "theme": {
         "light": "Claro",
@@ -164,8 +167,20 @@
       "claimedButton": "¡Genial!",
       "claimError": "No se pudo reclamar la recompensa. Inténtalo de nuevo.",
       "ageVerifyError": "Código de verificación inválido o expirado. Inténtalo de nuevo.",
-      "shareMessage": "Mira este anuncio en SmartDeals: {{title}} - ¡Gana ${{amount}}!",
-      "advertiserFallback": "Anunciante"
+      "shareMessage": "Mira este anuncio en SmartAdDeals: {{title}} - ¡Gana ${{amount}}!",
+      "advertiserFallback": "Anunciante",
+      "businessTitle": "Negocio y contacto",
+      "messageCompany": "Enviar mensaje a la empresa",
+      "noContact": "No se han indicado datos de contacto para esta promoción.",
+      "rewardsTitle": "Lo que puedes ganar",
+      "rewardPool": "Quedan {{remaining}} de {{total}} tokens de la campaña",
+      "expectationsTitle": "¿Piensas visitarlo? Anota lo que esperas",
+      "expectationsSaved": "Expectativas guardadas: cuéntanos cómo fue después de tu visita",
+      "expectationsHint": "Después de tu visita podrás compararlo con lo que ocurrió realmente.",
+      "expExperience": "Experiencia",
+      "expService": "Servicio",
+      "expProduct": "Producto",
+      "saveExpectations": "Guardar expectativas"
     },
     "ageGate": {
       "title": "Verificación de edad requerida",
@@ -185,7 +200,10 @@
       "generateQR": "Generar QR",
       "generateError": "No se pudo generar el código QR. Inténtalo de nuevo.",
       "tokensValue": "{{count}} tokens (${{amount}})",
-      "showToMerchant": "Muéstraselo al comercio. Los tokens solo se descuentan tras la aprobación del comercio."
+      "showToMerchant": "Muéstraselo al comercio. Los tokens solo se descuentan tras la aprobación del comercio.",
+      "selectOutlet": "¿En qué sucursal estás?",
+      "searchOutlet": "Buscar por sucursal, marca o ciudad",
+      "purchaseAmountOptional": "Importe de la compra (opcional)"
     },
     "merchantScan": {
       "title": "Escanear QR del cliente",
@@ -214,7 +232,15 @@
       },
       "approvedTitle": "Canje aprobado",
       "approvedMessage": "Se descontaron {{tokens}} tokens (${{discount}}). Nuevo saldo del cliente: ${{balance}}.",
-      "approveRedemption": "Aprobar canje"
+      "approveRedemption": "Aprobar canje",
+      "countTowardCampaign": "Imputar a la campaña",
+      "itemsTitle": "Artículos comprados (opcional)",
+      "itemName": "Artículo",
+      "itemQty": "Cant.",
+      "itemPrice": "Precio unitario",
+      "addItem": "Añadir artículo",
+      "itemsTotal": "Total de artículos",
+      "receipt": "Recibo"
     },
     "notifications": {
       "title": "Notificaciones",
@@ -358,6 +384,36 @@
         "clicksConversions": "{{clicks}} clics · {{conversions}} conversiones",
         "conversions": "{{count}} conversiones"
       }
+    },
+    "chat": {
+      "title": "Mensajes",
+      "emptyTitle": "Aún no hay mensajes",
+      "emptyMessage": "Las consultas que envíes o recibas aparecerán aquí.",
+      "startPrompt": "Envía un mensaje para iniciar la conversación.",
+      "inputPlaceholder": "Escribe un mensaje…",
+      "typing": "escribiendo…"
+    },
+    "purchases": {
+      "title": "Historial de compras",
+      "tokens": "tokens",
+      "receipt": "Recibo",
+      "emptyTitle": "Aún no hay compras",
+      "emptyMessage": "Canjea tokens en un comercio y tus compras aparecerán aquí."
+    },
+    "tokenCalc": {
+      "title": "Calculadora de tokens",
+      "tokenValue": "Valor actual del token",
+      "token": "token",
+      "tokens": "tokens",
+      "tokensEach": "tokens cada uno",
+      "yourTokens": "Tus tokens",
+      "estimateTitle": "Estima tus ganancias",
+      "perView": "Anuncios vistos",
+      "perClick": "Anuncios clicados",
+      "perReview": "Reseñas escritas",
+      "perPhoto": "Fotos subidas",
+      "estimatedTotal": "Total estimado",
+      "disclaimer": "Las estimaciones usan la tarifa media de las campañas activas. Cada campaña fija sus propias recompensas."
     }
   },
   "fr": {
@@ -394,7 +450,7 @@
       "signIn": "Se connecter",
       "noAccount": "Vous n'avez pas de compte ?",
       "createAccount": "Créer un compte",
-      "createAccountSubtitle": "Rejoignez SmartDeals et gagnez des récompenses en regardant des pubs",
+      "createAccountSubtitle": "Rejoignez SmartAdDeals et gagnez des récompenses en regardant des pubs",
       "fullName": "Nom complet",
       "fullNamePlaceholder": "Saisissez votre nom complet",
       "createPasswordPlaceholder": "Créez un mot de passe",
@@ -494,7 +550,10 @@
         "language": "Langue",
         "privacy": "Confidentialité",
         "help": "Aide et support",
-        "about": "À propos d'SmartDeals"
+        "about": "À propos d'SmartAdDeals",
+        "messages": "Messages",
+        "purchases": "Historique d'achats",
+        "tokenCalculator": "Calculateur de jetons"
       },
       "theme": {
         "light": "Clair",
@@ -525,8 +584,20 @@
       "claimedButton": "Super !",
       "claimError": "Impossible de réclamer la récompense. Veuillez réessayer.",
       "ageVerifyError": "Code de vérification invalide ou expiré. Veuillez réessayer.",
-      "shareMessage": "Découvrez cette pub sur SmartDeals : {{title}} - Gagnez ${{amount}} !",
-      "advertiserFallback": "Annonceur"
+      "shareMessage": "Découvrez cette pub sur SmartAdDeals : {{title}} - Gagnez ${{amount}} !",
+      "advertiserFallback": "Annonceur",
+      "businessTitle": "Entreprise et contact",
+      "messageCompany": "Envoyer un message à l'entreprise",
+      "noContact": "Aucune coordonnée n'est fournie pour cette promotion.",
+      "rewardsTitle": "Ce que vous pouvez gagner",
+      "rewardPool": "{{remaining}} jetons restants sur {{total}} pour cette campagne",
+      "expectationsTitle": "Vous prévoyez une visite ? Notez vos attentes",
+      "expectationsSaved": "Attentes enregistrées — dites-nous comment cela s'est passé après votre visite",
+      "expectationsHint": "Après votre visite, vous pourrez comparer avec ce qui s'est réellement passé.",
+      "expExperience": "Expérience",
+      "expService": "Service",
+      "expProduct": "Produit",
+      "saveExpectations": "Enregistrer les attentes"
     },
     "ageGate": {
       "title": "Vérification de l'âge requise",
@@ -546,7 +617,10 @@
       "generateQR": "Générer le QR",
       "generateError": "Impossible de générer le code QR. Veuillez réessayer.",
       "tokensValue": "{{count}} tokens (${{amount}})",
-      "showToMerchant": "Présentez-le au commerçant. Les tokens ne sont déduits qu'après validation du commerçant."
+      "showToMerchant": "Présentez-le au commerçant. Les tokens ne sont déduits qu'après validation du commerçant.",
+      "selectOutlet": "Dans quelle succursale êtes-vous ?",
+      "searchOutlet": "Rechercher par succursale, marque ou ville",
+      "purchaseAmountOptional": "Montant de l'achat (facultatif)"
     },
     "merchantScan": {
       "title": "Scanner le QR client",
@@ -575,7 +649,15 @@
       },
       "approvedTitle": "Échange approuvé",
       "approvedMessage": "{{tokens}} tokens (${{discount}}) déduits. Nouveau solde du client : ${{balance}}.",
-      "approveRedemption": "Approuver l'échange"
+      "approveRedemption": "Approuver l'échange",
+      "countTowardCampaign": "Imputer à la campagne",
+      "itemsTitle": "Articles achetés (facultatif)",
+      "itemName": "Article",
+      "itemQty": "Qté",
+      "itemPrice": "Prix unitaire",
+      "addItem": "Ajouter un article",
+      "itemsTotal": "Total des articles",
+      "receipt": "Reçu"
     },
     "notifications": {
       "title": "Notifications",
@@ -719,6 +801,36 @@
         "clicksConversions": "{{clicks}} clics · {{conversions}} conversions",
         "conversions": "{{count}} conversions"
       }
+    },
+    "chat": {
+      "title": "Messages",
+      "emptyTitle": "Aucun message pour l'instant",
+      "emptyMessage": "Les demandes que vous envoyez ou recevez s'affichent ici.",
+      "startPrompt": "Envoyez un message pour démarrer la conversation.",
+      "inputPlaceholder": "Écrivez un message…",
+      "typing": "en train d'écrire…"
+    },
+    "purchases": {
+      "title": "Historique d'achats",
+      "tokens": "jetons",
+      "receipt": "Reçu",
+      "emptyTitle": "Aucun achat pour l'instant",
+      "emptyMessage": "Échangez des jetons chez un commerçant et vos achats apparaîtront ici."
+    },
+    "tokenCalc": {
+      "title": "Calculateur de jetons",
+      "tokenValue": "Valeur actuelle du jeton",
+      "token": "jeton",
+      "tokens": "jetons",
+      "tokensEach": "jetons chacun",
+      "yourTokens": "Vos jetons",
+      "estimateTitle": "Estimez vos gains",
+      "perView": "Publicités vues",
+      "perClick": "Publicités cliquées",
+      "perReview": "Avis rédigés",
+      "perPhoto": "Photos envoyées",
+      "estimatedTotal": "Total estimé",
+      "disclaimer": "Les estimations utilisent le taux moyen des campagnes en cours. Chaque campagne fixe ses propres récompenses."
     }
   },
   "de": {
@@ -755,7 +867,7 @@
       "signIn": "Anmelden",
       "noAccount": "Noch kein Konto?",
       "createAccount": "Konto erstellen",
-      "createAccountSubtitle": "Tritt SmartDeals bei und verdiene Prämien durch das Ansehen von Anzeigen",
+      "createAccountSubtitle": "Tritt SmartAdDeals bei und verdiene Prämien durch das Ansehen von Anzeigen",
       "fullName": "Vollständiger Name",
       "fullNamePlaceholder": "Gib deinen vollständigen Namen ein",
       "createPasswordPlaceholder": "Erstelle ein Passwort",
@@ -855,7 +967,10 @@
         "language": "Sprache",
         "privacy": "Datenschutz",
         "help": "Hilfe & Support",
-        "about": "Über SmartDeals"
+        "about": "Über SmartAdDeals",
+        "messages": "Nachrichten",
+        "purchases": "Kaufhistorie",
+        "tokenCalculator": "Token-Rechner"
       },
       "theme": {
         "light": "Hell",
@@ -886,8 +1001,20 @@
       "claimedButton": "Super!",
       "claimError": "Prämie konnte nicht eingefordert werden. Bitte versuche es erneut.",
       "ageVerifyError": "Ungültiger oder abgelaufener Bestätigungscode. Bitte versuche es erneut.",
-      "shareMessage": "Schau dir diese Anzeige auf SmartDeals an: {{title}} - Verdiene ${{amount}}!",
-      "advertiserFallback": "Werbetreibender"
+      "shareMessage": "Schau dir diese Anzeige auf SmartAdDeals an: {{title}} - Verdiene ${{amount}}!",
+      "advertiserFallback": "Werbetreibender",
+      "businessTitle": "Unternehmen & Kontakt",
+      "messageCompany": "Unternehmen anschreiben",
+      "noContact": "Für diese Aktion sind keine Kontaktdaten hinterlegt.",
+      "rewardsTitle": "Das kannst du verdienen",
+      "rewardPool": "Noch {{remaining}} von {{total}} Kampagnen-Token verfügbar",
+      "expectationsTitle": "Besuch geplant? Halte deine Erwartungen fest",
+      "expectationsSaved": "Erwartungen gespeichert – erzähl uns nach dem Besuch, wie es war",
+      "expectationsHint": "Nach deinem Besuch kannst du das mit dem tatsächlichen Erlebnis vergleichen.",
+      "expExperience": "Erlebnis",
+      "expService": "Service",
+      "expProduct": "Produkt",
+      "saveExpectations": "Erwartungen speichern"
     },
     "ageGate": {
       "title": "Altersverifizierung erforderlich",
@@ -907,7 +1034,10 @@
       "generateQR": "QR-Code erstellen",
       "generateError": "QR-Code konnte nicht erstellt werden. Bitte versuche es erneut.",
       "tokensValue": "{{count}} Token (${{amount}})",
-      "showToMerchant": "Zeige dies dem Händler. Token werden erst nach der Bestätigung durch den Händler abgezogen."
+      "showToMerchant": "Zeige dies dem Händler. Token werden erst nach der Bestätigung durch den Händler abgezogen.",
+      "selectOutlet": "In welcher Filiale bist du?",
+      "searchOutlet": "Nach Filiale, Marke oder Stadt suchen",
+      "purchaseAmountOptional": "Kaufbetrag (optional)"
     },
     "merchantScan": {
       "title": "Kunden-QR scannen",
@@ -936,7 +1066,15 @@
       },
       "approvedTitle": "Einlösung genehmigt",
       "approvedMessage": "{{tokens}} Token (${{discount}}) abgezogen. Neuer Kontostand des Kunden: ${{balance}}.",
-      "approveRedemption": "Einlösung genehmigen"
+      "approveRedemption": "Einlösung genehmigen",
+      "countTowardCampaign": "Der Kampagne zurechnen",
+      "itemsTitle": "Gekaufte Artikel (optional)",
+      "itemName": "Artikel",
+      "itemQty": "Menge",
+      "itemPrice": "Stückpreis",
+      "addItem": "Artikel hinzufügen",
+      "itemsTotal": "Artikelsumme",
+      "receipt": "Beleg"
     },
     "notifications": {
       "title": "Benachrichtigungen",
@@ -1080,6 +1218,36 @@
         "clicksConversions": "{{clicks}} Klicks · {{conversions}} Conversions",
         "conversions": "{{count}} Conversions"
       }
+    },
+    "chat": {
+      "title": "Nachrichten",
+      "emptyTitle": "Noch keine Nachrichten",
+      "emptyMessage": "Anfragen, die du sendest oder erhältst, erscheinen hier.",
+      "startPrompt": "Sende eine Nachricht, um das Gespräch zu beginnen.",
+      "inputPlaceholder": "Nachricht schreiben…",
+      "typing": "schreibt…"
+    },
+    "purchases": {
+      "title": "Kaufhistorie",
+      "tokens": "Token",
+      "receipt": "Beleg",
+      "emptyTitle": "Noch keine Käufe",
+      "emptyMessage": "Löse Token bei einem Händler ein und deine Käufe erscheinen hier."
+    },
+    "tokenCalc": {
+      "title": "Token-Rechner",
+      "tokenValue": "Aktueller Token-Wert",
+      "token": "Token",
+      "tokens": "Token",
+      "tokensEach": "Token pro Stück",
+      "yourTokens": "Deine Token",
+      "estimateTitle": "Schätze deine Einnahmen",
+      "perView": "Angesehene Anzeigen",
+      "perClick": "Geklickte Anzeigen",
+      "perReview": "Geschriebene Bewertungen",
+      "perPhoto": "Hochgeladene Fotos",
+      "estimatedTotal": "Geschätzte Summe",
+      "disclaimer": "Die Schätzung nutzt den Durchschnittssatz aller laufenden Kampagnen. Jede Kampagne legt ihre Belohnungen selbst fest."
     }
   },
   "pt": {
@@ -1116,7 +1284,7 @@
       "signIn": "Entrar",
       "noAccount": "Não tem uma conta?",
       "createAccount": "Criar conta",
-      "createAccountSubtitle": "Junte-se à SmartDeals e comece a ganhar recompensas assistindo anúncios",
+      "createAccountSubtitle": "Junte-se à SmartAdDeals e comece a ganhar recompensas assistindo anúncios",
       "fullName": "Nome completo",
       "fullNamePlaceholder": "Digite seu nome completo",
       "createPasswordPlaceholder": "Crie uma senha",
@@ -1216,7 +1384,10 @@
         "language": "Idioma",
         "privacy": "Privacidade",
         "help": "Ajuda e suporte",
-        "about": "Sobre a SmartDeals"
+        "about": "Sobre a SmartAdDeals",
+        "messages": "Mensagens",
+        "purchases": "Histórico de compras",
+        "tokenCalculator": "Calculadora de tokens"
       },
       "theme": {
         "light": "Claro",
@@ -1247,8 +1418,20 @@
       "claimedButton": "Ótimo!",
       "claimError": "Não foi possível resgatar a recompensa. Tente novamente.",
       "ageVerifyError": "Código de verificação inválido ou expirado. Tente novamente.",
-      "shareMessage": "Confira este anúncio na SmartDeals: {{title}} - Ganhe ${{amount}}!",
-      "advertiserFallback": "Anunciante"
+      "shareMessage": "Confira este anúncio na SmartAdDeals: {{title}} - Ganhe ${{amount}}!",
+      "advertiserFallback": "Anunciante",
+      "businessTitle": "Empresa e contacto",
+      "messageCompany": "Enviar mensagem à empresa",
+      "noContact": "Não foram indicados dados de contacto para esta promoção.",
+      "rewardsTitle": "O que pode ganhar",
+      "rewardPool": "Restam {{remaining}} de {{total}} tokens da campanha",
+      "expectationsTitle": "Vai visitar? Registe o que espera",
+      "expectationsSaved": "Expectativas guardadas — conte-nos como correu depois da visita",
+      "expectationsHint": "Depois da visita poderá comparar isto com o que aconteceu realmente.",
+      "expExperience": "Experiência",
+      "expService": "Serviço",
+      "expProduct": "Produto",
+      "saveExpectations": "Guardar expectativas"
     },
     "ageGate": {
       "title": "Verificação de idade obrigatória",
@@ -1268,7 +1451,10 @@
       "generateQR": "Gerar QR",
       "generateError": "Não foi possível gerar o código QR. Tente novamente.",
       "tokensValue": "{{count}} tokens (${{amount}})",
-      "showToMerchant": "Mostre isto ao comerciante. Os tokens só são descontados após a aprovação do comerciante."
+      "showToMerchant": "Mostre isto ao comerciante. Os tokens só são descontados após a aprovação do comerciante.",
+      "selectOutlet": "Em que loja está?",
+      "searchOutlet": "Pesquisar por loja, marca ou cidade",
+      "purchaseAmountOptional": "Valor da compra (opcional)"
     },
     "merchantScan": {
       "title": "Escanear QR do cliente",
@@ -1297,7 +1483,15 @@
       },
       "approvedTitle": "Resgate aprovado",
       "approvedMessage": "{{tokens}} tokens (${{discount}}) descontados. Novo saldo do cliente: ${{balance}}.",
-      "approveRedemption": "Aprovar resgate"
+      "approveRedemption": "Aprovar resgate",
+      "countTowardCampaign": "Imputar à campanha",
+      "itemsTitle": "Artigos comprados (opcional)",
+      "itemName": "Artigo",
+      "itemQty": "Qtd.",
+      "itemPrice": "Preço unitário",
+      "addItem": "Adicionar artigo",
+      "itemsTotal": "Total dos artigos",
+      "receipt": "Recibo"
     },
     "notifications": {
       "title": "Notificações",
@@ -1441,6 +1635,453 @@
         "clicksConversions": "{{clicks}} cliques · {{conversions}} conversões",
         "conversions": "{{count}} conversões"
       }
+    },
+    "chat": {
+      "title": "Mensagens",
+      "emptyTitle": "Ainda não há mensagens",
+      "emptyMessage": "As questões que enviar ou receber aparecem aqui.",
+      "startPrompt": "Envie uma mensagem para iniciar a conversa.",
+      "inputPlaceholder": "Escreva uma mensagem…",
+      "typing": "a escrever…"
+    },
+    "purchases": {
+      "title": "Histórico de compras",
+      "tokens": "tokens",
+      "receipt": "Recibo",
+      "emptyTitle": "Ainda não há compras",
+      "emptyMessage": "Troque tokens num comerciante e as suas compras aparecerão aqui."
+    },
+    "tokenCalc": {
+      "title": "Calculadora de tokens",
+      "tokenValue": "Valor atual do token",
+      "token": "token",
+      "tokens": "tokens",
+      "tokensEach": "tokens cada",
+      "yourTokens": "Os seus tokens",
+      "estimateTitle": "Estime os seus ganhos",
+      "perView": "Anúncios vistos",
+      "perClick": "Anúncios clicados",
+      "perReview": "Avaliações escritas",
+      "perPhoto": "Fotos carregadas",
+      "estimatedTotal": "Total estimado",
+      "disclaimer": "As estimativas usam a taxa média das campanhas ativas. Cada campanha define as suas próprias recompensas."
+    }
+  },
+  "sv": {
+    "common": {
+      "back": "Tillbaka",
+      "cancel": "Avbryt",
+      "ok": "OK",
+      "error": "Fel",
+      "success": "Klart",
+      "loading": "Laddar...",
+      "comingSoon": "Den här funktionen kommer snart!",
+      "trending": "Populärt"
+    },
+    "tabs": {
+      "home": "Hem",
+      "search": "Sök",
+      "rewards": "Belöningar",
+      "profile": "Profil",
+      "dashboard": "Översikt"
+    },
+    "splash": {
+      "subtitle": "Upptäck annonser. Tjäna belöningar.",
+      "tagline": "Intelligent annonsplattform"
+    },
+    "auth": {
+      "tagline": "Titta på annonser. Tjäna belöningar. Så enkelt är det.",
+      "welcomeBack": "Välkommen tillbaka",
+      "signInSubtitle": "Logga in på ditt konto för att fortsätta",
+      "email": "E-post",
+      "emailPlaceholder": "Ange din e-postadress",
+      "password": "Lösenord",
+      "passwordPlaceholder": "Ange ditt lösenord",
+      "forgotPassword": "Glömt lösenordet?",
+      "signIn": "Logga in",
+      "noAccount": "Har du inget konto?",
+      "createAccount": "Skapa konto",
+      "createAccountSubtitle": "Gå med i SmartAdDeals och börja tjäna belöningar genom att titta på annonser",
+      "fullName": "Fullständigt namn",
+      "fullNamePlaceholder": "Ange ditt fullständiga namn",
+      "createPasswordPlaceholder": "Skapa ett lösenord",
+      "confirmPassword": "Bekräfta lösenord",
+      "confirmPasswordPlaceholder": "Bekräfta ditt lösenord",
+      "termsPrefix": "Genom att skapa ett konto godkänner du våra",
+      "termsOfService": "användarvillkor",
+      "termsAnd": "och",
+      "privacyPolicy": "integritetspolicy",
+      "alreadyHaveAccount": "Har du redan ett konto?",
+      "resetPasswordTitle": "Återställ lösenord",
+      "resetPasswordMessage": "En länk för att återställa lösenordet skickas till din e-postadress.",
+      "sendLink": "Skicka länk",
+      "sentTitle": "Skickat!",
+      "sentMessage": "Kolla din inkorg efter återställningslänken.",
+      "errors": {
+        "emailRequired": "E-postadress krävs",
+        "emailInvalid": "Ange en giltig e-postadress",
+        "passwordRequired": "Lösenord krävs",
+        "passwordMin6": "Lösenordet måste vara minst 6 tecken",
+        "passwordMin8": "Lösenordet måste vara minst 8 tecken",
+        "nameRequired": "Namn krävs",
+        "confirmRequired": "Bekräfta ditt lösenord",
+        "passwordsMismatch": "Lösenorden matchar inte",
+        "invalidCredentials": "Fel e-postadress eller lösenord",
+        "registrationFailed": "Registreringen misslyckades. Försök igen."
+      }
+    },
+    "home": {
+      "welcomeTo": "Välkommen till",
+      "featuredAds": "Utvalda annonser",
+      "trendingNow": "Populärt just nu",
+      "seeAll": "Visa alla",
+      "browseByCategory": "Bläddra efter kategori",
+      "recentAds": "Senaste annonserna",
+      "browseAll": "Visa alla",
+      "loadingAds": "Laddar annonser..."
+    },
+    "search": {
+      "title": "Sök annonser",
+      "placeholder": "Sök annonser, varumärken, kategorier...",
+      "sortBy": "Sortera efter:",
+      "sort": {
+        "trending": "Populärt",
+        "newest": "Senaste",
+        "rewardValue": "Belöningens värde"
+      },
+      "adsFound": "{{count}} annonser hittades",
+      "noAdsFound": "Inga annonser hittades",
+      "noAdsMessage": "Justera din sökning eller dina filter för att hitta fler annonser.",
+      "clearFilters": "Rensa filter",
+      "loadingMore": "Laddar fler annonser...",
+      "searching": "Söker annonser..."
+    },
+    "rewards": {
+      "title": "Mina belöningar",
+      "availableBalance": "Tillgängligt saldo",
+      "redeemRewards": "Lös in belöningar",
+      "history": "Belöningshistorik",
+      "noRewardsYet": "Inga belöningar ännu",
+      "noRewardsMessage": "Börja titta på annonser för att tjäna belöningar!",
+      "loading": "Laddar belöningar...",
+      "filter": {
+        "all": "Alla",
+        "pending": "Väntande",
+        "credited": "Insatt",
+        "redeemed": "Inlöst"
+      },
+      "status": {
+        "pending": "Väntande",
+        "credited": "Insatt",
+        "redeemed": "Inlöst",
+        "expired": "Utgången"
+      }
+    },
+    "profile": {
+      "title": "Profil",
+      "defaultUser": "Användare",
+      "stats": {
+        "adsViewed": "Sedda annonser",
+        "earned": "Intjänat",
+        "joined": "Medlem sedan"
+      },
+      "linkedDevices": "Kopplade enheter",
+      "currentDevice": "Nuvarande",
+      "lastActive": "Senast aktiv:",
+      "devices": {
+        "iphone": "iPhone",
+        "android": "Android-enhet",
+        "other": "Den här enheten"
+      },
+      "settings": "Inställningar",
+      "items": {
+        "appearance": "Utseende",
+        "notifications": "Aviseringar",
+        "messages": "Meddelanden",
+        "purchases": "Köphistorik",
+        "merchantScan": "Handlare: Skanna kundens QR-kod",
+        "language": "Språk",
+        "privacy": "Integritet",
+        "help": "Hjälp och support",
+        "about": "Om SmartAdDeals",
+        "tokenCalculator": "Tokenkalkylator"
+      },
+      "theme": {
+        "light": "Ljust",
+        "dark": "Mörkt",
+        "system": "System"
+      },
+      "logout": "Logga ut",
+      "logoutConfirm": "Är du säker på att du vill logga ut?",
+      "languageModal": {
+        "title": "Välj språk"
+      }
+    },
+    "adDetail": {
+      "loading": "Laddar annons...",
+      "earnReward": "Tjäna {{amount}} {{currency}}",
+      "viewToClaim": "Titta på annonsen för att hämta din belöning",
+      "views": "{{count}} tn visningar",
+      "ageRestricted": "Åldersgräns: endast {{age}}+",
+      "shareAd": "Dela den här annonsen",
+      "reviewsTitle": "Omdömen och betyg",
+      "reviewCount_one": "{{count}} omdöme",
+      "reviewCount_other": "{{count}} omdömen",
+      "noReviews": "Inga omdömen ännu. Bli den första att dela dina tankar!",
+      "reward": "Belöning",
+      "claimReward": "Hämta belöning",
+      "claimedTitle": "Belöning hämtad!",
+      "claimedMessage": "Du har tjänat {{amount}} från {{advertiser}}. Beloppet sätts in på ditt saldo inom kort.",
+      "claimedButton": "Toppen!",
+      "claimError": "Det gick inte att hämta belöningen. Försök igen.",
+      "ageVerifyError": "Ogiltig eller utgången verifieringskod. Försök igen.",
+      "shareMessage": "Kolla in den här annonsen på SmartAdDeals: {{title}} – Tjäna {{amount}}!",
+      "advertiserFallback": "Annonsör",
+      "businessTitle": "Företag och kontakt",
+      "messageCompany": "Skicka meddelande till företaget",
+      "noContact": "Inga kontaktuppgifter har angetts för den här kampanjen.",
+      "rewardsTitle": "Det här kan du tjäna",
+      "rewardPool": "{{remaining}} av {{total}} kampanjtoken återstår",
+      "expectationsTitle": "Planerar du ett besök? Notera vad du förväntar dig",
+      "expectationsSaved": "Förväntningar sparade – berätta hur det gick efter ditt besök",
+      "expectationsHint": "Efter besöket kan du jämföra det här med hur det faktiskt blev.",
+      "expExperience": "Upplevelse",
+      "expService": "Service",
+      "expProduct": "Produkt",
+      "saveExpectations": "Spara förväntningar"
+    },
+    "chat": {
+      "title": "Meddelanden",
+      "emptyTitle": "Inga meddelanden ännu",
+      "emptyMessage": "Förfrågningar du skickar eller tar emot visas här.",
+      "startPrompt": "Skicka ett meddelande för att starta konversationen.",
+      "inputPlaceholder": "Skriv ett meddelande…",
+      "typing": "skriver…"
+    },
+    "purchases": {
+      "title": "Köphistorik",
+      "tokens": "token",
+      "receipt": "Kvitto",
+      "emptyTitle": "Inga köp ännu",
+      "emptyMessage": "Lös in token hos en handlare så visas dina köp här."
+    },
+    "ageGate": {
+      "title": "Åldersverifiering krävs",
+      "description": "Den här annonsen är begränsad till tittare som är {{minAge}} år eller äldre. Ange den 6-siffriga verifieringskoden som skickats till ditt registrerade telefonnummer.",
+      "verify": "Verifiera",
+      "devCode": "Utvecklarkod: {{code}}"
+    },
+    "redeem": {
+      "title": "Lös in token",
+      "availableBalance": "Tillgängligt saldo",
+      "maxTokens": "Max {{count}} token (1 token = 0,05 $)",
+      "expiredMessage": "Din QR-kod har gått ut. Skapa en ny nedan.",
+      "tokensToRedeem": "Token att lösa in",
+      "placeholder": "Ange 1 – {{max}}",
+      "balanceTooLow": "Ditt saldo är för lågt för att lösa in token.",
+      "enterWholeNumber": "Ange ett heltal mellan 1 och {{max}}.",
+      "generateQR": "Skapa QR-kod",
+      "generateError": "Det gick inte att skapa QR-koden. Försök igen.",
+      "tokensValue": "{{count}} token ({{amount}} $)",
+      "showToMerchant": "Visa den här för handlaren. Token dras först efter handlarens godkännande.",
+      "selectOutlet": "Vilken filial är du på?",
+      "searchOutlet": "Sök på filial, varumärke eller stad",
+      "purchaseAmountOptional": "Köpbelopp (valfritt)"
+    },
+    "merchantScan": {
+      "title": "Skanna kundens QR-kod",
+      "cameraAccessNeeded": "Kameraåtkomst krävs",
+      "cameraAccessMessage": "Tillåt kameraåtkomst för att kunna skanna kundernas QR-koder.",
+      "grantPermission": "Ge behörighet",
+      "pointCamera": "Rikta kameran mot kundens QR-kod för inlösen",
+      "scanFailed": "Skanningen misslyckades",
+      "scanAgain": "Skanna igen",
+      "scanAnother": "Skanna en till",
+      "invalidQR": "Ogiltig QR-kod. Skanna en giltig QR-kod för kundinlösen.",
+      "qrExpired": "Den här QR-koden har gått ut, är ogiltig eller redan använd.",
+      "redeeming": "Löser in",
+      "tokens": "{{count}} token",
+      "countTowardCampaign": "Räkna mot kampanjen",
+      "purchaseAmount": "Köpbelopp ($)",
+      "continue": "Fortsätt",
+      "validateError": "Det gick inte att validera inlösen. Försök igen.",
+      "confirmError": "Det gick inte att bekräfta inlösen. Försök igen.",
+      "summary": {
+        "title": "Sammanfattning av inlösen",
+        "customer": "Kund",
+        "purchase": "Köp",
+        "tokensUsed": "Använda token",
+        "discount": "Rabatt",
+        "customerPays": "Kunden betalar"
+      },
+      "approvedTitle": "Inlösen godkänd",
+      "approvedMessage": "{{tokens}} token ({{discount}} $) har dragits. Kundens nya saldo: {{balance}} $.",
+      "approveRedemption": "Godkänn inlösen",
+      "itemsTitle": "Köpta artiklar (valfritt)",
+      "itemName": "Artikel",
+      "itemQty": "Antal",
+      "itemPrice": "Styckpris",
+      "addItem": "Lägg till artikel",
+      "itemsTotal": "Summa artiklar",
+      "receipt": "Kvitto"
+    },
+    "notifications": {
+      "title": "Aviseringar",
+      "markAllRead": "Markera alla som lästa",
+      "empty": "Inga aviseringar",
+      "emptyMessage": "Du är helt uppdaterad! Kom tillbaka senare för nyheter."
+    },
+    "editProfile": {
+      "title": "Redigera profil",
+      "emailAddress": "E-postadress",
+      "noEmailOnFile": "Ingen e-postadress registrerad",
+      "emailCannotChange": "E-postadressen kan inte ändras",
+      "saveChanges": "Spara ändringar",
+      "saving": "Sparar...",
+      "changePassword": "Byt lösenord",
+      "currentPassword": "Nuvarande lösenord",
+      "currentPasswordPlaceholder": "Ange nuvarande lösenord",
+      "newPassword": "Nytt lösenord",
+      "newPasswordPlaceholder": "Ange nytt lösenord",
+      "confirmNewPassword": "Bekräfta nytt lösenord",
+      "confirmNewPasswordPlaceholder": "Ange det nya lösenordet igen",
+      "updatePassword": "Uppdatera lösenord",
+      "updating": "Uppdaterar...",
+      "errors": {
+        "nameEmpty": "Namnet får inte vara tomt",
+        "notLoggedIn": "Du måste vara inloggad för att uppdatera din profil",
+        "profileUpdated": "Profilen har uppdaterats",
+        "updateFailed": "Det gick inte att uppdatera profilen",
+        "fillPasswordFields": "Fyll i alla lösenordsfält",
+        "passwordMin6": "Det nya lösenordet måste vara minst 6 tecken",
+        "passwordsMismatch": "De nya lösenorden matchar inte",
+        "passwordUpdated": "Lösenordet har uppdaterats",
+        "passwordFailed": "Det gick inte att uppdatera lösenordet"
+      }
+    },
+    "industries": {
+      "technology": "Teknik",
+      "food_beverage": "Mat och dryck",
+      "fashion": "Mode",
+      "health": "Hälsa",
+      "finance": "Finans",
+      "entertainment": "Underhållning",
+      "travel": "Resor",
+      "education": "Utbildning",
+      "sports": "Sport",
+      "automotive": "Fordon",
+      "real_estate": "Fastigheter",
+      "retail": "Detaljhandel"
+    },
+    "dashboard": {
+      "title": "Översikt",
+      "campaignTitle": "Kampanj",
+      "campaignsTitle": "Dina kampanjer",
+      "noCampaigns": "Inga kampanjer ännu",
+      "noCampaignsMessage": "Kampanjer du skapar visas här.",
+      "campaignNotFound": "Kampanjen hittades inte",
+      "spentOf": "{{spent}} av {{total}} förbrukat",
+      "kpi": {
+        "impressions": "Visningar",
+        "clicks": "Klick",
+        "ctr": "CTR",
+        "spend": "Kostnad"
+      },
+      "status": {
+        "draft": "Utkast",
+        "active": "Aktiv",
+        "paused": "Pausad",
+        "completed": "Avslutad",
+        "archived": "Arkiverad"
+      },
+      "tabs": {
+        "overview": "Översikt",
+        "ai": "AI",
+        "anomalies": "Avvikelser",
+        "story": "Berättelse",
+        "team": "Team",
+        "attribution": "Attribution"
+      },
+      "overview": {
+        "metrics": "Resultat",
+        "info": "Kampanjinformation",
+        "budgetTotal": "Total budget",
+        "budgetSpent": "Förbrukad budget",
+        "startDate": "Startdatum",
+        "endDate": "Slutdatum",
+        "industry": "Bransch",
+        "benchmarks": "Branschriktmärken",
+        "aboveAvg": "Över genomsnittet",
+        "belowAvg": "Under genomsnittet",
+        "yoursVsIndustry": "Din: {{yours}} · Bransch: {{industry}}"
+      },
+      "ai": {
+        "empty": "Inga rekommendationer",
+        "emptyMessage": "AI-rekommendationer för den här kampanjen visas här.",
+        "apply": "Tillämpa",
+        "dismiss": "Avfärda",
+        "confidence": "{{value}} % säkerhet",
+        "status": {
+          "pending": "Väntande",
+          "applied": "Tillämpad",
+          "dismissed": "Avfärdad"
+        }
+      },
+      "anomalies": {
+        "empty": "Inga avvikelser upptäckta",
+        "emptyMessage": "Kampanjen presterar inom förväntade nivåer.",
+        "resolve": "Åtgärda",
+        "resolved": "Åtgärdad",
+        "metric": "Mätvärde",
+        "currentValue": "Aktuellt värde",
+        "threshold": "Tröskelvärde",
+        "detectedAt": "Upptäckt",
+        "severity": {
+          "low": "Låg",
+          "medium": "Medel",
+          "high": "Hög",
+          "critical": "Kritisk"
+        }
+      },
+      "story": {
+        "empty": "Ingen berättelse tillgänglig ännu",
+        "preliminary": "Preliminära insikter – berättelsen blir mer detaljerad när mer data kommer in.",
+        "chapter": "Kapitel {{number}}",
+        "keyInsights": "Viktigaste insikterna",
+        "recommendations": "Rekommendationer"
+      },
+      "team": {
+        "empty": "Inga teammedlemmar",
+        "roles": {
+          "admin": "Administratör",
+          "editor": "Redaktör",
+          "viewer": "Läsare"
+        }
+      },
+      "attribution": {
+        "empty": "Ingen attributionsdata",
+        "emptyMessage": "Enhetsfördelning och vägar mellan enheter är inte tillgängliga ännu.",
+        "devices": "Enhetsfördelning",
+        "crossDevicePaths": "Vägar mellan enheter",
+        "ctr": "CTR",
+        "clicksConversions": "{{clicks}} klick · {{conversions}} konverteringar",
+        "conversions": "{{count}} konverteringar"
+      }
+    },
+    "tokenCalc": {
+      "title": "Tokenkalkylator",
+      "tokenValue": "Aktuellt tokenvärde",
+      "token": "token",
+      "tokens": "token",
+      "tokensEach": "token styck",
+      "yourTokens": "Dina token",
+      "estimateTitle": "Uppskatta dina intäkter",
+      "perView": "Sedda annonser",
+      "perClick": "Klickade annonser",
+      "perReview": "Skrivna omdömen",
+      "perPhoto": "Uppladdade foton",
+      "estimatedTotal": "Uppskattad summa",
+      "disclaimer": "Uppskattningarna bygger på genomsnittet för aktiva kampanjer. Varje kampanj sätter sina egna belöningar."
     }
   }
 }

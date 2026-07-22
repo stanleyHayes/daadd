@@ -1,61 +1,4 @@
 {
-  "header": {
-    "logo": "SmartDeals",
-    "tagline": "Intelligent Ad Management",
-    "nav": {
-      "home": "Home",
-      "ads": "Browse Ads",
-      "about": "About",
-      "blog": "Blog",
-      "careers": "Careers",
-      "partners": "Partners"
-    },
-    "cta": "Get Started"
-  },
-  "landing": {
-    "hero": {
-      "title": "Transform Your Advertising with AI",
-      "subtitle": "Reach the right audience, optimize in real-time, maximize your ROI.",
-      "cta": "Start Free Trial"
-    },
-    "features": {
-      "title": "Why Choose SmartDeals?",
-      "ai": {
-        "title": "AI-Powered Optimization",
-        "desc": "Automatic bid adjustments, audience targeting, and creative optimization based on real-time performance data."
-      },
-      "realtime": {
-        "title": "Real-Time Analytics",
-        "desc": "Monitor campaign performance, detect anomalies, and act instantly with our intuitive dashboard."
-      },
-      "rewards": {
-        "title": "Reward-Based Engagement",
-        "desc": "Incentivize user actions and build loyalty with our built-in rewards system."
-      }
-    }
-  },
-  "blog": {
-    "title": "SmartDeals Blog",
-    "subtitle": "Insights, updates, and stories from the world of intelligent advertising.",
-    "allPosts": "All Posts",
-    "noResults": "No posts found in this category.",
-    "readMore": "Read Full Article",
-    "readTime": "min read",
-    "category": {
-      "trends": "AdTech Trends",
-      "updates": "Platform Updates",
-      "cases": "Case Studies",
-      "guides": "Tips & Guides"
-    }
-  },
-  "footer": {
-    "copyright": "© 2026 SmartDeals. All rights reserved.",
-    "links": {
-      "privacy": "Privacy Policy",
-      "terms": "Terms of Service",
-      "cookies": "Cookie Policy"
-    }
-  },
   "mobile": {
     "common": {
       "back": "Back",
@@ -90,7 +33,7 @@
       "signIn": "Sign In",
       "noAccount": "Don't have an account?",
       "createAccount": "Create Account",
-      "createAccountSubtitle": "Join SmartDeals and start earning rewards by watching ads",
+      "createAccountSubtitle": "Join SmartAdDeals and start earning rewards by watching ads",
       "fullName": "Full Name",
       "fullNamePlaceholder": "Enter your full name",
       "createPasswordPlaceholder": "Create a password",
@@ -192,7 +135,7 @@
         "language": "Language",
         "privacy": "Privacy",
         "help": "Help & Support",
-        "about": "About SmartDeals",
+        "about": "About SmartAdDeals",
         "tokenCalculator": "Token Calculator"
       },
       "theme": {
@@ -224,7 +167,7 @@
       "claimedButton": "Great!",
       "claimError": "Failed to claim reward. Please try again.",
       "ageVerifyError": "Invalid or expired verification code. Please try again.",
-      "shareMessage": "Check out this ad on SmartDeals: {{title}} - Earn ${{amount}}!",
+      "shareMessage": "Check out this ad on SmartAdDeals: {{title}} - Earn ${{amount}}!",
       "advertiserFallback": "Advertiser",
       "businessTitle": "Business & contact",
       "messageCompany": "Message company",

@@ -1,6 +1,6 @@
-# SmartDeals — Technical Guide for Merchants
+# SmartAdDeals — Technical Guide for Merchants
 
-**Platform:** SmartDeals (Two-Sided AdTech Platform)  
+**Platform:** SmartAdDeals (Two-Sided AdTech Platform)  
 **Role:** Merchant (Redemption Management & Dynamic Control)  
 **Last Updated:** May 2026  
 **Audience:** Merchants managing customer redemptions and reward offers
@@ -25,13 +25,13 @@
 
 ## Getting Started
 
-### What Merchants Do on SmartDeals
+### What Merchants Do on SmartAdDeals
 
 As a Merchant, you:
 
 1. **Manage Offers** — Define discounts, rewards, and incentives for campaigns
 2. **Approve Redemptions** — Verify customer purchases and approve rewards
-3. **Track Sales** — See revenue generated from SmartDeals-attributed customers
+3. **Track Sales** — See revenue generated from SmartAdDeals-attributed customers
 4. **Control Inventory** — Pause redemptions if supplies are low
 5. **Monitor Performance** — Track conversion rates and customer satisfaction
 6. **Integrate Systems** — Connect your POS, e-commerce, or inventory systems
@@ -117,7 +117,7 @@ GET /api/v1/merchant/dashboard/metrics?period=today
 ### How Redemptions Work
 
 **Step 1: Customer Receives Offer**
-- Customer sees a SmartDeals campaign with an offer (e.g., "30% off Nike shoes")
+- Customer sees a SmartAdDeals campaign with an offer (e.g., "30% off Nike shoes")
 - They receive a unique QR code valid for 2 minutes
 
 **Step 2: Customer Visits Store**
@@ -136,17 +136,17 @@ GET /api/v1/merchant/dashboard/metrics?period=today
 **Step 5: You Approve Redemption**
 - Review purchase details
 - Confirm customer used the discount/reward
-- Tap **"Approve"** in SmartDeals dashboard
+- Tap **"Approve"** in SmartAdDeals dashboard
 
 **Step 6: Payment Settled**
-- SmartDeals deducts reward cost from advertiser's account
-- You receive payment (less SmartDeals fee)
+- SmartAdDeals deducts reward cost from advertiser's account
+- You receive payment (less SmartAdDeals fee)
 
 ### Verify a QR Code
 
 **Mobile App (POS):**
 
-1. Open SmartDeals Merchant app
+1. Open SmartAdDeals Merchant app
 2. Tap **"Scan QR"**
 3. Point camera at code
 4. System shows:
@@ -684,7 +684,7 @@ GET /api/v1/merchant/campaigns/camp_456/performance
 
 ### Integrate with Your POS System
 
-If you have a POS terminal (register), integrate SmartDeals redemptions:
+If you have a POS terminal (register), integrate SmartAdDeals redemptions:
 
 #### Option 1: QR Code Scanner
 
@@ -714,7 +714,7 @@ If you have a custom POS system, integrate via API:
 // Node.js example
 const axios = require('axios');
 
-async function verifySmartDealsCode(code) {
+async function verifySmartAdDealsCode(code) {
   const response = await axios.post(
     'https://daadd.example.com/api/v1/redemptions/verify-by-code',
     { code },
@@ -737,7 +737,7 @@ async function verifySmartDealsCode(code) {
 }
 
 // In checkout flow
-const redemption = await verifySmartDealsCode(customerProvidedCode);
+const redemption = await verifySmartAdDealsCode(customerProvidedCode);
 applyDiscount(redemption.discount_amount);
 ```
 
@@ -751,7 +751,7 @@ Simple and fastest: use web dashboard to scan/approve on a tablet.
 
 ### Fraud Detection System
 
-SmartDeals automatically flags suspicious redemption patterns:
+SmartAdDeals automatically flags suspicious redemption patterns:
 
 ```bash
 GET /api/v1/redemptions/fraud-alerts
@@ -928,7 +928,7 @@ curl -X POST https://daadd.example.com/api/v1/redemptions/red_001/approve \
 **Solution:**
 1. Review fraud alert details
 2. If legitimate, approve and add note
-3. If persistent, contact SmartDeals support to adjust fraud thresholds
+3. If persistent, contact SmartAdDeals support to adjust fraud thresholds
 
 ### Issue: Payment Not Received
 
@@ -990,14 +990,14 @@ curl -X GET https://daadd.example.com/api/v1/merchant/campaigns/camp_456 \
 1. **Be Quick** — Approve within 1 hour for best customer experience
 2. **Be Transparent** — Explain any denials clearly
 3. **Check Stock** — Ensure product is available before approval
-4. **Get Feedback** — Ask customers about their SmartDeals experience
+4. **Get Feedback** — Ask customers about their SmartAdDeals experience
 
 ### Compliance
 
 1. **Keep Records** — Export and archive redemption reports monthly
-2. **Track Revenue** — Reconcile SmartDeals payouts with your sales
+2. **Track Revenue** — Reconcile SmartAdDeals payouts with your sales
 3. **Honor Terms** — Follow agreed discount terms exactly
-4. **Report Issues** — Notify SmartDeals of fraud or system issues
+4. **Report Issues** — Notify SmartAdDeals of fraud or system issues
 
 ---
 

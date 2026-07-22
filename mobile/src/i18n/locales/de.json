@@ -1,61 +1,4 @@
 {
-  "header": {
-    "logo": "SmartDeals",
-    "tagline": "Intelligente Anzeigenverwaltung",
-    "nav": {
-      "home": "Startseite",
-      "ads": "Anzeigen durchsuchen",
-      "about": "Über uns",
-      "blog": "Blog",
-      "careers": "Karriere",
-      "partners": "Partners"
-    },
-    "cta": "Jetzt Starten"
-  },
-  "landing": {
-    "hero": {
-      "title": "Verwandeln Sie Ihre Werbung mit KI",
-      "subtitle": "Erreichen Sie die richtige Zielgruppe, optimieren Sie in Echtzeit, maximieren Sie Ihren ROI.",
-      "cta": "Kostenlose Testversion"
-    },
-    "features": {
-      "title": "Warum SmartDeals Wählen?",
-      "ai": {
-        "title": "KI-gestützte Optimierung",
-        "desc": "Automatische Gebotsanpassungen, Zielgruppenausrichtung und kreative Optimierung basierend auf Echtzeitleistungsdaten."
-      },
-      "realtime": {
-        "title": "Echtzeit-Analysen",
-        "desc": "Überwachen Sie die Kampagnenleistung, erkennen Sie Anomalien und handeln Sie sofort mit unserem intuitiven Dashboard."
-      },
-      "rewards": {
-        "title": "Belohnungsbasiertes Engagement",
-        "desc": "Incentivieren Sie Benutzeraktionen und bauen Sie Loyalität mit unserem integrierten Belohnungssystem auf."
-      }
-    }
-  },
-  "blog": {
-    "title": "SmartDeals Blog",
-    "subtitle": "Einblicke, Updates und Geschichten aus der Welt der intelligenten Werbung.",
-    "allPosts": "Alle Artikel",
-    "noResults": "Keine Artikel in dieser Kategorie gefunden.",
-    "readMore": "Vollständigen Artikel Lesen",
-    "readTime": "min Lesezeit",
-    "category": {
-      "trends": "AdTech-Trends",
-      "updates": "Plattform-Updates",
-      "cases": "Fallstudien",
-      "guides": "Tipps & Anleitungen"
-    }
-  },
-  "footer": {
-    "copyright": "© 2026 SmartDeals. Alle Rechte vorbehalten.",
-    "links": {
-      "privacy": "Datenschutzrichtlinie",
-      "terms": "Nutzungsbedingungen",
-      "cookies": "Cookie-Richtlinie"
-    }
-  },
   "mobile": {
     "common": {
       "back": "Zurück",
@@ -90,7 +33,7 @@
       "signIn": "Anmelden",
       "noAccount": "Noch kein Konto?",
       "createAccount": "Konto erstellen",
-      "createAccountSubtitle": "Tritt SmartDeals bei und verdiene Prämien durch das Ansehen von Anzeigen",
+      "createAccountSubtitle": "Tritt SmartAdDeals bei und verdiene Prämien durch das Ansehen von Anzeigen",
       "fullName": "Vollständiger Name",
       "fullNamePlaceholder": "Gib deinen vollständigen Namen ein",
       "createPasswordPlaceholder": "Erstelle ein Passwort",
@@ -186,11 +129,14 @@
       "items": {
         "appearance": "Darstellung",
         "notifications": "Benachrichtigungen",
+        "messages": "Nachrichten",
+        "purchases": "Kaufhistorie",
         "merchantScan": "Händler: Kunden-QR scannen",
         "language": "Sprache",
         "privacy": "Datenschutz",
         "help": "Hilfe & Support",
-        "about": "Über SmartDeals"
+        "about": "Über SmartAdDeals",
+        "tokenCalculator": "Token-Rechner"
       },
       "theme": {
         "light": "Hell",
@@ -221,8 +167,35 @@
       "claimedButton": "Super!",
       "claimError": "Prämie konnte nicht eingefordert werden. Bitte versuche es erneut.",
       "ageVerifyError": "Ungültiger oder abgelaufener Bestätigungscode. Bitte versuche es erneut.",
-      "shareMessage": "Schau dir diese Anzeige auf SmartDeals an: {{title}} - Verdiene ${{amount}}!",
-      "advertiserFallback": "Werbetreibender"
+      "shareMessage": "Schau dir diese Anzeige auf SmartAdDeals an: {{title}} - Verdiene ${{amount}}!",
+      "advertiserFallback": "Werbetreibender",
+      "businessTitle": "Unternehmen & Kontakt",
+      "messageCompany": "Unternehmen anschreiben",
+      "noContact": "Für diese Aktion sind keine Kontaktdaten hinterlegt.",
+      "rewardsTitle": "Das kannst du verdienen",
+      "rewardPool": "Noch {{remaining}} von {{total}} Kampagnen-Token verfügbar",
+      "expectationsTitle": "Besuch geplant? Halte deine Erwartungen fest",
+      "expectationsSaved": "Erwartungen gespeichert – erzähl uns nach dem Besuch, wie es war",
+      "expectationsHint": "Nach deinem Besuch kannst du das mit dem tatsächlichen Erlebnis vergleichen.",
+      "expExperience": "Erlebnis",
+      "expService": "Service",
+      "expProduct": "Produkt",
+      "saveExpectations": "Erwartungen speichern"
+    },
+    "chat": {
+      "title": "Nachrichten",
+      "emptyTitle": "Noch keine Nachrichten",
+      "emptyMessage": "Anfragen, die du sendest oder erhältst, erscheinen hier.",
+      "startPrompt": "Sende eine Nachricht, um das Gespräch zu beginnen.",
+      "inputPlaceholder": "Nachricht schreiben…",
+      "typing": "schreibt…"
+    },
+    "purchases": {
+      "title": "Kaufhistorie",
+      "tokens": "Token",
+      "receipt": "Beleg",
+      "emptyTitle": "Noch keine Käufe",
+      "emptyMessage": "Löse Token bei einem Händler ein und deine Käufe erscheinen hier."
     },
     "ageGate": {
       "title": "Altersverifizierung erforderlich",
@@ -242,7 +215,10 @@
       "generateQR": "QR-Code erstellen",
       "generateError": "QR-Code konnte nicht erstellt werden. Bitte versuche es erneut.",
       "tokensValue": "{{count}} Token (${{amount}})",
-      "showToMerchant": "Zeige dies dem Händler. Token werden erst nach der Bestätigung durch den Händler abgezogen."
+      "showToMerchant": "Zeige dies dem Händler. Token werden erst nach der Bestätigung durch den Händler abgezogen.",
+      "selectOutlet": "In welcher Filiale bist du?",
+      "searchOutlet": "Nach Filiale, Marke oder Stadt suchen",
+      "purchaseAmountOptional": "Kaufbetrag (optional)"
     },
     "merchantScan": {
       "title": "Kunden-QR scannen",
@@ -257,6 +233,7 @@
       "qrExpired": "Dieser QR-Code ist abgelaufen, ungültig oder wurde bereits verwendet.",
       "redeeming": "Löst ein",
       "tokens": "{{count}} Token",
+      "countTowardCampaign": "Der Kampagne zurechnen",
       "purchaseAmount": "Kaufbetrag ($)",
       "continue": "Weiter",
       "validateError": "Einlösung konnte nicht validiert werden. Bitte versuche es erneut.",
@@ -271,7 +248,14 @@
       },
       "approvedTitle": "Einlösung genehmigt",
       "approvedMessage": "{{tokens}} Token (${{discount}}) abgezogen. Neuer Kontostand des Kunden: ${{balance}}.",
-      "approveRedemption": "Einlösung genehmigen"
+      "approveRedemption": "Einlösung genehmigen",
+      "itemsTitle": "Gekaufte Artikel (optional)",
+      "itemName": "Artikel",
+      "itemQty": "Menge",
+      "itemPrice": "Stückpreis",
+      "addItem": "Artikel hinzufügen",
+      "itemsTotal": "Artikelsumme",
+      "receipt": "Beleg"
     },
     "notifications": {
       "title": "Benachrichtigungen",
@@ -415,6 +399,21 @@
         "clicksConversions": "{{clicks}} Klicks · {{conversions}} Conversions",
         "conversions": "{{count}} Conversions"
       }
+    },
+    "tokenCalc": {
+      "title": "Token-Rechner",
+      "tokenValue": "Aktueller Token-Wert",
+      "token": "Token",
+      "tokens": "Token",
+      "tokensEach": "Token pro Stück",
+      "yourTokens": "Deine Token",
+      "estimateTitle": "Schätze deine Einnahmen",
+      "perView": "Angesehene Anzeigen",
+      "perClick": "Geklickte Anzeigen",
+      "perReview": "Geschriebene Bewertungen",
+      "perPhoto": "Hochgeladene Fotos",
+      "estimatedTotal": "Geschätzte Summe",
+      "disclaimer": "Die Schätzung nutzt den Durchschnittssatz aller laufenden Kampagnen. Jede Kampagne legt ihre Belohnungen selbst fest."
     }
   }
 }

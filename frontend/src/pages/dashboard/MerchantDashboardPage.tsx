@@ -23,7 +23,7 @@ export function MerchantDashboardPage() {
       <div>
         <h1 className="text-2xl font-bold text-text-primary">Merchant Performance</h1>
         <p className="text-sm text-text-secondary mt-1">
-          The business value SmartDeals generated for your outlets.
+          The business value SmartAdDeals generated for your outlets.
         </p>
       </div>
 

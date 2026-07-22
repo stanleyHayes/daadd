@@ -180,7 +180,7 @@ function storyToHtml(story: AdJourneyStory): string {
   <ul>${insights}</ul>
   <h3>Recommendations</h3>
   <ul>${recs}</ul>
-  <footer>Generated ${new Date().toISOString()} by SmartDeals Storyteller</footer>
+  <footer>Generated ${new Date().toISOString()} by SmartAdDeals Storyteller</footer>
 </body>
 </html>`;
 }
@@ -270,7 +270,7 @@ router.get('/:campaignId/export/pdf', authMiddleware, async (req: Request, res: 
       .moveDown(2)
       .fontSize(8)
       .fillColor('#9ca3af')
-      .text(`Generated ${new Date().toISOString()} by SmartDeals Storyteller`);
+      .text(`Generated ${new Date().toISOString()} by SmartAdDeals Storyteller`);
 
     doc.end();
   } catch (err: any) {
