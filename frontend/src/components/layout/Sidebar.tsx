@@ -29,6 +29,7 @@ import {
   Sparkles,
   LayoutTemplate,
   KeyRound,
+  Radio,
   ChevronLeft,
   ChevronRight,
   Zap,
@@ -62,6 +63,7 @@ const allNavGroups: NavGroup[] = [
     title: 'campaigns',
     items: [
       { key: 'campaigns', resource: 'campaigns', href: '/dashboard/campaigns', label: 'campaigns', icon: Megaphone },
+      { key: 'channels', resource: 'campaigns', href: '/dashboard/channels', label: 'channels', icon: Radio },
       { key: 'ai-optimization', resource: 'ai', href: '/dashboard/ai-optimization', label: 'aiOptimization', icon: Brain },
       { key: 'anomalies', resource: 'anomalies', href: '/dashboard/anomalies', label: 'anomalies', icon: AlertTriangle },
     ],

@@ -517,7 +517,8 @@
       "collapse": "Replier",
       "openMenu": "Ouvrir le menu",
       "siteContent": "Website Content",
-      "roles": "Roles & Access"
+      "roles": "Roles & Access",
+      "channels": "Ad Channels"
     },
     "home": {
       "title": "Tableau de bord",
@@ -1224,6 +1225,29 @@
         "billing": "Billing",
         "support": "Support"
       }
+    },
+    "channels": {
+      "title": "Ad Channels",
+      "intro": "Where your adverts can run. A channel only appears here once it has been enabled, which happens when the supply agreement behind it is in place.",
+      "emptyTitle": "No channels enabled",
+      "emptyDesc": "On-platform display is available by default. Programmatic, connected TV, audio and retail media each need a supply agreement before they can be switched on.",
+      "types": {
+        "display": "On-platform display",
+        "rtb": "Programmatic exchange",
+        "ctv": "Connected TV",
+        "audio": "Audio",
+        "retail_media": "Retail media"
+      },
+      "pricing": "Billed on",
+      "rate": "Rate",
+      "provider": "Supply partner",
+      "estimate": "Estimate cost",
+      "estimateTitle": "{{channel}} estimate",
+      "estimateSubtitle": "What this delivery would cost before you commit any budget",
+      "unitsLabel": "{{unit}}",
+      "spend": "Estimated spend",
+      "ecpm": "Effective CPM",
+      "recalculate": "Recalculate"
     }
   },
   "legal": {

@@ -4,6 +4,7 @@ import { Loader2 } from 'lucide-react';
 
 type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'danger' | 'ghost';
 type ButtonSize = 'sm' | 'md' | 'lg';
+type ButtonShape = 'default' | 'rounded' | 'pill' | 'sharp';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
@@ -11,8 +12,17 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean;
   icon?: ReactNode;
   fullWidth?: boolean;
+  /** Corner treatment. `default` is the house style; the rest are opt-in. */
+  shape?: ButtonShape;
   children: ReactNode;
 }
+
+const shapeStyles: Record<ButtonShape, string> = {
+  default: 'rounded-md',
+  rounded: 'rounded-xl',
+  pill: 'rounded-full',
+  sharp: 'rounded-none',
+};
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary: 'bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500 shadow-sm dark:bg-secondary-600 dark:text-primary-900 dark:hover:bg-secondary-700 dark:focus:ring-secondary-500',
@@ -34,6 +44,7 @@ export function Button({
   loading = false,
   icon,
   fullWidth = false,
+  shape = 'default',
   className,
   disabled,
   children,
@@ -42,7 +53,8 @@ export function Button({
   return (
     <button
       className={cn(
-        'inline-flex items-center justify-center gap-2 rounded-md font-medium transition-all whitespace-nowrap',
+        'inline-flex items-center justify-center gap-2 font-medium transition-all whitespace-nowrap',
+        shapeStyles[shape],
         'focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-slate-900',
         'disabled:opacity-50 disabled:cursor-not-allowed',
         'active:scale-95 transition-transform',

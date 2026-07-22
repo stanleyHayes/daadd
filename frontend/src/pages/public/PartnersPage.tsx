@@ -96,7 +96,7 @@ export function PartnersPage() {
         {/* Partners grid */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           {isLoading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
               {Array.from({ length: 6 }).map((_, i) => (
                 <SkeletonAdCard key={i} />
               ))}
@@ -109,7 +109,7 @@ export function PartnersPage() {
               description="There are no active advertisers on the platform right now. Check back soon."
             />
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
               {partners.map((partner, index) => (
                 <motion.div
                   key={partner.name}

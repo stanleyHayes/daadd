@@ -57,6 +57,7 @@ import { SettingsPage } from '@/pages/dashboard/SettingsPage';
 import { PlatformAccountsPage } from '@/pages/dashboard/PlatformAccountsPage';
 import { AdminAdvertisersPage } from '@/pages/dashboard/AdminAdvertisersPage';
 import { AdminModerationPage } from '@/pages/dashboard/AdminModerationPage';
+import { ChannelsPage } from '@/pages/dashboard/ChannelsPage';
 import { RolesPage } from '@/pages/dashboard/RolesPage';
 import { SiteContentPage } from '@/pages/dashboard/SiteContentPage';
 import { AdminLoyaltyPage } from '@/pages/dashboard/AdminLoyaltyPage';
@@ -155,6 +156,7 @@ function App() {
                 <Route path="/dashboard/admin/loyalty" element={<AdminLoyaltyPage />} />
                 <Route path="/dashboard/admin/site-content" element={<SiteContentPage />} />
                 <Route path="/dashboard/admin/roles" element={<RolesPage />} />
+                <Route path="/dashboard/channels" element={<ChannelsPage />} />
               </Route>
               <Route path="/dashboard/messages" element={<MessagesPage />} />
               <Route element={<ProtectedRoute allowedRoles={['admin', 'advertiser', 'merchant']} />}>

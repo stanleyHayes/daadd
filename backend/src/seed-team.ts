@@ -2,8 +2,9 @@ import 'dotenv/config';
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
-import { Role, User, SiteContent, PlatformSetting } from './models';
+import { Role, User, SiteContent, PlatformSetting, AdChannel } from './models';
 import { ROLE_TEMPLATES, ACCOUNT_TYPE_ROLES, effectivePermissions } from './utils/permissions';
+import type { AdChannelType, PricingModel } from './models';
 
 /**
  * Seeds the roles, the staff accounts and a starting set of website content.
@@ -192,6 +193,42 @@ async function main() {
       value: { email: `hello@${DOMAIN}`, careers_email: `careers@${DOMAIN}` },
     });
     console.log('content contact        seeded with email addresses only');
+  }
+
+  // --- ad channels (roadmap phases 3-6) ------------------------------------
+  // Seeded DISABLED. Each needs a signed supply agreement and, for most, API
+  // credentials from the partner before it can be sold to an advertiser.
+  console.log('');
+  const CHANNELS: {
+    type: AdChannelType;
+    name: string;
+    provider: string;
+    pricing_model: PricingModel;
+    specs: Record<string, unknown>;
+    is_enabled?: boolean;
+  }[] = [
+    { type: 'display', name: 'On-platform display', provider: 'SmartAdDeals', pricing_model: 'cpm',
+      specs: { formats: ['image', 'video'] }, is_enabled: true },
+    { type: 'rtb', name: 'Open exchange', provider: '', pricing_model: 'cpm',
+      specs: { protocol: 'OpenRTB 2.6', timeout_ms: 100 } },
+    { type: 'ctv', name: 'Connected TV', provider: '', pricing_model: 'cpcv',
+      specs: { durations: [15, 30], aspect: '16:9', min_bitrate: '2Mbps' } },
+    { type: 'audio', name: 'Audio', provider: '', pricing_model: 'cpm',
+      specs: { durations: [15, 30], formats: ['mp3', 'aac'] } },
+    { type: 'retail_media', name: 'Retail media', provider: '', pricing_model: 'cpc',
+      specs: { placements: ['search', 'product_page'] } },
+  ];
+  for (const channel of CHANNELS) {
+    const existing = await AdChannel.findOne({ type: channel.type, name: channel.name });
+    if (existing) {
+      console.log(`chan  ${channel.name.padEnd(22)} already present, left alone`);
+      continue;
+    }
+    await AdChannel.create({ ...channel, is_enabled: channel.is_enabled ?? false });
+    console.log(
+      `chan  ${channel.name.padEnd(22)} ${channel.pricing_model} ` +
+        `(${channel.is_enabled ? 'enabled' : 'disabled until a supply deal exists'})`
+    );
   }
 
   // --- credentials ---------------------------------------------------------

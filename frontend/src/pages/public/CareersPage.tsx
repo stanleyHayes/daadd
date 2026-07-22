@@ -37,7 +37,7 @@ export function CareersPage() {
  <section className="py-16">
  <div className="max-w-5xl mx-auto px-4">
  <h2 className="text-2xl font-bold text-gray-900 dark:text-white text-center mb-10">{t('careers.perksTitle')}</h2>
- <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+ <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-stretch">
  {perks.map((perk) => {
  const Icon = perk.icon;
  return (

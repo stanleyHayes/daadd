@@ -22,7 +22,7 @@ const PUSH_INTERVAL_MS = 3000;
 
 /** Campaigns with events since the last flush. */
 const dirty = new Set<string>();
-let timer: NodeJS.Timeout | null = null;
+let timer: ReturnType<typeof setTimeout> | null = null;
 
 export interface LiveMetrics {
   campaignId: string;

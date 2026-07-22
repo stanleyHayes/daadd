@@ -24,6 +24,7 @@ import outletRoutes from './outlets';
 import supportRoutes from './support';
 import siteRoutes from './site';
 import roleRoutes from './roles';
+import channelRoutes from './channels';
 
 const router = Router();
 
@@ -52,5 +53,6 @@ router.use('/outlets', outletRoutes);
 router.use('/support', supportRoutes);
 router.use('/site', siteRoutes);
 router.use('/roles', roleRoutes);
+router.use('/channels', channelRoutes);
 
 export default router;

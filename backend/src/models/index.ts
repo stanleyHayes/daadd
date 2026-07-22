@@ -21,5 +21,7 @@ export { Message, IMessage } from './Message';
 export { Outlet, IOutlet } from './Outlet';
 export { PlatformSetting, IPlatformSetting } from './PlatformSetting';
 export { Role, IRole } from './Role';
+export { AdChannel, IAdChannel, AD_CHANNELS, AdChannelType, PRICING_MODELS, PricingModel } from './AdChannel';
+export { BidRequest, IBidRequest } from './BidRequest';
 export { SiteContent, ISiteContent, SITE_CONTENT_TYPES, SiteContentType } from './SiteContent';
 export { SupportTicket, ISupportTicket, SupportCategory, SupportStatus } from './SupportTicket';
