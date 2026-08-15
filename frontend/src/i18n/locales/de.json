@@ -171,7 +171,8 @@
       "successToast": "Konto erstellt! Bitte melde dich an.",
       "errorToast": "Registrierung fehlgeschlagen. Die E-Mail-Adresse wird möglicherweise bereits verwendet.",
       "panelTitle": "Zwei Wege hinein",
-      "panelBlurb": "Schalte Kampagnen und verfolge, was sie einbringen – oder stöbere durch Anzeigen und verdiene Tokens, die du beim Händler ausgeben kannst."
+      "panelBlurb": "Schalte Kampagnen und verfolge, was sie einbringen – oder stöbere durch Anzeigen und verdiene Tokens, die du beim Händler ausgeben kannst.",
+      "marketingConsent": "Schicke mir Angebote und Werbenachrichten von DAADD und teilnehmenden Unternehmen. Du kannst das jederzeit ändern."
     },
     "forgot": {
       "backToLogin": "Zurück zur Anmeldung",
@@ -999,7 +1000,8 @@
         "profile": "Profil",
         "preferences": "Einstellungen",
         "notifications": "Benachrichtigungen",
-        "security": "Sicherheit"
+        "security": "Sicherheit",
+        "privacy": "Datenschutz & Daten"
       },
       "infoTitle": "Profilinformationen",
       "infoSubtitle": "Aktualisiere deine persönlichen Daten",
@@ -1253,6 +1255,40 @@
       "spend": "Geschätzte Ausgaben",
       "ecpm": "Effektiver CPM",
       "recalculate": "Neu berechnen"
+    },
+    "privacy": {
+      "consentTitle": "Wozu du deine Einwilligung gibst",
+      "consentSubtitle": "Ändere all das, wann immer du möchtest. Wenn du etwas ausschaltest, gilt das sofort.",
+      "purposes": {
+        "marketing": {
+          "label": "Angebote und Aktionen",
+          "desc": "Angebote und Werbenachrichten von DAADD und teilnehmenden Unternehmen erhalten."
+        },
+        "personalisation": {
+          "label": "Personalisierte Anzeigen und Angebote",
+          "desc": "Deine Aktivität nutzen, um auszuwählen, welche Anzeigen und Händler dir angezeigt werden."
+        },
+        "location": {
+          "label": "Standort",
+          "desc": "Deinen Standort nutzen, um Händler und Angebote in deiner Nähe anzuzeigen."
+        },
+        "analytics": {
+          "label": "Nutzungsauswertung",
+          "desc": "Deine Aktivität in zusammengefasste Auswertungen zur Nutzung einbeziehen."
+        }
+      },
+      "dataTitle": "Deine Daten",
+      "dataSubtitle": "Lade eine Kopie von allem herunter, was DAADD über dein Konto gespeichert hat.",
+      "export": "Meine Daten herunterladen",
+      "exportFailed": "Dein Export konnte nicht vorbereitet werden. Bitte versuche es erneut.",
+      "deleteTitle": "Konto löschen",
+      "deleteSubtitle": "Lösche deine personenbezogenen Daten. Finanzunterlagen werden in anonymisierter Form aufbewahrt, wie es das Gesetz vorschreibt.",
+      "delete": "Konto löschen",
+      "deleteConfirm": "Damit werden deine personenbezogenen Daten gelöscht und du wirst abgemeldet. Das lässt sich nicht rückgängig machen. Finanzunterlagen werden ohne Angaben aufbewahrt, die dich identifizieren.",
+      "deleteConfirmYes": "Ja, mein Konto löschen",
+      "deleted": "Deine personenbezogenen Daten wurden gelöscht.",
+      "deleteFailed": "Die Löschung konnte nicht abgeschlossen werden. Bitte wende dich an den Support.",
+      "saveFailed": "Das konnte nicht gespeichert werden. Bitte versuche es erneut."
     }
   },
   "legal": {

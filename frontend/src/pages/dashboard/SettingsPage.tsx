@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { languages } from '@/i18n/config';
 import { Card, CardHeader, CardFooter } from '@/components/ui/Card';
+import { PrivacyPanel } from '@/components/settings/PrivacyPanel';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
@@ -10,7 +11,7 @@ import { useAuthStore } from '@/stores/auth.store';
 import { useThemeStore } from '@/stores/theme.store';
 import { useUpdateProfile, useChangePassword } from '@/hooks/useAuth';
 import { cn, getInitials } from '@/lib/utils';
-import { Camera, User, Bell, Lock, Palette, Globe, Clock, Loader2 } from 'lucide-react';
+import { Camera, User, Bell, Lock, Palette, Globe, Clock, Loader2, ShieldCheck } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { PageTransition } from '@/components/ui/PageTransition';
 
@@ -31,6 +32,7 @@ const tabs = [
  { key: 'profile', icon: User },
  { key: 'preferences', icon: Palette },
  { key: 'notifications', icon: Bell },
+ { key: 'privacy', icon: ShieldCheck },
  { key: 'security', icon: Lock },
 ];
 
@@ -372,6 +374,9 @@ export function SettingsPage() {
  </Card>
  </div>
  )}
+
+ {/* Privacy & Data Tab */}
+ {activeTab === 'privacy' && <PrivacyPanel />}
 
  {/* Security Tab */}
  {activeTab === 'security' && (

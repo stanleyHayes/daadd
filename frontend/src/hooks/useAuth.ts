@@ -14,6 +14,8 @@ interface RegisterPayload {
   email: string;
   password: string;
   role: string;
+  /** DPA requires prior consent for marketing specifically. Opt-in, not opt-out. */
+  marketing_consent?: boolean;
 }
 
 interface LoginResponse {

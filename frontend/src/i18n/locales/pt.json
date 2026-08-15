@@ -171,7 +171,8 @@
       "successToast": "Conta criada! Inicie sessão.",
       "errorToast": "Falha no registo. O e-mail pode já estar em utilização.",
       "panelTitle": "Duas formas de entrar",
-      "panelBlurb": "Crie campanhas e acompanhe o que rendem, ou veja anúncios e ganhe tokens para gastar no comerciante."
+      "panelBlurb": "Crie campanhas e acompanhe o que rendem, ou veja anúncios e ganhe tokens para gastar no comerciante.",
+      "marketingConsent": "Envie-me ofertas e mensagens promocionais da DAADD e das empresas participantes. Pode alterar esta opção a qualquer momento."
     },
     "forgot": {
       "backToLogin": "Voltar ao início de sessão",
@@ -999,7 +1000,8 @@
         "profile": "Perfil",
         "preferences": "Preferências",
         "notifications": "Notificações",
-        "security": "Segurança"
+        "security": "Segurança",
+        "privacy": "Privacidade e Dados"
       },
       "infoTitle": "Informação do perfil",
       "infoSubtitle": "Atualize os seus dados pessoais",
@@ -1253,6 +1255,40 @@
       "spend": "Investimento estimado",
       "ecpm": "CPM efetivo",
       "recalculate": "Recalcular"
+    },
+    "privacy": {
+      "consentTitle": "Aquilo com que consente",
+      "consentSubtitle": "Altere qualquer uma destas opções quando quiser. Desativar uma tem efeito imediato.",
+      "purposes": {
+        "marketing": {
+          "label": "Ofertas e promoções",
+          "desc": "Receber ofertas e mensagens promocionais da DAADD e das empresas participantes."
+        },
+        "personalisation": {
+          "label": "Anúncios e ofertas personalizados",
+          "desc": "Utilizar a sua atividade para escolher os anúncios e comerciantes que vê."
+        },
+        "location": {
+          "label": "Localização",
+          "desc": "Utilizar a sua localização para mostrar comerciantes e ofertas próximos."
+        },
+        "analytics": {
+          "label": "Análise de utilização",
+          "desc": "Incluir a sua atividade em análises agregadas sobre o envolvimento."
+        }
+      },
+      "dataTitle": "Os seus dados",
+      "dataSubtitle": "Descarregue uma cópia de tudo o que a DAADD guarda sobre a sua conta.",
+      "export": "Descarregar os meus dados",
+      "exportFailed": "Não foi possível preparar a sua exportação. Tente novamente.",
+      "deleteTitle": "Eliminar a minha conta",
+      "deleteSubtitle": "Apague os seus dados pessoais. Os registos financeiros são mantidos de forma anonimizada, conforme exigido por lei.",
+      "delete": "Eliminar a minha conta",
+      "deleteConfirm": "Isto apaga os seus dados pessoais e termina a sua sessão. Não pode ser anulado. Os registos financeiros são conservados sem qualquer elemento que o identifique.",
+      "deleteConfirmYes": "Sim, eliminar a minha conta",
+      "deleted": "Os seus dados pessoais foram apagados.",
+      "deleteFailed": "Não foi possível concluir a eliminação. Contacte o apoio ao cliente.",
+      "saveFailed": "Não foi possível guardar. Tente novamente."
     }
   },
   "legal": {

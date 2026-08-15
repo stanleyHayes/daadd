@@ -23,6 +23,7 @@ const buildSchema = (t: (k: string) => string) =>
  confirmPassword: z.string(),
  role: z.enum(['advertiser', 'end_user'], { message: t('auth.errors.roleRequired') }),
  terms: z.boolean().refine((val) => val === true, t('auth.errors.termsRequired')),
+ newsletter: z.boolean().optional(),
  })
  .refine((data) => data.password === data.confirmPassword, {
  message: t('auth.errors.passwordsMismatch'),
@@ -51,7 +52,7 @@ export function RegisterPage() {
  formState: { errors },
  } = useForm<RegisterForm>({
  resolver: zodResolver(buildSchema(t)),
- defaultValues: { role: 'advertiser', terms: false },
+ defaultValues: { role: 'advertiser', terms: false, newsletter: false },
  });
 
  const selectedRole = useWatch({ control, name: 'role' });
@@ -64,6 +65,7 @@ export function RegisterPage() {
  email: data.email,
  password: data.password,
  role: data.role,
+ marketing_consent: data.newsletter === true,
  });
  toast.success(t('auth.register.successToast'));
  navigate('/login');
@@ -240,6 +242,19 @@ export function RegisterPage() {
  </span>
  </label>
  {errors.terms && <p className="text-xs text-danger-600">{errors.terms.message}</p>}
+
+ {/* Marketing consent — separate from terms, because the DPA requires prior
+ consent for marketing specifically, and it must be genuinely optional. */}
+ <label className="flex items-start gap-2.5">
+ <input
+ type="checkbox"
+ className="rounded border-gray-300 dark:border-slate-600 text-primary-600 focus:ring-primary-500 mt-0.5 dark:bg-slate-700"
+ {...register('newsletter')}
+ />
+ <span className="text-sm text-gray-600 dark:text-slate-400 leading-relaxed">
+ {t('auth.register.marketingConsent')}
+ </span>
+ </label>
 
  {/* Submit */}
  <button

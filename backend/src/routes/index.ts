@@ -25,6 +25,7 @@ import supportRoutes from './support';
 import siteRoutes from './site';
 import roleRoutes from './roles';
 import channelRoutes from './channels';
+import privacyRoutes from './privacy';
 
 const router = Router();
 
@@ -54,5 +55,6 @@ router.use('/support', supportRoutes);
 router.use('/site', siteRoutes);
 router.use('/roles', roleRoutes);
 router.use('/channels', channelRoutes);
+router.use('/privacy', privacyRoutes);
 
 export default router;

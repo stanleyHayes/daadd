@@ -25,3 +25,5 @@ export { AdChannel, IAdChannel, AD_CHANNELS, AdChannelType, PRICING_MODELS, Pric
 export { BidRequest, IBidRequest } from './BidRequest';
 export { SiteContent, ISiteContent, SITE_CONTENT_TYPES, SiteContentType } from './SiteContent';
 export { SupportTicket, ISupportTicket, SupportCategory, SupportStatus } from './SupportTicket';
+export { Consent, IConsent, CONSENT_PURPOSES, ConsentPurpose, currentConsent } from './Consent';
+export { DataAccessLog, IDataAccessLog, recordDataAccess } from './DataAccessLog';

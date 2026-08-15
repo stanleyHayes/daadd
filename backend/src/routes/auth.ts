@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
-import { User } from '../models';
+import { User, Consent } from '../models';
 import {
   authMiddleware,
   generateToken,
@@ -67,6 +67,18 @@ router.post('/register', async (req: Request, res: Response) => {
       avatar_url: `https://i.pravatar.cc/150?u=${email.toLowerCase()}`,
     });
 
+    // Record consent given at signup. The DPA requires prior consent for
+    // marketing specifically; the client sends `marketing_consent: true/false`.
+    // Absent (older clients) is treated as not consented — opt-in, not opt-out.
+    await Consent.create({
+      user_id: user._id,
+      purpose: 'marketing',
+      granted: req.body?.marketing_consent === true,
+      policy_version: 'v1',
+      ip: req.ip || '',
+      user_agent: req.headers['user-agent'] || '',
+    });
+
     const token = generateToken({ userId: user._id.toString(), email: user.email, role: user.role });
     const refreshToken = generateRefreshToken({ userId: user._id.toString(), role: user.role });
     res
@@ -90,6 +102,18 @@ router.post('/login', async (req: Request, res: Response) => {
       res.status(401).json({ success: false, message: 'Invalid credentials' });
       return;
     }
+
+    // Record consent given at signup. The DPA requires prior consent for
+    // marketing specifically; the client sends `marketing_consent: true/false`.
+    // Absent (older clients) is treated as not consented — opt-in, not opt-out.
+    await Consent.create({
+      user_id: user._id,
+      purpose: 'marketing',
+      granted: req.body?.marketing_consent === true,
+      policy_version: 'v1',
+      ip: req.ip || '',
+      user_agent: req.headers['user-agent'] || '',
+    });
 
     const token = generateToken({ userId: user._id.toString(), email: user.email, role: user.role });
     const refreshToken = generateRefreshToken({ userId: user._id.toString(), role: user.role });

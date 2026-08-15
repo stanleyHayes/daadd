@@ -171,7 +171,8 @@
       "successToast": "Kontot har skapats! Logga in.",
       "errorToast": "Registreringen misslyckades. E-postadressen kan redan vara registrerad.",
       "panelTitle": "Två vägar in",
-      "panelBlurb": "Kör kampanjer och följ vad de ger tillbaka, eller bläddra bland annonser och tjäna tokens du kan använda hos handlaren."
+      "panelBlurb": "Kör kampanjer och följ vad de ger tillbaka, eller bläddra bland annonser och tjäna tokens du kan använda hos handlaren.",
+      "marketingConsent": "Skicka mig erbjudanden och reklammeddelanden från DAADD och deltagande företag. Du kan ändra detta när som helst."
     },
     "forgot": {
       "backToLogin": "Tillbaka till inloggningen",
@@ -999,7 +1000,8 @@
         "profile": "Profil",
         "preferences": "Inställningar",
         "notifications": "Aviseringar",
-        "security": "Säkerhet"
+        "security": "Säkerhet",
+        "privacy": "Integritet och uppgifter"
       },
       "infoTitle": "Profiluppgifter",
       "infoSubtitle": "Uppdatera dina personuppgifter",
@@ -1253,6 +1255,40 @@
       "spend": "Uppskattad kostnad",
       "ecpm": "Effektiv CPM",
       "recalculate": "Räkna om"
+    },
+    "privacy": {
+      "consentTitle": "Vad du samtycker till",
+      "consentSubtitle": "Ändra vad som helst av detta när du vill. Att stänga av något börjar gälla omedelbart.",
+      "purposes": {
+        "marketing": {
+          "label": "Erbjudanden och kampanjer",
+          "desc": "Ta emot erbjudanden och reklammeddelanden från DAADD och deltagande företag."
+        },
+        "personalisation": {
+          "label": "Personanpassade annonser och erbjudanden",
+          "desc": "Använd din aktivitet för att välja vilka annonser och handlare du ser."
+        },
+        "location": {
+          "label": "Plats",
+          "desc": "Använd din plats för att visa närliggande handlare och erbjudanden."
+        },
+        "analytics": {
+          "label": "Användningsanalys",
+          "desc": "Inkludera din aktivitet i aggregerad analys om engagemang."
+        }
+      },
+      "dataTitle": "Dina uppgifter",
+      "dataSubtitle": "Ladda ner en kopia av allt som DAADD har om ditt konto.",
+      "export": "Ladda ner mina uppgifter",
+      "exportFailed": "Det gick inte att förbereda din export. Försök igen.",
+      "deleteTitle": "Radera mitt konto",
+      "deleteSubtitle": "Radera dina personuppgifter. Finansiella uppgifter behålls i anonymiserad form enligt lagens krav.",
+      "delete": "Radera mitt konto",
+      "deleteConfirm": "Detta raderar dina personuppgifter och loggar ut dig. Det kan inte ångras. Finansiella uppgifter behålls utan något som identifierar dig.",
+      "deleteConfirmYes": "Ja, radera mitt konto",
+      "deleted": "Dina personuppgifter har raderats.",
+      "deleteFailed": "Det gick inte att slutföra raderingen. Kontakta supporten.",
+      "saveFailed": "Det gick inte att spara det. Försök igen."
     }
   },
   "legal": {

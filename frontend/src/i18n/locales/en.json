@@ -171,7 +171,8 @@
       "successToast": "Account created! Please sign in.",
       "errorToast": "Registration failed. Email may already be in use.",
       "panelTitle": "Two ways in",
-      "panelBlurb": "Run campaigns and track what they return, or browse ads and earn tokens you can spend at the merchant."
+      "panelBlurb": "Run campaigns and track what they return, or browse ads and earn tokens you can spend at the merchant.",
+      "marketingConsent": "Send me offers and promotional messages from DAADD and participating businesses. You can change this any time."
     },
     "forgot": {
       "backToLogin": "Back to login",
@@ -999,7 +1000,8 @@
         "profile": "Profile",
         "preferences": "Preferences",
         "notifications": "Notifications",
-        "security": "Security"
+        "security": "Security",
+        "privacy": "Privacy & Data"
       },
       "infoTitle": "Profile Information",
       "infoSubtitle": "Update your personal details",
@@ -1253,6 +1255,40 @@
       "spend": "Estimated spend",
       "ecpm": "Effective CPM",
       "recalculate": "Recalculate"
+    },
+    "privacy": {
+      "consentTitle": "What you agree to",
+      "consentSubtitle": "Change any of these whenever you like. Turning one off takes effect immediately.",
+      "purposes": {
+        "marketing": {
+          "label": "Offers and promotions",
+          "desc": "Receive offers and promotional messages from DAADD and participating businesses."
+        },
+        "personalisation": {
+          "label": "Personalised ads and deals",
+          "desc": "Use your activity to choose which ads and merchants you see."
+        },
+        "location": {
+          "label": "Location",
+          "desc": "Use your location to surface nearby merchants and deals."
+        },
+        "analytics": {
+          "label": "Usage analytics",
+          "desc": "Include your activity in aggregate analytics about engagement."
+        }
+      },
+      "dataTitle": "Your data",
+      "dataSubtitle": "Download a copy of everything DAADD holds about your account.",
+      "export": "Download my data",
+      "exportFailed": "Could not prepare your export. Please try again.",
+      "deleteTitle": "Delete my account",
+      "deleteSubtitle": "Erase your personal data. Financial records are kept in anonymised form as the law requires.",
+      "delete": "Delete my account",
+      "deleteConfirm": "This erases your personal data and signs you out. It cannot be undone. Financial records are retained without anything that identifies you.",
+      "deleteConfirmYes": "Yes, delete my account",
+      "deleted": "Your personal data has been erased.",
+      "deleteFailed": "Could not complete the deletion. Please contact support.",
+      "saveFailed": "Could not save that. Please try again."
     }
   },
   "legal": {
