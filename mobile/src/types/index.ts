@@ -3,6 +3,7 @@ export type UserRole =
   | 'advertiser'
   | 'campaign_manager'
   | 'analyst'
+  | 'merchant'
   | 'end_user';
 
 export interface User {

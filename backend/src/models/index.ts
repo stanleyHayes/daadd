@@ -45,3 +45,9 @@ export {
   FraudSignalStatus,
   FRAUD_SIGNAL_STATUSES,
 } from './FraudSignal';
+export {
+  DiscountVoucher,
+  IDiscountVoucher,
+  VoucherStatus,
+  VOUCHER_STATUSES,
+} from './DiscountVoucher';

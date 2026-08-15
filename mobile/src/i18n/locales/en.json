@@ -8,7 +8,8 @@
       "success": "Success",
       "loading": "Loading...",
       "comingSoon": "This feature is coming soon!",
-      "trending": "Trending"
+      "trending": "Trending",
+      "done": "Done"
     },
     "tabs": {
       "home": "Home",
@@ -137,7 +138,8 @@
         "help": "Help & Support",
         "about": "About SmartAdDeals",
         "tokenCalculator": "Token Calculator",
-        "referral": "Refer a friend"
+        "referral": "Refer a friend",
+        "vouchers": "Gift vouchers"
       },
       "theme": {
         "light": "Light",
@@ -425,6 +427,36 @@
       "shareMessage": "Join me on DAADD with code {{code}} and earn rewards on real purchases.",
       "activated": "Activated",
       "pending": "Pending"
+    },
+    "vouchers": {
+      "title": "Vouchers",
+      "send": "Send a gift",
+      "haveCode": "Have a code?",
+      "redeemCustomer": "Redeem a voucher",
+      "received": "Received",
+      "sent": "Sent",
+      "tokensAmount": "{{tokens}} tokens",
+      "status": {
+        "issued": "Unclaimed",
+        "claimed": "Claimed",
+        "redeemed": "Redeemed",
+        "expired": "Expired",
+        "revoked": "Revoked"
+      },
+      "amountLabel": "Amount (tokens)",
+      "messageLabel": "Message (optional)",
+      "messagePlaceholder": "Add a note…",
+      "sendGift": "Send gift",
+      "invalidAmount": "Enter a valid amount",
+      "createdHint": "Share this code with your friend.",
+      "shareCode": "Share code",
+      "shareMessage": "I sent you a DAADD gift! Claim it with code {{code}}.",
+      "claim": "Claim voucher",
+      "claimedHint": "Voucher claimed. Use it at a participating merchant.",
+      "codeLabel": "Voucher code",
+      "billLabel": "Bill amount (optional)",
+      "applyDiscount": "Apply discount",
+      "finalBill": "Final bill: ${{amount}}"
     }
   }
 }

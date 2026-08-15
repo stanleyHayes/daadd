@@ -8,7 +8,8 @@
       "success": "Éxito",
       "loading": "Cargando...",
       "comingSoon": "¡Esta función estará disponible pronto!",
-      "trending": "Tendencia"
+      "trending": "Tendencia",
+      "done": "Listo"
     },
     "tabs": {
       "home": "Inicio",
@@ -137,7 +138,8 @@
         "help": "Ayuda y soporte",
         "about": "Acerca de SmartAdDeals",
         "tokenCalculator": "Calculadora de tokens",
-        "referral": "Invitar a un amigo"
+        "referral": "Invitar a un amigo",
+        "vouchers": "Vales de regalo"
       },
       "theme": {
         "light": "Claro",
@@ -425,6 +427,36 @@
       "shareMessage": "Únete a mí en DAADD con el código {{code}} y gana recompensas en compras reales.",
       "activated": "Activados",
       "pending": "Pendientes"
+    },
+    "vouchers": {
+      "title": "Vales",
+      "send": "Enviar un regalo",
+      "haveCode": "¿Tienes un código?",
+      "redeemCustomer": "Canjear un vale",
+      "received": "Recibidos",
+      "sent": "Enviados",
+      "tokensAmount": "{{tokens}} tokens",
+      "status": {
+        "issued": "Sin reclamar",
+        "claimed": "Reclamado",
+        "redeemed": "Canjeado",
+        "expired": "Caducado",
+        "revoked": "Revocado"
+      },
+      "amountLabel": "Cantidad (tokens)",
+      "messageLabel": "Mensaje (opcional)",
+      "messagePlaceholder": "Añade una nota…",
+      "sendGift": "Enviar regalo",
+      "invalidAmount": "Introduce una cantidad válida",
+      "createdHint": "Comparte este código con tu amigo.",
+      "shareCode": "Compartir código",
+      "shareMessage": "¡Te envié un regalo de DAADD! Recláma­lo con el código {{code}}.",
+      "claim": "Reclamar vale",
+      "claimedHint": "Vale reclamado. Úsalo en un comercio participante.",
+      "codeLabel": "Código del vale",
+      "billLabel": "Importe de la cuenta (opcional)",
+      "applyDiscount": "Aplicar descuento",
+      "finalBill": "Cuenta final: ${{amount}}"
     }
   }
 }

@@ -80,15 +80,29 @@ queue, resolve) + `AdminFraudPage`; the 5-minute scheduled scan now runs fraud
 detection alongside the anomaly scan. Thresholds are env-configurable. Six locales.
 Tests: fraud-detection (13); the anomaly integration tests now seed real events.
 
-### Phase 3 — Discount transfer + referral + multiplier engine 🚧
+### Phase 3 — Discount transfer + referral + multiplier engine ✅
 
 Low regulatory risk, high engagement, no payments needed.
 
 | # | Item | Status |
 | --- | --- | --- |
-| 3.1 | User-to-user discount transfer (vouchers; tokens stay non-transferable) | ⬜ |
+| 3.1 | User-to-user discount transfer (vouchers; tokens stay non-transferable) | ✅ |
 | 3.2 | Referral system with *activated* referrals (invitee must become real) | ✅ |
 | 3.3 | Configurable multiplier rules engine (replaces hardcoded tiers) | ✅ |
+
+**3.1 — discount-voucher transfer (done).** The compliant way to give value to
+another user without moving tokens. `DiscountVoucher` model + state machine
+(issued → claimed → redeemed, plus expired/revoked). **Issue** debits the sender's
+own token ledger and mints a *separate* fixed discount (never a token transfer;
+the recipient is never credited tokens — machine-checked). **Claim** transfers
+ownership atomically. **Redeem** is done by a verified merchant reusing the same
+`merchant-gate` as token redemption; the discount is capped at the bill and no
+ledger write happens at redeem (the value was pre-funded at issue). Unused vouchers
+**lapse and refund the issuer** via the scheduled sweep (value conservation).
+Routes stay clear of the token-policy tripwire. Frontend: a full mobile vouchers
+screen (send / claim / list, plus merchant redeem). Six locales (mobile). Tests:
+vouchers (12) — issue/claim/redeem lifecycle, the mint-not-transfer compliance
+check, discount cap, authz, and end-to-end value conservation on expiry.
 
 **3.2 — activated referrals (done).** `User` gains `referral_code` (unique, sparse),
 `referred_by`, and a `referral_activated` guard. A code is assigned at registration
@@ -157,6 +171,7 @@ backups + DR, production monitoring + alerting.
 
 Newest first. One line per landed increment, with the commit.
 
+- Phase 3.1 (discount-voucher transfer) — `DiscountVoucher` state machine; issue debits the sender + mints a separate discount (tokens never transferred), claim, verified-merchant redeem (reuses merchant-gate), expiry-refund sweep. Mobile vouchers screen. Backend + mobile + 12 tests, six locales. **Phase 3 complete.**
 - Phase 3.2 (activated referrals) — referral codes + referred_by on User; referrer minted a fresh bonus only on the invitee's first completed redemption (once-only, tokens never transferred); `/referrals/me` stats; web Settings tab + mobile referral screen. Backend + web + mobile + 9 tests, six locales each.
 - Phase 3.3 (configurable multiplier engine) — admin-editable streak tiers + VIP multiplier stored in PlatformSetting, replacing hardcoded constants; hard non-configurable ceilings clamped on save and re-clamped at grant time (defence-in-depth). Backend + admin editor + 14 tests, six locales.
 - Phase 2.3 (real fraud detection) — de-synthesized the campaign anomaly series (now real DeviceEvent aggregation); new money-path FraudSignal detector (velocity / merchant surge / collusion / reward farming) with admin review routes, page, scheduled scan. Backend + frontend + 13 tests, six locales. Phase 2 complete.

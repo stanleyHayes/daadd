@@ -8,7 +8,8 @@
       "success": "Succès",
       "loading": "Chargement...",
       "comingSoon": "Cette fonctionnalité sera bientôt disponible !",
-      "trending": "Tendance"
+      "trending": "Tendance",
+      "done": "Terminé"
     },
     "tabs": {
       "home": "Accueil",
@@ -137,7 +138,8 @@
         "help": "Aide et support",
         "about": "À propos d'SmartAdDeals",
         "tokenCalculator": "Calculateur de jetons",
-        "referral": "Parrainer un ami"
+        "referral": "Parrainer un ami",
+        "vouchers": "Bons cadeaux"
       },
       "theme": {
         "light": "Clair",
@@ -425,6 +427,36 @@
       "shareMessage": "Rejoignez-moi sur DAADD avec le code {{code}} et gagnez des récompenses sur de vrais achats.",
       "activated": "Activés",
       "pending": "En attente"
+    },
+    "vouchers": {
+      "title": "Bons",
+      "send": "Envoyer un cadeau",
+      "haveCode": "Vous avez un code ?",
+      "redeemCustomer": "Utiliser un bon",
+      "received": "Reçus",
+      "sent": "Envoyés",
+      "tokensAmount": "{{tokens}} jetons",
+      "status": {
+        "issued": "Non réclamé",
+        "claimed": "Réclamé",
+        "redeemed": "Utilisé",
+        "expired": "Expiré",
+        "revoked": "Révoqué"
+      },
+      "amountLabel": "Montant (jetons)",
+      "messageLabel": "Message (facultatif)",
+      "messagePlaceholder": "Ajouter une note…",
+      "sendGift": "Envoyer le cadeau",
+      "invalidAmount": "Saisissez un montant valide",
+      "createdHint": "Partagez ce code avec votre ami.",
+      "shareCode": "Partager le code",
+      "shareMessage": "Je vous ai envoyé un cadeau DAADD ! Réclamez-le avec le code {{code}}.",
+      "claim": "Réclamer le bon",
+      "claimedHint": "Bon réclamé. Utilisez-le chez un commerçant participant.",
+      "codeLabel": "Code du bon",
+      "billLabel": "Montant de l’addition (facultatif)",
+      "applyDiscount": "Appliquer la remise",
+      "finalBill": "Addition finale : {{amount}} $"
     }
   }
 }

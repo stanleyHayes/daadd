@@ -8,7 +8,8 @@
       "success": "Erfolg",
       "loading": "Wird geladen...",
       "comingSoon": "Diese Funktion ist bald verfügbar!",
-      "trending": "Im Trend"
+      "trending": "Im Trend",
+      "done": "Fertig"
     },
     "tabs": {
       "home": "Start",
@@ -137,7 +138,8 @@
         "help": "Hilfe & Support",
         "about": "Über SmartAdDeals",
         "tokenCalculator": "Token-Rechner",
-        "referral": "Freund werben"
+        "referral": "Freund werben",
+        "vouchers": "Geschenkgutscheine"
       },
       "theme": {
         "light": "Hell",
@@ -425,6 +427,36 @@
       "shareMessage": "Komm mit dem Code {{code}} zu DAADD und verdiene Belohnungen für echte Einkäufe.",
       "activated": "Aktiviert",
       "pending": "Ausstehend"
+    },
+    "vouchers": {
+      "title": "Gutscheine",
+      "send": "Geschenk senden",
+      "haveCode": "Hast du einen Code?",
+      "redeemCustomer": "Gutschein einlösen",
+      "received": "Erhalten",
+      "sent": "Gesendet",
+      "tokensAmount": "{{tokens}} Token",
+      "status": {
+        "issued": "Nicht eingelöst",
+        "claimed": "Beansprucht",
+        "redeemed": "Eingelöst",
+        "expired": "Abgelaufen",
+        "revoked": "Widerrufen"
+      },
+      "amountLabel": "Betrag (Token)",
+      "messageLabel": "Nachricht (optional)",
+      "messagePlaceholder": "Notiz hinzufügen…",
+      "sendGift": "Geschenk senden",
+      "invalidAmount": "Gültigen Betrag eingeben",
+      "createdHint": "Teile diesen Code mit deinem Freund.",
+      "shareCode": "Code teilen",
+      "shareMessage": "Ich habe dir ein DAADD-Geschenk gesendet! Löse es mit dem Code {{code}} ein.",
+      "claim": "Gutschein beanspruchen",
+      "claimedHint": "Gutschein beansprucht. Nutze ihn bei einem teilnehmenden Händler.",
+      "codeLabel": "Gutscheincode",
+      "billLabel": "Rechnungsbetrag (optional)",
+      "applyDiscount": "Rabatt anwenden",
+      "finalBill": "Endbetrag: ${{amount}}"
     }
   }
 }

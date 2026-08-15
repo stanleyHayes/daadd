@@ -159,6 +159,17 @@ function RootLayoutInner() {
           }}
         />
         <Stack.Screen
+          name="vouchers"
+          options={{
+            headerShown: true,
+            headerTitle: t('mobile.vouchers.title'),
+            headerBackTitle: t('mobile.common.back'),
+            headerTintColor: colors.primary,
+            headerStyle: { backgroundColor: colors.surface },
+            headerShadowVisible: false,
+          }}
+        />
+        <Stack.Screen
           name="chat/index"
           options={{
             headerShown: true,

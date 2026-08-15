@@ -12,6 +12,7 @@ import { Conversation } from './models';
 import { seedDatabase } from './seed';
 import { scanAllActiveCampaigns } from './services/anomaly-detection.service';
 import { runFraudScan } from './services/fraud-detection.service';
+import { expireVouchers } from './utils/voucher';
 
 const PORT = process.env.PORT || 4000;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/daadd';
@@ -130,6 +131,9 @@ async function startServer(): Promise<void> {
         if (fraud.created > 0) {
           console.log(`[fraud-scan] created=${fraud.created} refreshed=${fraud.refreshed}`);
         }
+        // Lapse expired vouchers and refund their issuers (value conservation).
+        const expired = await expireVouchers();
+        if (expired > 0) console.log(`[voucher-sweep] expired=${expired}`);
       } catch (err) {
         console.warn('[anomaly-scan] failed (swallowed):', err);
       } finally {

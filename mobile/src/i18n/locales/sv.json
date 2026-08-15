@@ -8,7 +8,8 @@
       "success": "Klart",
       "loading": "Laddar...",
       "comingSoon": "Den här funktionen kommer snart!",
-      "trending": "Populärt"
+      "trending": "Populärt",
+      "done": "Klar"
     },
     "tabs": {
       "home": "Hem",
@@ -137,7 +138,8 @@
         "help": "Hjälp och support",
         "about": "Om SmartAdDeals",
         "tokenCalculator": "Tokenkalkylator",
-        "referral": "Bjud in en vän"
+        "referral": "Bjud in en vän",
+        "vouchers": "Presentkuponger"
       },
       "theme": {
         "light": "Ljust",
@@ -425,6 +427,36 @@
       "shareMessage": "Gå med mig på DAADD med koden {{code}} och tjäna belöningar på riktiga köp.",
       "activated": "Aktiverade",
       "pending": "Väntande"
+    },
+    "vouchers": {
+      "title": "Kuponger",
+      "send": "Skicka en present",
+      "haveCode": "Har du en kod?",
+      "redeemCustomer": "Lös in en kupong",
+      "received": "Mottagna",
+      "sent": "Skickade",
+      "tokensAmount": "{{tokens}} tokens",
+      "status": {
+        "issued": "Ej hämtad",
+        "claimed": "Hämtad",
+        "redeemed": "Inlöst",
+        "expired": "Utgången",
+        "revoked": "Återkallad"
+      },
+      "amountLabel": "Belopp (tokens)",
+      "messageLabel": "Meddelande (valfritt)",
+      "messagePlaceholder": "Lägg till en notering…",
+      "sendGift": "Skicka present",
+      "invalidAmount": "Ange ett giltigt belopp",
+      "createdHint": "Dela den här koden med din vän.",
+      "shareCode": "Dela kod",
+      "shareMessage": "Jag skickade en DAADD-present till dig! Hämta den med koden {{code}}.",
+      "claim": "Hämta kupong",
+      "claimedHint": "Kupong hämtad. Använd den hos en ansluten handlare.",
+      "codeLabel": "Kupongkod",
+      "billLabel": "Notabelopp (valfritt)",
+      "applyDiscount": "Applicera rabatt",
+      "finalBill": "Slutnota: ${{amount}}"
     }
   }
 }
