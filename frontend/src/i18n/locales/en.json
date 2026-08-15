@@ -519,7 +519,8 @@
       "openMenu": "Open menu",
       "siteContent": "Website Content",
       "roles": "Roles & Access",
-      "channels": "Ad Channels"
+      "channels": "Ad Channels",
+      "merchantApprovals": "Merchant Verification"
     },
     "home": {
       "title": "Dashboard",
@@ -1289,6 +1290,62 @@
       "deleted": "Your personal data has been erased.",
       "deleteFailed": "Could not complete the deletion. Please contact support.",
       "saveFailed": "Could not save that. Please try again."
+    },
+    "verification": {
+      "status": {
+        "pending": "Verification pending",
+        "verified": "Verified",
+        "restricted": "Account restricted",
+        "suspended": "Account suspended"
+      },
+      "canTransact": "Your business is verified — you can accept redemptions.",
+      "reviewNote": "Reviewer note",
+      "formTitle": "Business verification",
+      "formSubtitle": "We verify every merchant before they can accept redemptions. Your ID and settlement details are kept only as a masked reference.",
+      "reReviewWarning": "Editing your details sends your account back for review before you can accept redemptions again.",
+      "businessName": "Business name",
+      "registrationNumber": "Business registration number",
+      "city": "City",
+      "phone": "Contact phone",
+      "address": "Business address",
+      "ownerName": "Owner's full name",
+      "idType": "ID type",
+      "idTypes": {
+        "ghana_card": "Ghana Card",
+        "passport": "Passport",
+        "drivers_licence": "Driver's licence",
+        "voter_id": "Voter ID",
+        "other": "Other"
+      },
+      "idNumber": "ID number",
+      "currentEnding": "On file: ending {{last4}}",
+      "settlementProvider": "Settlement provider (bank or mobile money)",
+      "settlementAccount": "Settlement account number",
+      "settlement": "Settlement",
+      "settlementHint": "We keep only the last few digits — your provider holds the account.",
+      "submit": "Submit for verification",
+      "submitted": "Submitted for review",
+      "submitFailed": "Could not submit your details"
+    },
+    "adminMerchants": {
+      "title": "Merchant verification",
+      "subtitle": "Review merchant KYC and set who can accept redemptions.",
+      "noName": "Unnamed business",
+      "submitted": "Submitted {{date}}",
+      "notePlaceholder": "Review note (optional) — shared with the merchant",
+      "actionFailed": "Could not update that merchant",
+      "emptyTitle": "No {{status}} merchants",
+      "emptyDesc": "Merchants appear here once they submit their details.",
+      "action": {
+        "verified": "Verify",
+        "restricted": "Restrict",
+        "suspended": "Suspend"
+      },
+      "set": {
+        "verified": "Merchant verified",
+        "restricted": "Merchant restricted",
+        "suspended": "Merchant suspended"
+      }
     }
   },
   "legal": {

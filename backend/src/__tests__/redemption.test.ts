@@ -1,4 +1,4 @@
-import { Redemption, Reward, User } from '../models';
+import { Redemption, Reward, User, MerchantVerification } from '../models';
 import { generateToken } from '../middleware/auth';
 import { request, connectTestDb, resetTestDb, closeTestDb } from '../test-helpers';
 
@@ -33,6 +33,11 @@ async function registerUser(): Promise<TestUser> {
 async function registerMerchant(): Promise<TestUser> {
   const user = await registerUser();
   await User.findByIdAndUpdate(user.id, { role: 'merchant' });
+  // Confirming a redemption now requires a cleared verification (see
+  // utils/merchant-gate.ts). The default merchant fixture is verified so the
+  // existing scan → validate → confirm flow tests exercise the happy path;
+  // the unverified case is covered explicitly in merchant-verification.test.ts.
+  await MerchantVerification.create({ merchant_id: user.id, status: 'verified' });
   const token = generateToken({
     userId: user.id,
     email: `redemption-user-${userSeq}@example.com`,

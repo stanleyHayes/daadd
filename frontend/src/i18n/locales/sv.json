@@ -519,7 +519,8 @@
       "openMenu": "Öppna menyn",
       "siteContent": "Webbplatsinnehåll",
       "roles": "Roller och behörigheter",
-      "channels": "Annonskanaler"
+      "channels": "Annonskanaler",
+      "merchantApprovals": "Handlarverifiering"
     },
     "home": {
       "title": "Översikt",
@@ -1289,6 +1290,62 @@
       "deleted": "Dina personuppgifter har raderats.",
       "deleteFailed": "Det gick inte att slutföra raderingen. Kontakta supporten.",
       "saveFailed": "Det gick inte att spara det. Försök igen."
+    },
+    "verification": {
+      "status": {
+        "pending": "Verifiering väntar",
+        "verified": "Verifierad",
+        "restricted": "Konto begränsat",
+        "suspended": "Konto avstängt"
+      },
+      "canTransact": "Ditt företag är verifierat — du kan ta emot inlösen.",
+      "reviewNote": "Granskarens anteckning",
+      "formTitle": "Företagsverifiering",
+      "formSubtitle": "Vi verifierar varje handlare innan de kan ta emot inlösen. Dina identitets- och avvecklingsuppgifter sparas endast som en maskerad referens.",
+      "reReviewWarning": "Om du ändrar dina uppgifter skickas ditt konto tillbaka för granskning innan du kan ta emot inlösen igen.",
+      "businessName": "Företagsnamn",
+      "registrationNumber": "Organisationsnummer",
+      "city": "Stad",
+      "phone": "Kontakttelefon",
+      "address": "Företagsadress",
+      "ownerName": "Ägarens fullständiga namn",
+      "idType": "Typ av legitimation",
+      "idTypes": {
+        "ghana_card": "Ghana-kort",
+        "passport": "Pass",
+        "drivers_licence": "Körkort",
+        "voter_id": "Röstkort",
+        "other": "Övrigt"
+      },
+      "idNumber": "Legitimationsnummer",
+      "currentEnding": "Sparat: slutar på {{last4}}",
+      "settlementProvider": "Avvecklingsleverantör (bank eller mobilpengar)",
+      "settlementAccount": "Avvecklingskontonummer",
+      "settlement": "Avveckling",
+      "settlementHint": "Vi sparar bara de sista siffrorna — din leverantör har kontot.",
+      "submit": "Skicka för verifiering",
+      "submitted": "Inskickat för granskning",
+      "submitFailed": "Det gick inte att skicka dina uppgifter"
+    },
+    "adminMerchants": {
+      "title": "Handlarverifiering",
+      "subtitle": "Granska handlarnas KYC och bestäm vem som kan ta emot inlösen.",
+      "noName": "Namnlöst företag",
+      "submitted": "Inskickat {{date}}",
+      "notePlaceholder": "Granskningsanteckning (valfri) — delas med handlaren",
+      "actionFailed": "Det gick inte att uppdatera handlaren",
+      "emptyTitle": "Inga {{status}} handlare",
+      "emptyDesc": "Handlare visas här när de har skickat in sina uppgifter.",
+      "action": {
+        "verified": "Verifiera",
+        "restricted": "Begränsa",
+        "suspended": "Stäng av"
+      },
+      "set": {
+        "verified": "Handlare verifierad",
+        "restricted": "Handlare begränsad",
+        "suspended": "Handlare avstängd"
+      }
     }
   },
   "legal": {

@@ -26,6 +26,7 @@ import siteRoutes from './site';
 import roleRoutes from './roles';
 import channelRoutes from './channels';
 import privacyRoutes from './privacy';
+import merchantRoutes from './merchants';
 
 const router = Router();
 
@@ -56,5 +57,6 @@ router.use('/site', siteRoutes);
 router.use('/roles', roleRoutes);
 router.use('/channels', channelRoutes);
 router.use('/privacy', privacyRoutes);
+router.use('/merchants', merchantRoutes);
 
 export default router;

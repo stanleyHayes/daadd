@@ -519,7 +519,8 @@
       "openMenu": "Menü öffnen",
       "siteContent": "Website-Inhalte",
       "roles": "Rollen & Zugriff",
-      "channels": "Werbekanäle"
+      "channels": "Werbekanäle",
+      "merchantApprovals": "Händlerprüfung"
     },
     "home": {
       "title": "Dashboard",
@@ -1289,6 +1290,62 @@
       "deleted": "Deine personenbezogenen Daten wurden gelöscht.",
       "deleteFailed": "Die Löschung konnte nicht abgeschlossen werden. Bitte wende dich an den Support.",
       "saveFailed": "Das konnte nicht gespeichert werden. Bitte versuche es erneut."
+    },
+    "verification": {
+      "status": {
+        "pending": "Prüfung ausstehend",
+        "verified": "Verifiziert",
+        "restricted": "Konto eingeschränkt",
+        "suspended": "Konto gesperrt"
+      },
+      "canTransact": "Ihr Unternehmen ist verifiziert — Sie können Einlösungen annehmen.",
+      "reviewNote": "Prüferhinweis",
+      "formTitle": "Unternehmensverifizierung",
+      "formSubtitle": "Wir prüfen jeden Händler, bevor er Einlösungen annehmen kann. Ihre Ausweis- und Abrechnungsdaten werden nur als maskierte Referenz gespeichert.",
+      "reReviewWarning": "Wenn Sie Ihre Daten ändern, wird Ihr Konto erneut zur Prüfung gesendet, bevor Sie wieder Einlösungen annehmen können.",
+      "businessName": "Firmenname",
+      "registrationNumber": "Handelsregisternummer",
+      "city": "Stadt",
+      "phone": "Kontakttelefon",
+      "address": "Geschäftsadresse",
+      "ownerName": "Vollständiger Name des Inhabers",
+      "idType": "Ausweisart",
+      "idTypes": {
+        "ghana_card": "Ghana-Karte",
+        "passport": "Reisepass",
+        "drivers_licence": "Führerschein",
+        "voter_id": "Wählerausweis",
+        "other": "Sonstiges"
+      },
+      "idNumber": "Ausweisnummer",
+      "currentEnding": "Gespeichert: endet auf {{last4}}",
+      "settlementProvider": "Abrechnungsanbieter (Bank oder Mobile Money)",
+      "settlementAccount": "Abrechnungskontonummer",
+      "settlement": "Abrechnung",
+      "settlementHint": "Wir speichern nur die letzten Ziffern — Ihr Anbieter verwahrt das Konto.",
+      "submit": "Zur Verifizierung einreichen",
+      "submitted": "Zur Prüfung eingereicht",
+      "submitFailed": "Ihre Daten konnten nicht übermittelt werden"
+    },
+    "adminMerchants": {
+      "title": "Händlerprüfung",
+      "subtitle": "Prüfen Sie das Händler-KYC und legen Sie fest, wer Einlösungen annehmen darf.",
+      "noName": "Unbenanntes Unternehmen",
+      "submitted": "Eingereicht am {{date}}",
+      "notePlaceholder": "Prüfhinweis (optional) — für den Händler sichtbar",
+      "actionFailed": "Dieser Händler konnte nicht aktualisiert werden",
+      "emptyTitle": "Keine {{status}} Händler",
+      "emptyDesc": "Händler erscheinen hier, sobald sie ihre Daten übermittelt haben.",
+      "action": {
+        "verified": "Verifizieren",
+        "restricted": "Einschränken",
+        "suspended": "Sperren"
+      },
+      "set": {
+        "verified": "Händler verifiziert",
+        "restricted": "Händler eingeschränkt",
+        "suspended": "Händler gesperrt"
+      }
     }
   },
   "legal": {

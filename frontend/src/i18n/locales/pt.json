@@ -519,7 +519,8 @@
       "openMenu": "Abrir menu",
       "siteContent": "Conteúdo do site",
       "roles": "Funções e acessos",
-      "channels": "Canais de anúncios"
+      "channels": "Canais de anúncios",
+      "merchantApprovals": "Verificação de comerciantes"
     },
     "home": {
       "title": "Painel",
@@ -1289,6 +1290,62 @@
       "deleted": "Os seus dados pessoais foram apagados.",
       "deleteFailed": "Não foi possível concluir a eliminação. Contacte o apoio ao cliente.",
       "saveFailed": "Não foi possível guardar. Tente novamente."
+    },
+    "verification": {
+      "status": {
+        "pending": "Verificação pendente",
+        "verified": "Verificado",
+        "restricted": "Conta restrita",
+        "suspended": "Conta suspensa"
+      },
+      "canTransact": "O seu negócio está verificado — já pode aceitar resgates.",
+      "reviewNote": "Nota do revisor",
+      "formTitle": "Verificação do negócio",
+      "formSubtitle": "Verificamos cada comerciante antes de poder aceitar resgates. Os seus dados de identidade e de liquidação são guardados apenas como referência mascarada.",
+      "reReviewWarning": "Editar os seus dados envia a sua conta de volta para revisão antes de poder voltar a aceitar resgates.",
+      "businessName": "Nome do negócio",
+      "registrationNumber": "Número de registo comercial",
+      "city": "Cidade",
+      "phone": "Telefone de contacto",
+      "address": "Morada do negócio",
+      "ownerName": "Nome completo do proprietário",
+      "idType": "Tipo de documento",
+      "idTypes": {
+        "ghana_card": "Cartão do Gana",
+        "passport": "Passaporte",
+        "drivers_licence": "Carta de condução",
+        "voter_id": "Cartão de eleitor",
+        "other": "Outro"
+      },
+      "idNumber": "Número do documento",
+      "currentEnding": "Registado: termina em {{last4}}",
+      "settlementProvider": "Fornecedor de liquidação (banco ou dinheiro móvel)",
+      "settlementAccount": "Número da conta de liquidação",
+      "settlement": "Liquidação",
+      "settlementHint": "Guardamos apenas os últimos dígitos — o seu fornecedor detém a conta.",
+      "submit": "Enviar para verificação",
+      "submitted": "Enviado para revisão",
+      "submitFailed": "Não foi possível enviar os seus dados"
+    },
+    "adminMerchants": {
+      "title": "Verificação de comerciantes",
+      "subtitle": "Reveja o KYC dos comerciantes e defina quem pode aceitar resgates.",
+      "noName": "Negócio sem nome",
+      "submitted": "Enviado a {{date}}",
+      "notePlaceholder": "Nota de revisão (opcional) — partilhada com o comerciante",
+      "actionFailed": "Não foi possível atualizar esse comerciante",
+      "emptyTitle": "Sem comerciantes {{status}}",
+      "emptyDesc": "Os comerciantes aparecem aqui assim que enviam os seus dados.",
+      "action": {
+        "verified": "Verificar",
+        "restricted": "Restringir",
+        "suspended": "Suspender"
+      },
+      "set": {
+        "verified": "Comerciante verificado",
+        "restricted": "Comerciante restrito",
+        "suspended": "Comerciante suspenso"
+      }
     }
   },
   "legal": {

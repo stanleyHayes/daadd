@@ -58,6 +58,7 @@ const NAV_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   profile: User,
   settings: Settings,
   'admin-advertisers': UserCheck,
+  'admin-merchants': Store,
   'admin-moderation': ShieldCheck,
   'admin-loyalty': Sparkles,
   'site-content': LayoutTemplate,

@@ -1,10 +1,20 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import crypto from 'crypto';
 import { Types } from 'mongoose';
-import { Redemption, Reward, User, Notification, Campaign, Outlet } from '../models';
+import {
+  Redemption,
+  Reward,
+  User,
+  Notification,
+  Campaign,
+  Outlet,
+  MerchantVerification,
+  UserRole,
+} from '../models';
 import { authMiddleware, JWT_SECRET } from '../middleware/auth';
 import { success, paginated } from '../utils/response';
 import { bumpStreak } from '../utils/streak';
+import { merchantGate } from '../utils/merchant-gate';
 
 const router = Router();
 
@@ -458,6 +468,21 @@ router.post('/validate', authMiddleware, requireMerchant, async (req: Request, r
 
 router.post('/confirm', authMiddleware, requireMerchant, async (req: Request, res: Response) => {
   try {
+    // Confirming a redemption debits the customer's token ledger — the
+    // money-touching action. A `merchant`-role actor must have cleared
+    // verification first; advertiser/admin actors are not gated.
+    const verification = await MerchantVerification.findOne({ merchant_id: req.user!.userId })
+      .select('status')
+      .lean();
+    const gate = merchantGate({
+      role: req.user!.role as UserRole,
+      status: verification?.status ?? null,
+    });
+    if (!gate.can_transact) {
+      res.status(403).json({ success: false, message: gate.reason });
+      return;
+    }
+
     const { redemption_id } = req.body;
     if (!redemption_id) {
       res.status(400).json({ success: false, message: 'redemption_id is required' });

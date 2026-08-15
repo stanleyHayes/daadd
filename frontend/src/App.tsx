@@ -56,6 +56,7 @@ import { ProfilePage } from '@/pages/dashboard/ProfilePage';
 import { SettingsPage } from '@/pages/dashboard/SettingsPage';
 import { PlatformAccountsPage } from '@/pages/dashboard/PlatformAccountsPage';
 import { AdminAdvertisersPage } from '@/pages/dashboard/AdminAdvertisersPage';
+import { AdminMerchantsPage } from '@/pages/dashboard/AdminMerchantsPage';
 import { AdminModerationPage } from '@/pages/dashboard/AdminModerationPage';
 import { ChannelsPage } from '@/pages/dashboard/ChannelsPage';
 import { RolesPage } from '@/pages/dashboard/RolesPage';
@@ -152,6 +153,7 @@ function App() {
               </Route>
               <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
                 <Route path="/dashboard/admin/advertisers" element={<AdminAdvertisersPage />} />
+                <Route path="/dashboard/admin/merchants" element={<AdminMerchantsPage />} />
                 <Route path="/dashboard/admin/moderation" element={<AdminModerationPage />} />
                 <Route path="/dashboard/admin/loyalty" element={<AdminLoyaltyPage />} />
                 <Route path="/dashboard/admin/site-content" element={<SiteContentPage />} />

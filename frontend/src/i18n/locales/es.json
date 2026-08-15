@@ -519,7 +519,8 @@
       "openMenu": "Abrir menú",
       "siteContent": "Contenido del sitio web",
       "roles": "Roles y accesos",
-      "channels": "Canales publicitarios"
+      "channels": "Canales publicitarios",
+      "merchantApprovals": "Verificación de comercios"
     },
     "home": {
       "title": "Panel",
@@ -1289,6 +1290,62 @@
       "deleted": "Tus datos personales se han suprimido.",
       "deleteFailed": "No se ha podido completar la eliminación. Ponte en contacto con el servicio de asistencia.",
       "saveFailed": "No se ha podido guardar. Inténtalo de nuevo."
+    },
+    "verification": {
+      "status": {
+        "pending": "Verificación pendiente",
+        "verified": "Verificado",
+        "restricted": "Cuenta restringida",
+        "suspended": "Cuenta suspendida"
+      },
+      "canTransact": "Tu negocio está verificado: ya puedes aceptar canjes.",
+      "reviewNote": "Nota del revisor",
+      "formTitle": "Verificación del negocio",
+      "formSubtitle": "Verificamos a cada comercio antes de que pueda aceptar canjes. Tus datos de identidad y de liquidación se guardan solo como referencia enmascarada.",
+      "reReviewWarning": "Editar tus datos envía tu cuenta de nuevo a revisión antes de que puedas volver a aceptar canjes.",
+      "businessName": "Nombre del negocio",
+      "registrationNumber": "Número de registro mercantil",
+      "city": "Ciudad",
+      "phone": "Teléfono de contacto",
+      "address": "Dirección del negocio",
+      "ownerName": "Nombre completo del propietario",
+      "idType": "Tipo de documento",
+      "idTypes": {
+        "ghana_card": "Tarjeta de Ghana",
+        "passport": "Pasaporte",
+        "drivers_licence": "Licencia de conducir",
+        "voter_id": "Credencial de votante",
+        "other": "Otro"
+      },
+      "idNumber": "Número de documento",
+      "currentEnding": "Registrado: termina en {{last4}}",
+      "settlementProvider": "Proveedor de liquidación (banco o dinero móvil)",
+      "settlementAccount": "Número de cuenta de liquidación",
+      "settlement": "Liquidación",
+      "settlementHint": "Solo guardamos los últimos dígitos: tu proveedor conserva la cuenta.",
+      "submit": "Enviar para verificación",
+      "submitted": "Enviado para revisión",
+      "submitFailed": "No se pudieron enviar tus datos"
+    },
+    "adminMerchants": {
+      "title": "Verificación de comercios",
+      "subtitle": "Revisa el KYC de los comercios y decide quién puede aceptar canjes.",
+      "noName": "Negocio sin nombre",
+      "submitted": "Enviado el {{date}}",
+      "notePlaceholder": "Nota de revisión (opcional): compartida con el comercio",
+      "actionFailed": "No se pudo actualizar ese comercio",
+      "emptyTitle": "No hay comercios {{status}}",
+      "emptyDesc": "Los comercios aparecen aquí cuando envían sus datos.",
+      "action": {
+        "verified": "Verificar",
+        "restricted": "Restringir",
+        "suspended": "Suspender"
+      },
+      "set": {
+        "verified": "Comercio verificado",
+        "restricted": "Comercio restringido",
+        "suspended": "Comercio suspendido"
+      }
     }
   },
   "legal": {

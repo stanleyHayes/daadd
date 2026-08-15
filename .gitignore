@@ -69,3 +69,6 @@ backend/dist-seed/
 
 # Agent working state — machine-local, not project content.
 .claude/projects/
+
+# Raven plugin working directories
+.raven/

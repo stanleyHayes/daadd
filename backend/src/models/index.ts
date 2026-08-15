@@ -27,3 +27,11 @@ export { SiteContent, ISiteContent, SITE_CONTENT_TYPES, SiteContentType } from '
 export { SupportTicket, ISupportTicket, SupportCategory, SupportStatus } from './SupportTicket';
 export { Consent, IConsent, CONSENT_PURPOSES, ConsentPurpose, currentConsent } from './Consent';
 export { DataAccessLog, IDataAccessLog, recordDataAccess } from './DataAccessLog';
+export {
+  MerchantVerification,
+  IMerchantVerification,
+  VerificationStatus,
+  VERIFICATION_STATUSES,
+  IdType,
+  maskLast,
+} from './MerchantVerification';

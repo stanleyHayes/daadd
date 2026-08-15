@@ -4,6 +4,7 @@ import { Card } from '@/components/ui/Card';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { useMerchantMetrics } from '@/hooks/useMerchantMetrics';
+import { MerchantVerificationPanel } from '@/components/merchant/MerchantVerificationPanel';
 import { formatCurrency, formatNumber, formatPercentage } from '@/lib/utils';
 import {
   Users,
@@ -26,6 +27,8 @@ export function MerchantDashboardPage() {
         <h1 className="text-2xl font-bold text-text-primary">{t('dashboard.merchant.title')}</h1>
         <p className="text-sm text-text-secondary mt-1">{t('dashboard.merchant.subtitle')}</p>
       </div>
+
+      <MerchantVerificationPanel />
 
       {isLoading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

@@ -519,7 +519,8 @@
       "openMenu": "Ouvrir le menu",
       "siteContent": "Contenu du site",
       "roles": "Rôles et accès",
-      "channels": "Canaux publicitaires"
+      "channels": "Canaux publicitaires",
+      "merchantApprovals": "Vérification des commerçants"
     },
     "home": {
       "title": "Tableau de bord",
@@ -1289,6 +1290,62 @@
       "deleted": "Vos données personnelles ont été effacées.",
       "deleteFailed": "Impossible de finaliser la suppression. Veuillez contacter le support.",
       "saveFailed": "Impossible d'enregistrer ce choix. Veuillez réessayer."
+    },
+    "verification": {
+      "status": {
+        "pending": "Vérification en attente",
+        "verified": "Vérifié",
+        "restricted": "Compte restreint",
+        "suspended": "Compte suspendu"
+      },
+      "canTransact": "Votre entreprise est vérifiée — vous pouvez accepter les échanges.",
+      "reviewNote": "Note de l'examinateur",
+      "formTitle": "Vérification de l'entreprise",
+      "formSubtitle": "Nous vérifions chaque commerçant avant qu'il puisse accepter des échanges. Vos pièces d'identité et coordonnées de règlement ne sont conservées que sous forme de référence masquée.",
+      "reReviewWarning": "Modifier vos informations renvoie votre compte en examen avant que vous puissiez à nouveau accepter des échanges.",
+      "businessName": "Nom de l'entreprise",
+      "registrationNumber": "Numéro d'immatriculation de l'entreprise",
+      "city": "Ville",
+      "phone": "Téléphone de contact",
+      "address": "Adresse de l'entreprise",
+      "ownerName": "Nom complet du propriétaire",
+      "idType": "Type de pièce d'identité",
+      "idTypes": {
+        "ghana_card": "Carte du Ghana",
+        "passport": "Passeport",
+        "drivers_licence": "Permis de conduire",
+        "voter_id": "Carte d'électeur",
+        "other": "Autre"
+      },
+      "idNumber": "Numéro de pièce d'identité",
+      "currentEnding": "Enregistré : se terminant par {{last4}}",
+      "settlementProvider": "Prestataire de règlement (banque ou mobile money)",
+      "settlementAccount": "Numéro de compte de règlement",
+      "settlement": "Règlement",
+      "settlementHint": "Nous ne conservons que les derniers chiffres — votre prestataire détient le compte.",
+      "submit": "Soumettre pour vérification",
+      "submitted": "Soumis pour examen",
+      "submitFailed": "Impossible de soumettre vos informations"
+    },
+    "adminMerchants": {
+      "title": "Vérification des commerçants",
+      "subtitle": "Examinez le KYC des commerçants et définissez qui peut accepter les échanges.",
+      "noName": "Entreprise sans nom",
+      "submitted": "Soumis le {{date}}",
+      "notePlaceholder": "Note d'examen (facultative) — partagée avec le commerçant",
+      "actionFailed": "Impossible de mettre à jour ce commerçant",
+      "emptyTitle": "Aucun commerçant {{status}}",
+      "emptyDesc": "Les commerçants apparaissent ici une fois leurs informations soumises.",
+      "action": {
+        "verified": "Vérifier",
+        "restricted": "Restreindre",
+        "suspended": "Suspendre"
+      },
+      "set": {
+        "verified": "Commerçant vérifié",
+        "restricted": "Commerçant restreint",
+        "suspended": "Commerçant suspendu"
+      }
     }
   },
   "legal": {

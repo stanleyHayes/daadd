@@ -635,7 +635,8 @@
         "openMenu": "Öppna menyn",
         "channels": "Annonskanaler",
         "roles": "Roller och behörigheter",
-        "siteContent": "Webbplatsinnehåll"
+        "siteContent": "Webbplatsinnehåll",
+        "merchantApprovals": "Handlarverifiering"
       },
       "home": {
         "title": "Översikt",
@@ -1405,6 +1406,62 @@
           }
         },
         "saveFailed": "Det gick inte att spara det. Försök igen."
+      },
+      "verification": {
+        "status": {
+          "pending": "Verifiering väntar",
+          "verified": "Verifierad",
+          "restricted": "Konto begränsat",
+          "suspended": "Konto avstängt"
+        },
+        "canTransact": "Ditt företag är verifierat — du kan ta emot inlösen.",
+        "reviewNote": "Granskarens anteckning",
+        "formTitle": "Företagsverifiering",
+        "formSubtitle": "Vi verifierar varje handlare innan de kan ta emot inlösen. Dina identitets- och avvecklingsuppgifter sparas endast som en maskerad referens.",
+        "reReviewWarning": "Om du ändrar dina uppgifter skickas ditt konto tillbaka för granskning innan du kan ta emot inlösen igen.",
+        "businessName": "Företagsnamn",
+        "registrationNumber": "Organisationsnummer",
+        "city": "Stad",
+        "phone": "Kontakttelefon",
+        "address": "Företagsadress",
+        "ownerName": "Ägarens fullständiga namn",
+        "idType": "Typ av legitimation",
+        "idTypes": {
+          "ghana_card": "Ghana-kort",
+          "passport": "Pass",
+          "drivers_licence": "Körkort",
+          "voter_id": "Röstkort",
+          "other": "Övrigt"
+        },
+        "idNumber": "Legitimationsnummer",
+        "currentEnding": "Sparat: slutar på {{last4}}",
+        "settlementProvider": "Avvecklingsleverantör (bank eller mobilpengar)",
+        "settlementAccount": "Avvecklingskontonummer",
+        "settlement": "Avveckling",
+        "settlementHint": "Vi sparar bara de sista siffrorna — din leverantör har kontot.",
+        "submit": "Skicka för verifiering",
+        "submitted": "Inskickat för granskning",
+        "submitFailed": "Det gick inte att skicka dina uppgifter"
+      },
+      "adminMerchants": {
+        "title": "Handlarverifiering",
+        "subtitle": "Granska handlarnas KYC och bestäm vem som kan ta emot inlösen.",
+        "noName": "Namnlöst företag",
+        "submitted": "Inskickat {{date}}",
+        "notePlaceholder": "Granskningsanteckning (valfri) — delas med handlaren",
+        "actionFailed": "Det gick inte att uppdatera handlaren",
+        "emptyTitle": "Inga {{status}} handlare",
+        "emptyDesc": "Handlare visas här när de har skickat in sina uppgifter.",
+        "action": {
+          "verified": "Verifiera",
+          "restricted": "Begränsa",
+          "suspended": "Stäng av"
+        },
+        "set": {
+          "verified": "Handlare verifierad",
+          "restricted": "Handlare begränsad",
+          "suspended": "Handlare avstängd"
+        }
       }
     },
     "legal": {
@@ -2052,7 +2109,8 @@
         "openMenu": "Abrir menú",
         "channels": "Canales publicitarios",
         "roles": "Roles y accesos",
-        "siteContent": "Contenido del sitio web"
+        "siteContent": "Contenido del sitio web",
+        "merchantApprovals": "Verificación de comercios"
       },
       "home": {
         "title": "Panel",
@@ -2827,6 +2885,62 @@
           }
         },
         "saveFailed": "No se ha podido guardar. Inténtalo de nuevo."
+      },
+      "verification": {
+        "status": {
+          "pending": "Verificación pendiente",
+          "verified": "Verificado",
+          "restricted": "Cuenta restringida",
+          "suspended": "Cuenta suspendida"
+        },
+        "canTransact": "Tu negocio está verificado: ya puedes aceptar canjes.",
+        "reviewNote": "Nota del revisor",
+        "formTitle": "Verificación del negocio",
+        "formSubtitle": "Verificamos a cada comercio antes de que pueda aceptar canjes. Tus datos de identidad y de liquidación se guardan solo como referencia enmascarada.",
+        "reReviewWarning": "Editar tus datos envía tu cuenta de nuevo a revisión antes de que puedas volver a aceptar canjes.",
+        "businessName": "Nombre del negocio",
+        "registrationNumber": "Número de registro mercantil",
+        "city": "Ciudad",
+        "phone": "Teléfono de contacto",
+        "address": "Dirección del negocio",
+        "ownerName": "Nombre completo del propietario",
+        "idType": "Tipo de documento",
+        "idTypes": {
+          "ghana_card": "Tarjeta de Ghana",
+          "passport": "Pasaporte",
+          "drivers_licence": "Licencia de conducir",
+          "voter_id": "Credencial de votante",
+          "other": "Otro"
+        },
+        "idNumber": "Número de documento",
+        "currentEnding": "Registrado: termina en {{last4}}",
+        "settlementProvider": "Proveedor de liquidación (banco o dinero móvil)",
+        "settlementAccount": "Número de cuenta de liquidación",
+        "settlement": "Liquidación",
+        "settlementHint": "Solo guardamos los últimos dígitos: tu proveedor conserva la cuenta.",
+        "submit": "Enviar para verificación",
+        "submitted": "Enviado para revisión",
+        "submitFailed": "No se pudieron enviar tus datos"
+      },
+      "adminMerchants": {
+        "title": "Verificación de comercios",
+        "subtitle": "Revisa el KYC de los comercios y decide quién puede aceptar canjes.",
+        "noName": "Negocio sin nombre",
+        "submitted": "Enviado el {{date}}",
+        "notePlaceholder": "Nota de revisión (opcional): compartida con el comercio",
+        "actionFailed": "No se pudo actualizar ese comercio",
+        "emptyTitle": "No hay comercios {{status}}",
+        "emptyDesc": "Los comercios aparecen aquí cuando envían sus datos.",
+        "action": {
+          "verified": "Verificar",
+          "restricted": "Restringir",
+          "suspended": "Suspender"
+        },
+        "set": {
+          "verified": "Comercio verificado",
+          "restricted": "Comercio restringido",
+          "suspended": "Comercio suspendido"
+        }
       }
     },
     "legal": {
@@ -3474,7 +3588,8 @@
         "openMenu": "Ouvrir le menu",
         "channels": "Canaux publicitaires",
         "roles": "Rôles et accès",
-        "siteContent": "Contenu du site"
+        "siteContent": "Contenu du site",
+        "merchantApprovals": "Vérification des commerçants"
       },
       "home": {
         "title": "Tableau de bord",
@@ -4249,6 +4364,62 @@
           }
         },
         "saveFailed": "Impossible d'enregistrer ce choix. Veuillez réessayer."
+      },
+      "verification": {
+        "status": {
+          "pending": "Vérification en attente",
+          "verified": "Vérifié",
+          "restricted": "Compte restreint",
+          "suspended": "Compte suspendu"
+        },
+        "canTransact": "Votre entreprise est vérifiée — vous pouvez accepter les échanges.",
+        "reviewNote": "Note de l'examinateur",
+        "formTitle": "Vérification de l'entreprise",
+        "formSubtitle": "Nous vérifions chaque commerçant avant qu'il puisse accepter des échanges. Vos pièces d'identité et coordonnées de règlement ne sont conservées que sous forme de référence masquée.",
+        "reReviewWarning": "Modifier vos informations renvoie votre compte en examen avant que vous puissiez à nouveau accepter des échanges.",
+        "businessName": "Nom de l'entreprise",
+        "registrationNumber": "Numéro d'immatriculation de l'entreprise",
+        "city": "Ville",
+        "phone": "Téléphone de contact",
+        "address": "Adresse de l'entreprise",
+        "ownerName": "Nom complet du propriétaire",
+        "idType": "Type de pièce d'identité",
+        "idTypes": {
+          "ghana_card": "Carte du Ghana",
+          "passport": "Passeport",
+          "drivers_licence": "Permis de conduire",
+          "voter_id": "Carte d'électeur",
+          "other": "Autre"
+        },
+        "idNumber": "Numéro de pièce d'identité",
+        "currentEnding": "Enregistré : se terminant par {{last4}}",
+        "settlementProvider": "Prestataire de règlement (banque ou mobile money)",
+        "settlementAccount": "Numéro de compte de règlement",
+        "settlement": "Règlement",
+        "settlementHint": "Nous ne conservons que les derniers chiffres — votre prestataire détient le compte.",
+        "submit": "Soumettre pour vérification",
+        "submitted": "Soumis pour examen",
+        "submitFailed": "Impossible de soumettre vos informations"
+      },
+      "adminMerchants": {
+        "title": "Vérification des commerçants",
+        "subtitle": "Examinez le KYC des commerçants et définissez qui peut accepter les échanges.",
+        "noName": "Entreprise sans nom",
+        "submitted": "Soumis le {{date}}",
+        "notePlaceholder": "Note d'examen (facultative) — partagée avec le commerçant",
+        "actionFailed": "Impossible de mettre à jour ce commerçant",
+        "emptyTitle": "Aucun commerçant {{status}}",
+        "emptyDesc": "Les commerçants apparaissent ici une fois leurs informations soumises.",
+        "action": {
+          "verified": "Vérifier",
+          "restricted": "Restreindre",
+          "suspended": "Suspendre"
+        },
+        "set": {
+          "verified": "Commerçant vérifié",
+          "restricted": "Commerçant restreint",
+          "suspended": "Commerçant suspendu"
+        }
       }
     },
     "legal": {
@@ -4896,7 +5067,8 @@
         "openMenu": "Menü öffnen",
         "channels": "Werbekanäle",
         "roles": "Rollen & Zugriff",
-        "siteContent": "Website-Inhalte"
+        "siteContent": "Website-Inhalte",
+        "merchantApprovals": "Händlerprüfung"
       },
       "home": {
         "title": "Dashboard",
@@ -5671,6 +5843,62 @@
           }
         },
         "saveFailed": "Das konnte nicht gespeichert werden. Bitte versuche es erneut."
+      },
+      "verification": {
+        "status": {
+          "pending": "Prüfung ausstehend",
+          "verified": "Verifiziert",
+          "restricted": "Konto eingeschränkt",
+          "suspended": "Konto gesperrt"
+        },
+        "canTransact": "Ihr Unternehmen ist verifiziert — Sie können Einlösungen annehmen.",
+        "reviewNote": "Prüferhinweis",
+        "formTitle": "Unternehmensverifizierung",
+        "formSubtitle": "Wir prüfen jeden Händler, bevor er Einlösungen annehmen kann. Ihre Ausweis- und Abrechnungsdaten werden nur als maskierte Referenz gespeichert.",
+        "reReviewWarning": "Wenn Sie Ihre Daten ändern, wird Ihr Konto erneut zur Prüfung gesendet, bevor Sie wieder Einlösungen annehmen können.",
+        "businessName": "Firmenname",
+        "registrationNumber": "Handelsregisternummer",
+        "city": "Stadt",
+        "phone": "Kontakttelefon",
+        "address": "Geschäftsadresse",
+        "ownerName": "Vollständiger Name des Inhabers",
+        "idType": "Ausweisart",
+        "idTypes": {
+          "ghana_card": "Ghana-Karte",
+          "passport": "Reisepass",
+          "drivers_licence": "Führerschein",
+          "voter_id": "Wählerausweis",
+          "other": "Sonstiges"
+        },
+        "idNumber": "Ausweisnummer",
+        "currentEnding": "Gespeichert: endet auf {{last4}}",
+        "settlementProvider": "Abrechnungsanbieter (Bank oder Mobile Money)",
+        "settlementAccount": "Abrechnungskontonummer",
+        "settlement": "Abrechnung",
+        "settlementHint": "Wir speichern nur die letzten Ziffern — Ihr Anbieter verwahrt das Konto.",
+        "submit": "Zur Verifizierung einreichen",
+        "submitted": "Zur Prüfung eingereicht",
+        "submitFailed": "Ihre Daten konnten nicht übermittelt werden"
+      },
+      "adminMerchants": {
+        "title": "Händlerprüfung",
+        "subtitle": "Prüfen Sie das Händler-KYC und legen Sie fest, wer Einlösungen annehmen darf.",
+        "noName": "Unbenanntes Unternehmen",
+        "submitted": "Eingereicht am {{date}}",
+        "notePlaceholder": "Prüfhinweis (optional) — für den Händler sichtbar",
+        "actionFailed": "Dieser Händler konnte nicht aktualisiert werden",
+        "emptyTitle": "Keine {{status}} Händler",
+        "emptyDesc": "Händler erscheinen hier, sobald sie ihre Daten übermittelt haben.",
+        "action": {
+          "verified": "Verifizieren",
+          "restricted": "Einschränken",
+          "suspended": "Sperren"
+        },
+        "set": {
+          "verified": "Händler verifiziert",
+          "restricted": "Händler eingeschränkt",
+          "suspended": "Händler gesperrt"
+        }
       }
     },
     "legal": {
@@ -6318,7 +6546,8 @@
         "openMenu": "Abrir menu",
         "channels": "Canais de anúncios",
         "roles": "Funções e acessos",
-        "siteContent": "Conteúdo do site"
+        "siteContent": "Conteúdo do site",
+        "merchantApprovals": "Verificação de comerciantes"
       },
       "home": {
         "title": "Painel",
@@ -7093,6 +7322,62 @@
           }
         },
         "saveFailed": "Não foi possível guardar. Tente novamente."
+      },
+      "verification": {
+        "status": {
+          "pending": "Verificação pendente",
+          "verified": "Verificado",
+          "restricted": "Conta restrita",
+          "suspended": "Conta suspensa"
+        },
+        "canTransact": "O seu negócio está verificado — já pode aceitar resgates.",
+        "reviewNote": "Nota do revisor",
+        "formTitle": "Verificação do negócio",
+        "formSubtitle": "Verificamos cada comerciante antes de poder aceitar resgates. Os seus dados de identidade e de liquidação são guardados apenas como referência mascarada.",
+        "reReviewWarning": "Editar os seus dados envia a sua conta de volta para revisão antes de poder voltar a aceitar resgates.",
+        "businessName": "Nome do negócio",
+        "registrationNumber": "Número de registo comercial",
+        "city": "Cidade",
+        "phone": "Telefone de contacto",
+        "address": "Morada do negócio",
+        "ownerName": "Nome completo do proprietário",
+        "idType": "Tipo de documento",
+        "idTypes": {
+          "ghana_card": "Cartão do Gana",
+          "passport": "Passaporte",
+          "drivers_licence": "Carta de condução",
+          "voter_id": "Cartão de eleitor",
+          "other": "Outro"
+        },
+        "idNumber": "Número do documento",
+        "currentEnding": "Registado: termina em {{last4}}",
+        "settlementProvider": "Fornecedor de liquidação (banco ou dinheiro móvel)",
+        "settlementAccount": "Número da conta de liquidação",
+        "settlement": "Liquidação",
+        "settlementHint": "Guardamos apenas os últimos dígitos — o seu fornecedor detém a conta.",
+        "submit": "Enviar para verificação",
+        "submitted": "Enviado para revisão",
+        "submitFailed": "Não foi possível enviar os seus dados"
+      },
+      "adminMerchants": {
+        "title": "Verificação de comerciantes",
+        "subtitle": "Reveja o KYC dos comerciantes e defina quem pode aceitar resgates.",
+        "noName": "Negócio sem nome",
+        "submitted": "Enviado a {{date}}",
+        "notePlaceholder": "Nota de revisão (opcional) — partilhada com o comerciante",
+        "actionFailed": "Não foi possível atualizar esse comerciante",
+        "emptyTitle": "Sem comerciantes {{status}}",
+        "emptyDesc": "Os comerciantes aparecem aqui assim que enviam os seus dados.",
+        "action": {
+          "verified": "Verificar",
+          "restricted": "Restringir",
+          "suspended": "Suspender"
+        },
+        "set": {
+          "verified": "Comerciante verificado",
+          "restricted": "Comerciante restrito",
+          "suspended": "Comerciante suspenso"
+        }
       }
     },
     "legal": {
