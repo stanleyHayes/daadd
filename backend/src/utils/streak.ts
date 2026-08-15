@@ -27,9 +27,17 @@ function dayKey(d: Date): string {
   return d.toISOString().slice(0, 10); // UTC calendar day
 }
 
-/** The multiplier a streak of `count` days earns (1 when below the first tier). */
-export function multiplierForStreak(count: number): number {
-  for (const tier of STREAK_TIERS) {
+export type StreakTier = { min: number; multiplier: number };
+
+/**
+ * The multiplier a streak of `count` days earns (1 when below the first tier).
+ *
+ * `tiers` defaults to the built-in STREAK_TIERS but can be overridden with the
+ * administrator-configured tiers (see utils/multiplier-rules.ts). Tiers are
+ * expected highest-`min`-first; the first one the count satisfies wins.
+ */
+export function multiplierForStreak(count: number, tiers: StreakTier[] = STREAK_TIERS): number {
+  for (const tier of tiers) {
     if (count >= tier.min) return tier.multiplier;
   }
   return 1;
@@ -50,7 +58,8 @@ export interface StreakUpdate {
  */
 export function advanceStreak(
   current: { streak_count?: number; last_reward_date?: Date | null },
-  now: Date = new Date()
+  now: Date = new Date(),
+  tiers: StreakTier[] = STREAK_TIERS
 ): StreakUpdate {
   const prev = current.streak_count || 0;
   const last = current.last_reward_date ? new Date(current.last_reward_date) : null;
@@ -70,11 +79,13 @@ export function advanceStreak(
     }
   }
 
-  const multiplier = multiplierForStreak(streak);
+  const multiplier = multiplierForStreak(streak, tiers);
   return {
     streak_count: streak,
     last_reward_date: now,
-    active: streak >= STREAK_BONUS_THRESHOLD,
+    // "Active" means the streak actually earns a bonus under the tiers in force,
+    // rather than a fixed day count — so it tracks configured tiers automatically.
+    active: multiplier > 1,
     multiplier,
   };
 }

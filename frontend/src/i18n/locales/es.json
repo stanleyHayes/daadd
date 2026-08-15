@@ -1102,7 +1102,21 @@
       "minScore": "Puntuación mínima de participación",
       "minScoreHint": "Puntuación ponderada de visitas, compras, reseñas, visualizaciones y rachas.",
       "save": "Guardar criterios",
-      "reset": "Restablecer valores predeterminados"
+      "reset": "Restablecer valores predeterminados",
+      "multiplier": {
+        "title": "Multiplicadores de recompensa",
+        "subtitle": "Niveles de racha y multiplicador VIP que aumentan las recompensas en tokens.",
+        "ceilingNote": "Topes máximos: racha ×{{streak}}, VIP ×{{vip}}, combinado ×{{effective}}. Cualquier valor superior se ajusta al guardar.",
+        "tiers": "Niveles de racha",
+        "minDays": "Racha mínima (días)",
+        "multiplier": "Multiplicador",
+        "removeTier": "Eliminar nivel",
+        "addTier": "Añadir nivel",
+        "vipMultiplier": "Multiplicador VIP",
+        "max": "Máx ×{{n}}",
+        "bonusThreshold": "Umbral de bonificación (días)",
+        "bonusThresholdHint": "Días antes de que se aplique cualquier bonificación por racha."
+      }
     },
     "siteContent": {
       "title": "Contenido del sitio web",

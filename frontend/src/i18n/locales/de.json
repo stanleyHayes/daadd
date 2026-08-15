@@ -1102,7 +1102,21 @@
       "minScore": "Mindest-Engagement-Score",
       "minScoreHint": "Gewichteter Score aus Besuchen, Käufen, Bewertungen, Ansichten und Serien.",
       "save": "Kriterien speichern",
-      "reset": "Auf Standard zurücksetzen"
+      "reset": "Auf Standard zurücksetzen",
+      "multiplier": {
+        "title": "Belohnungsmultiplikatoren",
+        "subtitle": "Serien-Stufen und VIP-Multiplikator, die Token-Belohnungen erhöhen.",
+        "ceilingNote": "Harte Obergrenzen: Serie ×{{streak}}, VIP ×{{vip}}, kombiniert ×{{effective}}. Höhere Werte werden beim Speichern begrenzt.",
+        "tiers": "Serien-Stufen",
+        "minDays": "Mindestserie (Tage)",
+        "multiplier": "Multiplikator",
+        "removeTier": "Stufe entfernen",
+        "addTier": "Stufe hinzufügen",
+        "vipMultiplier": "VIP-Multiplikator",
+        "max": "Max ×{{n}}",
+        "bonusThreshold": "Bonus-Schwelle (Tage)",
+        "bonusThresholdHint": "Tage, bevor ein Serienbonus greift."
+      }
     },
     "siteContent": {
       "title": "Website-Inhalte",

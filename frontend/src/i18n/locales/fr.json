@@ -1102,7 +1102,21 @@
       "minScore": "Score d'engagement minimal",
       "minScoreHint": "Score pondéré tenant compte des visites, achats, avis, consultations et séries.",
       "save": "Enregistrer les critères",
-      "reset": "Rétablir les valeurs par défaut"
+      "reset": "Rétablir les valeurs par défaut",
+      "multiplier": {
+        "title": "Multiplicateurs de récompense",
+        "subtitle": "Paliers de série et multiplicateur VIP qui augmentent les récompenses en jetons.",
+        "ceilingNote": "Plafonds stricts : série ×{{streak}}, VIP ×{{vip}}, combiné ×{{effective}}. Toute valeur supérieure est ramenée à la limite lors de l’enregistrement.",
+        "tiers": "Paliers de série",
+        "minDays": "Série minimale (jours)",
+        "multiplier": "Multiplicateur",
+        "removeTier": "Supprimer le palier",
+        "addTier": "Ajouter un palier",
+        "vipMultiplier": "Multiplicateur VIP",
+        "max": "Max ×{{n}}",
+        "bonusThreshold": "Seuil de bonus (jours)",
+        "bonusThresholdHint": "Jours avant qu’un bonus de série ne s’applique."
+      }
     },
     "siteContent": {
       "title": "Contenu du site",

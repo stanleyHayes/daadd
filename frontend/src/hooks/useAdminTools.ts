@@ -78,3 +78,54 @@ export function useUpdateVipCriteria() {
     onError: () => toast.error('Could not update the criteria'),
   });
 }
+
+export interface StreakTier {
+  min: number;
+  multiplier: number;
+}
+
+export interface MultiplierRules {
+  streak_tiers: StreakTier[];
+  vip_multiplier: number;
+  bonus_threshold: number;
+}
+
+export interface MultiplierLimits {
+  max_streak_multiplier: number;
+  max_vip_multiplier: number;
+  max_effective_multiplier: number;
+}
+
+/** Admin-configurable reward-multiplier rules (Phase 3.3). */
+export function useMultiplierRules() {
+  return useQuery({
+    queryKey: ['multiplierRules'],
+    queryFn: async () => {
+      const res = await api.get<
+        ApiResponse<{ rules: MultiplierRules; defaults: MultiplierRules; limits: MultiplierLimits }>
+      >('/admin/multiplier-rules');
+      return res.data.data;
+    },
+  });
+}
+
+export function useUpdateMultiplierRules() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (rules: MultiplierRules) => {
+      const res = await api.put<ApiResponse<{ rules: MultiplierRules }>>(
+        '/admin/multiplier-rules',
+        rules
+      );
+      return res.data.data;
+    },
+    onSuccess: () => {
+      // The server re-clamps, so trust its response for what actually persisted.
+      queryClient.invalidateQueries({ queryKey: ['multiplierRules'] });
+      queryClient.invalidateQueries({ queryKey: ['streak'] });
+      queryClient.invalidateQueries({ queryKey: ['vip'] });
+      toast.success('Multiplier rules updated');
+    },
+    onError: () => toast.error('Could not update multiplier rules'),
+  });
+}

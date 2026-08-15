@@ -7,16 +7,14 @@ import {
   advanceStreak,
   bumpStreak,
   multiplierForStreak,
-  STREAK_BONUS_THRESHOLD,
-  STREAK_TIERS,
   STREAK_TYPES,
 } from '../utils/streak';
 import {
   engagementScore,
   getVipCriteria,
   qualifiesForVip,
-  VIP_MULTIPLIER,
 } from '../utils/vip';
+import { getMultiplierRules, effectiveMultiplier } from '../utils/multiplier-rules';
 import { tokensForInteraction, BUDGET_ALERT_THRESHOLD } from '../utils/reward-economics';
 
 const router = Router();
@@ -290,9 +288,10 @@ router.get('/leaderboard', authMiddleware, async (req: Request, res: Response) =
 // The signed-in user's engagement streaks + bonus status (V2 Area 8).
 router.get('/streak', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const user = await User.findById(req.user!.userId)
-      .select('streak_count last_reward_date streaks')
-      .lean();
+    const [user, rules] = await Promise.all([
+      User.findById(req.user!.userId).select('streak_count last_reward_date streaks').lean(),
+      getMultiplierRules(),
+    ]);
     const streak = user?.streak_count || 0;
     const stored = (user?.streaks || {}) as Record<string, { count?: number; last_at?: Date }>;
 
@@ -300,11 +299,11 @@ router.get('/streak', authMiddleware, async (req: Request, res: Response) => {
       success({
         streak,
         last_reward_date: user?.last_reward_date || null,
-        bonus_active: streak >= STREAK_BONUS_THRESHOLD,
-        bonus_threshold: STREAK_BONUS_THRESHOLD,
+        bonus_active: streak >= rules.bonus_threshold,
+        bonus_threshold: rules.bonus_threshold,
         // Multiplier the headline (daily) streak currently earns.
-        bonus_multiplier: multiplierForStreak(streak),
-        tiers: STREAK_TIERS,
+        bonus_multiplier: multiplierForStreak(streak, rules.streak_tiers),
+        tiers: rules.streak_tiers,
         // Per-activity streaks: daily / ad / merchant / review.
         streaks: STREAK_TYPES.reduce(
           (acc, type) => {
@@ -312,7 +311,7 @@ router.get('/streak', authMiddleware, async (req: Request, res: Response) => {
             acc[type] = {
               count,
               last_at: type === 'daily' ? user?.last_reward_date || null : stored[type]?.last_at || null,
-              multiplier: multiplierForStreak(count),
+              multiplier: multiplierForStreak(count, rules.streak_tiers),
             };
             return acc;
           },
@@ -336,12 +335,13 @@ router.get('/vip', authMiddleware, async (req: Request, res: Response) => {
     const uid = new Types.ObjectId(userId);
     const userMatch = { $in: [userId, uid] as any[] };
 
-    const [redemptions, reviewCount, adRewards, user, criteria] = await Promise.all([
+    const [redemptions, reviewCount, adRewards, user, criteria, rules] = await Promise.all([
       Redemption.find({ user_id: userMatch, status: 'completed' }).select('merchant_id').lean(),
       Review.countDocuments({ user: userMatch }),
       Reward.countDocuments({ user_id: uid, type: 'ad_reward', status: { $in: ['approved', 'paid'] } }),
       User.findById(userId).select('streak_count streaks vip_tier vip_since'),
       getVipCriteria(),
+      getMultiplierRules(),
     ]);
 
     const stored = (user?.streaks || {}) as Record<string, { count?: number }>;
@@ -370,7 +370,7 @@ router.get('/vip', authMiddleware, async (req: Request, res: Response) => {
       success({
         tier: qualifies ? 'vip' : 'none',
         since: user?.vip_since || null,
-        multiplier: qualifies ? VIP_MULTIPLIER : 1,
+        multiplier: qualifies ? rules.vip_multiplier : 1,
         engagement_score: score,
         metrics,
         criteria,
@@ -401,21 +401,24 @@ router.post('/claim/:adId', authMiddleware, async (req: Request, res: Response) 
       return;
     }
 
-    // Streak bonus (#6): regulars earn +0.5x on rewards. Advance the streak and
-    // apply the multiplier to this reward.
+    // Streak bonus (#6): regulars earn a multiplier on rewards. The tiers and
+    // the VIP multiplier are administrator-configurable (Phase 3.3); the values
+    // are re-clamped to hard ceilings here so a bad config cannot mint tokens.
+    const rules = await getMultiplierRules();
     const user = await User.findById(req.user!.userId).select(
       'streak_count last_reward_date streaks vip_tier'
     );
-    const streak = advanceStreak(user || {});
+    const streak = advanceStreak(user || {}, new Date(), rules.streak_tiers);
     // VIP members earn an extra multiplier on top of their streak bonus.
-    const vipMultiplier = user?.vip_tier === 'vip' ? VIP_MULTIPLIER : 1;
+    const vipMultiplier = user?.vip_tier === 'vip' ? rules.vip_multiplier : 1;
+    const rewardMultiplier = effectiveMultiplier(streak.multiplier, vipMultiplier);
 
     // Reward economics (Area 5): the token grant comes from the campaign's
     // configuration; campaigns predating that config fall back to the ad's
     // fixed reward so existing adverts keep paying out.
     const campaign = ad.campaign_id ? await Campaign.findById(ad.campaign_id).lean() : null;
     const baseTokens = tokensForInteraction(campaign, 'view', ad.reward_amount || 0);
-    const tokens = Math.max(0, Math.round(baseTokens * streak.multiplier * vipMultiplier));
+    const tokens = Math.max(0, Math.round(baseTokens * rewardMultiplier));
     if (tokens <= 0) {
       res.status(409).json({ success: false, message: 'This campaign is not issuing rewards' });
       return;

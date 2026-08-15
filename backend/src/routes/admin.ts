@@ -4,6 +4,15 @@ import { User, PlatformSetting } from '../models';
 import { authMiddleware, requireRole } from '../middleware/auth';
 import { success } from '../utils/response';
 import { getVipCriteria, DEFAULT_VIP_CRITERIA, VIP_CRITERIA_KEY } from '../utils/vip';
+import {
+  getMultiplierRules,
+  sanitizeMultiplierRules,
+  DEFAULT_MULTIPLIER_RULES,
+  MULTIPLIER_RULES_KEY,
+  MAX_STREAK_MULTIPLIER,
+  MAX_VIP_MULTIPLIER,
+  MAX_EFFECTIVE_MULTIPLIER,
+} from '../utils/multiplier-rules';
 
 const router = Router();
 
@@ -60,6 +69,45 @@ router.put('/vip-criteria', async (req: Request, res: Response) => {
     res.json(success({ criteria: next }, 'VIP criteria updated'));
   } catch (err: any) {
     res.status(500).json({ success: false, message: err.message || 'Failed to update VIP criteria' });
+  }
+});
+
+/**
+ * Reward-multiplier rules (Phase 3.3) — administrator-configurable streak tiers
+ * and VIP multiplier, replacing the previously hardcoded values. The saved value
+ * is sanitised and clamped to hard ceilings so no admin input can inflate the
+ * multiplier past a safe bound (the reward path re-clamps too — see
+ * utils/multiplier-rules.ts).
+ */
+router.get('/multiplier-rules', async (_req: Request, res: Response) => {
+  try {
+    res.json(
+      success({
+        rules: await getMultiplierRules(),
+        defaults: DEFAULT_MULTIPLIER_RULES,
+        limits: {
+          max_streak_multiplier: MAX_STREAK_MULTIPLIER,
+          max_vip_multiplier: MAX_VIP_MULTIPLIER,
+          max_effective_multiplier: MAX_EFFECTIVE_MULTIPLIER,
+        },
+      })
+    );
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message || 'Failed to fetch multiplier rules' });
+  }
+});
+
+router.put('/multiplier-rules', async (req: Request, res: Response) => {
+  try {
+    const next = sanitizeMultiplierRules(req.body);
+    await PlatformSetting.findOneAndUpdate(
+      { key: MULTIPLIER_RULES_KEY },
+      { $set: { value: next } },
+      { upsert: true, new: true }
+    );
+    res.json(success({ rules: next }, 'Multiplier rules updated'));
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message || 'Failed to update multiplier rules' });
   }
 });
 

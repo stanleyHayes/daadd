@@ -1102,7 +1102,21 @@
       "minScore": "Minsta engagemangspoäng",
       "minScoreHint": "Viktad poäng utifrån besök, köp, omdömen, visningar och streaks.",
       "save": "Spara kriterier",
-      "reset": "Återställ till standard"
+      "reset": "Återställ till standard",
+      "multiplier": {
+        "title": "Belöningsmultiplikatorer",
+        "subtitle": "Streak-nivåer och VIP-multiplikator som ökar token-belöningar.",
+        "ceilingNote": "Hårda tak: streak ×{{streak}}, VIP ×{{vip}}, kombinerat ×{{effective}}. Värden över detta begränsas vid sparande.",
+        "tiers": "Streak-nivåer",
+        "minDays": "Minsta streak (dagar)",
+        "multiplier": "Multiplikator",
+        "removeTier": "Ta bort nivå",
+        "addTier": "Lägg till nivå",
+        "vipMultiplier": "VIP-multiplikator",
+        "max": "Max ×{{n}}",
+        "bonusThreshold": "Bonuströskel (dagar)",
+        "bonusThresholdHint": "Dagar innan någon streak-bonus gäller."
+      }
     },
     "siteContent": {
       "title": "Webbplatsinnehåll",

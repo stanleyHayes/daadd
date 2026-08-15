@@ -80,7 +80,7 @@ queue, resolve) + `AdminFraudPage`; the 5-minute scheduled scan now runs fraud
 detection alongside the anomaly scan. Thresholds are env-configurable. Six locales.
 Tests: fraud-detection (13); the anomaly integration tests now seed real events.
 
-### Phase 3 — Discount transfer + referral + multiplier engine ⬜
+### Phase 3 — Discount transfer + referral + multiplier engine 🚧
 
 Low regulatory risk, high engagement, no payments needed.
 
@@ -88,7 +88,22 @@ Low regulatory risk, high engagement, no payments needed.
 | --- | --- | --- |
 | 3.1 | User-to-user discount transfer (vouchers; tokens stay non-transferable) | ⬜ |
 | 3.2 | Referral system with *activated* referrals (invitee must become real) | ⬜ |
-| 3.3 | Configurable multiplier rules engine (replaces hardcoded tiers) | ⬜ |
+| 3.3 | Configurable multiplier rules engine (replaces hardcoded tiers) | ✅ |
+
+**3.3 — configurable multiplier engine (done).** The streak tiers and VIP
+multiplier were hardcoded constants; they're now an admin-editable config stored
+in `PlatformSetting` (`utils/multiplier-rules.ts`, mirroring the VIP-criteria
+pattern). `streak.ts`'s `multiplierForStreak`/`advanceStreak` take injectable
+tiers; the reward-claim path and the streak/VIP read endpoints resolve live rules.
+**Safety:** every value is clamped to a hard, non-configurable ceiling (streak ×5,
+VIP ×3, effective product ×10) both on save *and* re-clamped at grant time, so a
+mistyped or malicious config can't mint inflated tokens — proven by a
+defence-in-depth test that poisons the store directly and asserts the claim is
+still capped. Admin `GET/PUT /admin/multiplier-rules`; editor added to
+`AdminLoyaltyPage`. Six locales. Tests: multiplier-rules (14).
+
+**Remaining in Phase 3:** 3.1 (voucher/discount transfer) and 3.2 (activated
+referrals) — both consumer-facing (mobile), greenfield, surveyed and scoped.
 
 ### Phase 4 — Payment abstraction over a licensed PSP ⛔
 
@@ -127,6 +142,7 @@ backups + DR, production monitoring + alerting.
 
 Newest first. One line per landed increment, with the commit.
 
+- Phase 3.3 (configurable multiplier engine) — admin-editable streak tiers + VIP multiplier stored in PlatformSetting, replacing hardcoded constants; hard non-configurable ceilings clamped on save and re-clamped at grant time (defence-in-depth). Backend + admin editor + 14 tests, six locales.
 - Phase 2.3 (real fraud detection) — de-synthesized the campaign anomaly series (now real DeviceEvent aggregation); new money-path FraudSignal detector (velocity / merchant surge / collusion / reward farming) with admin review routes, page, scheduled scan. Backend + frontend + 13 tests, six locales. Phase 2 complete.
 - Phase 2.1–2.2 (merchant verification) — KYC model with masked settlement/ID, verification status machine, merchant gate on the redemption-confirm money path, admin review queue, merchant dashboard panel. Backend + frontend + 21 tests, six locales.
 - Phase 1 (compliance foundations) — consent, data export, erasure, per-country config, token-policy invariant, sensitive-read audit log. Backend + frontend + 18 tests, six locales.

@@ -1218,7 +1218,21 @@
         "minScore": "Minsta engagemangspoäng",
         "minScoreHint": "Viktad poäng utifrån besök, köp, omdömen, visningar och streaks.",
         "save": "Spara kriterier",
-        "reset": "Återställ till standard"
+        "reset": "Återställ till standard",
+        "multiplier": {
+          "title": "Belöningsmultiplikatorer",
+          "subtitle": "Streak-nivåer och VIP-multiplikator som ökar token-belöningar.",
+          "ceilingNote": "Hårda tak: streak ×{{streak}}, VIP ×{{vip}}, kombinerat ×{{effective}}. Värden över detta begränsas vid sparande.",
+          "tiers": "Streak-nivåer",
+          "minDays": "Minsta streak (dagar)",
+          "multiplier": "Multiplikator",
+          "removeTier": "Ta bort nivå",
+          "addTier": "Lägg till nivå",
+          "vipMultiplier": "VIP-multiplikator",
+          "max": "Max ×{{n}}",
+          "bonusThreshold": "Bonuströskel (dagar)",
+          "bonusThresholdHint": "Dagar innan någon streak-bonus gäller."
+        }
       },
       "channels": {
         "ecpm": "Effektiv CPM",
@@ -2737,7 +2751,21 @@
         "minScore": "Puntuación mínima de participación",
         "minScoreHint": "Puntuación ponderada de visitas, compras, reseñas, visualizaciones y rachas.",
         "save": "Guardar criterios",
-        "reset": "Restablecer valores predeterminados"
+        "reset": "Restablecer valores predeterminados",
+        "multiplier": {
+          "title": "Multiplicadores de recompensa",
+          "subtitle": "Niveles de racha y multiplicador VIP que aumentan las recompensas en tokens.",
+          "ceilingNote": "Topes máximos: racha ×{{streak}}, VIP ×{{vip}}, combinado ×{{effective}}. Cualquier valor superior se ajusta al guardar.",
+          "tiers": "Niveles de racha",
+          "minDays": "Racha mínima (días)",
+          "multiplier": "Multiplicador",
+          "removeTier": "Eliminar nivel",
+          "addTier": "Añadir nivel",
+          "vipMultiplier": "Multiplicador VIP",
+          "max": "Máx ×{{n}}",
+          "bonusThreshold": "Umbral de bonificación (días)",
+          "bonusThresholdHint": "Días antes de que se aplique cualquier bonificación por racha."
+        }
       },
       "channels": {
         "ecpm": "CPM efectivo",
@@ -4256,7 +4284,21 @@
         "minScore": "Score d'engagement minimal",
         "minScoreHint": "Score pondéré tenant compte des visites, achats, avis, consultations et séries.",
         "save": "Enregistrer les critères",
-        "reset": "Rétablir les valeurs par défaut"
+        "reset": "Rétablir les valeurs par défaut",
+        "multiplier": {
+          "title": "Multiplicateurs de récompense",
+          "subtitle": "Paliers de série et multiplicateur VIP qui augmentent les récompenses en jetons.",
+          "ceilingNote": "Plafonds stricts : série ×{{streak}}, VIP ×{{vip}}, combiné ×{{effective}}. Toute valeur supérieure est ramenée à la limite lors de l’enregistrement.",
+          "tiers": "Paliers de série",
+          "minDays": "Série minimale (jours)",
+          "multiplier": "Multiplicateur",
+          "removeTier": "Supprimer le palier",
+          "addTier": "Ajouter un palier",
+          "vipMultiplier": "Multiplicateur VIP",
+          "max": "Max ×{{n}}",
+          "bonusThreshold": "Seuil de bonus (jours)",
+          "bonusThresholdHint": "Jours avant qu’un bonus de série ne s’applique."
+        }
       },
       "channels": {
         "ecpm": "CPM effectif",
@@ -5775,7 +5817,21 @@
         "minScore": "Mindest-Engagement-Score",
         "minScoreHint": "Gewichteter Score aus Besuchen, Käufen, Bewertungen, Ansichten und Serien.",
         "save": "Kriterien speichern",
-        "reset": "Auf Standard zurücksetzen"
+        "reset": "Auf Standard zurücksetzen",
+        "multiplier": {
+          "title": "Belohnungsmultiplikatoren",
+          "subtitle": "Serien-Stufen und VIP-Multiplikator, die Token-Belohnungen erhöhen.",
+          "ceilingNote": "Harte Obergrenzen: Serie ×{{streak}}, VIP ×{{vip}}, kombiniert ×{{effective}}. Höhere Werte werden beim Speichern begrenzt.",
+          "tiers": "Serien-Stufen",
+          "minDays": "Mindestserie (Tage)",
+          "multiplier": "Multiplikator",
+          "removeTier": "Stufe entfernen",
+          "addTier": "Stufe hinzufügen",
+          "vipMultiplier": "VIP-Multiplikator",
+          "max": "Max ×{{n}}",
+          "bonusThreshold": "Bonus-Schwelle (Tage)",
+          "bonusThresholdHint": "Tage, bevor ein Serienbonus greift."
+        }
       },
       "channels": {
         "ecpm": "Effektiver CPM",
@@ -7294,7 +7350,21 @@
         "minScore": "Pontuação mínima de envolvimento",
         "minScoreHint": "Pontuação ponderada de visitas, compras, avaliações, visualizações e sequências.",
         "save": "Guardar critérios",
-        "reset": "Repor predefinições"
+        "reset": "Repor predefinições",
+        "multiplier": {
+          "title": "Multiplicadores de recompensa",
+          "subtitle": "Níveis de sequência e multiplicador VIP que aumentam as recompensas em tokens.",
+          "ceilingNote": "Limites máximos: sequência ×{{streak}}, VIP ×{{vip}}, combinado ×{{effective}}. Valores acima são ajustados ao guardar.",
+          "tiers": "Níveis de sequência",
+          "minDays": "Sequência mínima (dias)",
+          "multiplier": "Multiplicador",
+          "removeTier": "Remover nível",
+          "addTier": "Adicionar nível",
+          "vipMultiplier": "Multiplicador VIP",
+          "max": "Máx ×{{n}}",
+          "bonusThreshold": "Limiar de bónus (dias)",
+          "bonusThresholdHint": "Dias antes de qualquer bónus de sequência se aplicar."
+        }
       },
       "channels": {
         "ecpm": "CPM efetivo",

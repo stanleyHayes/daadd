@@ -1102,7 +1102,21 @@
       "minScore": "Minimum engagement score",
       "minScoreHint": "Weighted score across visits, purchases, reviews, views and streaks.",
       "save": "Save criteria",
-      "reset": "Reset to defaults"
+      "reset": "Reset to defaults",
+      "multiplier": {
+        "title": "Reward multipliers",
+        "subtitle": "Streak tiers and the VIP multiplier that boost token rewards.",
+        "ceilingNote": "Hard ceilings: streak ×{{streak}}, VIP ×{{vip}}, combined ×{{effective}}. Anything above is clamped on save.",
+        "tiers": "Streak tiers",
+        "minDays": "Min streak (days)",
+        "multiplier": "Multiplier",
+        "removeTier": "Remove tier",
+        "addTier": "Add tier",
+        "vipMultiplier": "VIP multiplier",
+        "max": "Max ×{{n}}",
+        "bonusThreshold": "Bonus threshold (days)",
+        "bonusThresholdHint": "Days before any streak bonus applies."
+      }
     },
     "siteContent": {
       "title": "Website Content",

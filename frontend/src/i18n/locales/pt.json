@@ -1102,7 +1102,21 @@
       "minScore": "Pontuação mínima de envolvimento",
       "minScoreHint": "Pontuação ponderada de visitas, compras, avaliações, visualizações e sequências.",
       "save": "Guardar critérios",
-      "reset": "Repor predefinições"
+      "reset": "Repor predefinições",
+      "multiplier": {
+        "title": "Multiplicadores de recompensa",
+        "subtitle": "Níveis de sequência e multiplicador VIP que aumentam as recompensas em tokens.",
+        "ceilingNote": "Limites máximos: sequência ×{{streak}}, VIP ×{{vip}}, combinado ×{{effective}}. Valores acima são ajustados ao guardar.",
+        "tiers": "Níveis de sequência",
+        "minDays": "Sequência mínima (dias)",
+        "multiplier": "Multiplicador",
+        "removeTier": "Remover nível",
+        "addTier": "Adicionar nível",
+        "vipMultiplier": "Multiplicador VIP",
+        "max": "Máx ×{{n}}",
+        "bonusThreshold": "Limiar de bónus (dias)",
+        "bonusThresholdHint": "Dias antes de qualquer bónus de sequência se aplicar."
+      }
     },
     "siteContent": {
       "title": "Conteúdo do site",
