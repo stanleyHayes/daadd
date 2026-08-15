@@ -27,6 +27,7 @@ import roleRoutes from './roles';
 import channelRoutes from './channels';
 import privacyRoutes from './privacy';
 import merchantRoutes from './merchants';
+import fraudRoutes from './fraud';
 
 const router = Router();
 
@@ -58,5 +59,6 @@ router.use('/roles', roleRoutes);
 router.use('/channels', channelRoutes);
 router.use('/privacy', privacyRoutes);
 router.use('/merchants', merchantRoutes);
+router.use('/fraud', fraudRoutes);
 
 export default router;

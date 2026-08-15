@@ -1,16 +1,23 @@
 /**
  * Real-time anomaly detection service (spec §3.6).
  *
- * NOTE ON DATA: there is no real event stream in this deployment, so the
- * 14-day metric series per campaign is DETERMINISTIC SYNTHETIC DATA seeded
- * from the campaign id (see src/utils/seeded.ts) — identical input always
- * yields the same series. The LAST day of the series is computed from the
- * campaign's actual stored stats (impressions/clicks/spend/conversions
- * fields or embedded metrics) when they exist on the document.
+ * The 14-day metric series per campaign is built from REAL device events
+ * (impression / click / conversion, see routes/attribution.ts), aggregated by
+ * day. There is no per-day spend stream, so `spend` is 0 and the spend/CPA rules
+ * stay dormant (they are guarded on a non-zero baseline). A campaign with no
+ * events yields an empty series and therefore no alerts — nothing is fabricated.
  */
 import { Types } from 'mongoose';
-import { Campaign, Anomaly, Notification, User, TeamAuditLog, AnomalyType, AnomalySeverity } from '../models';
-import { seededRandom } from '../utils/seeded';
+import {
+  Campaign,
+  Anomaly,
+  Notification,
+  User,
+  TeamAuditLog,
+  DeviceEvent,
+  AnomalyType,
+  AnomalySeverity,
+} from '../models';
 import { sendAnomalyAlertEmail } from './mailer';
 
 const SERIES_DAYS = 14;
@@ -44,37 +51,58 @@ export interface ScanResult {
 }
 
 /**
- * Build a deterministic 14-day series seeded from the campaign id.
- * The last day uses the campaign's actual stored stats where available.
+ * Build the trailing 14-day series for a campaign from real device events,
+ * one bucket per calendar day (UTC). Days with no events are zero-filled so the
+ * baseline window is always the full length. `spend` has no per-day source and
+ * stays 0.
  */
-export function buildMetricSeries(campaignId: string, campaign: any): DayMetric[] {
-  const rng = seededRandom(`anomaly:${campaignId}`);
-  const days: DayMetric[] = [];
+export async function buildMetricSeries(campaignId: string): Promise<DayMetric[]> {
   const now = new Date();
-  for (let i = SERIES_DAYS - 1; i >= 0; i--) {
-    const date = new Date(now);
-    date.setDate(date.getDate() - i);
-    const impressions = Math.floor(800 + rng() * 9200);
-    const ctr = 1 + rng() * 8; // percent, 1–9%
-    const clicks = Math.round((impressions * ctr) / 100);
-    const spend = Math.round((50 + rng() * 450) * 100) / 100; // $50–$500/day
-    const conversions = Math.round(clicks * (0.02 + rng() * 0.08)); // 2–10% CVR
-    days.push({ date: date.toISOString().split('T')[0], impressions, clicks, ctr, spend, conversions });
+  const start = new Date(now);
+  start.setUTCDate(start.getUTCDate() - (SERIES_DAYS - 1));
+  start.setUTCHours(0, 0, 0, 0);
+
+  const campaignMatch: any[] = [campaignId];
+  if (Types.ObjectId.isValid(campaignId)) campaignMatch.push(new Types.ObjectId(campaignId));
+
+  const rows = await DeviceEvent.aggregate([
+    { $match: { campaign_id: { $in: campaignMatch }, created_at: { $gte: start } } },
+    {
+      $group: {
+        _id: {
+          day: { $dateToString: { format: '%Y-%m-%d', date: '$created_at', timezone: 'UTC' } },
+          type: '$event_type',
+        },
+        count: { $sum: 1 },
+      },
+    },
+  ]);
+
+  // day -> { impression, click, conversion } counts.
+  const byDay = new Map<string, { impression: number; click: number; conversion: number }>();
+  for (const r of rows) {
+    const day = r._id.day as string;
+    const bucket = byDay.get(day) ?? { impression: 0, click: 0, conversion: 0 };
+    if (r._id.type in bucket) bucket[r._id.type as keyof typeof bucket] = r.count;
+    byDay.set(day, bucket);
   }
 
-  // Last day: prefer the campaign's actual stored stats where available.
-  const last = days[days.length - 1];
-  const storedImpressions = Number(campaign?.impressions ?? campaign?.metrics?.impressions ?? 0);
-  const storedClicks = Number(campaign?.clicks ?? campaign?.metrics?.clicks ?? 0);
-  if (storedImpressions > 0) {
-    last.impressions = storedImpressions;
-    if (storedClicks > 0) last.clicks = storedClicks;
-    last.ctr = last.impressions > 0 ? (last.clicks / last.impressions) * 100 : last.ctr;
+  const days: DayMetric[] = [];
+  for (let i = SERIES_DAYS - 1; i >= 0; i--) {
+    const date = new Date(now);
+    date.setUTCDate(date.getUTCDate() - i);
+    const key = date.toISOString().split('T')[0];
+    const b = byDay.get(key) ?? { impression: 0, click: 0, conversion: 0 };
+    const ctr = b.impression > 0 ? (b.click / b.impression) * 100 : 0;
+    days.push({
+      date: key,
+      impressions: b.impression,
+      clicks: b.click,
+      ctr,
+      spend: 0,
+      conversions: b.conversion,
+    });
   }
-  const storedSpend = Number(campaign?.spend ?? campaign?.metrics?.spend ?? 0);
-  const storedConversions = Number(campaign?.conversions ?? campaign?.metrics?.conversions ?? 0);
-  if (storedSpend > 0) last.spend = storedSpend;
-  if (storedConversions > 0) last.conversions = storedConversions;
   return days;
 }
 
@@ -253,7 +281,7 @@ export async function scanCampaignsForAnomalies(campaigns: any[]): Promise<ScanR
 
   for (const campaign of campaigns) {
     const campaignId = campaign._id?.toString?.() || String(campaign._id);
-    const series = buildMetricSeries(campaignId, campaign);
+    const series = await buildMetricSeries(campaignId);
     const detections = detectAnomalies(series);
     if (detections.length === 0) continue;
 

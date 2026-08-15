@@ -3,7 +3,7 @@ import { navEntryForPath } from '@/lib/navigation';
 
 // Define which sidebar nav keys each role can see
 export const ROLE_NAV_ITEMS: Record<UserRole, string[]> = {
-  admin: ['dashboard', 'campaigns', 'channels', 'analytics', 'heatmaps', 'ai-optimization', 'anomalies', 'benchmarking', 'storyteller', 'team', 'platform-accounts', 'admin-advertisers', 'admin-merchants', 'admin-moderation', 'admin-loyalty', 'site-content', 'roles-access', 'messages', 'merchant', 'outlets', 'profile', 'settings'],
+  admin: ['dashboard', 'campaigns', 'channels', 'analytics', 'heatmaps', 'ai-optimization', 'anomalies', 'benchmarking', 'storyteller', 'team', 'platform-accounts', 'admin-advertisers', 'admin-merchants', 'admin-fraud', 'admin-moderation', 'admin-loyalty', 'site-content', 'roles-access', 'messages', 'merchant', 'outlets', 'profile', 'settings'],
   advertiser: ['dashboard', 'campaigns', 'channels', 'analytics', 'heatmaps', 'ai-optimization', 'anomalies', 'benchmarking', 'storyteller', 'team', 'platform-accounts', 'messages', 'merchant', 'outlets', 'profile', 'settings'],
   campaign_manager: ['dashboard', 'campaigns', 'channels', 'analytics', 'heatmaps', 'messages', 'profile', 'settings'],
   analyst: ['dashboard', 'analytics', 'heatmaps', 'benchmarking', 'storyteller', 'profile', 'settings'],

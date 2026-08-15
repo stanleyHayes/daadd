@@ -520,7 +520,8 @@
       "siteContent": "Contenido del sitio web",
       "roles": "Roles y accesos",
       "channels": "Canales publicitarios",
-      "merchantApprovals": "Verificación de comercios"
+      "merchantApprovals": "Verificación de comercios",
+      "fraudReview": "Revisión de fraude"
     },
     "home": {
       "title": "Panel",
@@ -1345,6 +1346,45 @@
         "verified": "Comercio verificado",
         "restricted": "Comercio restringido",
         "suspended": "Comercio suspendido"
+      }
+    },
+    "fraud": {
+      "title": "Revisión de fraude",
+      "subtitle": "Señales generadas a partir de la actividad real de canjes y recompensas. Revisa cada una: nada se procesa automáticamente.",
+      "scan": "Ejecutar análisis",
+      "scanDone": "{{created}} nuevas, {{refreshed}} actualizadas",
+      "scanFailed": "No se pudo ejecutar el análisis",
+      "actionFailed": "No se pudo actualizar esa señal",
+      "detected": "Detectado el {{date}}",
+      "emptyTitle": "No hay señales {{status}}",
+      "emptyDesc": "Las señales aparecen aquí cuando la actividad supera un umbral de riesgo.",
+      "status": {
+        "open": "Abiertas",
+        "reviewing": "En revisión",
+        "dismissed": "Descartadas",
+        "actioned": "Accionadas"
+      },
+      "severity": {
+        "low": "Baja",
+        "medium": "Media",
+        "high": "Alta",
+        "critical": "Crítica"
+      },
+      "type": {
+        "redemption_velocity": "Velocidad de canjes",
+        "merchant_surge": "Pico de comercio",
+        "collusion": "Posible colusión",
+        "reward_farming": "Acumulación de recompensas"
+      },
+      "action": {
+        "reviewing": "Revisar",
+        "dismissed": "Descartar",
+        "actioned": "Marcar accionada"
+      },
+      "set": {
+        "reviewing": "Marcada para revisión",
+        "dismissed": "Señal descartada",
+        "actioned": "Señal accionada"
       }
     }
   },

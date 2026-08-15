@@ -35,3 +35,13 @@ export {
   IdType,
   maskLast,
 } from './MerchantVerification';
+export {
+  FraudSignal,
+  IFraudSignal,
+  FraudSignalType,
+  FRAUD_SIGNAL_TYPES,
+  FraudSubjectType,
+  FraudSeverity,
+  FraudSignalStatus,
+  FRAUD_SIGNAL_STATUSES,
+} from './FraudSignal';

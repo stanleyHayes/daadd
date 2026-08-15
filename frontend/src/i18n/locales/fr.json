@@ -520,7 +520,8 @@
       "siteContent": "Contenu du site",
       "roles": "Rôles et accès",
       "channels": "Canaux publicitaires",
-      "merchantApprovals": "Vérification des commerçants"
+      "merchantApprovals": "Vérification des commerçants",
+      "fraudReview": "Examen des fraudes"
     },
     "home": {
       "title": "Tableau de bord",
@@ -1345,6 +1346,45 @@
         "verified": "Commerçant vérifié",
         "restricted": "Commerçant restreint",
         "suspended": "Commerçant suspendu"
+      }
+    },
+    "fraud": {
+      "title": "Examen des fraudes",
+      "subtitle": "Signaux issus de l'activité réelle d'échanges et de récompenses. Examinez chacun — rien n'est traité automatiquement.",
+      "scan": "Lancer l'analyse",
+      "scanDone": "{{created}} nouveaux, {{refreshed}} actualisés",
+      "scanFailed": "Impossible de lancer l'analyse",
+      "actionFailed": "Impossible de mettre à jour ce signal",
+      "detected": "Détecté le {{date}}",
+      "emptyTitle": "Aucun signal {{status}}",
+      "emptyDesc": "Les signaux apparaissent ici lorsque l'activité dépasse un seuil de risque.",
+      "status": {
+        "open": "Ouverts",
+        "reviewing": "En examen",
+        "dismissed": "Rejetés",
+        "actioned": "Traités"
+      },
+      "severity": {
+        "low": "Faible",
+        "medium": "Moyen",
+        "high": "Élevé",
+        "critical": "Critique"
+      },
+      "type": {
+        "redemption_velocity": "Vitesse d'échange",
+        "merchant_surge": "Pic marchand",
+        "collusion": "Collusion possible",
+        "reward_farming": "Accumulation de récompenses"
+      },
+      "action": {
+        "reviewing": "Examiner",
+        "dismissed": "Rejeter",
+        "actioned": "Marquer traité"
+      },
+      "set": {
+        "reviewing": "Marqué pour examen",
+        "dismissed": "Signal rejeté",
+        "actioned": "Signal traité"
       }
     }
   },

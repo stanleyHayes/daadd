@@ -47,7 +47,7 @@ Six locales complete.
 basis) — modelled but no scheduler yet; erasure and export are the user-driven
 rights, retention is the automatic side.
 
-### Phase 2 — Merchant verification + real fraud detection 🚧
+### Phase 2 — Merchant verification + real fraud detection ✅
 
 Launch gate per the readiness doc.
 
@@ -55,7 +55,7 @@ Launch gate per the readiness doc.
 | --- | --- | --- |
 | 2.1 | Merchant KYC + status machine (verified / pending / restricted / suspended) | ✅ |
 | 2.2 | Gate features on verification status | ✅ |
-| 2.3 | Real fraud detection on real events (replaces synthetic anomaly detection) | ⬜ |
+| 2.3 | Real fraud detection on real events (replaces synthetic anomaly detection) | ✅ |
 
 Backend: `MerchantVerification` model (masked KYC — full ID/settlement numbers are
 never stored, only last-4; DAADD is not the money custodian); `utils/merchant-gate.ts`
@@ -68,8 +68,17 @@ dashboard (status banner + KYC form), `AdminMerchantsPage` review queue. Six loc
 Tests: merchant-verification (21) — gate, masking, routes, and the confirm gate as an
 integration test; existing redemption confirm tests now seed a verified merchant.
 
-**Still open in Phase 2:** 2.3 — anomaly detection is still synthetic; it needs to run
-on real redemption/ad events before launch.
+**2.3 — real fraud detection (done).** Two parts. (a) The campaign anomaly detector
+no longer fabricates data: `buildMetricSeries` now aggregates real `DeviceEvent`
+impressions/clicks/conversions by day (no per-day spend source, so the spend/CPA
+rules stay dormant); a campaign with no events raises nothing. (b) New money-path
+fraud detector on real completed redemptions + the reward ledger: `FraudSignal`
+model + `fraud-detection.service.ts` with four rules — redemption velocity (customer),
+merchant surge, customer↔merchant collusion, reward farming — each raising a
+review-only signal (never an automatic punishment). Admin `/fraud` routes (scan,
+queue, resolve) + `AdminFraudPage`; the 5-minute scheduled scan now runs fraud
+detection alongside the anomaly scan. Thresholds are env-configurable. Six locales.
+Tests: fraud-detection (13); the anomaly integration tests now seed real events.
 
 ### Phase 3 — Discount transfer + referral + multiplier engine ⬜
 
@@ -118,5 +127,6 @@ backups + DR, production monitoring + alerting.
 
 Newest first. One line per landed increment, with the commit.
 
-- Phase 2.1–2.2 (merchant verification) — KYC model with masked settlement/ID, verification status machine, merchant gate on the redemption-confirm money path, admin review queue, merchant dashboard panel. Backend + frontend + 21 tests, six locales. (2.3 fraud detection still open.)
+- Phase 2.3 (real fraud detection) — de-synthesized the campaign anomaly series (now real DeviceEvent aggregation); new money-path FraudSignal detector (velocity / merchant surge / collusion / reward farming) with admin review routes, page, scheduled scan. Backend + frontend + 13 tests, six locales. Phase 2 complete.
+- Phase 2.1–2.2 (merchant verification) — KYC model with masked settlement/ID, verification status machine, merchant gate on the redemption-confirm money path, admin review queue, merchant dashboard panel. Backend + frontend + 21 tests, six locales.
 - Phase 1 (compliance foundations) — consent, data export, erasure, per-country config, token-policy invariant, sensitive-read audit log. Backend + frontend + 18 tests, six locales.

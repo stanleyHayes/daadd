@@ -4,7 +4,7 @@ import {
   scanCampaignsForAnomalies,
   DayMetric,
 } from '../services/anomaly-detection.service';
-import { Anomaly, Campaign, TeamAuditLog } from '../models';
+import { Anomaly, Campaign, TeamAuditLog, DeviceEvent } from '../models';
 import { connectTestDb, resetTestDb, closeTestDb } from '../test-helpers';
 
 const SERIES_DAYS = 14;
@@ -139,10 +139,49 @@ describe('scanCampaignsForAnomalies (DB integration)', () => {
     });
   }
 
+  let deviceSeq = 0;
+  /**
+   * Seed real device events for a campaign. Each entry is a day-offset (0 =
+   * today, UTC noon to avoid boundaries) with impression/click/conversion counts.
+   */
+  async function seedEvents(
+    campaignId: Types.ObjectId,
+    days: Array<{ offset: number; impressions?: number; clicks?: number; conversions?: number }>
+  ) {
+    const docs: any[] = [];
+    for (const d of days) {
+      const when = new Date();
+      when.setUTCDate(when.getUTCDate() - d.offset);
+      when.setUTCHours(12, 0, 0, 0);
+      const push = (event_type: string, n: number) => {
+        for (let i = 0; i < n; i++) {
+          deviceSeq += 1;
+          docs.push({
+            user_id: new Types.ObjectId(),
+            device_id: `dev-${deviceSeq}`,
+            device_type: 'phone',
+            campaign_id: campaignId,
+            event_type,
+            created_at: when,
+          });
+        }
+      };
+      push('impression', d.impressions ?? 0);
+      push('click', d.clicks ?? 0);
+      push('conversion', d.conversions ?? 0);
+    }
+    if (docs.length) await DeviceEvent.insertMany(docs);
+  }
+
   it('creates a ctr_drop anomaly and an audit-log entry, and dedupes on rescan', async () => {
     const campaign = await createActiveCampaign('CTR Drop Campaign');
-    // Last-day CTR = 10/10000 = 0.1% — far below any synthetic baseline.
-    const doc = { ...campaign.toObject(), impressions: 10000, clicks: 10 };
+    // Baseline (1–7 days ago): 5% CTR. Today: 0% CTR — a full collapse below the
+    // 80% floor. Counts are what matter; the series is built from these events.
+    await seedEvents(campaign._id, [
+      ...[1, 2, 3, 4, 5, 6, 7].map((offset) => ({ offset, impressions: 20, clicks: 1 })),
+      { offset: 0, impressions: 20, clicks: 0 },
+    ]);
+    const doc = campaign.toObject();
 
     const first = await scanCampaignsForAnomalies([doc]);
     expect(first.created).toBeGreaterThanOrEqual(1);
@@ -169,8 +208,9 @@ describe('scanCampaignsForAnomalies (DB integration)', () => {
 
   it('auto-pauses on a critical bot_traffic anomaly and audit-logs the pause', async () => {
     const campaign = await createActiveCampaign('Bot Campaign');
-    // clicks > impressions → bot_traffic (critical).
-    const doc = { ...campaign.toObject(), impressions: 100, clicks: 500 };
+    // Today: more clicks than impressions → bot_traffic (critical).
+    await seedEvents(campaign._id, [{ offset: 0, impressions: 5, clicks: 30 }]);
+    const doc = campaign.toObject();
 
     const result = await scanCampaignsForAnomalies([doc]);
     expect(result.anomalies.some((a) => a.type === 'bot_traffic' && a.severity === 'critical')).toBe(true);

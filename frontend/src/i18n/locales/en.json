@@ -520,7 +520,8 @@
       "siteContent": "Website Content",
       "roles": "Roles & Access",
       "channels": "Ad Channels",
-      "merchantApprovals": "Merchant Verification"
+      "merchantApprovals": "Merchant Verification",
+      "fraudReview": "Fraud Review"
     },
     "home": {
       "title": "Dashboard",
@@ -1345,6 +1346,45 @@
         "verified": "Merchant verified",
         "restricted": "Merchant restricted",
         "suspended": "Merchant suspended"
+      }
+    },
+    "fraud": {
+      "title": "Fraud review",
+      "subtitle": "Signals raised from real redemption and reward activity. Review each one — nothing is auto-actioned.",
+      "scan": "Run scan",
+      "scanDone": "{{created}} new, {{refreshed}} refreshed",
+      "scanFailed": "Could not run the scan",
+      "actionFailed": "Could not update that signal",
+      "detected": "Detected {{date}}",
+      "emptyTitle": "No {{status}} signals",
+      "emptyDesc": "Signals appear here when activity crosses a risk threshold.",
+      "status": {
+        "open": "Open",
+        "reviewing": "Reviewing",
+        "dismissed": "Dismissed",
+        "actioned": "Actioned"
+      },
+      "severity": {
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High",
+        "critical": "Critical"
+      },
+      "type": {
+        "redemption_velocity": "Redemption velocity",
+        "merchant_surge": "Merchant surge",
+        "collusion": "Possible collusion",
+        "reward_farming": "Reward farming"
+      },
+      "action": {
+        "reviewing": "Review",
+        "dismissed": "Dismiss",
+        "actioned": "Mark actioned"
+      },
+      "set": {
+        "reviewing": "Marked for review",
+        "dismissed": "Signal dismissed",
+        "actioned": "Signal actioned"
       }
     }
   },

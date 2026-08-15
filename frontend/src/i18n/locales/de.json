@@ -520,7 +520,8 @@
       "siteContent": "Website-Inhalte",
       "roles": "Rollen & Zugriff",
       "channels": "Werbekanäle",
-      "merchantApprovals": "Händlerprüfung"
+      "merchantApprovals": "Händlerprüfung",
+      "fraudReview": "Betrugsprüfung"
     },
     "home": {
       "title": "Dashboard",
@@ -1345,6 +1346,45 @@
         "verified": "Händler verifiziert",
         "restricted": "Händler eingeschränkt",
         "suspended": "Händler gesperrt"
+      }
+    },
+    "fraud": {
+      "title": "Betrugsprüfung",
+      "subtitle": "Signale aus echter Einlöse- und Prämienaktivität. Prüfen Sie jedes — nichts wird automatisch bearbeitet.",
+      "scan": "Scan starten",
+      "scanDone": "{{created}} neu, {{refreshed}} aktualisiert",
+      "scanFailed": "Scan konnte nicht ausgeführt werden",
+      "actionFailed": "Dieses Signal konnte nicht aktualisiert werden",
+      "detected": "Erkannt am {{date}}",
+      "emptyTitle": "Keine {{status}} Signale",
+      "emptyDesc": "Signale erscheinen hier, wenn die Aktivität eine Risikoschwelle überschreitet.",
+      "status": {
+        "open": "Offen",
+        "reviewing": "In Prüfung",
+        "dismissed": "Verworfen",
+        "actioned": "Bearbeitet"
+      },
+      "severity": {
+        "low": "Niedrig",
+        "medium": "Mittel",
+        "high": "Hoch",
+        "critical": "Kritisch"
+      },
+      "type": {
+        "redemption_velocity": "Einlösegeschwindigkeit",
+        "merchant_surge": "Händler-Spitze",
+        "collusion": "Mögliche Absprache",
+        "reward_farming": "Prämien-Farming"
+      },
+      "action": {
+        "reviewing": "Prüfen",
+        "dismissed": "Verwerfen",
+        "actioned": "Als bearbeitet markieren"
+      },
+      "set": {
+        "reviewing": "Zur Prüfung markiert",
+        "dismissed": "Signal verworfen",
+        "actioned": "Signal bearbeitet"
       }
     }
   },

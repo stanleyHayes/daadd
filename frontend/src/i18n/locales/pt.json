@@ -520,7 +520,8 @@
       "siteContent": "Conteúdo do site",
       "roles": "Funções e acessos",
       "channels": "Canais de anúncios",
-      "merchantApprovals": "Verificação de comerciantes"
+      "merchantApprovals": "Verificação de comerciantes",
+      "fraudReview": "Revisão de fraude"
     },
     "home": {
       "title": "Painel",
@@ -1345,6 +1346,45 @@
         "verified": "Comerciante verificado",
         "restricted": "Comerciante restrito",
         "suspended": "Comerciante suspenso"
+      }
+    },
+    "fraud": {
+      "title": "Revisão de fraude",
+      "subtitle": "Sinais gerados a partir da atividade real de resgates e recompensas. Reveja cada um — nada é processado automaticamente.",
+      "scan": "Executar análise",
+      "scanDone": "{{created}} novos, {{refreshed}} atualizados",
+      "scanFailed": "Não foi possível executar a análise",
+      "actionFailed": "Não foi possível atualizar esse sinal",
+      "detected": "Detetado a {{date}}",
+      "emptyTitle": "Sem sinais {{status}}",
+      "emptyDesc": "Os sinais aparecem aqui quando a atividade ultrapassa um limiar de risco.",
+      "status": {
+        "open": "Abertos",
+        "reviewing": "Em revisão",
+        "dismissed": "Descartados",
+        "actioned": "Acionados"
+      },
+      "severity": {
+        "low": "Baixo",
+        "medium": "Médio",
+        "high": "Alto",
+        "critical": "Crítico"
+      },
+      "type": {
+        "redemption_velocity": "Velocidade de resgate",
+        "merchant_surge": "Pico de comerciante",
+        "collusion": "Possível conluio",
+        "reward_farming": "Acumulação de recompensas"
+      },
+      "action": {
+        "reviewing": "Rever",
+        "dismissed": "Descartar",
+        "actioned": "Marcar acionado"
+      },
+      "set": {
+        "reviewing": "Marcado para revisão",
+        "dismissed": "Sinal descartado",
+        "actioned": "Sinal acionado"
       }
     }
   },

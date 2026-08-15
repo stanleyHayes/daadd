@@ -520,7 +520,8 @@
       "siteContent": "Webbplatsinnehåll",
       "roles": "Roller och behörigheter",
       "channels": "Annonskanaler",
-      "merchantApprovals": "Handlarverifiering"
+      "merchantApprovals": "Handlarverifiering",
+      "fraudReview": "Bedrägerigranskning"
     },
     "home": {
       "title": "Översikt",
@@ -1345,6 +1346,45 @@
         "verified": "Handlare verifierad",
         "restricted": "Handlare begränsad",
         "suspended": "Handlare avstängd"
+      }
+    },
+    "fraud": {
+      "title": "Bedrägerigranskning",
+      "subtitle": "Signaler från verklig inlösen- och belöningsaktivitet. Granska varje — inget hanteras automatiskt.",
+      "scan": "Kör skanning",
+      "scanDone": "{{created}} nya, {{refreshed}} uppdaterade",
+      "scanFailed": "Det gick inte att köra skanningen",
+      "actionFailed": "Det gick inte att uppdatera signalen",
+      "detected": "Upptäckt {{date}}",
+      "emptyTitle": "Inga {{status}} signaler",
+      "emptyDesc": "Signaler visas här när aktiviteten passerar en risktröskel.",
+      "status": {
+        "open": "Öppna",
+        "reviewing": "Granskas",
+        "dismissed": "Avfärdade",
+        "actioned": "Åtgärdade"
+      },
+      "severity": {
+        "low": "Låg",
+        "medium": "Medel",
+        "high": "Hög",
+        "critical": "Kritisk"
+      },
+      "type": {
+        "redemption_velocity": "Inlösenhastighet",
+        "merchant_surge": "Handlartopp",
+        "collusion": "Möjlig samverkan",
+        "reward_farming": "Belöningsfarmning"
+      },
+      "action": {
+        "reviewing": "Granska",
+        "dismissed": "Avfärda",
+        "actioned": "Markera åtgärdad"
+      },
+      "set": {
+        "reviewing": "Markerad för granskning",
+        "dismissed": "Signal avfärdad",
+        "actioned": "Signal åtgärdad"
       }
     }
   },

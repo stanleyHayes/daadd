@@ -636,7 +636,8 @@
         "channels": "Annonskanaler",
         "roles": "Roller och behörigheter",
         "siteContent": "Webbplatsinnehåll",
-        "merchantApprovals": "Handlarverifiering"
+        "merchantApprovals": "Handlarverifiering",
+        "fraudReview": "Bedrägerigranskning"
       },
       "home": {
         "title": "Översikt",
@@ -1462,6 +1463,45 @@
           "restricted": "Handlare begränsad",
           "suspended": "Handlare avstängd"
         }
+      },
+      "fraud": {
+        "title": "Bedrägerigranskning",
+        "subtitle": "Signaler från verklig inlösen- och belöningsaktivitet. Granska varje — inget hanteras automatiskt.",
+        "scan": "Kör skanning",
+        "scanDone": "{{created}} nya, {{refreshed}} uppdaterade",
+        "scanFailed": "Det gick inte att köra skanningen",
+        "actionFailed": "Det gick inte att uppdatera signalen",
+        "detected": "Upptäckt {{date}}",
+        "emptyTitle": "Inga {{status}} signaler",
+        "emptyDesc": "Signaler visas här när aktiviteten passerar en risktröskel.",
+        "status": {
+          "open": "Öppna",
+          "reviewing": "Granskas",
+          "dismissed": "Avfärdade",
+          "actioned": "Åtgärdade"
+        },
+        "severity": {
+          "low": "Låg",
+          "medium": "Medel",
+          "high": "Hög",
+          "critical": "Kritisk"
+        },
+        "type": {
+          "redemption_velocity": "Inlösenhastighet",
+          "merchant_surge": "Handlartopp",
+          "collusion": "Möjlig samverkan",
+          "reward_farming": "Belöningsfarmning"
+        },
+        "action": {
+          "reviewing": "Granska",
+          "dismissed": "Avfärda",
+          "actioned": "Markera åtgärdad"
+        },
+        "set": {
+          "reviewing": "Markerad för granskning",
+          "dismissed": "Signal avfärdad",
+          "actioned": "Signal åtgärdad"
+        }
       }
     },
     "legal": {
@@ -2110,7 +2150,8 @@
         "channels": "Canales publicitarios",
         "roles": "Roles y accesos",
         "siteContent": "Contenido del sitio web",
-        "merchantApprovals": "Verificación de comercios"
+        "merchantApprovals": "Verificación de comercios",
+        "fraudReview": "Revisión de fraude"
       },
       "home": {
         "title": "Panel",
@@ -2941,6 +2982,45 @@
           "restricted": "Comercio restringido",
           "suspended": "Comercio suspendido"
         }
+      },
+      "fraud": {
+        "title": "Revisión de fraude",
+        "subtitle": "Señales generadas a partir de la actividad real de canjes y recompensas. Revisa cada una: nada se procesa automáticamente.",
+        "scan": "Ejecutar análisis",
+        "scanDone": "{{created}} nuevas, {{refreshed}} actualizadas",
+        "scanFailed": "No se pudo ejecutar el análisis",
+        "actionFailed": "No se pudo actualizar esa señal",
+        "detected": "Detectado el {{date}}",
+        "emptyTitle": "No hay señales {{status}}",
+        "emptyDesc": "Las señales aparecen aquí cuando la actividad supera un umbral de riesgo.",
+        "status": {
+          "open": "Abiertas",
+          "reviewing": "En revisión",
+          "dismissed": "Descartadas",
+          "actioned": "Accionadas"
+        },
+        "severity": {
+          "low": "Baja",
+          "medium": "Media",
+          "high": "Alta",
+          "critical": "Crítica"
+        },
+        "type": {
+          "redemption_velocity": "Velocidad de canjes",
+          "merchant_surge": "Pico de comercio",
+          "collusion": "Posible colusión",
+          "reward_farming": "Acumulación de recompensas"
+        },
+        "action": {
+          "reviewing": "Revisar",
+          "dismissed": "Descartar",
+          "actioned": "Marcar accionada"
+        },
+        "set": {
+          "reviewing": "Marcada para revisión",
+          "dismissed": "Señal descartada",
+          "actioned": "Señal accionada"
+        }
       }
     },
     "legal": {
@@ -3589,7 +3669,8 @@
         "channels": "Canaux publicitaires",
         "roles": "Rôles et accès",
         "siteContent": "Contenu du site",
-        "merchantApprovals": "Vérification des commerçants"
+        "merchantApprovals": "Vérification des commerçants",
+        "fraudReview": "Examen des fraudes"
       },
       "home": {
         "title": "Tableau de bord",
@@ -4420,6 +4501,45 @@
           "restricted": "Commerçant restreint",
           "suspended": "Commerçant suspendu"
         }
+      },
+      "fraud": {
+        "title": "Examen des fraudes",
+        "subtitle": "Signaux issus de l'activité réelle d'échanges et de récompenses. Examinez chacun — rien n'est traité automatiquement.",
+        "scan": "Lancer l'analyse",
+        "scanDone": "{{created}} nouveaux, {{refreshed}} actualisés",
+        "scanFailed": "Impossible de lancer l'analyse",
+        "actionFailed": "Impossible de mettre à jour ce signal",
+        "detected": "Détecté le {{date}}",
+        "emptyTitle": "Aucun signal {{status}}",
+        "emptyDesc": "Les signaux apparaissent ici lorsque l'activité dépasse un seuil de risque.",
+        "status": {
+          "open": "Ouverts",
+          "reviewing": "En examen",
+          "dismissed": "Rejetés",
+          "actioned": "Traités"
+        },
+        "severity": {
+          "low": "Faible",
+          "medium": "Moyen",
+          "high": "Élevé",
+          "critical": "Critique"
+        },
+        "type": {
+          "redemption_velocity": "Vitesse d'échange",
+          "merchant_surge": "Pic marchand",
+          "collusion": "Collusion possible",
+          "reward_farming": "Accumulation de récompenses"
+        },
+        "action": {
+          "reviewing": "Examiner",
+          "dismissed": "Rejeter",
+          "actioned": "Marquer traité"
+        },
+        "set": {
+          "reviewing": "Marqué pour examen",
+          "dismissed": "Signal rejeté",
+          "actioned": "Signal traité"
+        }
       }
     },
     "legal": {
@@ -5068,7 +5188,8 @@
         "channels": "Werbekanäle",
         "roles": "Rollen & Zugriff",
         "siteContent": "Website-Inhalte",
-        "merchantApprovals": "Händlerprüfung"
+        "merchantApprovals": "Händlerprüfung",
+        "fraudReview": "Betrugsprüfung"
       },
       "home": {
         "title": "Dashboard",
@@ -5899,6 +6020,45 @@
           "restricted": "Händler eingeschränkt",
           "suspended": "Händler gesperrt"
         }
+      },
+      "fraud": {
+        "title": "Betrugsprüfung",
+        "subtitle": "Signale aus echter Einlöse- und Prämienaktivität. Prüfen Sie jedes — nichts wird automatisch bearbeitet.",
+        "scan": "Scan starten",
+        "scanDone": "{{created}} neu, {{refreshed}} aktualisiert",
+        "scanFailed": "Scan konnte nicht ausgeführt werden",
+        "actionFailed": "Dieses Signal konnte nicht aktualisiert werden",
+        "detected": "Erkannt am {{date}}",
+        "emptyTitle": "Keine {{status}} Signale",
+        "emptyDesc": "Signale erscheinen hier, wenn die Aktivität eine Risikoschwelle überschreitet.",
+        "status": {
+          "open": "Offen",
+          "reviewing": "In Prüfung",
+          "dismissed": "Verworfen",
+          "actioned": "Bearbeitet"
+        },
+        "severity": {
+          "low": "Niedrig",
+          "medium": "Mittel",
+          "high": "Hoch",
+          "critical": "Kritisch"
+        },
+        "type": {
+          "redemption_velocity": "Einlösegeschwindigkeit",
+          "merchant_surge": "Händler-Spitze",
+          "collusion": "Mögliche Absprache",
+          "reward_farming": "Prämien-Farming"
+        },
+        "action": {
+          "reviewing": "Prüfen",
+          "dismissed": "Verwerfen",
+          "actioned": "Als bearbeitet markieren"
+        },
+        "set": {
+          "reviewing": "Zur Prüfung markiert",
+          "dismissed": "Signal verworfen",
+          "actioned": "Signal bearbeitet"
+        }
       }
     },
     "legal": {
@@ -6547,7 +6707,8 @@
         "channels": "Canais de anúncios",
         "roles": "Funções e acessos",
         "siteContent": "Conteúdo do site",
-        "merchantApprovals": "Verificação de comerciantes"
+        "merchantApprovals": "Verificação de comerciantes",
+        "fraudReview": "Revisão de fraude"
       },
       "home": {
         "title": "Painel",
@@ -7377,6 +7538,45 @@
           "verified": "Comerciante verificado",
           "restricted": "Comerciante restrito",
           "suspended": "Comerciante suspenso"
+        }
+      },
+      "fraud": {
+        "title": "Revisão de fraude",
+        "subtitle": "Sinais gerados a partir da atividade real de resgates e recompensas. Reveja cada um — nada é processado automaticamente.",
+        "scan": "Executar análise",
+        "scanDone": "{{created}} novos, {{refreshed}} atualizados",
+        "scanFailed": "Não foi possível executar a análise",
+        "actionFailed": "Não foi possível atualizar esse sinal",
+        "detected": "Detetado a {{date}}",
+        "emptyTitle": "Sem sinais {{status}}",
+        "emptyDesc": "Os sinais aparecem aqui quando a atividade ultrapassa um limiar de risco.",
+        "status": {
+          "open": "Abertos",
+          "reviewing": "Em revisão",
+          "dismissed": "Descartados",
+          "actioned": "Acionados"
+        },
+        "severity": {
+          "low": "Baixo",
+          "medium": "Médio",
+          "high": "Alto",
+          "critical": "Crítico"
+        },
+        "type": {
+          "redemption_velocity": "Velocidade de resgate",
+          "merchant_surge": "Pico de comerciante",
+          "collusion": "Possível conluio",
+          "reward_farming": "Acumulação de recompensas"
+        },
+        "action": {
+          "reviewing": "Rever",
+          "dismissed": "Descartar",
+          "actioned": "Marcar acionado"
+        },
+        "set": {
+          "reviewing": "Marcado para revisão",
+          "dismissed": "Sinal descartado",
+          "actioned": "Sinal acionado"
         }
       }
     },
