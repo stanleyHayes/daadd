@@ -136,7 +136,8 @@
         "about": "Acerca de SmartAdDeals",
         "messages": "Mensajes",
         "purchases": "Historial de compras",
-        "tokenCalculator": "Calculadora de tokens"
+        "tokenCalculator": "Calculadora de tokens",
+        "referral": "Invitar a un amigo"
       },
       "theme": {
         "light": "Claro",
@@ -414,6 +415,16 @@
       "perPhoto": "Fotos subidas",
       "estimatedTotal": "Total estimado",
       "disclaimer": "Las estimaciones usan la tarifa media de las campañas activas. Cada campaña fija sus propias recompensas."
+    },
+    "referral": {
+      "title": "Invitar a un amigo",
+      "heading": "Da recompensas, recibe recompensas",
+      "subtitle": "Cuando un amigo hace su primer canje, ganas {{tokens}} tokens.",
+      "yourCode": "Tu código de referido",
+      "share": "Compartir invitación",
+      "shareMessage": "Únete a mí en DAADD con el código {{code}} y gana recompensas en compras reales.",
+      "activated": "Activados",
+      "pending": "Pendientes"
     }
   },
   "fr": {
@@ -553,7 +564,8 @@
         "about": "À propos d'SmartAdDeals",
         "messages": "Messages",
         "purchases": "Historique d'achats",
-        "tokenCalculator": "Calculateur de jetons"
+        "tokenCalculator": "Calculateur de jetons",
+        "referral": "Parrainer un ami"
       },
       "theme": {
         "light": "Clair",
@@ -831,6 +843,16 @@
       "perPhoto": "Photos envoyées",
       "estimatedTotal": "Total estimé",
       "disclaimer": "Les estimations utilisent le taux moyen des campagnes en cours. Chaque campagne fixe ses propres récompenses."
+    },
+    "referral": {
+      "title": "Parrainer un ami",
+      "heading": "Offrez des récompenses, gagnez des récompenses",
+      "subtitle": "Quand un ami effectue son premier échange, vous gagnez {{tokens}} jetons.",
+      "yourCode": "Votre code de parrainage",
+      "share": "Partager l’invitation",
+      "shareMessage": "Rejoignez-moi sur DAADD avec le code {{code}} et gagnez des récompenses sur de vrais achats.",
+      "activated": "Activés",
+      "pending": "En attente"
     }
   },
   "de": {
@@ -970,7 +992,8 @@
         "about": "Über SmartAdDeals",
         "messages": "Nachrichten",
         "purchases": "Kaufhistorie",
-        "tokenCalculator": "Token-Rechner"
+        "tokenCalculator": "Token-Rechner",
+        "referral": "Freund werben"
       },
       "theme": {
         "light": "Hell",
@@ -1248,6 +1271,16 @@
       "perPhoto": "Hochgeladene Fotos",
       "estimatedTotal": "Geschätzte Summe",
       "disclaimer": "Die Schätzung nutzt den Durchschnittssatz aller laufenden Kampagnen. Jede Kampagne legt ihre Belohnungen selbst fest."
+    },
+    "referral": {
+      "title": "Freund werben",
+      "heading": "Belohnungen geben, Belohnungen erhalten",
+      "subtitle": "Wenn ein Freund seine erste Einlösung macht, erhalten Sie {{tokens}} Token.",
+      "yourCode": "Ihr Empfehlungscode",
+      "share": "Einladung teilen",
+      "shareMessage": "Komm mit dem Code {{code}} zu DAADD und verdiene Belohnungen für echte Einkäufe.",
+      "activated": "Aktiviert",
+      "pending": "Ausstehend"
     }
   },
   "pt": {
@@ -1387,7 +1420,8 @@
         "about": "Sobre a SmartAdDeals",
         "messages": "Mensagens",
         "purchases": "Histórico de compras",
-        "tokenCalculator": "Calculadora de tokens"
+        "tokenCalculator": "Calculadora de tokens",
+        "referral": "Convidar um amigo"
       },
       "theme": {
         "light": "Claro",
@@ -1665,6 +1699,16 @@
       "perPhoto": "Fotos carregadas",
       "estimatedTotal": "Total estimado",
       "disclaimer": "As estimativas usam a taxa média das campanhas ativas. Cada campanha define as suas próprias recompensas."
+    },
+    "referral": {
+      "title": "Convidar um amigo",
+      "heading": "Dá recompensas, recebe recompensas",
+      "subtitle": "Quando um amigo faz o primeiro resgate, ganha {{tokens}} tokens.",
+      "yourCode": "O seu código de referência",
+      "share": "Partilhar convite",
+      "shareMessage": "Junta-te a mim na DAADD com o código {{code}} e ganha recompensas em compras reais.",
+      "activated": "Ativados",
+      "pending": "Pendentes"
     }
   },
   "sv": {
@@ -1804,7 +1848,8 @@
         "privacy": "Integritet",
         "help": "Hjälp och support",
         "about": "Om SmartAdDeals",
-        "tokenCalculator": "Tokenkalkylator"
+        "tokenCalculator": "Tokenkalkylator",
+        "referral": "Bjud in en vän"
       },
       "theme": {
         "light": "Ljust",
@@ -2082,6 +2127,16 @@
       "perPhoto": "Uppladdade foton",
       "estimatedTotal": "Uppskattad summa",
       "disclaimer": "Uppskattningarna bygger på genomsnittet för aktiva kampanjer. Varje kampanj sätter sina egna belöningar."
+    },
+    "referral": {
+      "title": "Bjud in en vän",
+      "heading": "Ge belöningar, få belöningar",
+      "subtitle": "När en vän gör sin första inlösen får du {{tokens}} tokens.",
+      "yourCode": "Din värvningskod",
+      "share": "Dela inbjudan",
+      "shareMessage": "Gå med mig på DAADD med koden {{code}} och tjäna belöningar på riktiga köp.",
+      "activated": "Aktiverade",
+      "pending": "Väntande"
     }
   }
 }

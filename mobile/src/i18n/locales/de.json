@@ -136,7 +136,8 @@
         "privacy": "Datenschutz",
         "help": "Hilfe & Support",
         "about": "Über SmartAdDeals",
-        "tokenCalculator": "Token-Rechner"
+        "tokenCalculator": "Token-Rechner",
+        "referral": "Freund werben"
       },
       "theme": {
         "light": "Hell",
@@ -414,6 +415,16 @@
       "perPhoto": "Hochgeladene Fotos",
       "estimatedTotal": "Geschätzte Summe",
       "disclaimer": "Die Schätzung nutzt den Durchschnittssatz aller laufenden Kampagnen. Jede Kampagne legt ihre Belohnungen selbst fest."
+    },
+    "referral": {
+      "title": "Freund werben",
+      "heading": "Belohnungen geben, Belohnungen erhalten",
+      "subtitle": "Wenn ein Freund seine erste Einlösung macht, erhalten Sie {{tokens}} Token.",
+      "yourCode": "Ihr Empfehlungscode",
+      "share": "Einladung teilen",
+      "shareMessage": "Komm mit dem Code {{code}} zu DAADD und verdiene Belohnungen für echte Einkäufe.",
+      "activated": "Aktiviert",
+      "pending": "Ausstehend"
     }
   }
 }

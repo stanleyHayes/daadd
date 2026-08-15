@@ -11,7 +11,8 @@ import { useAuthStore } from '@/stores/auth.store';
 import { useThemeStore } from '@/stores/theme.store';
 import { useUpdateProfile, useChangePassword } from '@/hooks/useAuth';
 import { cn, getInitials } from '@/lib/utils';
-import { Camera, User, Bell, Lock, Palette, Globe, Clock, Loader2, ShieldCheck } from 'lucide-react';
+import { Camera, User, Bell, Lock, Palette, Globe, Clock, Loader2, ShieldCheck, Gift } from 'lucide-react';
+import { ReferralPanel } from '@/components/settings/ReferralPanel';
 import toast from 'react-hot-toast';
 import { PageTransition } from '@/components/ui/PageTransition';
 
@@ -33,6 +34,7 @@ const tabs = [
  { key: 'preferences', icon: Palette },
  { key: 'notifications', icon: Bell },
  { key: 'privacy', icon: ShieldCheck },
+ { key: 'referrals', icon: Gift },
  { key: 'security', icon: Lock },
 ];
 
@@ -377,6 +379,9 @@ export function SettingsPage() {
 
  {/* Privacy & Data Tab */}
  {activeTab === 'privacy' && <PrivacyPanel />}
+
+ {/* Refer a friend Tab */}
+ {activeTab === 'referrals' && <ReferralPanel />}
 
  {/* Security Tab */}
  {activeTab === 'security' && (

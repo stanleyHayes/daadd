@@ -1003,7 +1003,8 @@
         "preferences": "Préférences",
         "notifications": "Notifications",
         "security": "Sécurité",
-        "privacy": "Confidentialité et données"
+        "privacy": "Confidentialité et données",
+        "referrals": "Parrainer un ami"
       },
       "infoTitle": "Informations du profil",
       "infoSubtitle": "Mettez à jour vos informations personnelles",
@@ -1400,6 +1401,17 @@
         "dismissed": "Signal rejeté",
         "actioned": "Signal traité"
       }
+    },
+    "referral": {
+      "title": "Parrainer un ami",
+      "subtitle": "Partagez votre code. Quand un ami effectue son premier échange, vous gagnez {{tokens}} jetons.",
+      "yourCode": "Votre code de parrainage",
+      "copyCode": "Copier le code",
+      "copyFailed": "Impossible de copier dans le presse-papiers",
+      "share": "Partager",
+      "shareText": "Rejoignez-moi sur DAADD et gagnez des récompenses sur de vrais achats.",
+      "activated": "Activés",
+      "pending": "En attente"
     }
   },
   "legal": {

@@ -28,6 +28,7 @@ import channelRoutes from './channels';
 import privacyRoutes from './privacy';
 import merchantRoutes from './merchants';
 import fraudRoutes from './fraud';
+import referralRoutes from './referrals';
 
 const router = Router();
 
@@ -60,5 +61,6 @@ router.use('/channels', channelRoutes);
 router.use('/privacy', privacyRoutes);
 router.use('/merchants', merchantRoutes);
 router.use('/fraud', fraudRoutes);
+router.use('/referrals', referralRoutes);
 
 export default router;

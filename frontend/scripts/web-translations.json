@@ -1119,7 +1119,8 @@
           "preferences": "Inställningar",
           "notifications": "Aviseringar",
           "security": "Säkerhet",
-          "privacy": "Integritet och uppgifter"
+          "privacy": "Integritet och uppgifter",
+          "referrals": "Bjud in en vän"
         },
         "infoTitle": "Profiluppgifter",
         "infoSubtitle": "Uppdatera dina personuppgifter",
@@ -1516,6 +1517,17 @@
           "dismissed": "Signal avfärdad",
           "actioned": "Signal åtgärdad"
         }
+      },
+      "referral": {
+        "title": "Bjud in en vän",
+        "subtitle": "Dela din kod. När en vän gör sin första inlösen får du {{tokens}} tokens.",
+        "yourCode": "Din värvningskod",
+        "copyCode": "Kopiera kod",
+        "copyFailed": "Det gick inte att kopiera till urklipp",
+        "share": "Dela",
+        "shareText": "Gå med mig på DAADD och tjäna belöningar på riktiga köp.",
+        "activated": "Aktiverade",
+        "pending": "Väntande"
       }
     },
     "legal": {
@@ -2652,7 +2664,8 @@
           "preferences": "Preferencias",
           "notifications": "Notificaciones",
           "security": "Seguridad",
-          "privacy": "Privacidad y datos"
+          "privacy": "Privacidad y datos",
+          "referrals": "Invitar a un amigo"
         },
         "infoTitle": "Información del perfil",
         "infoSubtitle": "Actualiza tus datos personales",
@@ -3049,6 +3062,17 @@
           "dismissed": "Señal descartada",
           "actioned": "Señal accionada"
         }
+      },
+      "referral": {
+        "title": "Invitar a un amigo",
+        "subtitle": "Comparte tu código. Cuando un amigo hace su primer canje, ganas {{tokens}} tokens.",
+        "yourCode": "Tu código de referido",
+        "copyCode": "Copiar código",
+        "copyFailed": "No se pudo copiar al portapapeles",
+        "share": "Compartir",
+        "shareText": "Únete a mí en DAADD y gana recompensas en compras reales.",
+        "activated": "Activados",
+        "pending": "Pendientes"
       }
     },
     "legal": {
@@ -4185,7 +4209,8 @@
           "preferences": "Préférences",
           "notifications": "Notifications",
           "security": "Sécurité",
-          "privacy": "Confidentialité et données"
+          "privacy": "Confidentialité et données",
+          "referrals": "Parrainer un ami"
         },
         "infoTitle": "Informations du profil",
         "infoSubtitle": "Mettez à jour vos informations personnelles",
@@ -4582,6 +4607,17 @@
           "dismissed": "Signal rejeté",
           "actioned": "Signal traité"
         }
+      },
+      "referral": {
+        "title": "Parrainer un ami",
+        "subtitle": "Partagez votre code. Quand un ami effectue son premier échange, vous gagnez {{tokens}} jetons.",
+        "yourCode": "Votre code de parrainage",
+        "copyCode": "Copier le code",
+        "copyFailed": "Impossible de copier dans le presse-papiers",
+        "share": "Partager",
+        "shareText": "Rejoignez-moi sur DAADD et gagnez des récompenses sur de vrais achats.",
+        "activated": "Activés",
+        "pending": "En attente"
       }
     },
     "legal": {
@@ -5718,7 +5754,8 @@
           "preferences": "Einstellungen",
           "notifications": "Benachrichtigungen",
           "security": "Sicherheit",
-          "privacy": "Datenschutz & Daten"
+          "privacy": "Datenschutz & Daten",
+          "referrals": "Freund werben"
         },
         "infoTitle": "Profilinformationen",
         "infoSubtitle": "Aktualisiere deine persönlichen Daten",
@@ -6115,6 +6152,17 @@
           "dismissed": "Signal verworfen",
           "actioned": "Signal bearbeitet"
         }
+      },
+      "referral": {
+        "title": "Freund werben",
+        "subtitle": "Teilen Sie Ihren Code. Wenn ein Freund seine erste Einlösung macht, erhalten Sie {{tokens}} Token.",
+        "yourCode": "Ihr Empfehlungscode",
+        "copyCode": "Code kopieren",
+        "copyFailed": "Kopieren in die Zwischenablage nicht möglich",
+        "share": "Teilen",
+        "shareText": "Komm zu mir auf DAADD und verdiene Belohnungen für echte Einkäufe.",
+        "activated": "Aktiviert",
+        "pending": "Ausstehend"
       }
     },
     "legal": {
@@ -7251,7 +7299,8 @@
           "preferences": "Preferências",
           "notifications": "Notificações",
           "security": "Segurança",
-          "privacy": "Privacidade e Dados"
+          "privacy": "Privacidade e Dados",
+          "referrals": "Convidar um amigo"
         },
         "infoTitle": "Informação do perfil",
         "infoSubtitle": "Atualize os seus dados pessoais",
@@ -7648,6 +7697,17 @@
           "dismissed": "Sinal descartado",
           "actioned": "Sinal acionado"
         }
+      },
+      "referral": {
+        "title": "Convidar um amigo",
+        "subtitle": "Partilhe o seu código. Quando um amigo faz o primeiro resgate, ganha {{tokens}} tokens.",
+        "yourCode": "O seu código de referência",
+        "copyCode": "Copiar código",
+        "copyFailed": "Não foi possível copiar para a área de transferência",
+        "share": "Partilhar",
+        "shareText": "Junta-te a mim na DAADD e ganha recompensas em compras reais.",
+        "activated": "Ativados",
+        "pending": "Pendentes"
       }
     },
     "legal": {

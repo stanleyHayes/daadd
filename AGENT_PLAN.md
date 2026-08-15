@@ -87,8 +87,23 @@ Low regulatory risk, high engagement, no payments needed.
 | # | Item | Status |
 | --- | --- | --- |
 | 3.1 | User-to-user discount transfer (vouchers; tokens stay non-transferable) | ⬜ |
-| 3.2 | Referral system with *activated* referrals (invitee must become real) | ⬜ |
+| 3.2 | Referral system with *activated* referrals (invitee must become real) | ✅ |
 | 3.3 | Configurable multiplier rules engine (replaces hardcoded tiers) | ✅ |
+
+**3.2 — activated referrals (done).** `User` gains `referral_code` (unique, sparse),
+`referred_by`, and a `referral_activated` guard. A code is assigned at registration
+(and lazily for older accounts); signup captures an optional `referral_code` →
+`referred_by` (unknown codes ignored, self-referral impossible at signup). The
+referrer is paid **only on the invitee's first completed redemption** — the
+activation hook in the redemption-confirm path flips the guard atomically (once,
+even under concurrency) and **mints** a fresh `referral_reward` to the referrer;
+the invitee's balance is never touched, so tokens stay non-transferable. Anti-abuse:
+gated on a real (costly-to-fake) redemption, self-referral guard, once-only flag,
+and the existing `reward_farming` fraud signal already watches accrual. `GET
+/referrals/me` returns the code, share link, and activation counts (no invitee PII).
+Frontend: "Refer a friend" Settings tab (web) + a mobile referral screen with native
+share. Six locales (web + mobile). Tests: referrals (9), including an end-to-end
+proof that a real first redemption pays the referrer exactly once.
 
 **3.3 — configurable multiplier engine (done).** The streak tiers and VIP
 multiplier were hardcoded constants; they're now an admin-editable config stored
@@ -142,6 +157,7 @@ backups + DR, production monitoring + alerting.
 
 Newest first. One line per landed increment, with the commit.
 
+- Phase 3.2 (activated referrals) — referral codes + referred_by on User; referrer minted a fresh bonus only on the invitee's first completed redemption (once-only, tokens never transferred); `/referrals/me` stats; web Settings tab + mobile referral screen. Backend + web + mobile + 9 tests, six locales each.
 - Phase 3.3 (configurable multiplier engine) — admin-editable streak tiers + VIP multiplier stored in PlatformSetting, replacing hardcoded constants; hard non-configurable ceilings clamped on save and re-clamped at grant time (defence-in-depth). Backend + admin editor + 14 tests, six locales.
 - Phase 2.3 (real fraud detection) — de-synthesized the campaign anomaly series (now real DeviceEvent aggregation); new money-path FraudSignal detector (velocity / merchant surge / collusion / reward farming) with admin review routes, page, scheduled scan. Backend + frontend + 13 tests, six locales. Phase 2 complete.
 - Phase 2.1–2.2 (merchant verification) — KYC model with masked settlement/ID, verification status machine, merchant gate on the redemption-confirm money path, admin review queue, merchant dashboard panel. Backend + frontend + 21 tests, six locales.

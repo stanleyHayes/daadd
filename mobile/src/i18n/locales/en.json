@@ -136,7 +136,8 @@
         "privacy": "Privacy",
         "help": "Help & Support",
         "about": "About SmartAdDeals",
-        "tokenCalculator": "Token Calculator"
+        "tokenCalculator": "Token Calculator",
+        "referral": "Refer a friend"
       },
       "theme": {
         "light": "Light",
@@ -414,6 +415,16 @@
       "perPhoto": "Photos uploaded",
       "estimatedTotal": "Estimated total",
       "disclaimer": "Estimates use the average rate across live campaigns. Each campaign sets its own rewards."
+    },
+    "referral": {
+      "title": "Refer a friend",
+      "heading": "Give rewards, get rewards",
+      "subtitle": "When a friend makes their first redemption, you earn {{tokens}} tokens.",
+      "yourCode": "Your referral code",
+      "share": "Share invite",
+      "shareMessage": "Join me on DAADD with code {{code}} and earn rewards on real purchases.",
+      "activated": "Activated",
+      "pending": "Pending"
     }
   }
 }

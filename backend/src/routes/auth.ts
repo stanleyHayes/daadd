@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import crypto from 'crypto';
+import { Types } from 'mongoose';
 import bcrypt from 'bcryptjs';
 import { User, Consent } from '../models';
 import {
@@ -12,6 +13,7 @@ import { rateLimit } from '../middleware/rateLimit';
 import { success } from '../utils/response';
 import { sendOtpEmail, sendPasswordResetEmail } from '../services/mailer';
 import { advertiserGate } from '../utils/advertiser-gate';
+import { generateReferralCode } from '../utils/referral';
 
 const router = Router();
 
@@ -24,6 +26,7 @@ function sanitizeUser(user: InstanceType<typeof User>) {
     role: user.role,
     avatar_url: user.avatar_url,
     created_at: user.created_at,
+    referral_code: user.referral_code,
     // Advertiser onboarding status (drives the onboarding UI + the run-ads gate).
     email_verified: gate.email_verified,
     advertiser_approval: gate.advertiser_approval,
@@ -59,12 +62,26 @@ router.post('/register', async (req: Request, res: Response) => {
     const requestedRole = (SELF_SERVICE_ROLES as readonly string[]).includes(role)
       ? role
       : 'end_user';
+
+    // Referral capture (Phase 3.2): if the signup carried a valid code, record
+    // who referred this user. The referrer is NOT paid here — only when this
+    // user later activates (their first completed redemption). An unknown code
+    // is ignored rather than failing registration.
+    let referredBy: Types.ObjectId | undefined;
+    const referralCode = String(req.body?.referral_code ?? '').trim().toUpperCase();
+    if (referralCode) {
+      const referrer = await User.findOne({ referral_code: referralCode }).select('_id');
+      if (referrer) referredBy = referrer._id;
+    }
+
     const user = await User.create({
       name,
       email: email.toLowerCase(),
       password_hash: passwordHash,
       role: requestedRole,
       avatar_url: `https://i.pravatar.cc/150?u=${email.toLowerCase()}`,
+      referral_code: await generateReferralCode(),
+      ...(referredBy ? { referred_by: referredBy } : {}),
     });
 
     // Record consent given at signup. The DPA requires prior consent for

@@ -1003,7 +1003,8 @@
         "preferences": "Einstellungen",
         "notifications": "Benachrichtigungen",
         "security": "Sicherheit",
-        "privacy": "Datenschutz & Daten"
+        "privacy": "Datenschutz & Daten",
+        "referrals": "Freund werben"
       },
       "infoTitle": "Profilinformationen",
       "infoSubtitle": "Aktualisiere deine persönlichen Daten",
@@ -1400,6 +1401,17 @@
         "dismissed": "Signal verworfen",
         "actioned": "Signal bearbeitet"
       }
+    },
+    "referral": {
+      "title": "Freund werben",
+      "subtitle": "Teilen Sie Ihren Code. Wenn ein Freund seine erste Einlösung macht, erhalten Sie {{tokens}} Token.",
+      "yourCode": "Ihr Empfehlungscode",
+      "copyCode": "Code kopieren",
+      "copyFailed": "Kopieren in die Zwischenablage nicht möglich",
+      "share": "Teilen",
+      "shareText": "Komm zu mir auf DAADD und verdiene Belohnungen für echte Einkäufe.",
+      "activated": "Aktiviert",
+      "pending": "Ausstehend"
     }
   },
   "legal": {

@@ -136,7 +136,8 @@
         "privacy": "Privacidade",
         "help": "Ajuda e suporte",
         "about": "Sobre a SmartAdDeals",
-        "tokenCalculator": "Calculadora de tokens"
+        "tokenCalculator": "Calculadora de tokens",
+        "referral": "Convidar um amigo"
       },
       "theme": {
         "light": "Claro",
@@ -414,6 +415,16 @@
       "perPhoto": "Fotos carregadas",
       "estimatedTotal": "Total estimado",
       "disclaimer": "As estimativas usam a taxa média das campanhas ativas. Cada campanha define as suas próprias recompensas."
+    },
+    "referral": {
+      "title": "Convidar um amigo",
+      "heading": "Dá recompensas, recebe recompensas",
+      "subtitle": "Quando um amigo faz o primeiro resgate, ganha {{tokens}} tokens.",
+      "yourCode": "O seu código de referência",
+      "share": "Partilhar convite",
+      "shareMessage": "Junta-te a mim na DAADD com o código {{code}} e ganha recompensas em compras reais.",
+      "activated": "Ativados",
+      "pending": "Pendentes"
     }
   }
 }

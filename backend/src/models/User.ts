@@ -41,6 +41,13 @@ export interface IUser extends Document {
   // VIP loyalty tier (V2 Area 8) — auto-qualified from engagement metrics.
   vip_tier: 'none' | 'vip';
   vip_since?: Date;
+  // Referral (Phase 3.2). `referral_code` is this user's own shareable code;
+  // `referred_by` is the user who referred them; `referral_activated` flips once
+  // when this user completes their first redemption, paying the referrer exactly
+  // once. Rewards are minted, never transferred — tokens stay non-transferable.
+  referral_code?: string;
+  referred_by?: Types.ObjectId;
+  referral_activated: boolean;
   push_tokens?: {
     token: string;
     platform: string;
@@ -86,6 +93,10 @@ const UserSchema = new Schema<IUser>({
   streaks: { type: Schema.Types.Mixed, default: {} },
   vip_tier: { type: String, enum: ['none', 'vip'], default: 'none' },
   vip_since: { type: Date },
+  // Referral (Phase 3.2). Unique + sparse so users without a code never collide.
+  referral_code: { type: String, unique: true, sparse: true, uppercase: true, trim: true },
+  referred_by: { type: Schema.Types.ObjectId, ref: 'User', index: true },
+  referral_activated: { type: Boolean, default: false },
   push_tokens: {
     type: [
       {

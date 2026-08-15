@@ -1003,7 +1003,8 @@
         "preferences": "Inställningar",
         "notifications": "Aviseringar",
         "security": "Säkerhet",
-        "privacy": "Integritet och uppgifter"
+        "privacy": "Integritet och uppgifter",
+        "referrals": "Bjud in en vän"
       },
       "infoTitle": "Profiluppgifter",
       "infoSubtitle": "Uppdatera dina personuppgifter",
@@ -1400,6 +1401,17 @@
         "dismissed": "Signal avfärdad",
         "actioned": "Signal åtgärdad"
       }
+    },
+    "referral": {
+      "title": "Bjud in en vän",
+      "subtitle": "Dela din kod. När en vän gör sin första inlösen får du {{tokens}} tokens.",
+      "yourCode": "Din värvningskod",
+      "copyCode": "Kopiera kod",
+      "copyFailed": "Det gick inte att kopiera till urklipp",
+      "share": "Dela",
+      "shareText": "Gå med mig på DAADD och tjäna belöningar på riktiga köp.",
+      "activated": "Aktiverade",
+      "pending": "Väntande"
     }
   },
   "legal": {

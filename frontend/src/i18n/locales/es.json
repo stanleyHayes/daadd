@@ -1003,7 +1003,8 @@
         "preferences": "Preferencias",
         "notifications": "Notificaciones",
         "security": "Seguridad",
-        "privacy": "Privacidad y datos"
+        "privacy": "Privacidad y datos",
+        "referrals": "Invitar a un amigo"
       },
       "infoTitle": "Información del perfil",
       "infoSubtitle": "Actualiza tus datos personales",
@@ -1400,6 +1401,17 @@
         "dismissed": "Señal descartada",
         "actioned": "Señal accionada"
       }
+    },
+    "referral": {
+      "title": "Invitar a un amigo",
+      "subtitle": "Comparte tu código. Cuando un amigo hace su primer canje, ganas {{tokens}} tokens.",
+      "yourCode": "Tu código de referido",
+      "copyCode": "Copiar código",
+      "copyFailed": "No se pudo copiar al portapapeles",
+      "share": "Compartir",
+      "shareText": "Únete a mí en DAADD y gana recompensas en compras reales.",
+      "activated": "Activados",
+      "pending": "Pendientes"
     }
   },
   "legal": {

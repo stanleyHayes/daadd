@@ -136,7 +136,8 @@
         "privacy": "Confidentialité",
         "help": "Aide et support",
         "about": "À propos d'SmartAdDeals",
-        "tokenCalculator": "Calculateur de jetons"
+        "tokenCalculator": "Calculateur de jetons",
+        "referral": "Parrainer un ami"
       },
       "theme": {
         "light": "Clair",
@@ -414,6 +415,16 @@
       "perPhoto": "Photos envoyées",
       "estimatedTotal": "Total estimé",
       "disclaimer": "Les estimations utilisent le taux moyen des campagnes en cours. Chaque campagne fixe ses propres récompenses."
+    },
+    "referral": {
+      "title": "Parrainer un ami",
+      "heading": "Offrez des récompenses, gagnez des récompenses",
+      "subtitle": "Quand un ami effectue son premier échange, vous gagnez {{tokens}} jetons.",
+      "yourCode": "Votre code de parrainage",
+      "share": "Partager l’invitation",
+      "shareMessage": "Rejoignez-moi sur DAADD avec le code {{code}} et gagnez des récompenses sur de vrais achats.",
+      "activated": "Activés",
+      "pending": "En attente"
     }
   }
 }

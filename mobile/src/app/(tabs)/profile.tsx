@@ -126,6 +126,13 @@ export default function ProfileScreen() {
       onPress: () => router.push('/token-calculator' as Href),
     },
     {
+      id: 'referral',
+      icon: 'gift-outline' as const,
+      label: t('mobile.profile.items.referral'),
+      color: colors.accent,
+      onPress: () => router.push('/referral' as Href),
+    },
+    {
       id: 'merchant-scan',
       icon: 'qr-code-outline' as const,
       label: t('mobile.profile.items.merchantScan'),

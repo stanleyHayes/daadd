@@ -136,7 +136,8 @@
         "privacy": "Integritet",
         "help": "Hjälp och support",
         "about": "Om SmartAdDeals",
-        "tokenCalculator": "Tokenkalkylator"
+        "tokenCalculator": "Tokenkalkylator",
+        "referral": "Bjud in en vän"
       },
       "theme": {
         "light": "Ljust",
@@ -414,6 +415,16 @@
       "perPhoto": "Uppladdade foton",
       "estimatedTotal": "Uppskattad summa",
       "disclaimer": "Uppskattningarna bygger på genomsnittet för aktiva kampanjer. Varje kampanj sätter sina egna belöningar."
+    },
+    "referral": {
+      "title": "Bjud in en vän",
+      "heading": "Ge belöningar, få belöningar",
+      "subtitle": "När en vän gör sin första inlösen får du {{tokens}} tokens.",
+      "yourCode": "Din värvningskod",
+      "share": "Dela inbjudan",
+      "shareMessage": "Gå med mig på DAADD med koden {{code}} och tjäna belöningar på riktiga köp.",
+      "activated": "Aktiverade",
+      "pending": "Väntande"
     }
   }
 }

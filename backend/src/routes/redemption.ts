@@ -15,6 +15,7 @@ import { authMiddleware, JWT_SECRET } from '../middleware/auth';
 import { success, paginated } from '../utils/response';
 import { bumpStreak } from '../utils/streak';
 import { merchantGate } from '../utils/merchant-gate';
+import { activateReferral } from '../utils/referral';
 
 const router = Router();
 
@@ -554,6 +555,10 @@ router.post('/confirm', authMiddleware, requireMerchant, async (req: Request, re
     } catch (streakErr) {
       console.error('Failed to bump merchant streak:', streakErr);
     }
+
+    // Referral activation (Phase 3.2): a completed redemption is the "real, active
+    // user" signal that pays the referrer — once. Best-effort; never fails the sale.
+    await activateReferral(String(redemption.user_id));
 
     await Notification.create({
       user_id: new Types.ObjectId(String(redemption.user_id)),

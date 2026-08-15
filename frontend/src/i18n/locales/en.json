@@ -1003,7 +1003,8 @@
         "preferences": "Preferences",
         "notifications": "Notifications",
         "security": "Security",
-        "privacy": "Privacy & Data"
+        "privacy": "Privacy & Data",
+        "referrals": "Refer a friend"
       },
       "infoTitle": "Profile Information",
       "infoSubtitle": "Update your personal details",
@@ -1400,6 +1401,17 @@
         "dismissed": "Signal dismissed",
         "actioned": "Signal actioned"
       }
+    },
+    "referral": {
+      "title": "Refer a friend",
+      "subtitle": "Share your code. When a friend makes their first redemption, you earn {{tokens}} tokens.",
+      "yourCode": "Your referral code",
+      "copyCode": "Copy code",
+      "copyFailed": "Could not copy to clipboard",
+      "share": "Share",
+      "shareText": "Join me on DAADD and earn rewards on real purchases.",
+      "activated": "Activated",
+      "pending": "Pending"
     }
   },
   "legal": {
