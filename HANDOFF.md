@@ -70,15 +70,17 @@ VAT-inclusive vs exclusive, VAT rate, auto-release days, and payment TTL are all
 admin flags now — no code change needed to tune them. Tests in `orders.test.ts` +
 `commerce-settings.test.ts`.
 
+Also done: **multi-merchant carts** — `POST /orders` splits a cart spanning
+merchants into one order per merchant (each independently escrowed/paid), returning
+`{ orders: [...] }`. See `orders.test.ts`.
+
 **Remaining — genuinely need external setup (not a config flag):**
 - **Merchant settlement/payout.** `completed` orders imply money is due to the
   merchant, but nothing pays them out. This needs Paystack **Transfers/Subaccounts**
   wired to `MerchantVerification` settlement details — **gated on the legal sign-off**.
   Until then, `completed` just records that settlement is due.
-- **Multi-merchant carts.** Orders are single-merchant by design; a cart spanning
-  merchants must split into one order per merchant.
-- **Evidence upload.** Dispute `evidence` is an array of URLs; wire it to the
-  existing upload service (`services/storage.service.ts`) on the client side.
+- **Evidence upload.** Dispute `evidence` is an array of URLs (http(s) only); wire it
+  to the existing upload service (`services/storage.service.ts`) on the client side.
 - **Refund idempotency hardening.** `refundPayment` marks the `Payment` refunded and
   calls Paystack once; add a `Refund`/ledger record if you need partial refunds or
   an audit trail beyond `Payment.status`.

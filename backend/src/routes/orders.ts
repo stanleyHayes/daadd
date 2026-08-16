@@ -119,7 +119,18 @@ async function notify(userId: Types.ObjectId, title: string, message: string) {
 
 // --- Create + read ---------------------------------------------------------
 
-/** POST /orders — place an order for one merchant's products. */
+interface MerchantGroup {
+  merchant_id: string;
+  currency: string;
+  subtotal: number;
+  items: { product_id: Types.ObjectId; name: string; unit_price_minor: number; quantity: number }[];
+}
+
+/**
+ * POST /orders — place a cart. A cart spanning multiple merchants is SPLIT into
+ * one order per merchant, each its own escrow (paid, held, released
+ * independently). Returns `{ orders: [...] }` — always an array, even for one.
+ */
 router.post('/', authMiddleware, async (req: Request, res: Response) => {
   try {
     const raw = Array.isArray(req.body?.items) ? req.body.items : [];
@@ -128,68 +139,69 @@ router.post('/', authMiddleware, async (req: Request, res: Response) => {
       return;
     }
 
-    // Resolve products, enforce a single merchant per order, snapshot prices.
     const wanted = raw
       .map((i: any) => ({ product_id: String(i.product_id), quantity: Math.max(1, Math.floor(Number(i.quantity) || 1)) }))
       .filter((i: any) => Types.ObjectId.isValid(i.product_id));
     const products = await Product.find({ _id: { $in: wanted.map((w: any) => w.product_id) }, is_active: true });
     const byId = new Map(products.map((p) => [String(p._id), p]));
 
-    let merchantId: string | null = null;
-    const items = [];
-    let subtotal = 0;
+    // Group items by their merchant, snapshotting prices and checking stock.
+    const groups = new Map<string, MerchantGroup>();
     for (const w of wanted) {
       const p = byId.get(w.product_id);
       if (!p) {
         res.status(400).json({ success: false, message: 'A product is unavailable' });
         return;
       }
-      if (merchantId && merchantId !== String(p.merchant_id)) {
-        res.status(400).json({ success: false, message: 'All items must be from the same merchant' });
+      const merchantId = String(p.merchant_id);
+      if (merchantId === req.user!.userId) {
+        res.status(400).json({ success: false, message: 'You cannot order your own products' });
         return;
       }
-      merchantId = String(p.merchant_id);
       if (p.stock != null && p.stock < w.quantity) {
         res.status(409).json({ success: false, message: `Not enough stock for ${p.name}` });
         return;
       }
-      items.push({ product_id: p._id, name: p.name, unit_price_minor: p.price_minor, quantity: w.quantity });
-      subtotal += p.price_minor * w.quantity;
+      const group = groups.get(merchantId) ?? { merchant_id: merchantId, currency: p.currency || 'GHS', subtotal: 0, items: [] };
+      group.items.push({ product_id: p._id, name: p.name, unit_price_minor: p.price_minor, quantity: w.quantity });
+      group.subtotal += p.price_minor * w.quantity;
+      groups.set(merchantId, group);
     }
 
-    if (!merchantId || items.length === 0) {
+    if (groups.size === 0) {
       res.status(400).json({ success: false, message: 'No valid products in the order' });
       return;
     }
-    if (merchantId === req.user!.userId) {
-      res.status(400).json({ success: false, message: 'You cannot order your own products' });
-      return;
+
+    const settings = await getCommerceSettings();
+    const contactBody = req.body?.contact || {};
+    const contact = {
+      name: String(contactBody.name ?? '').trim(),
+      phone: String(contactBody.phone ?? '').trim(),
+      address: String(contactBody.address ?? '').trim(),
+      city: String(contactBody.city ?? '').trim(),
+    };
+
+    // One order per merchant — each independently paid and escrowed.
+    const created = [];
+    for (const group of groups.values()) {
+      const totals = computeOrderTotals(group.subtotal, settings);
+      const order = await Order.create({
+        buyer_id: req.user!.userId,
+        merchant_id: group.merchant_id,
+        items: group.items,
+        subtotal_minor: totals.subtotal_minor,
+        tax_minor: totals.tax_minor,
+        total_minor: totals.total_minor,
+        currency: group.currency,
+        status: 'created',
+        contact,
+        history: [{ status: 'created', actor: 'buyer', by: req.user!.userId, at: new Date() }],
+      });
+      created.push(serialize(order.toObject()));
     }
 
-    // Apply the configured VAT (admin/env-driven, see utils/commerce-settings).
-    const settings = await getCommerceSettings();
-    const totals = computeOrderTotals(subtotal, settings);
-
-    const contact = req.body?.contact || {};
-    const order = await Order.create({
-      buyer_id: req.user!.userId,
-      merchant_id: merchantId,
-      items,
-      subtotal_minor: totals.subtotal_minor,
-      tax_minor: totals.tax_minor,
-      total_minor: totals.total_minor,
-      currency: products[0]?.currency || 'GHS',
-      status: 'created',
-      contact: {
-        name: String(contact.name ?? '').trim(),
-        phone: String(contact.phone ?? '').trim(),
-        address: String(contact.address ?? '').trim(),
-        city: String(contact.city ?? '').trim(),
-      },
-      history: [{ status: 'created', actor: 'buyer', by: req.user!.userId, at: new Date() }],
-    });
-
-    res.status(201).json(success(serialize(order.toObject()), 'Order placed'));
+    res.status(201).json(success({ orders: created }, created.length > 1 ? 'Orders placed' : 'Order placed'));
   } catch (error: any) {
     res.status(500).json({ success: false, message: error.message });
   }

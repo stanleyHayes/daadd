@@ -38,13 +38,20 @@ export default function ProductScreen() {
       return;
     }
     try {
-      const order = await createOrder.mutateAsync({ items: [{ product_id: product.id, quantity: qty }], contact });
-      const pay = await payOrder.mutateAsync(order.id);
-      if (pay.requires_payment && pay.authorization_url) {
-        await Linking.openURL(pay.authorization_url); // Paystack checkout in the browser
+      const orders = await createOrder.mutateAsync({ items: [{ product_id: product.id, quantity: qty }], contact });
+      if (orders.length === 0) {
+        setError(commerceError(null));
+        return;
       }
+      // A single-product buy yields one order; pay each and open its checkout.
+      let checkoutUrl: string | undefined;
+      for (const o of orders) {
+        const pay = await payOrder.mutateAsync(o.id);
+        if (pay.requires_payment && pay.authorization_url) checkoutUrl = pay.authorization_url;
+      }
+      if (checkoutUrl) await Linking.openURL(checkoutUrl); // Paystack checkout in the browser
       // The webhook reconciles server-side; the order screen re-fetches on focus.
-      router.replace(`/order/${order.id}` as Href);
+      router.replace((orders.length === 1 ? `/order/${orders[0].id}` : '/orders') as Href);
     } catch (e) {
       setError(commerceError(e));
     }

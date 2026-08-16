@@ -123,18 +123,43 @@ describe('order lifecycle', () => {
 
     const res = await request.post(ORDERS).set(auth(buyer.token)).send({ items: [{ product_id: productId, quantity: 2 }] });
     expect(res.status).toBe(201);
-    expect(res.body.data.total_minor).toBe(20000);
-    expect(res.body.data.status).toBe('created');
+    expect(res.body.data.orders).toHaveLength(1);
+    expect(res.body.data.orders[0].total_minor).toBe(20000);
+    expect(res.body.data.orders[0].status).toBe('created');
 
     // The merchant cannot buy their own product.
     expect((await request.post(ORDERS).set(auth(merchant.token)).send({ items: [{ product_id: productId, quantity: 1 }] })).status).toBe(400);
+  });
+
+  it('splits a multi-merchant cart into one order per merchant', async () => {
+    const m1 = await verifiedMerchant();
+    const m2 = await verifiedMerchant();
+    const buyer = await makeUser();
+    const p1 = await seedProduct(m1, { price_minor: 5000 });
+    const p2 = await seedProduct(m2, { price_minor: 3000 });
+
+    const res = await request.post(ORDERS).set(auth(buyer.token)).send({
+      items: [
+        { product_id: p1, quantity: 1 },
+        { product_id: p2, quantity: 2 },
+      ],
+    });
+    expect(res.status).toBe(201);
+    expect(res.body.data.orders).toHaveLength(2);
+    const byMerchant = Object.fromEntries(res.body.data.orders.map((o: any) => [o.merchant_id, o]));
+    expect(byMerchant[m1.id].total_minor).toBe(5000);
+    expect(byMerchant[m2.id].total_minor).toBe(6000);
+    // Each order is independently escrowed and payable.
+    for (const o of res.body.data.orders) {
+      expect(o.status).toBe('created');
+    }
   });
 
   it('runs the full happy path to completed (buyer confirms)', async () => {
     const merchant = await verifiedMerchant();
     const buyer = await makeUser();
     const productId = await seedProduct(merchant);
-    const order = (await request.post(ORDERS).set(auth(buyer.token)).send({ items: [{ product_id: productId, quantity: 1 }] })).body.data;
+    const order = (await request.post(ORDERS).set(auth(buyer.token)).send({ items: [{ product_id: productId, quantity: 1 }] })).body.data.orders[0];
 
     // Dev auto-pay (no PSP) → paid.
     const pay = await request.post(`${ORDERS}/${order.id}/pay`).set(auth(buyer.token));
@@ -162,7 +187,7 @@ describe('order lifecycle', () => {
     const merchant = await verifiedMerchant();
     const buyer = await makeUser();
     const productId = await seedProduct(merchant);
-    const order = (await request.post(ORDERS).set(auth(buyer.token)).send({ items: [{ product_id: productId, quantity: 1 }] })).body.data;
+    const order = (await request.post(ORDERS).set(auth(buyer.token)).send({ items: [{ product_id: productId, quantity: 1 }] })).body.data.orders[0];
     await request.post(`${ORDERS}/${order.id}/pay`).set(auth(buyer.token));
 
     // Buyer cannot accept; merchant cannot confirm; cannot ship before preparing.
@@ -239,7 +264,7 @@ describe('order lifecycle', () => {
     const buyer = await makeUser();
     const productId = (await request.post(PRODUCTS).set(auth(merchant.token)).send({ name: 'Stocked', price_minor: 10000, stock: 5 })).body.data.id;
 
-    const order = (await request.post(ORDERS).set(auth(buyer.token)).send({ items: [{ product_id: productId, quantity: 2 }] })).body.data;
+    const order = (await request.post(ORDERS).set(auth(buyer.token)).send({ items: [{ product_id: productId, quantity: 2 }] })).body.data.orders[0];
     await request.post(`${ORDERS}/${order.id}/pay`).set(auth(buyer.token)); // dev auto-pay → paid
     expect((await Product.findById(productId).lean())!.stock).toBe(3); // 5 - 2 reserved
 

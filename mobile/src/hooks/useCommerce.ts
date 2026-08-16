@@ -93,12 +93,14 @@ export function useOrder(id?: string) {
 export function useCreateOrder() {
   const qc = useQueryClient();
   return useMutation({
+    // A cart may span merchants; the server splits it into one order each and
+    // returns them all. Single-product buys just get an array of one.
     mutationFn: async (input: {
       items: { product_id: string; quantity: number }[];
       contact: { name: string; phone: string; address: string; city: string };
-    }): Promise<Order> => {
+    }): Promise<Order[]> => {
       const res = await api.post('/orders', input);
-      return res.data.data;
+      return res.data?.data?.orders || [];
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ['orders'] }),
   });

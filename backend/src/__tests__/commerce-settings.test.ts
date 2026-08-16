@@ -98,7 +98,7 @@ describe('commerce settings (DB + admin routes)', () => {
 
     // Exclusive VAT at 20%: a 12000 item → 12000 + 2400 = 14400 total.
     await PlatformSetting.create({ key: COMMERCE_SETTINGS_KEY, value: { vat_rate: 0.2, vat_inclusive: false } });
-    const order = (await request.post(ORDERS).set(auth(buyer.token)).send({ items: [{ product_id: productId, quantity: 1 }] })).body.data;
+    const order = (await request.post(ORDERS).set(auth(buyer.token)).send({ items: [{ product_id: productId, quantity: 1 }] })).body.data.orders[0];
     expect(order.subtotal_minor).toBe(12000);
     expect(order.tax_minor).toBe(2400);
     expect(order.total_minor).toBe(14400);
