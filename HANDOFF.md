@@ -120,21 +120,21 @@ See `AGENT_PLAN.md` "Decisions needed" — creator-network timing is a founder c
 
 ## Phase 7 — Operational launch-readiness (independent; no legal gate)
 
-A hard gate before public launch. Mostly ops, some code:
-- **Readiness endpoint.** There is `/health` (`app.ts`) that reports DB state. Add a
-  deeper `/health/ready` that pings Mongo and any critical dependency and returns
-  503 when not ready (for the load balancer).
-- **Error alerting.** `services/mailer.ts` exists (Resend). Add an alert on
-  unhandled errors / repeated 5xx / failed payment webhooks (the webhook currently
-  logs and 200s — see `routes/payments.ts`). Wire the anomaly/fraud scans' failures
-  to an alert too.
-- **Structured logging.** `morgan('combined')` is on; consider a structured logger
-  (pino) with request ids for production debugging.
-- **Load testing.** Add a `k6`/`artillery` script hitting the hot paths (ad serve,
-  redemption qr→confirm, order pay). Document expected throughput.
-- **Backups + DR.** Document + verify MongoDB Atlas backups and a tested restore
-  runbook. (Ops task, not code — write the runbook in `docs/`.)
-- **Monitoring.** Wire the host (Render) metrics + uptime checks on `/health`.
+**Code-side is done:** `GET /health/ready` (deep readiness, `app.ts`),
+`services/alerting.ts` (throttled ops alerts, wired into the payment-webhook error
+path + scheduled-scan failures), `backend/loadtest/smoke.js` (k6), and
+`docs/DR_RUNBOOK.md` (backup/restore runbook + pre-launch checklist).
+
+**Remaining — operator tasks (not code), all in `docs/DR_RUNBOOK.md`:**
+- Enable + **drill** MongoDB Atlas backups (record RTO/RPO).
+- Point Render's health check at `/health/ready`; add uptime monitors on both
+  `/health` and `/health/ready`.
+- Set `OPS_ALERT_EMAIL` (+ verify a test alert lands).
+- Run the k6 load test for a baseline; extend `smoke.js` to authed hot paths
+  (redemption qr→confirm, order pay) — see `__tests__` for request shapes.
+
+**Optional code follow-up:** structured logging (pino + request ids) instead of
+`morgan('combined')` for better production debugging.
 
 ---
 

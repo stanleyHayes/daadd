@@ -3,6 +3,7 @@ import { Payment, WebhookEvent, PaymentPurpose, PAYMENT_PURPOSES } from '../mode
 import { authMiddleware } from '../middleware/auth';
 import { resolveProvider, paymentsEnabled } from '../services/payment.service';
 import { createCharge, reconcile, PURPOSE_ROLES } from '../utils/payment-flow';
+import { alertOps } from '../services/alerting';
 import { success } from '../utils/response';
 
 /**
@@ -146,8 +147,9 @@ router.post('/webhook', async (req: Request, res: Response) => {
     res.status(200).json({ received: true });
   } catch (error: any) {
     // Still 200 so the PSP does not hammer retries on our internal error; the
-    // event is recorded and can be reconciled via the verify endpoint.
-    console.error('[payments] webhook error:', error);
+    // event is recorded and can be reconciled via the verify endpoint. Alert ops
+    // so a failing webhook path is noticed, not just logged.
+    void alertOps('payment webhook error', String(error?.stack || error?.message || error));
     res.status(200).json({ received: true });
   }
 });

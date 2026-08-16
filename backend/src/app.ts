@@ -43,6 +43,7 @@ if (process.env.NODE_ENV !== 'test') {
 // Serve locally stored creative uploads (see src/services/storage.service.ts).
 app.use('/uploads', express.static('uploads'));
 
+// Liveness: the process is up. Always 200 (used by simple uptime checks).
 app.get('/health', (_req, res) => {
   const dbState = mongoose.connection.readyState;
   res.status(200).json({
@@ -50,6 +51,20 @@ app.get('/health', (_req, res) => {
     timestamp: new Date().toISOString(),
     database: dbState === 1 ? 'connected' : 'disconnected',
   });
+});
+
+// Readiness (Phase 7): actually pings the database, so a load balancer can pull
+// the instance out of rotation when its dependencies are unhealthy. 503 = not ready.
+app.get('/health/ready', async (_req, res) => {
+  try {
+    if (mongoose.connection.readyState !== 1 || !mongoose.connection.db) {
+      throw new Error('database not connected');
+    }
+    await mongoose.connection.db.admin().ping();
+    res.status(200).json({ ready: true, timestamp: new Date().toISOString() });
+  } catch (err: any) {
+    res.status(503).json({ ready: false, reason: err?.message || 'not ready' });
+  }
 });
 
 app.get('/', (_req, res) => {

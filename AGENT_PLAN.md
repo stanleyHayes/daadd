@@ -187,10 +187,16 @@ rejection, refund on cancel, dispute + admin resolution, auto-release.
 New product line. Post-MVP, but design the attribution plumbing
 (creator → ad → consumer → QR → purchase) into event tracking now.
 
-### Phase 7 — Operational launch-readiness ⬜
+### Phase 7 — Operational launch-readiness 🚧 (code essentials done; ops tasks remain)
 
-Runs in parallel; a hard gate before any public launch. Load testing, tested
-backups + DR, production monitoring + alerting.
+A hard gate before public launch. **Code-side done:** `GET /health/ready` (deep
+readiness — pings Mongo, 503 when unhealthy, for the load balancer);
+`services/alerting.ts` (throttled ops alerts, wired into the payment-webhook error
+path and scheduled-scan failures); a k6 load script (`backend/loadtest/smoke.js`);
+and a DR runbook + pre-launch checklist (`docs/DR_RUNBOOK.md`). Tests: ops-readiness (3).
+**Ops tasks remain (operator, not code):** enable + drill Atlas backups, point
+Render's health check at `/health/ready`, set `OPS_ALERT_EMAIL` + an uptime monitor,
+run the load test for a baseline. See `docs/DR_RUNBOOK.md`.
 
 ---
 
@@ -209,6 +215,7 @@ backups + DR, production monitoring + alerting.
 
 Newest first. One line per landed increment, with the commit.
 
+- Phase 7 (ops-readiness code essentials) — deep `/health/ready` endpoint, throttled ops alerting (`services/alerting.ts`) wired into payment-webhook + scan failures, k6 load script, DR runbook + pre-launch checklist. Backend + 3 tests. Operator ops tasks (backups drill, monitors) documented.
 - Phase 5 (commerce backend) — Product + Order models, 12-state order machine (utils/order-state.ts), escrow via Phase-4 payments, PSP refunds on cancel/dispute, dispute+evidence+admin-resolution, auto-release sweep. Backend + 11 tests. **UI remaining — see HANDOFF.md.**
 - Phase 4 (payment abstraction) — PSP-abstracted, non-custody payment layer with Paystack adapter; Payment (pesewas) + WebhookEvent models; signature-verified idempotent webhook; advertiser billing replaces the insecure stub (billing_ready only from a verified payment). Backend + frontend callback + 11 tests. Code complete; go-live gated on the settlement-structure legal sign-off + live keys.
 - Phase 3.1 (discount-voucher transfer) — `DiscountVoucher` state machine; issue debits the sender + mints a separate discount (tokens never transferred), claim, verified-merchant redeem (reuses merchant-gate), expiry-refund sweep. Mobile vouchers screen. Backend + mobile + 12 tests, six locales. **Phase 3 complete.**

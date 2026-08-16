@@ -14,6 +14,7 @@ import { scanAllActiveCampaigns } from './services/anomaly-detection.service';
 import { runFraudScan } from './services/fraud-detection.service';
 import { expireVouchers } from './utils/voucher';
 import { autoReleaseOrders } from './utils/order-sweep';
+import { alertOps } from './services/alerting';
 
 const PORT = process.env.PORT || 4000;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/daadd';
@@ -152,6 +153,7 @@ async function startServer(): Promise<void> {
         if (released > 0) console.log(`[order-sweep] auto-released=${released}`);
       } catch (err) {
         console.warn('[anomaly-scan] failed (swallowed):', err);
+        void alertOps('scheduled scan failed', String((err as Error)?.stack || err));
       } finally {
         scanRunning = false;
       }
