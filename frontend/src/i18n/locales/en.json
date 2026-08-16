@@ -524,7 +524,8 @@
       "fraudReview": "Fraud Review",
       "products": "Products",
       "orders": "Orders",
-      "disputes": "Disputes"
+      "disputes": "Disputes",
+      "commerce": "Commerce"
     },
     "home": {
       "title": "Dashboard",
@@ -1484,6 +1485,22 @@
       "reason": "Reason",
       "value": "Order value",
       "evidence": "Evidence"
+    },
+    "commerce": {
+      "title": "Commerce settings",
+      "subtitle": "VAT and order-lifecycle rules for the marketplace.",
+      "vatTitle": "Tax & orders",
+      "vatSubtitle": "Applies to all new orders. Merchants set prices in GH₵.",
+      "vatRate": "VAT rate (%)",
+      "vatRateHint": "e.g. 20 for 20%. Defaults to the country rate.",
+      "vatInclusive": "Price includes VAT?",
+      "inclusive": "Inclusive",
+      "exclusive": "Added on top",
+      "autoRelease": "Auto-release (days)",
+      "autoReleaseHint": "Delivered orders auto-complete after this.",
+      "paymentTtl": "Payment window (minutes)",
+      "paymentTtlHint": "Unpaid orders expire after this.",
+      "reset": "Reset to defaults"
     }
   },
   "legal": {

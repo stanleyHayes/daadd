@@ -52,6 +52,7 @@ export const NAV_ENTRIES: NavEntry[] = [
   { key: 'admin-merchants', href: '/dashboard/admin/merchants', resource: 'advertisers', label: 'merchantApprovals', group: 'admin' },
   { key: 'admin-fraud', href: '/dashboard/admin/fraud', resource: 'anomalies', label: 'fraudReview', group: 'admin' },
   { key: 'admin-disputes', href: '/dashboard/admin/disputes', resource: 'advertisers', label: 'disputes', group: 'admin' },
+  { key: 'admin-commerce', href: '/dashboard/admin/commerce', resource: 'advertisers', label: 'commerce', group: 'admin' },
   { key: 'admin-moderation', href: '/dashboard/admin/moderation', resource: 'moderation', label: 'reviewModeration', group: 'admin' },
   { key: 'admin-loyalty', href: '/dashboard/admin/loyalty', resource: 'loyalty', label: 'loyaltyVip', group: 'admin' },
   { key: 'site-content', href: '/dashboard/admin/site-content', resource: 'site_content', label: 'siteContent', group: 'admin' },

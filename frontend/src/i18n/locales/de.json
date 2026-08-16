@@ -524,7 +524,8 @@
       "fraudReview": "Betrugsprüfung",
       "products": "Produkte",
       "orders": "Bestellungen",
-      "disputes": "Streitfälle"
+      "disputes": "Streitfälle",
+      "commerce": "Handel"
     },
     "home": {
       "title": "Dashboard",
@@ -1484,6 +1485,22 @@
       "reason": "Grund",
       "value": "Bestellwert",
       "evidence": "Nachweis"
+    },
+    "commerce": {
+      "title": "Handelseinstellungen",
+      "subtitle": "MwSt und Regeln des Bestell-Lebenszyklus für den Marktplatz.",
+      "vatTitle": "Steuern & Bestellungen",
+      "vatSubtitle": "Gilt für alle neuen Bestellungen. Händler legen Preise in GH₵ fest.",
+      "vatRate": "MwSt-Satz (%)",
+      "vatRateHint": "z. B. 20 für 20%. Standard ist der Landessatz.",
+      "vatInclusive": "Preis inkl. MwSt?",
+      "inclusive": "Inklusive",
+      "exclusive": "Wird aufgeschlagen",
+      "autoRelease": "Auto-Freigabe (Tage)",
+      "autoReleaseHint": "Gelieferte Bestellungen werden danach automatisch abgeschlossen.",
+      "paymentTtl": "Zahlungsfenster (Minuten)",
+      "paymentTtlHint": "Unbezahlte Bestellungen verfallen danach.",
+      "reset": "Auf Standard zurücksetzen"
     }
   },
   "legal": {

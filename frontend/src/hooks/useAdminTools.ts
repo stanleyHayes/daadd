@@ -109,6 +109,41 @@ export function useMultiplierRules() {
   });
 }
 
+export interface CommerceSettings {
+  vat_rate: number;
+  vat_inclusive: boolean;
+  auto_release_days: number;
+  payment_ttl_minutes: number;
+}
+
+/** Admin-configurable commerce settings (Phase 5): VAT + order windows. */
+export function useCommerceSettings() {
+  return useQuery({
+    queryKey: ['commerceSettings'],
+    queryFn: async () => {
+      const res = await api.get<ApiResponse<{ settings: CommerceSettings; defaults: CommerceSettings }>>(
+        '/admin/commerce-settings'
+      );
+      return res.data.data;
+    },
+  });
+}
+
+export function useUpdateCommerceSettings() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (settings: CommerceSettings) => {
+      const res = await api.put<ApiResponse<{ settings: CommerceSettings }>>('/admin/commerce-settings', settings);
+      return res.data.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['commerceSettings'] });
+      toast.success('Commerce settings updated');
+    },
+    onError: () => toast.error('Could not update commerce settings'),
+  });
+}
+
 export function useUpdateMultiplierRules() {
   const queryClient = useQueryClient();
   return useMutation({

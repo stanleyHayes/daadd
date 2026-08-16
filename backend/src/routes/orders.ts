@@ -15,6 +15,7 @@ import {
 import { authMiddleware } from '../middleware/auth';
 import { paymentsEnabled } from '../services/payment.service';
 import { createCharge, refundPayment, restoreStock, reserveStock } from '../utils/payment-flow';
+import { getCommerceSettings, computeOrderTotals } from '../utils/commerce-settings';
 import { success, paginated } from '../utils/response';
 
 /**
@@ -25,8 +26,6 @@ import { success, paginated } from '../utils/response';
  * appended to the order history.
  */
 const router = Router();
-
-const AUTO_RELEASE_MS = parseInt(process.env.ORDER_AUTO_RELEASE_DAYS || '7', 10) * 86400000;
 
 function serialize(o: Record<string, any>) {
   return {
@@ -40,6 +39,7 @@ function serialize(o: Record<string, any>) {
       quantity: i.quantity,
     })),
     subtotal_minor: o.subtotal_minor,
+    tax_minor: o.tax_minor ?? 0,
     total_minor: o.total_minor,
     currency: o.currency,
     status: o.status,
@@ -77,7 +77,10 @@ async function doTransition(
   }
 
   const set: Record<string, unknown> = { status: to, ...(extra?.set || {}) };
-  if (to === 'delivered') set.auto_release_at = new Date(Date.now() + AUTO_RELEASE_MS);
+  if (to === 'delivered') {
+    const { auto_release_days } = await getCommerceSettings();
+    set.auto_release_at = new Date(Date.now() + auto_release_days * 86400000);
+  }
 
   const updated = await Order.findOneAndUpdate(
     { _id: order._id, status: from },
@@ -163,13 +166,18 @@ router.post('/', authMiddleware, async (req: Request, res: Response) => {
       return;
     }
 
+    // Apply the configured VAT (admin/env-driven, see utils/commerce-settings).
+    const settings = await getCommerceSettings();
+    const totals = computeOrderTotals(subtotal, settings);
+
     const contact = req.body?.contact || {};
     const order = await Order.create({
       buyer_id: req.user!.userId,
       merchant_id: merchantId,
       items,
-      subtotal_minor: subtotal,
-      total_minor: subtotal,
+      subtotal_minor: totals.subtotal_minor,
+      tax_minor: totals.tax_minor,
+      total_minor: totals.total_minor,
       currency: products[0]?.currency || 'GHS',
       status: 'created',
       contact: {

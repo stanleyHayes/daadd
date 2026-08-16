@@ -62,6 +62,7 @@ import { BillingCallbackPage } from '@/pages/dashboard/BillingCallbackPage';
 import { MerchantProductsPage } from '@/pages/dashboard/MerchantProductsPage';
 import { MerchantOrdersPage } from '@/pages/dashboard/MerchantOrdersPage';
 import { AdminDisputesPage } from '@/pages/dashboard/AdminDisputesPage';
+import { AdminCommercePage } from '@/pages/dashboard/AdminCommercePage';
 import { AdminModerationPage } from '@/pages/dashboard/AdminModerationPage';
 import { ChannelsPage } from '@/pages/dashboard/ChannelsPage';
 import { RolesPage } from '@/pages/dashboard/RolesPage';
@@ -161,6 +162,7 @@ function App() {
                 <Route path="/dashboard/admin/merchants" element={<AdminMerchantsPage />} />
                 <Route path="/dashboard/admin/fraud" element={<AdminFraudPage />} />
                 <Route path="/dashboard/admin/disputes" element={<AdminDisputesPage />} />
+                <Route path="/dashboard/admin/commerce" element={<AdminCommercePage />} />
                 <Route path="/dashboard/admin/moderation" element={<AdminModerationPage />} />
                 <Route path="/dashboard/admin/loyalty" element={<AdminLoyaltyPage />} />
                 <Route path="/dashboard/admin/site-content" element={<SiteContentPage />} />

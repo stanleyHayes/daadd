@@ -61,16 +61,16 @@ Backend **and** UI are **done**: `frontend/src/hooks/useCommerce.ts` +
 ### Phase 5 functional follow-ups
 
 **Done** (built after the UI): **stock reservation** (decrement at `paid` via
-`reserveStock`, restore on cancel/refund via `restoreStock` — `utils/payment-flow.ts`),
-and **unpaid-order expiry** (`expireStaleOrders` in `utils/order-sweep.ts`, wired into
-the scheduled job; a payment that lands on an already-expired order is auto-refunded).
-Tests in `orders.test.ts`.
+`reserveStock`, restore on cancel/refund via `restoreStock` — `utils/payment-flow.ts`);
+**unpaid-order expiry** (`expireStaleOrders` in `utils/order-sweep.ts`); and
+**VAT + order windows as config** — `utils/commerce-settings.ts` (env default →
+`PlatformSetting` override → sanitised), applied to order totals (`tax_minor`), with
+an admin editor at `/dashboard/admin/commerce` and API `/admin/commerce-settings`.
+VAT-inclusive vs exclusive, VAT rate, auto-release days, and payment TTL are all
+admin flags now — no code change needed to tune them. Tests in `orders.test.ts` +
+`commerce-settings.test.ts`.
 
-**Remaining — need your decision or external setup:**
-- **VAT (decision).** `config/countries.ts` has `vat_rate` (0.2) but it's applied
-  nowhere. Decide whether order totals are VAT-inclusive or exclusive, then apply it
-  in `routes/orders.ts` order-total math and surface a tax line. Left undone because
-  it changes pricing semantics (a business decision).
+**Remaining — genuinely need external setup (not a config flag):**
 - **Merchant settlement/payout.** `completed` orders imply money is due to the
   merchant, but nothing pays them out. This needs Paystack **Transfers/Subaccounts**
   wired to `MerchantVerification` settlement details — **gated on the legal sign-off**.

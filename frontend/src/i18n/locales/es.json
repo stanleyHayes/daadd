@@ -524,7 +524,8 @@
       "fraudReview": "Revisión de fraude",
       "products": "Productos",
       "orders": "Pedidos",
-      "disputes": "Disputas"
+      "disputes": "Disputas",
+      "commerce": "Comercio"
     },
     "home": {
       "title": "Panel",
@@ -1484,6 +1485,22 @@
       "reason": "Motivo",
       "value": "Valor del pedido",
       "evidence": "Prueba"
+    },
+    "commerce": {
+      "title": "Ajustes de comercio",
+      "subtitle": "IVA y reglas del ciclo de pedidos del mercado.",
+      "vatTitle": "Impuestos y pedidos",
+      "vatSubtitle": "Se aplica a todos los pedidos nuevos. Los comercios fijan los precios en GH₵.",
+      "vatRate": "Tasa de IVA (%)",
+      "vatRateHint": "p. ej. 20 para 20%. Por defecto, la tasa del país.",
+      "vatInclusive": "¿El precio incluye IVA?",
+      "inclusive": "Incluido",
+      "exclusive": "Se añade",
+      "autoRelease": "Liberación automática (días)",
+      "autoReleaseHint": "Los pedidos entregados se completan solos tras esto.",
+      "paymentTtl": "Ventana de pago (minutos)",
+      "paymentTtlHint": "Los pedidos sin pagar caducan tras esto.",
+      "reset": "Restablecer valores"
     }
   },
   "legal": {

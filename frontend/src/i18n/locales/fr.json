@@ -524,7 +524,8 @@
       "fraudReview": "Examen des fraudes",
       "products": "Produits",
       "orders": "Commandes",
-      "disputes": "Litiges"
+      "disputes": "Litiges",
+      "commerce": "Commerce"
     },
     "home": {
       "title": "Tableau de bord",
@@ -1484,6 +1485,22 @@
       "reason": "Motif",
       "value": "Valeur de la commande",
       "evidence": "Preuve"
+    },
+    "commerce": {
+      "title": "Paramètres de commerce",
+      "subtitle": "TVA et règles du cycle de commande du marché.",
+      "vatTitle": "Taxes et commandes",
+      "vatSubtitle": "S'applique à toutes les nouvelles commandes. Les commerçants fixent les prix en GH₵.",
+      "vatRate": "Taux de TVA (%)",
+      "vatRateHint": "ex. 20 pour 20%. Par défaut, le taux du pays.",
+      "vatInclusive": "Le prix inclut la TVA ?",
+      "inclusive": "Inclus",
+      "exclusive": "Ajoutée",
+      "autoRelease": "Libération auto (jours)",
+      "autoReleaseHint": "Les commandes livrées se terminent seules après ce délai.",
+      "paymentTtl": "Fenêtre de paiement (minutes)",
+      "paymentTtlHint": "Les commandes impayées expirent après ce délai.",
+      "reset": "Réinitialiser"
     }
   },
   "legal": {

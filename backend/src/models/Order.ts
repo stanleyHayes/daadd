@@ -40,6 +40,7 @@ export interface IOrder extends Document {
   merchant_id: Types.ObjectId;
   items: IOrderItem[];
   subtotal_minor: number;
+  tax_minor: number;
   total_minor: number;
   currency: string;
   status: OrderStatus;
@@ -71,6 +72,7 @@ const OrderSchema = new Schema<IOrder>(
       default: [],
     },
     subtotal_minor: { type: Number, required: true, min: 0 },
+    tax_minor: { type: Number, default: 0, min: 0 },
     total_minor: { type: Number, required: true, min: 0 },
     currency: { type: String, default: 'GHS' },
     status: { type: String, enum: ORDER_STATUSES, default: 'created', index: true },

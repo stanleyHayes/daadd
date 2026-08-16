@@ -524,7 +524,8 @@
       "fraudReview": "Bedrägerigranskning",
       "products": "Produkter",
       "orders": "Beställningar",
-      "disputes": "Tvister"
+      "disputes": "Tvister",
+      "commerce": "Handel"
     },
     "home": {
       "title": "Översikt",
@@ -1484,6 +1485,22 @@
       "reason": "Orsak",
       "value": "Ordervärde",
       "evidence": "Bevis"
+    },
+    "commerce": {
+      "title": "Handelsinställningar",
+      "subtitle": "Moms och regler för orderns livscykel på marknaden.",
+      "vatTitle": "Skatt & beställningar",
+      "vatSubtitle": "Gäller alla nya beställningar. Handlare sätter priser i GH₵.",
+      "vatRate": "Momssats (%)",
+      "vatRateHint": "t.ex. 20 för 20%. Standard är landets sats.",
+      "vatInclusive": "Ingår moms i priset?",
+      "inclusive": "Inkluderad",
+      "exclusive": "Läggs på",
+      "autoRelease": "Auto-frisläpp (dagar)",
+      "autoReleaseHint": "Levererade beställningar slutförs automatiskt efter detta.",
+      "paymentTtl": "Betalningsfönster (minuter)",
+      "paymentTtlHint": "Obetalda beställningar upphör efter detta.",
+      "reset": "Återställ standard"
     }
   },
   "legal": {

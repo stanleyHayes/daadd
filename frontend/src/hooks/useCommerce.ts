@@ -55,6 +55,7 @@ export interface Order {
   merchant_id: string;
   items: OrderItem[];
   subtotal_minor: number;
+  tax_minor?: number;
   total_minor: number;
   currency: string;
   status: OrderStatus;

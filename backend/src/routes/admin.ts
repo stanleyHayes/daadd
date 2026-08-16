@@ -13,6 +13,12 @@ import {
   MAX_VIP_MULTIPLIER,
   MAX_EFFECTIVE_MULTIPLIER,
 } from '../utils/multiplier-rules';
+import {
+  getCommerceSettings,
+  sanitizeCommerceSettings,
+  DEFAULT_COMMERCE_SETTINGS,
+  COMMERCE_SETTINGS_KEY,
+} from '../utils/commerce-settings';
 
 const router = Router();
 
@@ -108,6 +114,32 @@ router.put('/multiplier-rules', async (req: Request, res: Response) => {
     res.json(success({ rules: next }, 'Multiplier rules updated'));
   } catch (err: any) {
     res.status(500).json({ success: false, message: err.message || 'Failed to update multiplier rules' });
+  }
+});
+
+/**
+ * Commerce settings (Phase 5) — VAT rate + inclusive/exclusive, and the order
+ * lifecycle windows. Config, not a code decision; sanitised + clamped on save.
+ */
+router.get('/commerce-settings', async (_req: Request, res: Response) => {
+  try {
+    res.json(success({ settings: await getCommerceSettings(), defaults: DEFAULT_COMMERCE_SETTINGS }));
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message || 'Failed to fetch commerce settings' });
+  }
+});
+
+router.put('/commerce-settings', async (req: Request, res: Response) => {
+  try {
+    const next = sanitizeCommerceSettings(req.body);
+    await PlatformSetting.findOneAndUpdate(
+      { key: COMMERCE_SETTINGS_KEY },
+      { $set: { value: next } },
+      { upsert: true, new: true }
+    );
+    res.json(success({ settings: next }, 'Commerce settings updated'));
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message || 'Failed to update commerce settings' });
   }
 });
 

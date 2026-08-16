@@ -524,7 +524,8 @@
       "fraudReview": "Revisão de fraude",
       "products": "Produtos",
       "orders": "Encomendas",
-      "disputes": "Disputas"
+      "disputes": "Disputas",
+      "commerce": "Comércio"
     },
     "home": {
       "title": "Painel",
@@ -1484,6 +1485,22 @@
       "reason": "Motivo",
       "value": "Valor da encomenda",
       "evidence": "Prova"
+    },
+    "commerce": {
+      "title": "Definições de comércio",
+      "subtitle": "IVA e regras do ciclo de encomendas do mercado.",
+      "vatTitle": "Impostos e encomendas",
+      "vatSubtitle": "Aplica-se a todas as novas encomendas. Os comerciantes definem os preços em GH₵.",
+      "vatRate": "Taxa de IVA (%)",
+      "vatRateHint": "ex. 20 para 20%. Por omissão, a taxa do país.",
+      "vatInclusive": "O preço inclui IVA?",
+      "inclusive": "Incluído",
+      "exclusive": "Adicionado",
+      "autoRelease": "Libertação automática (dias)",
+      "autoReleaseHint": "As encomendas entregues concluem-se sozinhas após isto.",
+      "paymentTtl": "Janela de pagamento (minutos)",
+      "paymentTtlHint": "As encomendas não pagas expiram após isto.",
+      "reset": "Repor predefinições"
     }
   },
   "legal": {

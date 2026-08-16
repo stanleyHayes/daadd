@@ -1,16 +1,15 @@
 import { Order } from '../models';
-
-/** How long an unpaid order may sit before it lapses. */
-const ORDER_PAYMENT_TTL_MS = parseInt(process.env.ORDER_PAYMENT_TTL_MINUTES || '60', 10) * 60000;
+import { getCommerceSettings } from './commerce-settings';
 
 /**
  * Expire orders that were never paid (still `created`/`payment_pending` past the
- * TTL). Idempotent; driven by the scheduled job. A payment that lands after this
- * is refunded — see applyPaymentEffect in utils/payment-flow.ts. Returns how many
- * were expired.
+ * configured TTL). Idempotent; driven by the scheduled job. A payment that lands
+ * after this is refunded — see applyPaymentEffect in utils/payment-flow.ts.
+ * Returns how many were expired.
  */
 export async function expireStaleOrders(): Promise<number> {
-  const cutoff = new Date(Date.now() - ORDER_PAYMENT_TTL_MS);
+  const { payment_ttl_minutes } = await getCommerceSettings();
+  const cutoff = new Date(Date.now() - payment_ttl_minutes * 60000);
   const due = await Order.find({ status: { $in: ['created', 'payment_pending'] }, created_at: { $lte: cutoff } })
     .select('_id')
     .limit(500)
