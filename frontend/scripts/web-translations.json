@@ -1528,6 +1528,15 @@
         "shareText": "Gå med mig på DAADD och tjäna belöningar på riktiga köp.",
         "activated": "Aktiverade",
         "pending": "Väntande"
+      },
+      "billing": {
+        "checking": "Bekräftar din betalning…",
+        "paidTitle": "Betalning genomförd",
+        "paidBody": "Din fakturering är klar. Du kan nu köra kampanjer.",
+        "continue": "Fortsätt till instrumentpanelen",
+        "failedTitle": "Betalning ej slutförd",
+        "failedBody": "Vi kunde inte bekräfta din betalning. Om du debiterades stäms den av automatiskt; annars försök igen.",
+        "back": "Tillbaka till instrumentpanelen"
       }
     },
     "legal": {
@@ -3073,6 +3082,15 @@
         "shareText": "Únete a mí en DAADD y gana recompensas en compras reales.",
         "activated": "Activados",
         "pending": "Pendientes"
+      },
+      "billing": {
+        "checking": "Confirmando tu pago…",
+        "paidTitle": "Pago exitoso",
+        "paidBody": "Tu facturación está configurada. Ya puedes lanzar campañas.",
+        "continue": "Continuar al panel",
+        "failedTitle": "Pago no completado",
+        "failedBody": "No pudimos confirmar tu pago. Si se te cobró, se conciliará automáticamente; de lo contrario, inténtalo de nuevo.",
+        "back": "Volver al panel"
       }
     },
     "legal": {
@@ -4618,6 +4636,15 @@
         "shareText": "Rejoignez-moi sur DAADD et gagnez des récompenses sur de vrais achats.",
         "activated": "Activés",
         "pending": "En attente"
+      },
+      "billing": {
+        "checking": "Confirmation de votre paiement…",
+        "paidTitle": "Paiement réussi",
+        "paidBody": "Votre facturation est configurée. Vous pouvez maintenant lancer des campagnes.",
+        "continue": "Continuer vers le tableau de bord",
+        "failedTitle": "Paiement non abouti",
+        "failedBody": "Nous n’avons pas pu confirmer votre paiement. Si vous avez été débité, il sera rapproché automatiquement ; sinon, réessayez.",
+        "back": "Retour au tableau de bord"
       }
     },
     "legal": {
@@ -6163,6 +6190,15 @@
         "shareText": "Komm zu mir auf DAADD und verdiene Belohnungen für echte Einkäufe.",
         "activated": "Aktiviert",
         "pending": "Ausstehend"
+      },
+      "billing": {
+        "checking": "Zahlung wird bestätigt…",
+        "paidTitle": "Zahlung erfolgreich",
+        "paidBody": "Ihre Abrechnung ist eingerichtet. Sie können jetzt Kampagnen schalten.",
+        "continue": "Weiter zum Dashboard",
+        "failedTitle": "Zahlung nicht abgeschlossen",
+        "failedBody": "Wir konnten Ihre Zahlung nicht bestätigen. Falls Sie belastet wurden, wird sie automatisch abgeglichen; andernfalls versuchen Sie es erneut.",
+        "back": "Zurück zum Dashboard"
       }
     },
     "legal": {
@@ -7708,6 +7744,15 @@
         "shareText": "Junta-te a mim na DAADD e ganha recompensas em compras reais.",
         "activated": "Ativados",
         "pending": "Pendentes"
+      },
+      "billing": {
+        "checking": "A confirmar o seu pagamento…",
+        "paidTitle": "Pagamento bem-sucedido",
+        "paidBody": "A sua faturação está configurada. Já pode lançar campanhas.",
+        "continue": "Continuar para o painel",
+        "failedTitle": "Pagamento não concluído",
+        "failedBody": "Não conseguimos confirmar o seu pagamento. Se foi cobrado, será reconciliado automaticamente; caso contrário, tente novamente.",
+        "back": "Voltar ao painel"
       }
     },
     "legal": {

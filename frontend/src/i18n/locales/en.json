@@ -1412,6 +1412,15 @@
       "shareText": "Join me on DAADD and earn rewards on real purchases.",
       "activated": "Activated",
       "pending": "Pending"
+    },
+    "billing": {
+      "checking": "Confirming your payment…",
+      "paidTitle": "Payment successful",
+      "paidBody": "Your billing is set up. You can now run campaigns.",
+      "continue": "Continue to dashboard",
+      "failedTitle": "Payment not completed",
+      "failedBody": "We couldn’t confirm your payment. If you were charged, it will be reconciled automatically — otherwise please try again.",
+      "back": "Back to dashboard"
     }
   },
   "legal": {

@@ -40,8 +40,35 @@ export function useSetupBilling() {
   const setUser = useAuthStore((s) => s.setUser);
   return useMutation({
     mutationFn: async () => {
-      await api.post('/billing/setup');
-      return refreshMe(setUser);
+      const res = await api.post<{ data: { requires_payment: boolean; authorization_url?: string } }>(
+        '/billing/setup'
+      );
+      return res.data.data;
+    },
+    onSuccess: async (data) => {
+      // With a PSP configured the server hands back a checkout URL; sending the
+      // browser there is the whole flow — billing_ready flips only after the
+      // payment is verified on return (see BillingCallbackPage). Without a PSP
+      // (dev), the flag is already set, so just refresh the user.
+      if (data.requires_payment && data.authorization_url) {
+        window.location.href = data.authorization_url;
+        return;
+      }
+      await refreshMe(setUser);
+    },
+  });
+}
+
+/** Verify a returned payment by its reference (the billing callback). */
+export function useVerifyPayment() {
+  const setUser = useAuthStore((s) => s.setUser);
+  return useMutation({
+    mutationFn: async (reference: string) => {
+      const res = await api.get<{ data: { status: string } }>(`/payments/verify/${reference}`);
+      return res.data.data;
+    },
+    onSuccess: async () => {
+      await refreshMe(setUser);
     },
   });
 }

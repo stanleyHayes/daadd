@@ -1412,6 +1412,15 @@
       "shareText": "Gå med mig på DAADD och tjäna belöningar på riktiga köp.",
       "activated": "Aktiverade",
       "pending": "Väntande"
+    },
+    "billing": {
+      "checking": "Bekräftar din betalning…",
+      "paidTitle": "Betalning genomförd",
+      "paidBody": "Din fakturering är klar. Du kan nu köra kampanjer.",
+      "continue": "Fortsätt till instrumentpanelen",
+      "failedTitle": "Betalning ej slutförd",
+      "failedBody": "Vi kunde inte bekräfta din betalning. Om du debiterades stäms den av automatiskt; annars försök igen.",
+      "back": "Tillbaka till instrumentpanelen"
     }
   },
   "legal": {

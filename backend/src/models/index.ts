@@ -51,3 +51,12 @@ export {
   VoucherStatus,
   VOUCHER_STATUSES,
 } from './DiscountVoucher';
+export {
+  Payment,
+  IPayment,
+  PaymentStatus,
+  PAYMENT_STATUSES,
+  PaymentPurpose,
+  PAYMENT_PURPOSES,
+} from './Payment';
+export { WebhookEvent, IWebhookEvent } from './WebhookEvent';

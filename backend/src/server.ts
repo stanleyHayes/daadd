@@ -34,6 +34,18 @@ async function startServer(): Promise<void> {
       process.exit(1);
     }
 
+    // A payment webhook secret must never fall back to a dev default — that
+    // would let anyone forge webhooks. If payments are turned on in production,
+    // the PSP secret must be set explicitly.
+    if (
+      process.env.NODE_ENV === 'production' &&
+      process.env.PAYMENTS_ENABLED === 'true' &&
+      !process.env.PAYSTACK_SECRET_KEY
+    ) {
+      console.error('FATAL: PAYSTACK_SECRET_KEY must be set when PAYMENTS_ENABLED=true in production');
+      process.exit(1);
+    }
+
     // In production there is no local Mongo — the localhost fallback can never
     // work, so fail fast with an actionable message instead of ECONNREFUSED.
     if (process.env.NODE_ENV === 'production' && !process.env.MONGODB_URI) {

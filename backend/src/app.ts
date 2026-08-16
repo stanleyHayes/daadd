@@ -21,7 +21,16 @@ app.use(compression());
 if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('combined'));
 }
-app.use(express.json());
+// Stash the raw request bytes so the PSP webhook can verify its HMAC signature
+// against the exact payload (a re-serialized object would mismatch on key order
+// or whitespace). Cheap: just keeps a reference to the buffer express already read.
+app.use(
+  express.json({
+    verify: (req, _res, buf) => {
+      (req as unknown as { rawBody?: Buffer }).rawBody = buf;
+    },
+  })
+);
 app.use(express.urlencoded({ extended: true }));
 
 // Rate limiting (spec §6). Skipped under NODE_ENV=test so the suites can

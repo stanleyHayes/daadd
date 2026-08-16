@@ -1412,6 +1412,15 @@
       "shareText": "Rejoignez-moi sur DAADD et gagnez des récompenses sur de vrais achats.",
       "activated": "Activés",
       "pending": "En attente"
+    },
+    "billing": {
+      "checking": "Confirmation de votre paiement…",
+      "paidTitle": "Paiement réussi",
+      "paidBody": "Votre facturation est configurée. Vous pouvez maintenant lancer des campagnes.",
+      "continue": "Continuer vers le tableau de bord",
+      "failedTitle": "Paiement non abouti",
+      "failedBody": "Nous n’avons pas pu confirmer votre paiement. Si vous avez été débité, il sera rapproché automatiquement ; sinon, réessayez.",
+      "back": "Retour au tableau de bord"
     }
   },
   "legal": {

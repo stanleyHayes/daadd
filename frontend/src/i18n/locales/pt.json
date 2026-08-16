@@ -1412,6 +1412,15 @@
       "shareText": "Junta-te a mim na DAADD e ganha recompensas em compras reais.",
       "activated": "Ativados",
       "pending": "Pendentes"
+    },
+    "billing": {
+      "checking": "A confirmar o seu pagamento…",
+      "paidTitle": "Pagamento bem-sucedido",
+      "paidBody": "A sua faturação está configurada. Já pode lançar campanhas.",
+      "continue": "Continuar para o painel",
+      "failedTitle": "Pagamento não concluído",
+      "failedBody": "Não conseguimos confirmar o seu pagamento. Se foi cobrado, será reconciliado automaticamente; caso contrário, tente novamente.",
+      "back": "Voltar ao painel"
     }
   },
   "legal": {

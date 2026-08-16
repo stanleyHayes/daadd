@@ -58,6 +58,7 @@ import { PlatformAccountsPage } from '@/pages/dashboard/PlatformAccountsPage';
 import { AdminAdvertisersPage } from '@/pages/dashboard/AdminAdvertisersPage';
 import { AdminMerchantsPage } from '@/pages/dashboard/AdminMerchantsPage';
 import { AdminFraudPage } from '@/pages/dashboard/AdminFraudPage';
+import { BillingCallbackPage } from '@/pages/dashboard/BillingCallbackPage';
 import { AdminModerationPage } from '@/pages/dashboard/AdminModerationPage';
 import { ChannelsPage } from '@/pages/dashboard/ChannelsPage';
 import { RolesPage } from '@/pages/dashboard/RolesPage';
@@ -167,6 +168,7 @@ function App() {
                 <Route path="/dashboard/merchant" element={<MerchantDashboardPage />} />
                 <Route path="/dashboard/outlets" element={<OutletsPage />} />
               </Route>
+              <Route path="/dashboard/billing/callback" element={<BillingCallbackPage />} />
               <Route path="/dashboard/profile" element={<ProfilePage />} />
               <Route path="/dashboard/settings" element={<SettingsPage />} />
               <Route path="*" element={<NotFoundPage />} />

@@ -1412,6 +1412,15 @@
       "shareText": "Komm zu mir auf DAADD und verdiene Belohnungen für echte Einkäufe.",
       "activated": "Aktiviert",
       "pending": "Ausstehend"
+    },
+    "billing": {
+      "checking": "Zahlung wird bestätigt…",
+      "paidTitle": "Zahlung erfolgreich",
+      "paidBody": "Ihre Abrechnung ist eingerichtet. Sie können jetzt Kampagnen schalten.",
+      "continue": "Weiter zum Dashboard",
+      "failedTitle": "Zahlung nicht abgeschlossen",
+      "failedBody": "Wir konnten Ihre Zahlung nicht bestätigen. Falls Sie belastet wurden, wird sie automatisch abgeglichen; andernfalls versuchen Sie es erneut.",
+      "back": "Zurück zum Dashboard"
     }
   },
   "legal": {

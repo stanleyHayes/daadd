@@ -131,13 +131,34 @@ defence-in-depth test that poisons the store directly and asserts the claim is
 still capped. Admin `GET/PUT /admin/multiplier-rules`; editor added to
 `AdminLoyaltyPage`. Six locales. Tests: multiplier-rules (14).
 
-**Remaining in Phase 3:** 3.1 (voucher/discount transfer) and 3.2 (activated
-referrals) — both consumer-facing (mobile), greenfield, surveyed and scoped.
+### Phase 4 — Payment abstraction over a licensed PSP 🚧 (code complete; go-live gated on legal sign-off)
 
-### Phase 4 — Payment abstraction over a licensed PSP ⛔
+PSP chosen: **Paystack** (Ghana, GHS). The payment layer is built and tested; the
+one remaining gate before charging real money is the **Ghanaian settlement-structure
+legal sign-off** (the advisor doc flags it twice) plus swapping in live keys.
 
-Blocked on decisions: which PSP, and Ghanaian counsel signing off the settlement
-structure. Enabling layer for all commerce.
+**What's built.** A PSP-abstracted, non-custody payment layer — DAADD records
+intent/status, the PSP holds funds. `services/payment.service.ts` defines a
+`PaymentProvider` interface (Paystack the first adapter, `PSP_PROVIDER` selects it,
+mirroring `storage.service.ts`). `Payment` model in **integer pesewas** (never the
+token ledger); `WebhookEvent` model for exactly-once. `utils/payment-flow.ts` holds
+the shared create/reconcile/effect logic. Routes: `POST /payments/initialize`,
+`GET /payments/verify/:reference` (browser callback), `GET /payments`, and an
+**unauthenticated, HMAC-SHA512-verified** `POST /payments/webhook`. First concrete
+use: advertiser billing — the old `billing.ts` stub (which flipped `billing_ready`
+on a client claim) is replaced; the flag now flips **only** from a verified payment.
+
+**Security posture.** Raw body captured for the webhook HMAC; signature checked in
+constant time; exactly-once via the `WebhookEvent` unique index *and* an atomic
+`pending→paid` transition; the webhook **re-verifies** with the provider before
+granting value; amount/currency must match what was requested or nothing unlocks;
+payments are inert (503) until `PAYSTACK_SECRET_KEY` is set, and production fails
+fast if enabled without it. Frontend: `BillingCallbackPage` reconciles on return.
+Tests: payments (11) — provider signature/parse, initialize/verify/webhook,
+idempotent redelivery, amount-tampering rejection, and money/token separation.
+
+**Known hardening follow-up:** the webhook shares the global 200/min-per-IP rate
+limiter; give it its own lane before high volume.
 
 ### Phase 5 — Online commerce → buyer protection ⬜ (depends on Phase 4)
 
@@ -160,7 +181,7 @@ backups + DR, production monitoring + alerting.
 
 | Decision | Blocks | Notes |
 | --- | --- | --- |
-| Which licensed Ghanaian PSP? | Phase 4, all of commerce | Settlement structure needs a Ghanaian fintech lawyer's sign-off — the regulatory doc says so twice |
+| ~~Which licensed Ghanaian PSP?~~ **Paystack** ✅ | ~~Phase 4~~ done | Payment layer built + tested. **Still blocked for go-live:** the settlement-structure legal sign-off (regulatory doc flags it twice) + live keys |
 | Confirm tokens stay non-cashable | Phase 1.5, Token Terms | `TOKEN_VALUE=0.05` is dollar-denominated today; the framing must not read as withdrawable money |
 | Pilot scope: thin Accra pilot vs full vision | Phase 5 onward | Advisor argues hard for ~100 Accra merchants first |
 | Creator-network timing | Phase 6 | Post-MVP, but attribution plumbing designed in now |
@@ -171,6 +192,7 @@ backups + DR, production monitoring + alerting.
 
 Newest first. One line per landed increment, with the commit.
 
+- Phase 4 (payment abstraction) — PSP-abstracted, non-custody payment layer with Paystack adapter; Payment (pesewas) + WebhookEvent models; signature-verified idempotent webhook; advertiser billing replaces the insecure stub (billing_ready only from a verified payment). Backend + frontend callback + 11 tests. Code complete; go-live gated on the settlement-structure legal sign-off + live keys.
 - Phase 3.1 (discount-voucher transfer) — `DiscountVoucher` state machine; issue debits the sender + mints a separate discount (tokens never transferred), claim, verified-merchant redeem (reuses merchant-gate), expiry-refund sweep. Mobile vouchers screen. Backend + mobile + 12 tests, six locales. **Phase 3 complete.**
 - Phase 3.2 (activated referrals) — referral codes + referred_by on User; referrer minted a fresh bonus only on the invitee's first completed redemption (once-only, tokens never transferred); `/referrals/me` stats; web Settings tab + mobile referral screen. Backend + web + mobile + 9 tests, six locales each.
 - Phase 3.3 (configurable multiplier engine) — admin-editable streak tiers + VIP multiplier stored in PlatformSetting, replacing hardcoded constants; hard non-configurable ceilings clamped on save and re-clamped at grant time (defence-in-depth). Backend + admin editor + 14 tests, six locales.
