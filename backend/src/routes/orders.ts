@@ -14,7 +14,7 @@ import {
 } from '../models';
 import { authMiddleware } from '../middleware/auth';
 import { paymentsEnabled } from '../services/payment.service';
-import { createCharge, refundPayment } from '../utils/payment-flow';
+import { createCharge, refundPayment, restoreStock, reserveStock } from '../utils/payment-flow';
 import { success, paginated } from '../utils/response';
 
 /**
@@ -89,12 +89,21 @@ async function doTransition(
   );
   if (!updated) return { ok: false, code: 409, message: 'The order changed — please refresh and retry' };
 
-  // Refund the held funds when cancelling/refunding a paid order.
-  if (shouldRefund(from, to) && updated.payment_id) {
-    const payment = await Payment.findById(updated.payment_id);
-    if (payment && payment.status === 'paid') {
-      await refundPayment(payment);
-      await Order.updateOne({ _id: updated._id }, { $set: { refund_reference: payment.reference } });
+  // Reserve stock when an order becomes paid (covers the dev/test auto-pay path;
+  // the real payment path reserves in applyPaymentEffect). The atomic move above
+  // guarantees this runs once per order.
+  if (to === 'paid') await reserveStock(updated.items);
+
+  // Cancelling/refunding a post-paid order releases the reserved stock (always)
+  // and refunds the held funds (when a real payment backed it).
+  if (shouldRefund(from, to)) {
+    await restoreStock(updated.items);
+    if (updated.payment_id) {
+      const payment = await Payment.findById(updated.payment_id);
+      if (payment && payment.status === 'paid') {
+        await refundPayment(payment);
+        await Order.updateOne({ _id: updated._id }, { $set: { refund_reference: payment.reference } });
+      }
     }
   }
 
@@ -323,7 +332,12 @@ router.post('/:id/dispute', authMiddleware, async (req: Request, res: Response) 
     const dispute = {
       reason: String(req.body?.reason ?? '').trim() || 'unspecified',
       detail: String(req.body?.detail ?? '').trim(),
-      evidence: Array.isArray(req.body?.evidence) ? req.body.evidence.slice(0, 8).map(String) : [],
+      // Only keep http(s) evidence URLs — a javascript:/data: link would be an
+      // XSS vector when a reviewer opens it.
+      evidence: (Array.isArray(req.body?.evidence) ? req.body.evidence : [])
+        .slice(0, 8)
+        .map(String)
+        .filter((u: string) => /^https?:\/\//i.test(u.trim())),
       opened_at: new Date(),
       opened_by: new Types.ObjectId(req.user!.userId),
     };

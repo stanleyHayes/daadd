@@ -8,6 +8,16 @@ import { useOrders, useResolveDispute, formatMinor } from '@/hooks/useCommerce';
 import { OrderCard } from './MerchantOrdersPage';
 import { Scale, RotateCcw, CheckCircle2 } from 'lucide-react';
 
+/** Only allow http(s) evidence links — never a javascript:/data: scheme (XSS). */
+function safeHref(url: string): string | null {
+  try {
+    const u = new URL(url);
+    return u.protocol === 'http:' || u.protocol === 'https:' ? u.href : null;
+  } catch {
+    return null;
+  }
+}
+
 export function AdminDisputesPage() {
   const { t } = useTranslation();
   const { data: orders, isLoading } = useOrders('admin', 'disputed');
@@ -46,11 +56,18 @@ export function AdminDisputesPage() {
                     </p>
                     {order.dispute.evidence.length > 0 && (
                       <div className="mt-2 flex flex-wrap gap-2">
-                        {order.dispute.evidence.map((url, i) => (
-                          <a key={i} href={url} target="_blank" rel="noreferrer" className="text-xs text-primary-600 underline">
-                            {t('dashboard.disputes.evidence')} {i + 1}
-                          </a>
-                        ))}
+                        {order.dispute.evidence.map((url, i) => {
+                          const href = safeHref(url);
+                          return href ? (
+                            <a key={i} href={href} target="_blank" rel="noreferrer noopener" className="text-xs text-primary-600 underline">
+                              {t('dashboard.disputes.evidence')} {i + 1}
+                            </a>
+                          ) : (
+                            <span key={i} className="text-xs text-text-muted">
+                              {t('dashboard.disputes.evidence')} {i + 1}
+                            </span>
+                          );
+                        })}
                       </div>
                     )}
                   </Card>

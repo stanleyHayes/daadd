@@ -1,7 +1,7 @@
 import { Types } from 'mongoose';
-import { Order, Payment, User, MerchantVerification, UserRole } from '../models';
+import { Order, Payment, Product, User, MerchantVerification, UserRole } from '../models';
 import { canTransition, allowedTransitions, isTerminal, shouldRefund } from '../utils/order-state';
-import { autoReleaseOrders } from '../utils/order-sweep';
+import { autoReleaseOrders, expireStaleOrders } from '../utils/order-sweep';
 import { generateToken } from '../middleware/auth';
 import { request, connectTestDb, resetTestDb, closeTestDb } from '../test-helpers';
 
@@ -232,6 +232,55 @@ describe('order lifecycle', () => {
     expect(resolve.status).toBe(200);
     expect(resolve.body.data.status).toBe('refunded');
     expect((await Payment.findById(payment._id).lean())!.status).toBe('refunded');
+  });
+
+  it('reserves stock on payment and restores it on cancel', async () => {
+    const merchant = await verifiedMerchant();
+    const buyer = await makeUser();
+    const productId = (await request.post(PRODUCTS).set(auth(merchant.token)).send({ name: 'Stocked', price_minor: 10000, stock: 5 })).body.data.id;
+
+    const order = (await request.post(ORDERS).set(auth(buyer.token)).send({ items: [{ product_id: productId, quantity: 2 }] })).body.data;
+    await request.post(`${ORDERS}/${order.id}/pay`).set(auth(buyer.token)); // dev auto-pay → paid
+    expect((await Product.findById(productId).lean())!.stock).toBe(3); // 5 - 2 reserved
+
+    await request.post(`${ORDERS}/${order.id}/cancel`).set(auth(merchant.token));
+    expect((await Product.findById(productId).lean())!.stock).toBe(5); // restored
+  });
+
+  it('expires orders that were never paid', async () => {
+    const merchant = await verifiedMerchant();
+    const buyer = await makeUser();
+    const productId = (await request.post(PRODUCTS).set(auth(merchant.token)).send({ name: 'X', price_minor: 100 })).body.data.id;
+    const order = await Order.create({
+      buyer_id: buyer.id, merchant_id: merchant.id,
+      items: [{ product_id: productId, name: 'X', unit_price_minor: 100, quantity: 1 }],
+      subtotal_minor: 100, total_minor: 100, status: 'created',
+      history: [{ status: 'created', actor: 'buyer', at: new Date() }],
+    });
+    // timestamps override created_at on create, so backdate via the raw driver (2h ago; TTL is 60m).
+    await Order.collection.updateOne({ _id: order._id }, { $set: { created_at: new Date(Date.now() - 2 * 3600 * 1000) } });
+
+    const n = await expireStaleOrders();
+    expect(n).toBe(1);
+    expect((await Order.findById(order._id).lean())!.status).toBe('expired');
+    expect(await expireStaleOrders()).toBe(0); // idempotent
+  });
+
+  it('drops non-http evidence URLs from a dispute (XSS guard)', async () => {
+    const merchant = await verifiedMerchant();
+    const buyer = await makeUser();
+    const order = await Order.create({
+      buyer_id: buyer.id, merchant_id: merchant.id,
+      items: [{ product_id: new Types.ObjectId(), name: 'X', unit_price_minor: 100, quantity: 1 }],
+      subtotal_minor: 100, total_minor: 100, status: 'delivered',
+      history: [{ status: 'delivered', actor: 'merchant', at: new Date() }],
+    });
+    const res = await request.post(`${ORDERS}/${order._id}/dispute`).set(auth(buyer.token)).send({
+      reason: 'bad',
+      evidence: ['https://ok.example/img.jpg', 'javascript:alert(1)', 'data:text/html,x'],
+    });
+    expect(res.status).toBe(200);
+    expect(res.body.data.dispute.evidence).toEqual(['https://ok.example/img.jpg']);
   });
 
   it('auto-releases a delivered order past its window', async () => {

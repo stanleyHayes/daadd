@@ -13,7 +13,7 @@ import { seedDatabase } from './seed';
 import { scanAllActiveCampaigns } from './services/anomaly-detection.service';
 import { runFraudScan } from './services/fraud-detection.service';
 import { expireVouchers } from './utils/voucher';
-import { autoReleaseOrders } from './utils/order-sweep';
+import { autoReleaseOrders, expireStaleOrders } from './utils/order-sweep';
 import { alertOps } from './services/alerting';
 
 const PORT = process.env.PORT || 4000;
@@ -148,9 +148,12 @@ async function startServer(): Promise<void> {
         // Lapse expired vouchers and refund their issuers (value conservation).
         const expired = await expireVouchers();
         if (expired > 0) console.log(`[voucher-sweep] expired=${expired}`);
-        // Auto-release delivered orders whose confirmation window has elapsed.
+        // Auto-release delivered orders whose confirmation window has elapsed,
+        // and expire orders that were never paid.
         const released = await autoReleaseOrders();
         if (released > 0) console.log(`[order-sweep] auto-released=${released}`);
+        const staleExpired = await expireStaleOrders();
+        if (staleExpired > 0) console.log(`[order-sweep] expired-unpaid=${staleExpired}`);
       } catch (err) {
         console.warn('[anomaly-scan] failed (swallowed):', err);
         void alertOps('scheduled scan failed', String((err as Error)?.stack || err));

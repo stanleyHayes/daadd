@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import { Payment, User, Notification, Order, IPayment, PaymentPurpose } from '../models';
+import { Payment, User, Notification, Order, Product, IPayment, PaymentPurpose } from '../models';
 import { resolveProvider, VerifyResult } from '../services/payment.service';
 
 /**
@@ -89,13 +89,46 @@ export async function applyPaymentEffect(payment: IPayment): Promise<void> {
     // pending-payment order transitions, and the history entry is appended once.
     const orderId = (payment.metadata as { order_id?: string })?.order_id;
     if (!orderId) return;
-    await Order.findOneAndUpdate(
+    const paid = await Order.findOneAndUpdate(
       { _id: orderId, status: 'payment_pending' },
       {
         $set: { status: 'paid', payment_id: payment._id, payment_reference: payment.reference },
         $push: { history: { status: 'paid', actor: 'system', at: new Date(), note: 'Payment received' } },
-      }
+      },
+      { new: true }
     );
+    if (paid) {
+      // Reserve stock now that the order is funded. Only the winner of the
+      // atomic transition above reaches here, so each item is decremented once.
+      await reserveStock(paid.items);
+      return;
+    }
+    // The order was no longer payment_pending — most likely it expired before the
+    // payment landed. The buyer paid for nothing, so refund them.
+    const order = await Order.findById(orderId).select('status').lean();
+    if (order?.status === 'expired') {
+      await refundPayment(payment);
+    }
+  }
+}
+
+/** Decrement tracked stock for an order's items (when an order becomes paid). */
+export async function reserveStock(items: { product_id: unknown; quantity: number }[]): Promise<void> {
+  for (const item of items) {
+    await Product.updateOne(
+      { _id: item.product_id as never, stock: { $ne: null } },
+      { $inc: { stock: -item.quantity } }
+    ).catch(() => {});
+  }
+}
+
+/** Restore reserved stock for an order's items (on cancel/refund of a paid order). */
+export async function restoreStock(items: { product_id: unknown; quantity: number }[]): Promise<void> {
+  for (const item of items) {
+    await Product.updateOne(
+      { _id: item.product_id as never, stock: { $ne: null } },
+      { $inc: { stock: item.quantity } }
+    ).catch(() => {});
   }
 }
 
