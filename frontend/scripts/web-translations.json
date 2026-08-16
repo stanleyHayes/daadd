@@ -637,7 +637,10 @@
         "roles": "Roller och behörigheter",
         "siteContent": "Webbplatsinnehåll",
         "merchantApprovals": "Handlarverifiering",
-        "fraudReview": "Bedrägerigranskning"
+        "fraudReview": "Bedrägerigranskning",
+        "products": "Produkter",
+        "orders": "Beställningar",
+        "disputes": "Tvister"
       },
       "home": {
         "title": "Översikt",
@@ -1537,6 +1540,66 @@
         "failedTitle": "Betalning ej slutförd",
         "failedBody": "Vi kunde inte bekräfta din betalning. Om du debiterades stäms den av automatiskt; annars försök igen.",
         "back": "Tillbaka till instrumentpanelen"
+      },
+      "products": {
+        "title": "Produkter",
+        "subtitle": "Sälj produkter till kunder. Du måste vara en verifierad handlare.",
+        "add": "Lägg till produkt",
+        "editTitle": "Redigera produkt",
+        "newTitle": "Ny produkt",
+        "name": "Namn",
+        "category": "Kategori",
+        "price": "Pris (GH₵)",
+        "priceHint": "Visas för köpare i ghananska cedi.",
+        "stock": "Lager",
+        "stockHint": "Lämna tomt för obegränsat.",
+        "description": "Beskrivning",
+        "invalid": "Ange ett namn och ett giltigt pris",
+        "emptyTitle": "Inga produkter ännu",
+        "emptyDesc": "Lägg till din första produkt för att börja sälja.",
+        "inactive": "dold",
+        "inStock": "{{n}} i lager"
+      },
+      "orders": {
+        "merchantTitle": "Beställningar",
+        "merchantSubtitle": "Uppfyll inkommande beställningar. Pengarna hålls tills köparen bekräftar.",
+        "placed": "Lagd {{date}}",
+        "timeline": "Tidslinje",
+        "emptyMerchantTitle": "Inga beställningar ännu",
+        "emptyMerchantDesc": "Beställningar från kunder visas här.",
+        "status": {
+          "created": "Skapad",
+          "payment_pending": "Väntar på betalning",
+          "paid": "Betald",
+          "accepted": "Accepterad",
+          "preparing": "Förbereds",
+          "shipped": "Skickad",
+          "delivered": "Levererad",
+          "completed": "Slutförd",
+          "disputed": "Tvist",
+          "refunded": "Återbetald",
+          "cancelled": "Avbruten",
+          "expired": "Utgången"
+        },
+        "action": {
+          "accept": "Acceptera",
+          "prepare": "Förbered",
+          "ship": "Skicka",
+          "deliver": "Markera levererad",
+          "confirm": "Bekräfta mottagande",
+          "cancel": "Avbryt"
+        }
+      },
+      "disputes": {
+        "title": "Tvister",
+        "subtitle": "Lös köpartvister: återbetala köparen eller frigör pengarna till handlaren.",
+        "emptyTitle": "Inga öppna tvister",
+        "emptyDesc": "Tvistade beställningar visas här för lösning.",
+        "refund": "Återbetala köparen",
+        "release": "Frigör till handlaren",
+        "reason": "Orsak",
+        "value": "Ordervärde",
+        "evidence": "Bevis"
       }
     },
     "legal": {
@@ -2186,7 +2249,10 @@
         "roles": "Roles y accesos",
         "siteContent": "Contenido del sitio web",
         "merchantApprovals": "Verificación de comercios",
-        "fraudReview": "Revisión de fraude"
+        "fraudReview": "Revisión de fraude",
+        "products": "Productos",
+        "orders": "Pedidos",
+        "disputes": "Disputas"
       },
       "home": {
         "title": "Panel",
@@ -3091,6 +3157,66 @@
         "failedTitle": "Pago no completado",
         "failedBody": "No pudimos confirmar tu pago. Si se te cobró, se conciliará automáticamente; de lo contrario, inténtalo de nuevo.",
         "back": "Volver al panel"
+      },
+      "products": {
+        "title": "Productos",
+        "subtitle": "Vende productos a los clientes. Debes ser un comercio verificado.",
+        "add": "Añadir producto",
+        "editTitle": "Editar producto",
+        "newTitle": "Nuevo producto",
+        "name": "Nombre",
+        "category": "Categoría",
+        "price": "Precio (GH₵)",
+        "priceHint": "Se muestra a los compradores en cedis ganeses.",
+        "stock": "Existencias",
+        "stockHint": "Déjalo en blanco para ilimitado.",
+        "description": "Descripción",
+        "invalid": "Introduce un nombre y un precio válido",
+        "emptyTitle": "Aún no hay productos",
+        "emptyDesc": "Añade tu primer producto para empezar a vender.",
+        "inactive": "oculto",
+        "inStock": "{{n}} en existencia"
+      },
+      "orders": {
+        "merchantTitle": "Pedidos",
+        "merchantSubtitle": "Cumple los pedidos entrantes. Los fondos se retienen hasta que el comprador confirme.",
+        "placed": "Realizado el {{date}}",
+        "timeline": "Cronología",
+        "emptyMerchantTitle": "Aún no hay pedidos",
+        "emptyMerchantDesc": "Los pedidos de clientes aparecerán aquí.",
+        "status": {
+          "created": "Creado",
+          "payment_pending": "Esperando pago",
+          "paid": "Pagado",
+          "accepted": "Aceptado",
+          "preparing": "Preparando",
+          "shipped": "Enviado",
+          "delivered": "Entregado",
+          "completed": "Completado",
+          "disputed": "En disputa",
+          "refunded": "Reembolsado",
+          "cancelled": "Cancelado",
+          "expired": "Caducado"
+        },
+        "action": {
+          "accept": "Aceptar",
+          "prepare": "Preparar",
+          "ship": "Enviar",
+          "deliver": "Marcar entregado",
+          "confirm": "Confirmar recepción",
+          "cancel": "Cancelar"
+        }
+      },
+      "disputes": {
+        "title": "Disputas",
+        "subtitle": "Resuelve las disputas de los compradores: reembolsa al comprador o libera los fondos al comercio.",
+        "emptyTitle": "No hay disputas abiertas",
+        "emptyDesc": "Los pedidos en disputa aparecen aquí para su resolución.",
+        "refund": "Reembolsar al comprador",
+        "release": "Liberar al comercio",
+        "reason": "Motivo",
+        "value": "Valor del pedido",
+        "evidence": "Prueba"
       }
     },
     "legal": {
@@ -3740,7 +3866,10 @@
         "roles": "Rôles et accès",
         "siteContent": "Contenu du site",
         "merchantApprovals": "Vérification des commerçants",
-        "fraudReview": "Examen des fraudes"
+        "fraudReview": "Examen des fraudes",
+        "products": "Produits",
+        "orders": "Commandes",
+        "disputes": "Litiges"
       },
       "home": {
         "title": "Tableau de bord",
@@ -4645,6 +4774,66 @@
         "failedTitle": "Paiement non abouti",
         "failedBody": "Nous n’avons pas pu confirmer votre paiement. Si vous avez été débité, il sera rapproché automatiquement ; sinon, réessayez.",
         "back": "Retour au tableau de bord"
+      },
+      "products": {
+        "title": "Produits",
+        "subtitle": "Vendez des produits aux clients. Vous devez être un commerçant vérifié.",
+        "add": "Ajouter un produit",
+        "editTitle": "Modifier le produit",
+        "newTitle": "Nouveau produit",
+        "name": "Nom",
+        "category": "Catégorie",
+        "price": "Prix (GH₵)",
+        "priceHint": "Affiché aux acheteurs en cédis ghanéens.",
+        "stock": "Stock",
+        "stockHint": "Laissez vide pour illimité.",
+        "description": "Description",
+        "invalid": "Saisissez un nom et un prix valide",
+        "emptyTitle": "Aucun produit pour le moment",
+        "emptyDesc": "Ajoutez votre premier produit pour commencer à vendre.",
+        "inactive": "masqué",
+        "inStock": "{{n}} en stock"
+      },
+      "orders": {
+        "merchantTitle": "Commandes",
+        "merchantSubtitle": "Traitez les commandes entrantes. Les fonds sont retenus jusqu’à la confirmation de l’acheteur.",
+        "placed": "Passée le {{date}}",
+        "timeline": "Chronologie",
+        "emptyMerchantTitle": "Aucune commande pour le moment",
+        "emptyMerchantDesc": "Les commandes des clients apparaîtront ici.",
+        "status": {
+          "created": "Créée",
+          "payment_pending": "En attente de paiement",
+          "paid": "Payée",
+          "accepted": "Acceptée",
+          "preparing": "En préparation",
+          "shipped": "Expédiée",
+          "delivered": "Livrée",
+          "completed": "Terminée",
+          "disputed": "En litige",
+          "refunded": "Remboursée",
+          "cancelled": "Annulée",
+          "expired": "Expirée"
+        },
+        "action": {
+          "accept": "Accepter",
+          "prepare": "Préparer",
+          "ship": "Expédier",
+          "deliver": "Marquer livrée",
+          "confirm": "Confirmer la réception",
+          "cancel": "Annuler"
+        }
+      },
+      "disputes": {
+        "title": "Litiges",
+        "subtitle": "Résolvez les litiges des acheteurs : remboursez l’acheteur ou libérez les fonds au commerçant.",
+        "emptyTitle": "Aucun litige ouvert",
+        "emptyDesc": "Les commandes en litige apparaissent ici pour résolution.",
+        "refund": "Rembourser l’acheteur",
+        "release": "Libérer au commerçant",
+        "reason": "Motif",
+        "value": "Valeur de la commande",
+        "evidence": "Preuve"
       }
     },
     "legal": {
@@ -5294,7 +5483,10 @@
         "roles": "Rollen & Zugriff",
         "siteContent": "Website-Inhalte",
         "merchantApprovals": "Händlerprüfung",
-        "fraudReview": "Betrugsprüfung"
+        "fraudReview": "Betrugsprüfung",
+        "products": "Produkte",
+        "orders": "Bestellungen",
+        "disputes": "Streitfälle"
       },
       "home": {
         "title": "Dashboard",
@@ -6199,6 +6391,66 @@
         "failedTitle": "Zahlung nicht abgeschlossen",
         "failedBody": "Wir konnten Ihre Zahlung nicht bestätigen. Falls Sie belastet wurden, wird sie automatisch abgeglichen; andernfalls versuchen Sie es erneut.",
         "back": "Zurück zum Dashboard"
+      },
+      "products": {
+        "title": "Produkte",
+        "subtitle": "Verkaufen Sie Produkte an Kunden. Sie müssen ein verifizierter Händler sein.",
+        "add": "Produkt hinzufügen",
+        "editTitle": "Produkt bearbeiten",
+        "newTitle": "Neues Produkt",
+        "name": "Name",
+        "category": "Kategorie",
+        "price": "Preis (GH₵)",
+        "priceHint": "Käufern in ghanaischen Cedi angezeigt.",
+        "stock": "Bestand",
+        "stockHint": "Für unbegrenzt leer lassen.",
+        "description": "Beschreibung",
+        "invalid": "Geben Sie einen Namen und einen gültigen Preis ein",
+        "emptyTitle": "Noch keine Produkte",
+        "emptyDesc": "Fügen Sie Ihr erstes Produkt hinzu, um zu verkaufen.",
+        "inactive": "ausgeblendet",
+        "inStock": "{{n}} auf Lager"
+      },
+      "orders": {
+        "merchantTitle": "Bestellungen",
+        "merchantSubtitle": "Erfüllen Sie eingehende Bestellungen. Das Geld wird gehalten, bis der Käufer bestätigt.",
+        "placed": "Aufgegeben am {{date}}",
+        "timeline": "Verlauf",
+        "emptyMerchantTitle": "Noch keine Bestellungen",
+        "emptyMerchantDesc": "Kundenbestellungen erscheinen hier.",
+        "status": {
+          "created": "Erstellt",
+          "payment_pending": "Zahlung ausstehend",
+          "paid": "Bezahlt",
+          "accepted": "Angenommen",
+          "preparing": "In Vorbereitung",
+          "shipped": "Versendet",
+          "delivered": "Geliefert",
+          "completed": "Abgeschlossen",
+          "disputed": "Strittig",
+          "refunded": "Erstattet",
+          "cancelled": "Storniert",
+          "expired": "Abgelaufen"
+        },
+        "action": {
+          "accept": "Annehmen",
+          "prepare": "Vorbereiten",
+          "ship": "Versenden",
+          "deliver": "Als geliefert markieren",
+          "confirm": "Empfang bestätigen",
+          "cancel": "Stornieren"
+        }
+      },
+      "disputes": {
+        "title": "Streitfälle",
+        "subtitle": "Lösen Sie Käuferstreitfälle: den Käufer erstatten oder das Geld an den Händler freigeben.",
+        "emptyTitle": "Keine offenen Streitfälle",
+        "emptyDesc": "Strittige Bestellungen erscheinen hier zur Klärung.",
+        "refund": "Käufer erstatten",
+        "release": "An Händler freigeben",
+        "reason": "Grund",
+        "value": "Bestellwert",
+        "evidence": "Nachweis"
       }
     },
     "legal": {
@@ -6848,7 +7100,10 @@
         "roles": "Funções e acessos",
         "siteContent": "Conteúdo do site",
         "merchantApprovals": "Verificação de comerciantes",
-        "fraudReview": "Revisão de fraude"
+        "fraudReview": "Revisão de fraude",
+        "products": "Produtos",
+        "orders": "Encomendas",
+        "disputes": "Disputas"
       },
       "home": {
         "title": "Painel",
@@ -7753,6 +8008,66 @@
         "failedTitle": "Pagamento não concluído",
         "failedBody": "Não conseguimos confirmar o seu pagamento. Se foi cobrado, será reconciliado automaticamente; caso contrário, tente novamente.",
         "back": "Voltar ao painel"
+      },
+      "products": {
+        "title": "Produtos",
+        "subtitle": "Venda produtos aos clientes. Tem de ser um comerciante verificado.",
+        "add": "Adicionar produto",
+        "editTitle": "Editar produto",
+        "newTitle": "Novo produto",
+        "name": "Nome",
+        "category": "Categoria",
+        "price": "Preço (GH₵)",
+        "priceHint": "Mostrado aos compradores em cedis do Gana.",
+        "stock": "Stock",
+        "stockHint": "Deixe em branco para ilimitado.",
+        "description": "Descrição",
+        "invalid": "Introduza um nome e um preço válido",
+        "emptyTitle": "Ainda sem produtos",
+        "emptyDesc": "Adicione o seu primeiro produto para começar a vender.",
+        "inactive": "oculto",
+        "inStock": "{{n}} em stock"
+      },
+      "orders": {
+        "merchantTitle": "Encomendas",
+        "merchantSubtitle": "Cumpra as encomendas recebidas. Os fundos ficam retidos até o comprador confirmar.",
+        "placed": "Efetuada a {{date}}",
+        "timeline": "Cronologia",
+        "emptyMerchantTitle": "Ainda sem encomendas",
+        "emptyMerchantDesc": "As encomendas dos clientes aparecerão aqui.",
+        "status": {
+          "created": "Criada",
+          "payment_pending": "A aguardar pagamento",
+          "paid": "Paga",
+          "accepted": "Aceite",
+          "preparing": "Em preparação",
+          "shipped": "Enviada",
+          "delivered": "Entregue",
+          "completed": "Concluída",
+          "disputed": "Em disputa",
+          "refunded": "Reembolsada",
+          "cancelled": "Cancelada",
+          "expired": "Expirada"
+        },
+        "action": {
+          "accept": "Aceitar",
+          "prepare": "Preparar",
+          "ship": "Enviar",
+          "deliver": "Marcar como entregue",
+          "confirm": "Confirmar receção",
+          "cancel": "Cancelar"
+        }
+      },
+      "disputes": {
+        "title": "Disputas",
+        "subtitle": "Resolva as disputas dos compradores: reembolse o comprador ou liberte os fundos ao comerciante.",
+        "emptyTitle": "Sem disputas abertas",
+        "emptyDesc": "As encomendas em disputa aparecem aqui para resolução.",
+        "refund": "Reembolsar o comprador",
+        "release": "Libertar ao comerciante",
+        "reason": "Motivo",
+        "value": "Valor da encomenda",
+        "evidence": "Prova"
       }
     },
     "legal": {

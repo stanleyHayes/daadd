@@ -139,7 +139,9 @@
         "about": "About SmartAdDeals",
         "tokenCalculator": "Token Calculator",
         "referral": "Refer a friend",
-        "vouchers": "Gift vouchers"
+        "vouchers": "Gift vouchers",
+        "shop": "Shop",
+        "orders": "My orders"
       },
       "theme": {
         "light": "Light",
@@ -457,6 +459,47 @@
       "billLabel": "Bill amount (optional)",
       "applyDiscount": "Apply discount",
       "finalBill": "Final bill: ${{amount}}"
+    },
+    "shop": {
+      "title": "Shop",
+      "product": "Product",
+      "empty": "No products available yet."
+    },
+    "checkout": {
+      "contactRequired": "Please fill in your name, phone and address.",
+      "quantity": "Quantity",
+      "delivery": "Delivery details",
+      "name": "Full name",
+      "phone": "Phone",
+      "address": "Address",
+      "city": "City",
+      "buy": "Buy · {{total}}"
+    },
+    "orders": {
+      "title": "My orders",
+      "detailTitle": "Order",
+      "empty": "You haven't placed any orders yet.",
+      "timeline": "Timeline",
+      "confirm": "Confirm receipt",
+      "cancel": "Cancel order",
+      "dispute": "Open a dispute",
+      "disputeReason": "What went wrong?",
+      "disputePlaceholder": "Describe the problem",
+      "submitDispute": "Submit dispute",
+      "status": {
+        "created": "Created",
+        "payment_pending": "Awaiting payment",
+        "paid": "Paid",
+        "accepted": "Accepted",
+        "preparing": "Preparing",
+        "shipped": "Shipped",
+        "delivered": "Delivered",
+        "completed": "Completed",
+        "disputed": "Disputed",
+        "refunded": "Refunded",
+        "cancelled": "Cancelled",
+        "expired": "Expired"
+      }
     }
   }
 }

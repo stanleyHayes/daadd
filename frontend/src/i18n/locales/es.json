@@ -521,7 +521,10 @@
       "roles": "Roles y accesos",
       "channels": "Canales publicitarios",
       "merchantApprovals": "Verificación de comercios",
-      "fraudReview": "Revisión de fraude"
+      "fraudReview": "Revisión de fraude",
+      "products": "Productos",
+      "orders": "Pedidos",
+      "disputes": "Disputas"
     },
     "home": {
       "title": "Panel",
@@ -1421,6 +1424,66 @@
       "failedTitle": "Pago no completado",
       "failedBody": "No pudimos confirmar tu pago. Si se te cobró, se conciliará automáticamente; de lo contrario, inténtalo de nuevo.",
       "back": "Volver al panel"
+    },
+    "products": {
+      "title": "Productos",
+      "subtitle": "Vende productos a los clientes. Debes ser un comercio verificado.",
+      "add": "Añadir producto",
+      "editTitle": "Editar producto",
+      "newTitle": "Nuevo producto",
+      "name": "Nombre",
+      "category": "Categoría",
+      "price": "Precio (GH₵)",
+      "priceHint": "Se muestra a los compradores en cedis ganeses.",
+      "stock": "Existencias",
+      "stockHint": "Déjalo en blanco para ilimitado.",
+      "description": "Descripción",
+      "invalid": "Introduce un nombre y un precio válido",
+      "emptyTitle": "Aún no hay productos",
+      "emptyDesc": "Añade tu primer producto para empezar a vender.",
+      "inactive": "oculto",
+      "inStock": "{{n}} en existencia"
+    },
+    "orders": {
+      "merchantTitle": "Pedidos",
+      "merchantSubtitle": "Cumple los pedidos entrantes. Los fondos se retienen hasta que el comprador confirme.",
+      "placed": "Realizado el {{date}}",
+      "timeline": "Cronología",
+      "emptyMerchantTitle": "Aún no hay pedidos",
+      "emptyMerchantDesc": "Los pedidos de clientes aparecerán aquí.",
+      "status": {
+        "created": "Creado",
+        "payment_pending": "Esperando pago",
+        "paid": "Pagado",
+        "accepted": "Aceptado",
+        "preparing": "Preparando",
+        "shipped": "Enviado",
+        "delivered": "Entregado",
+        "completed": "Completado",
+        "disputed": "En disputa",
+        "refunded": "Reembolsado",
+        "cancelled": "Cancelado",
+        "expired": "Caducado"
+      },
+      "action": {
+        "accept": "Aceptar",
+        "prepare": "Preparar",
+        "ship": "Enviar",
+        "deliver": "Marcar entregado",
+        "confirm": "Confirmar recepción",
+        "cancel": "Cancelar"
+      }
+    },
+    "disputes": {
+      "title": "Disputas",
+      "subtitle": "Resuelve las disputas de los compradores: reembolsa al comprador o libera los fondos al comercio.",
+      "emptyTitle": "No hay disputas abiertas",
+      "emptyDesc": "Los pedidos en disputa aparecen aquí para su resolución.",
+      "refund": "Reembolsar al comprador",
+      "release": "Liberar al comercio",
+      "reason": "Motivo",
+      "value": "Valor del pedido",
+      "evidence": "Prueba"
     }
   },
   "legal": {

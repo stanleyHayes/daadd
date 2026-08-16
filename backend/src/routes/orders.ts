@@ -7,6 +7,7 @@ import {
   Notification,
   IOrder,
   OrderStatus,
+  ORDER_STATUSES,
   OrderActor,
   canTransition,
   shouldRefund,
@@ -177,13 +178,26 @@ router.post('/', authMiddleware, async (req: Request, res: Response) => {
   }
 });
 
-/** GET /orders?role=buyer|merchant — the caller's orders. */
+/**
+ * GET /orders?role=buyer|merchant|admin&status= — the caller's orders.
+ * `role=admin` (admins only) lists across all orders, optionally by status —
+ * the dispute console uses `role=admin&status=disputed`.
+ */
 router.get('/', authMiddleware, async (req: Request, res: Response) => {
   try {
     const page = Math.max(1, Number(req.query.page) || 1);
     const limit = Math.min(50, Number(req.query.limit) || 20);
-    const asMerchant = req.query.role === 'merchant';
-    const filter = asMerchant ? { merchant_id: req.user!.userId } : { buyer_id: req.user!.userId };
+    const filter: Record<string, unknown> = {};
+    if (req.query.role === 'admin' && req.user!.role === 'admin') {
+      // whole-platform view
+    } else if (req.query.role === 'merchant') {
+      filter.merchant_id = req.user!.userId;
+    } else {
+      filter.buyer_id = req.user!.userId;
+    }
+    if (typeof req.query.status === 'string' && ORDER_STATUSES.includes(req.query.status as OrderStatus)) {
+      filter.status = req.query.status;
+    }
     const [rows, total] = await Promise.all([
       Order.find(filter).sort({ created_at: -1 }).skip((page - 1) * limit).limit(limit).lean(),
       Order.countDocuments(filter),

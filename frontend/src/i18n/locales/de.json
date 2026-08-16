@@ -521,7 +521,10 @@
       "roles": "Rollen & Zugriff",
       "channels": "Werbekanäle",
       "merchantApprovals": "Händlerprüfung",
-      "fraudReview": "Betrugsprüfung"
+      "fraudReview": "Betrugsprüfung",
+      "products": "Produkte",
+      "orders": "Bestellungen",
+      "disputes": "Streitfälle"
     },
     "home": {
       "title": "Dashboard",
@@ -1421,6 +1424,66 @@
       "failedTitle": "Zahlung nicht abgeschlossen",
       "failedBody": "Wir konnten Ihre Zahlung nicht bestätigen. Falls Sie belastet wurden, wird sie automatisch abgeglichen; andernfalls versuchen Sie es erneut.",
       "back": "Zurück zum Dashboard"
+    },
+    "products": {
+      "title": "Produkte",
+      "subtitle": "Verkaufen Sie Produkte an Kunden. Sie müssen ein verifizierter Händler sein.",
+      "add": "Produkt hinzufügen",
+      "editTitle": "Produkt bearbeiten",
+      "newTitle": "Neues Produkt",
+      "name": "Name",
+      "category": "Kategorie",
+      "price": "Preis (GH₵)",
+      "priceHint": "Käufern in ghanaischen Cedi angezeigt.",
+      "stock": "Bestand",
+      "stockHint": "Für unbegrenzt leer lassen.",
+      "description": "Beschreibung",
+      "invalid": "Geben Sie einen Namen und einen gültigen Preis ein",
+      "emptyTitle": "Noch keine Produkte",
+      "emptyDesc": "Fügen Sie Ihr erstes Produkt hinzu, um zu verkaufen.",
+      "inactive": "ausgeblendet",
+      "inStock": "{{n}} auf Lager"
+    },
+    "orders": {
+      "merchantTitle": "Bestellungen",
+      "merchantSubtitle": "Erfüllen Sie eingehende Bestellungen. Das Geld wird gehalten, bis der Käufer bestätigt.",
+      "placed": "Aufgegeben am {{date}}",
+      "timeline": "Verlauf",
+      "emptyMerchantTitle": "Noch keine Bestellungen",
+      "emptyMerchantDesc": "Kundenbestellungen erscheinen hier.",
+      "status": {
+        "created": "Erstellt",
+        "payment_pending": "Zahlung ausstehend",
+        "paid": "Bezahlt",
+        "accepted": "Angenommen",
+        "preparing": "In Vorbereitung",
+        "shipped": "Versendet",
+        "delivered": "Geliefert",
+        "completed": "Abgeschlossen",
+        "disputed": "Strittig",
+        "refunded": "Erstattet",
+        "cancelled": "Storniert",
+        "expired": "Abgelaufen"
+      },
+      "action": {
+        "accept": "Annehmen",
+        "prepare": "Vorbereiten",
+        "ship": "Versenden",
+        "deliver": "Als geliefert markieren",
+        "confirm": "Empfang bestätigen",
+        "cancel": "Stornieren"
+      }
+    },
+    "disputes": {
+      "title": "Streitfälle",
+      "subtitle": "Lösen Sie Käuferstreitfälle: den Käufer erstatten oder das Geld an den Händler freigeben.",
+      "emptyTitle": "Keine offenen Streitfälle",
+      "emptyDesc": "Strittige Bestellungen erscheinen hier zur Klärung.",
+      "refund": "Käufer erstatten",
+      "release": "An Händler freigeben",
+      "reason": "Grund",
+      "value": "Bestellwert",
+      "evidence": "Nachweis"
     }
   },
   "legal": {

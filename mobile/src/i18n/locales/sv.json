@@ -139,7 +139,9 @@
         "about": "Om SmartAdDeals",
         "tokenCalculator": "Tokenkalkylator",
         "referral": "Bjud in en vän",
-        "vouchers": "Presentkuponger"
+        "vouchers": "Presentkuponger",
+        "shop": "Butik",
+        "orders": "Mina beställningar"
       },
       "theme": {
         "light": "Ljust",
@@ -457,6 +459,47 @@
       "billLabel": "Notabelopp (valfritt)",
       "applyDiscount": "Applicera rabatt",
       "finalBill": "Slutnota: ${{amount}}"
+    },
+    "shop": {
+      "title": "Butik",
+      "product": "Produkt",
+      "empty": "Inga produkter tillgängliga ännu."
+    },
+    "checkout": {
+      "contactRequired": "Fyll i ditt namn, telefon och adress.",
+      "quantity": "Antal",
+      "delivery": "Leveransuppgifter",
+      "name": "Fullständigt namn",
+      "phone": "Telefon",
+      "address": "Adress",
+      "city": "Stad",
+      "buy": "Köp · {{total}}"
+    },
+    "orders": {
+      "title": "Mina beställningar",
+      "detailTitle": "Beställning",
+      "empty": "Du har inte lagt några beställningar ännu.",
+      "timeline": "Tidslinje",
+      "confirm": "Bekräfta mottagande",
+      "cancel": "Avbryt beställning",
+      "dispute": "Öppna en tvist",
+      "disputeReason": "Vad gick fel?",
+      "disputePlaceholder": "Beskriv problemet",
+      "submitDispute": "Skicka tvist",
+      "status": {
+        "created": "Skapad",
+        "payment_pending": "Väntar på betalning",
+        "paid": "Betald",
+        "accepted": "Accepterad",
+        "preparing": "Förbereds",
+        "shipped": "Skickad",
+        "delivered": "Levererad",
+        "completed": "Slutförd",
+        "disputed": "Tvist",
+        "refunded": "Återbetald",
+        "cancelled": "Avbruten",
+        "expired": "Utgången"
+      }
     }
   }
 }

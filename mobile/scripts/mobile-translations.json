@@ -139,7 +139,9 @@
         "purchases": "Historial de compras",
         "tokenCalculator": "Calculadora de tokens",
         "referral": "Invitar a un amigo",
-        "vouchers": "Vales de regalo"
+        "vouchers": "Vales de regalo",
+        "shop": "Tienda",
+        "orders": "Mis pedidos"
       },
       "theme": {
         "light": "Claro",
@@ -457,6 +459,47 @@
       "billLabel": "Importe de la cuenta (opcional)",
       "applyDiscount": "Aplicar descuento",
       "finalBill": "Cuenta final: ${{amount}}"
+    },
+    "shop": {
+      "title": "Tienda",
+      "product": "Producto",
+      "empty": "Aún no hay productos disponibles."
+    },
+    "checkout": {
+      "contactRequired": "Introduce tu nombre, teléfono y dirección.",
+      "quantity": "Cantidad",
+      "delivery": "Datos de entrega",
+      "name": "Nombre completo",
+      "phone": "Teléfono",
+      "address": "Dirección",
+      "city": "Ciudad",
+      "buy": "Comprar · {{total}}"
+    },
+    "orders": {
+      "title": "Mis pedidos",
+      "detailTitle": "Pedido",
+      "empty": "Aún no has realizado ningún pedido.",
+      "timeline": "Cronología",
+      "confirm": "Confirmar recepción",
+      "cancel": "Cancelar pedido",
+      "dispute": "Abrir una disputa",
+      "disputeReason": "¿Qué salió mal?",
+      "disputePlaceholder": "Describe el problema",
+      "submitDispute": "Enviar disputa",
+      "status": {
+        "created": "Creado",
+        "payment_pending": "Esperando pago",
+        "paid": "Pagado",
+        "accepted": "Aceptado",
+        "preparing": "Preparando",
+        "shipped": "Enviado",
+        "delivered": "Entregado",
+        "completed": "Completado",
+        "disputed": "En disputa",
+        "refunded": "Reembolsado",
+        "cancelled": "Cancelado",
+        "expired": "Caducado"
+      }
     }
   },
   "fr": {
@@ -599,7 +642,9 @@
         "purchases": "Historique d'achats",
         "tokenCalculator": "Calculateur de jetons",
         "referral": "Parrainer un ami",
-        "vouchers": "Bons cadeaux"
+        "vouchers": "Bons cadeaux",
+        "shop": "Boutique",
+        "orders": "Mes commandes"
       },
       "theme": {
         "light": "Clair",
@@ -917,6 +962,47 @@
       "billLabel": "Montant de l’addition (facultatif)",
       "applyDiscount": "Appliquer la remise",
       "finalBill": "Addition finale : {{amount}} $"
+    },
+    "shop": {
+      "title": "Boutique",
+      "product": "Produit",
+      "empty": "Aucun produit disponible pour le moment."
+    },
+    "checkout": {
+      "contactRequired": "Renseignez votre nom, téléphone et adresse.",
+      "quantity": "Quantité",
+      "delivery": "Détails de livraison",
+      "name": "Nom complet",
+      "phone": "Téléphone",
+      "address": "Adresse",
+      "city": "Ville",
+      "buy": "Acheter · {{total}}"
+    },
+    "orders": {
+      "title": "Mes commandes",
+      "detailTitle": "Commande",
+      "empty": "Vous n'avez pas encore passé de commande.",
+      "timeline": "Chronologie",
+      "confirm": "Confirmer la réception",
+      "cancel": "Annuler la commande",
+      "dispute": "Ouvrir un litige",
+      "disputeReason": "Qu'est-ce qui n'a pas marché ?",
+      "disputePlaceholder": "Décrivez le problème",
+      "submitDispute": "Envoyer le litige",
+      "status": {
+        "created": "Créée",
+        "payment_pending": "En attente de paiement",
+        "paid": "Payée",
+        "accepted": "Acceptée",
+        "preparing": "En préparation",
+        "shipped": "Expédiée",
+        "delivered": "Livrée",
+        "completed": "Terminée",
+        "disputed": "En litige",
+        "refunded": "Remboursée",
+        "cancelled": "Annulée",
+        "expired": "Expirée"
+      }
     }
   },
   "de": {
@@ -1059,7 +1145,9 @@
         "purchases": "Kaufhistorie",
         "tokenCalculator": "Token-Rechner",
         "referral": "Freund werben",
-        "vouchers": "Geschenkgutscheine"
+        "vouchers": "Geschenkgutscheine",
+        "shop": "Shop",
+        "orders": "Meine Bestellungen"
       },
       "theme": {
         "light": "Hell",
@@ -1377,6 +1465,47 @@
       "billLabel": "Rechnungsbetrag (optional)",
       "applyDiscount": "Rabatt anwenden",
       "finalBill": "Endbetrag: ${{amount}}"
+    },
+    "shop": {
+      "title": "Shop",
+      "product": "Produkt",
+      "empty": "Noch keine Produkte verfügbar."
+    },
+    "checkout": {
+      "contactRequired": "Bitte Name, Telefon und Adresse angeben.",
+      "quantity": "Menge",
+      "delivery": "Lieferdetails",
+      "name": "Vollständiger Name",
+      "phone": "Telefon",
+      "address": "Adresse",
+      "city": "Stadt",
+      "buy": "Kaufen · {{total}}"
+    },
+    "orders": {
+      "title": "Meine Bestellungen",
+      "detailTitle": "Bestellung",
+      "empty": "Sie haben noch keine Bestellungen aufgegeben.",
+      "timeline": "Verlauf",
+      "confirm": "Empfang bestätigen",
+      "cancel": "Bestellung stornieren",
+      "dispute": "Streitfall eröffnen",
+      "disputeReason": "Was ist schiefgelaufen?",
+      "disputePlaceholder": "Beschreiben Sie das Problem",
+      "submitDispute": "Streitfall senden",
+      "status": {
+        "created": "Erstellt",
+        "payment_pending": "Zahlung ausstehend",
+        "paid": "Bezahlt",
+        "accepted": "Angenommen",
+        "preparing": "In Vorbereitung",
+        "shipped": "Versendet",
+        "delivered": "Geliefert",
+        "completed": "Abgeschlossen",
+        "disputed": "Strittig",
+        "refunded": "Erstattet",
+        "cancelled": "Storniert",
+        "expired": "Abgelaufen"
+      }
     }
   },
   "pt": {
@@ -1519,7 +1648,9 @@
         "purchases": "Histórico de compras",
         "tokenCalculator": "Calculadora de tokens",
         "referral": "Convidar um amigo",
-        "vouchers": "Vales de oferta"
+        "vouchers": "Vales de oferta",
+        "shop": "Loja",
+        "orders": "As minhas encomendas"
       },
       "theme": {
         "light": "Claro",
@@ -1837,6 +1968,47 @@
       "billLabel": "Valor da conta (opcional)",
       "applyDiscount": "Aplicar desconto",
       "finalBill": "Conta final: ${{amount}}"
+    },
+    "shop": {
+      "title": "Loja",
+      "product": "Produto",
+      "empty": "Ainda não há produtos disponíveis."
+    },
+    "checkout": {
+      "contactRequired": "Preencha o seu nome, telefone e morada.",
+      "quantity": "Quantidade",
+      "delivery": "Detalhes de entrega",
+      "name": "Nome completo",
+      "phone": "Telefone",
+      "address": "Morada",
+      "city": "Cidade",
+      "buy": "Comprar · {{total}}"
+    },
+    "orders": {
+      "title": "As minhas encomendas",
+      "detailTitle": "Encomenda",
+      "empty": "Ainda não fez nenhuma encomenda.",
+      "timeline": "Cronologia",
+      "confirm": "Confirmar receção",
+      "cancel": "Cancelar encomenda",
+      "dispute": "Abrir uma disputa",
+      "disputeReason": "O que correu mal?",
+      "disputePlaceholder": "Descreva o problema",
+      "submitDispute": "Enviar disputa",
+      "status": {
+        "created": "Criada",
+        "payment_pending": "A aguardar pagamento",
+        "paid": "Paga",
+        "accepted": "Aceite",
+        "preparing": "Em preparação",
+        "shipped": "Enviada",
+        "delivered": "Entregue",
+        "completed": "Concluída",
+        "disputed": "Em disputa",
+        "refunded": "Reembolsada",
+        "cancelled": "Cancelada",
+        "expired": "Expirada"
+      }
     }
   },
   "sv": {
@@ -1979,7 +2151,9 @@
         "about": "Om SmartAdDeals",
         "tokenCalculator": "Tokenkalkylator",
         "referral": "Bjud in en vän",
-        "vouchers": "Presentkuponger"
+        "vouchers": "Presentkuponger",
+        "shop": "Butik",
+        "orders": "Mina beställningar"
       },
       "theme": {
         "light": "Ljust",
@@ -2297,6 +2471,47 @@
       "billLabel": "Notabelopp (valfritt)",
       "applyDiscount": "Applicera rabatt",
       "finalBill": "Slutnota: ${{amount}}"
+    },
+    "shop": {
+      "title": "Butik",
+      "product": "Produkt",
+      "empty": "Inga produkter tillgängliga ännu."
+    },
+    "checkout": {
+      "contactRequired": "Fyll i ditt namn, telefon och adress.",
+      "quantity": "Antal",
+      "delivery": "Leveransuppgifter",
+      "name": "Fullständigt namn",
+      "phone": "Telefon",
+      "address": "Adress",
+      "city": "Stad",
+      "buy": "Köp · {{total}}"
+    },
+    "orders": {
+      "title": "Mina beställningar",
+      "detailTitle": "Beställning",
+      "empty": "Du har inte lagt några beställningar ännu.",
+      "timeline": "Tidslinje",
+      "confirm": "Bekräfta mottagande",
+      "cancel": "Avbryt beställning",
+      "dispute": "Öppna en tvist",
+      "disputeReason": "Vad gick fel?",
+      "disputePlaceholder": "Beskriv problemet",
+      "submitDispute": "Skicka tvist",
+      "status": {
+        "created": "Skapad",
+        "payment_pending": "Väntar på betalning",
+        "paid": "Betald",
+        "accepted": "Accepterad",
+        "preparing": "Förbereds",
+        "shipped": "Skickad",
+        "delivered": "Levererad",
+        "completed": "Slutförd",
+        "disputed": "Tvist",
+        "refunded": "Återbetald",
+        "cancelled": "Avbruten",
+        "expired": "Utgången"
+      }
     }
   }
 }

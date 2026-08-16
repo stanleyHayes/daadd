@@ -521,7 +521,10 @@
       "roles": "Roles & Access",
       "channels": "Ad Channels",
       "merchantApprovals": "Merchant Verification",
-      "fraudReview": "Fraud Review"
+      "fraudReview": "Fraud Review",
+      "products": "Products",
+      "orders": "Orders",
+      "disputes": "Disputes"
     },
     "home": {
       "title": "Dashboard",
@@ -1421,6 +1424,66 @@
       "failedTitle": "Payment not completed",
       "failedBody": "We couldn’t confirm your payment. If you were charged, it will be reconciled automatically — otherwise please try again.",
       "back": "Back to dashboard"
+    },
+    "products": {
+      "title": "Products",
+      "subtitle": "Sell products to customers. You must be a verified merchant.",
+      "add": "Add product",
+      "editTitle": "Edit product",
+      "newTitle": "New product",
+      "name": "Name",
+      "category": "Category",
+      "price": "Price (GH₵)",
+      "priceHint": "Shown to buyers in Ghana cedis.",
+      "stock": "Stock",
+      "stockHint": "Leave blank for unlimited.",
+      "description": "Description",
+      "invalid": "Enter a name and a valid price",
+      "emptyTitle": "No products yet",
+      "emptyDesc": "Add your first product to start selling.",
+      "inactive": "hidden",
+      "inStock": "{{n}} in stock"
+    },
+    "orders": {
+      "merchantTitle": "Orders",
+      "merchantSubtitle": "Fulfil incoming orders. Funds are held until the buyer confirms.",
+      "placed": "Placed {{date}}",
+      "timeline": "Timeline",
+      "emptyMerchantTitle": "No orders yet",
+      "emptyMerchantDesc": "Orders from customers will appear here.",
+      "status": {
+        "created": "Created",
+        "payment_pending": "Awaiting payment",
+        "paid": "Paid",
+        "accepted": "Accepted",
+        "preparing": "Preparing",
+        "shipped": "Shipped",
+        "delivered": "Delivered",
+        "completed": "Completed",
+        "disputed": "Disputed",
+        "refunded": "Refunded",
+        "cancelled": "Cancelled",
+        "expired": "Expired"
+      },
+      "action": {
+        "accept": "Accept",
+        "prepare": "Prepare",
+        "ship": "Ship",
+        "deliver": "Mark delivered",
+        "confirm": "Confirm receipt",
+        "cancel": "Cancel"
+      }
+    },
+    "disputes": {
+      "title": "Disputes",
+      "subtitle": "Resolve buyer disputes: refund the buyer or release funds to the merchant.",
+      "emptyTitle": "No open disputes",
+      "emptyDesc": "Disputed orders appear here for resolution.",
+      "refund": "Refund buyer",
+      "release": "Release to merchant",
+      "reason": "Reason",
+      "value": "Order value",
+      "evidence": "Evidence"
     }
   },
   "legal": {

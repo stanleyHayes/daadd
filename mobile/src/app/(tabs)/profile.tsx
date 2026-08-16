@@ -140,6 +140,20 @@ export default function ProfileScreen() {
       onPress: () => router.push('/vouchers' as Href),
     },
     {
+      id: 'shop',
+      icon: 'storefront-outline' as const,
+      label: t('mobile.profile.items.shop'),
+      color: colors.primary,
+      onPress: () => router.push('/shop' as Href),
+    },
+    {
+      id: 'orders',
+      icon: 'receipt-outline' as const,
+      label: t('mobile.profile.items.orders'),
+      color: colors.accent,
+      onPress: () => router.push('/orders' as Href),
+    },
+    {
       id: 'merchant-scan',
       icon: 'qr-code-outline' as const,
       label: t('mobile.profile.items.merchantScan'),

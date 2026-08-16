@@ -160,10 +160,18 @@ idempotent redelivery, amount-tampering rejection, and money/token separation.
 **Known hardening follow-up:** the webhook shares the global 200/min-per-IP rate
 limiter; give it its own lane before high volume.
 
-### Phase 5 — Online commerce → buyer protection 🚧 (backend complete + tested; UI remaining)
+### Phase 5 — Online commerce → buyer protection 🚧 (backend + UI done; funcnl follow-ups remain)
 
-Full 12-state marketplace with escrow-style buyer protection. **Backend done and
-tested; the web + mobile commerce UI is the remaining work (see Handoff below).**
+Full 12-state marketplace with escrow-style buyer protection. **Backend + web +
+mobile UI shipped; only functional follow-ups remain (stock reservation, VAT,
+merchant settlement/payout — the latter gated on the legal sign-off). See HANDOFF.md 5c.**
+
+**UI (web):** merchant product management + order queue (lifecycle actions +
+timeline), and an admin dispute console (refund buyer / release to merchant),
+all wired into nav/rbac with 6 locales. **UI (mobile):** storefront, product +
+checkout (create order → Paystack checkout in the browser; webhook reconciles),
+my-orders, and order detail (confirm / cancel / dispute). Small backend add:
+`GET /orders?role=admin&status=` for the dispute console.
 
 **What's built (backend).** `Product` model + CRUD routes (verified-merchant-gated
 selling, public catalogue). `Order` model with the **12-state machine** in

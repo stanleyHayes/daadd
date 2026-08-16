@@ -521,7 +521,10 @@
       "roles": "Rôles et accès",
       "channels": "Canaux publicitaires",
       "merchantApprovals": "Vérification des commerçants",
-      "fraudReview": "Examen des fraudes"
+      "fraudReview": "Examen des fraudes",
+      "products": "Produits",
+      "orders": "Commandes",
+      "disputes": "Litiges"
     },
     "home": {
       "title": "Tableau de bord",
@@ -1421,6 +1424,66 @@
       "failedTitle": "Paiement non abouti",
       "failedBody": "Nous n’avons pas pu confirmer votre paiement. Si vous avez été débité, il sera rapproché automatiquement ; sinon, réessayez.",
       "back": "Retour au tableau de bord"
+    },
+    "products": {
+      "title": "Produits",
+      "subtitle": "Vendez des produits aux clients. Vous devez être un commerçant vérifié.",
+      "add": "Ajouter un produit",
+      "editTitle": "Modifier le produit",
+      "newTitle": "Nouveau produit",
+      "name": "Nom",
+      "category": "Catégorie",
+      "price": "Prix (GH₵)",
+      "priceHint": "Affiché aux acheteurs en cédis ghanéens.",
+      "stock": "Stock",
+      "stockHint": "Laissez vide pour illimité.",
+      "description": "Description",
+      "invalid": "Saisissez un nom et un prix valide",
+      "emptyTitle": "Aucun produit pour le moment",
+      "emptyDesc": "Ajoutez votre premier produit pour commencer à vendre.",
+      "inactive": "masqué",
+      "inStock": "{{n}} en stock"
+    },
+    "orders": {
+      "merchantTitle": "Commandes",
+      "merchantSubtitle": "Traitez les commandes entrantes. Les fonds sont retenus jusqu’à la confirmation de l’acheteur.",
+      "placed": "Passée le {{date}}",
+      "timeline": "Chronologie",
+      "emptyMerchantTitle": "Aucune commande pour le moment",
+      "emptyMerchantDesc": "Les commandes des clients apparaîtront ici.",
+      "status": {
+        "created": "Créée",
+        "payment_pending": "En attente de paiement",
+        "paid": "Payée",
+        "accepted": "Acceptée",
+        "preparing": "En préparation",
+        "shipped": "Expédiée",
+        "delivered": "Livrée",
+        "completed": "Terminée",
+        "disputed": "En litige",
+        "refunded": "Remboursée",
+        "cancelled": "Annulée",
+        "expired": "Expirée"
+      },
+      "action": {
+        "accept": "Accepter",
+        "prepare": "Préparer",
+        "ship": "Expédier",
+        "deliver": "Marquer livrée",
+        "confirm": "Confirmer la réception",
+        "cancel": "Annuler"
+      }
+    },
+    "disputes": {
+      "title": "Litiges",
+      "subtitle": "Résolvez les litiges des acheteurs : remboursez l’acheteur ou libérez les fonds au commerçant.",
+      "emptyTitle": "Aucun litige ouvert",
+      "emptyDesc": "Les commandes en litige apparaissent ici pour résolution.",
+      "refund": "Rembourser l’acheteur",
+      "release": "Libérer au commerçant",
+      "reason": "Motif",
+      "value": "Valeur de la commande",
+      "evidence": "Preuve"
     }
   },
   "legal": {

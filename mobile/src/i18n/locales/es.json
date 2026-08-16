@@ -139,7 +139,9 @@
         "about": "Acerca de SmartAdDeals",
         "tokenCalculator": "Calculadora de tokens",
         "referral": "Invitar a un amigo",
-        "vouchers": "Vales de regalo"
+        "vouchers": "Vales de regalo",
+        "shop": "Tienda",
+        "orders": "Mis pedidos"
       },
       "theme": {
         "light": "Claro",
@@ -457,6 +459,47 @@
       "billLabel": "Importe de la cuenta (opcional)",
       "applyDiscount": "Aplicar descuento",
       "finalBill": "Cuenta final: ${{amount}}"
+    },
+    "shop": {
+      "title": "Tienda",
+      "product": "Producto",
+      "empty": "Aún no hay productos disponibles."
+    },
+    "checkout": {
+      "contactRequired": "Introduce tu nombre, teléfono y dirección.",
+      "quantity": "Cantidad",
+      "delivery": "Datos de entrega",
+      "name": "Nombre completo",
+      "phone": "Teléfono",
+      "address": "Dirección",
+      "city": "Ciudad",
+      "buy": "Comprar · {{total}}"
+    },
+    "orders": {
+      "title": "Mis pedidos",
+      "detailTitle": "Pedido",
+      "empty": "Aún no has realizado ningún pedido.",
+      "timeline": "Cronología",
+      "confirm": "Confirmar recepción",
+      "cancel": "Cancelar pedido",
+      "dispute": "Abrir una disputa",
+      "disputeReason": "¿Qué salió mal?",
+      "disputePlaceholder": "Describe el problema",
+      "submitDispute": "Enviar disputa",
+      "status": {
+        "created": "Creado",
+        "payment_pending": "Esperando pago",
+        "paid": "Pagado",
+        "accepted": "Aceptado",
+        "preparing": "Preparando",
+        "shipped": "Enviado",
+        "delivered": "Entregado",
+        "completed": "Completado",
+        "disputed": "En disputa",
+        "refunded": "Reembolsado",
+        "cancelled": "Cancelado",
+        "expired": "Caducado"
+      }
     }
   }
 }

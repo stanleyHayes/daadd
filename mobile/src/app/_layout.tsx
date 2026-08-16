@@ -169,6 +169,10 @@ function RootLayoutInner() {
             headerShadowVisible: false,
           }}
         />
+        <Stack.Screen name="shop" options={{ headerShown: true, headerTitle: t('mobile.shop.title'), headerBackTitle: t('mobile.common.back'), headerTintColor: colors.primary, headerStyle: { backgroundColor: colors.surface }, headerShadowVisible: false }} />
+        <Stack.Screen name="product/[id]" options={{ headerShown: true, headerTitle: t('mobile.shop.product'), headerBackTitle: t('mobile.common.back'), headerTintColor: colors.primary, headerStyle: { backgroundColor: colors.surface }, headerShadowVisible: false }} />
+        <Stack.Screen name="orders" options={{ headerShown: true, headerTitle: t('mobile.orders.title'), headerBackTitle: t('mobile.common.back'), headerTintColor: colors.primary, headerStyle: { backgroundColor: colors.surface }, headerShadowVisible: false }} />
+        <Stack.Screen name="order/[id]" options={{ headerShown: true, headerTitle: t('mobile.orders.detailTitle'), headerBackTitle: t('mobile.common.back'), headerTintColor: colors.primary, headerStyle: { backgroundColor: colors.surface }, headerShadowVisible: false }} />
         <Stack.Screen
           name="chat/index"
           options={{

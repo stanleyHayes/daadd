@@ -521,7 +521,10 @@
       "roles": "Roller och behörigheter",
       "channels": "Annonskanaler",
       "merchantApprovals": "Handlarverifiering",
-      "fraudReview": "Bedrägerigranskning"
+      "fraudReview": "Bedrägerigranskning",
+      "products": "Produkter",
+      "orders": "Beställningar",
+      "disputes": "Tvister"
     },
     "home": {
       "title": "Översikt",
@@ -1421,6 +1424,66 @@
       "failedTitle": "Betalning ej slutförd",
       "failedBody": "Vi kunde inte bekräfta din betalning. Om du debiterades stäms den av automatiskt; annars försök igen.",
       "back": "Tillbaka till instrumentpanelen"
+    },
+    "products": {
+      "title": "Produkter",
+      "subtitle": "Sälj produkter till kunder. Du måste vara en verifierad handlare.",
+      "add": "Lägg till produkt",
+      "editTitle": "Redigera produkt",
+      "newTitle": "Ny produkt",
+      "name": "Namn",
+      "category": "Kategori",
+      "price": "Pris (GH₵)",
+      "priceHint": "Visas för köpare i ghananska cedi.",
+      "stock": "Lager",
+      "stockHint": "Lämna tomt för obegränsat.",
+      "description": "Beskrivning",
+      "invalid": "Ange ett namn och ett giltigt pris",
+      "emptyTitle": "Inga produkter ännu",
+      "emptyDesc": "Lägg till din första produkt för att börja sälja.",
+      "inactive": "dold",
+      "inStock": "{{n}} i lager"
+    },
+    "orders": {
+      "merchantTitle": "Beställningar",
+      "merchantSubtitle": "Uppfyll inkommande beställningar. Pengarna hålls tills köparen bekräftar.",
+      "placed": "Lagd {{date}}",
+      "timeline": "Tidslinje",
+      "emptyMerchantTitle": "Inga beställningar ännu",
+      "emptyMerchantDesc": "Beställningar från kunder visas här.",
+      "status": {
+        "created": "Skapad",
+        "payment_pending": "Väntar på betalning",
+        "paid": "Betald",
+        "accepted": "Accepterad",
+        "preparing": "Förbereds",
+        "shipped": "Skickad",
+        "delivered": "Levererad",
+        "completed": "Slutförd",
+        "disputed": "Tvist",
+        "refunded": "Återbetald",
+        "cancelled": "Avbruten",
+        "expired": "Utgången"
+      },
+      "action": {
+        "accept": "Acceptera",
+        "prepare": "Förbered",
+        "ship": "Skicka",
+        "deliver": "Markera levererad",
+        "confirm": "Bekräfta mottagande",
+        "cancel": "Avbryt"
+      }
+    },
+    "disputes": {
+      "title": "Tvister",
+      "subtitle": "Lös köpartvister: återbetala köparen eller frigör pengarna till handlaren.",
+      "emptyTitle": "Inga öppna tvister",
+      "emptyDesc": "Tvistade beställningar visas här för lösning.",
+      "refund": "Återbetala köparen",
+      "release": "Frigör till handlaren",
+      "reason": "Orsak",
+      "value": "Ordervärde",
+      "evidence": "Bevis"
     }
   },
   "legal": {

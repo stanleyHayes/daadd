@@ -46,36 +46,19 @@ what's left.
 
 ---
 
-## Phase 5 — commerce UI (the big remaining piece)
+## Phase 5 — commerce
 
-Backend is complete (`routes/products.ts`, `routes/orders.ts`, models, tests). Build
-the clients. **No new backend needed for the core flows.**
+Backend **and** UI are **done**: `frontend/src/hooks/useCommerce.ts` +
+`MerchantProductsPage`, `MerchantOrdersPage`, `AdminDisputesPage` (web);
+`mobile/src/hooks/useCommerce.ts` + `shop.tsx`, `product/[id].tsx`, `orders.tsx`,
+`order/[id].tsx` (mobile). Both wired into nav/routes with 6 locales.
 
-### 5a. Web (advertiser/admin dashboard) — `frontend/`
-1. **Merchant product management** — hook `useProducts` (GET `/products/mine`, POST
-   `/products`, PATCH/DELETE `/products/:id`); page to list/create/edit/delete
-   products (price entered in GH₵, sent as `price_minor` = ₵×100). Nav entry gated
-   to merchants (mirror `admin-merchants` wiring).
-2. **Merchant order queue** — hook (GET `/orders?role=merchant`), page listing
-   incoming orders with action buttons that POST the lifecycle endpoints
-   (`/accept`, `/prepare`, `/ship`, `/deliver`). Show the `history` timeline.
-3. **Admin dispute console** — list orders with `status=disputed` (add a
-   `?status=` filter to `GET /orders` for admins — small backend add), show the
-   dispute reason/evidence, POST `/orders/:id/resolve` with `refunded`/`released`.
+**Mobile checkout note:** it opens the Paystack `authorization_url` via
+`Linking.openURL` and relies on the **webhook** to reconcile the order server-side
+(the order screen re-fetches). A cleaner UX would add a mobile deep-link callback
+(`daadd://…?reference=`) → `GET /payments/verify/:reference`; optional.
 
-### 5b. Mobile (consumer app) — `mobile/`
-4. **Storefront** — browse `GET /products` (public), product detail, "Buy".
-5. **Checkout** — POST `/orders` (items + contact), then POST `/orders/:id/pay`.
-   When `requires_payment` is true, open `authorization_url` (Paystack) in a
-   WebView/browser; the return URL hits the existing web `BillingCallbackPage`
-   pattern — add a **mobile deep-link callback** (`daadd://payments/callback?reference=`)
-   that calls `GET /payments/verify/:reference`.
-6. **Order tracking** — `GET /orders?role=buyer`, order detail with the `history`
-   timeline; buttons for `/confirm` (release), `/cancel`, `/dispute` (with evidence
-   upload — reuse the existing image-upload used by reviews/chat).
-7. i18n for all of the above (6 locales, both apps).
-
-### 5c. Phase 5 backend follow-ups (smaller, do before real launch)
+### Phase 5 functional follow-ups (do before real launch)
 - **Stock reservation.** Today stock is only *validated* at order create
   (`routes/orders.ts`), never decremented. Decide: decrement at `paid`
   (in `applyPaymentEffect` for `order_payment`) and restore on cancel/refund, or a

@@ -139,7 +139,9 @@
         "about": "À propos d'SmartAdDeals",
         "tokenCalculator": "Calculateur de jetons",
         "referral": "Parrainer un ami",
-        "vouchers": "Bons cadeaux"
+        "vouchers": "Bons cadeaux",
+        "shop": "Boutique",
+        "orders": "Mes commandes"
       },
       "theme": {
         "light": "Clair",
@@ -457,6 +459,47 @@
       "billLabel": "Montant de l’addition (facultatif)",
       "applyDiscount": "Appliquer la remise",
       "finalBill": "Addition finale : {{amount}} $"
+    },
+    "shop": {
+      "title": "Boutique",
+      "product": "Produit",
+      "empty": "Aucun produit disponible pour le moment."
+    },
+    "checkout": {
+      "contactRequired": "Renseignez votre nom, téléphone et adresse.",
+      "quantity": "Quantité",
+      "delivery": "Détails de livraison",
+      "name": "Nom complet",
+      "phone": "Téléphone",
+      "address": "Adresse",
+      "city": "Ville",
+      "buy": "Acheter · {{total}}"
+    },
+    "orders": {
+      "title": "Mes commandes",
+      "detailTitle": "Commande",
+      "empty": "Vous n'avez pas encore passé de commande.",
+      "timeline": "Chronologie",
+      "confirm": "Confirmer la réception",
+      "cancel": "Annuler la commande",
+      "dispute": "Ouvrir un litige",
+      "disputeReason": "Qu'est-ce qui n'a pas marché ?",
+      "disputePlaceholder": "Décrivez le problème",
+      "submitDispute": "Envoyer le litige",
+      "status": {
+        "created": "Créée",
+        "payment_pending": "En attente de paiement",
+        "paid": "Payée",
+        "accepted": "Acceptée",
+        "preparing": "En préparation",
+        "shipped": "Expédiée",
+        "delivered": "Livrée",
+        "completed": "Terminée",
+        "disputed": "En litige",
+        "refunded": "Remboursée",
+        "cancelled": "Annulée",
+        "expired": "Expirée"
+      }
     }
   }
 }

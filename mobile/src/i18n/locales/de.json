@@ -139,7 +139,9 @@
         "about": "Über SmartAdDeals",
         "tokenCalculator": "Token-Rechner",
         "referral": "Freund werben",
-        "vouchers": "Geschenkgutscheine"
+        "vouchers": "Geschenkgutscheine",
+        "shop": "Shop",
+        "orders": "Meine Bestellungen"
       },
       "theme": {
         "light": "Hell",
@@ -457,6 +459,47 @@
       "billLabel": "Rechnungsbetrag (optional)",
       "applyDiscount": "Rabatt anwenden",
       "finalBill": "Endbetrag: ${{amount}}"
+    },
+    "shop": {
+      "title": "Shop",
+      "product": "Produkt",
+      "empty": "Noch keine Produkte verfügbar."
+    },
+    "checkout": {
+      "contactRequired": "Bitte Name, Telefon und Adresse angeben.",
+      "quantity": "Menge",
+      "delivery": "Lieferdetails",
+      "name": "Vollständiger Name",
+      "phone": "Telefon",
+      "address": "Adresse",
+      "city": "Stadt",
+      "buy": "Kaufen · {{total}}"
+    },
+    "orders": {
+      "title": "Meine Bestellungen",
+      "detailTitle": "Bestellung",
+      "empty": "Sie haben noch keine Bestellungen aufgegeben.",
+      "timeline": "Verlauf",
+      "confirm": "Empfang bestätigen",
+      "cancel": "Bestellung stornieren",
+      "dispute": "Streitfall eröffnen",
+      "disputeReason": "Was ist schiefgelaufen?",
+      "disputePlaceholder": "Beschreiben Sie das Problem",
+      "submitDispute": "Streitfall senden",
+      "status": {
+        "created": "Erstellt",
+        "payment_pending": "Zahlung ausstehend",
+        "paid": "Bezahlt",
+        "accepted": "Angenommen",
+        "preparing": "In Vorbereitung",
+        "shipped": "Versendet",
+        "delivered": "Geliefert",
+        "completed": "Abgeschlossen",
+        "disputed": "Strittig",
+        "refunded": "Erstattet",
+        "cancelled": "Storniert",
+        "expired": "Abgelaufen"
+      }
     }
   }
 }

@@ -40,6 +40,8 @@ export const NAV_ENTRIES: NavEntry[] = [
 
   { key: 'messages', href: '/dashboard/messages', resource: 'messages', label: 'messages', group: 'workspace' },
   { key: 'merchant', href: '/dashboard/merchant', resource: 'analytics', label: 'merchant', group: 'workspace' },
+  { key: 'merchant-products', href: '/dashboard/products', resource: 'analytics', label: 'products', group: 'workspace' },
+  { key: 'merchant-orders', href: '/dashboard/orders', resource: 'analytics', label: 'orders', group: 'workspace' },
   { key: 'outlets', href: '/dashboard/outlets', resource: 'outlets', label: 'outlets', group: 'workspace' },
   { key: 'team', href: '/dashboard/team', resource: 'team', label: 'team', group: 'workspace' },
   { key: 'platform-accounts', href: '/dashboard/platform-accounts', resource: 'platform_accounts', label: 'adAccounts', group: 'workspace' },
@@ -49,6 +51,7 @@ export const NAV_ENTRIES: NavEntry[] = [
   { key: 'admin-advertisers', href: '/dashboard/admin/advertisers', resource: 'advertisers', label: 'advertiserApprovals', group: 'admin' },
   { key: 'admin-merchants', href: '/dashboard/admin/merchants', resource: 'advertisers', label: 'merchantApprovals', group: 'admin' },
   { key: 'admin-fraud', href: '/dashboard/admin/fraud', resource: 'anomalies', label: 'fraudReview', group: 'admin' },
+  { key: 'admin-disputes', href: '/dashboard/admin/disputes', resource: 'advertisers', label: 'disputes', group: 'admin' },
   { key: 'admin-moderation', href: '/dashboard/admin/moderation', resource: 'moderation', label: 'reviewModeration', group: 'admin' },
   { key: 'admin-loyalty', href: '/dashboard/admin/loyalty', resource: 'loyalty', label: 'loyaltyVip', group: 'admin' },
   { key: 'site-content', href: '/dashboard/admin/site-content', resource: 'site_content', label: 'siteContent', group: 'admin' },
