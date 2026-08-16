@@ -23,6 +23,31 @@ export interface InitializeParams {
 export interface Bank {
   name: string;
   code: string;
+  /** 'ghipss' (bank) or 'mobile_money' — determines the transfer-recipient type. */
+  type?: string;
+}
+
+export interface TransferRecipientParams {
+  name: string;
+  account_number: string;
+  bank_code: string;
+  /** Paystack recipient type: 'ghipss' (GHS bank) or 'mobile_money'. */
+  type: string;
+  currency: string;
+}
+
+export interface TransferParams {
+  amount_minor: number;
+  recipient_code: string;
+  currency: string;
+  reason: string;
+  reference: string;
+}
+
+export interface TransferResult {
+  status: string;
+  transfer_code?: string;
+  reference: string;
 }
 
 export interface ResolvedAccount {
@@ -88,6 +113,10 @@ export interface PaymentProvider {
   resolveAccount(accountNumber: string, bankCode: string): Promise<ResolvedAccount>;
   /** Create a merchant settlement subaccount; the PSP verifies the bank account. */
   createSubaccount(params: SubaccountParams): Promise<CreatedSubaccount>;
+  /** Create a transfer recipient (for escrow mode: pay the merchant on completion). */
+  createTransferRecipient(params: TransferRecipientParams): Promise<{ recipient_code: string }>;
+  /** Transfer held funds to a merchant's recipient (escrow release on completion). */
+  initiateTransfer(params: TransferParams): Promise<TransferResult>;
 }
 
 /** Constant-time compare of two hex digests (guards against timing attacks). */
@@ -197,7 +226,11 @@ class PaystackProvider implements PaymentProvider {
       params: { currency },
       timeout: 15000,
     });
-    return (data?.data || []).map((b: { name: string; code: string }) => ({ name: b.name, code: b.code }));
+    return (data?.data || []).map((b: { name: string; code: string; type?: string }) => ({
+      name: b.name,
+      code: b.code,
+      type: b.type,
+    }));
   }
 
   async resolveAccount(accountNumber: string, bankCode: string): Promise<ResolvedAccount> {
@@ -225,6 +258,40 @@ class PaystackProvider implements PaymentProvider {
     if (!d.subaccount_code) throw new Error('Paystack did not return a subaccount code');
     return { subaccount_code: d.subaccount_code, account_name: d.account_name };
   }
+
+  async createTransferRecipient(params: TransferRecipientParams): Promise<{ recipient_code: string }> {
+    const { data } = await axios.post(
+      `${this.baseUrl()}/transferrecipient`,
+      {
+        type: params.type,
+        name: params.name,
+        account_number: params.account_number,
+        bank_code: params.bank_code,
+        currency: params.currency,
+      },
+      { headers: this.headers(), timeout: 15000 }
+    );
+    const d = data?.data || {};
+    if (!d.recipient_code) throw new Error('Paystack did not return a recipient code');
+    return { recipient_code: d.recipient_code };
+  }
+
+  async initiateTransfer(params: TransferParams): Promise<TransferResult> {
+    const { data } = await axios.post(
+      `${this.baseUrl()}/transfer`,
+      {
+        source: 'balance',
+        amount: params.amount_minor,
+        recipient: params.recipient_code,
+        currency: params.currency,
+        reason: params.reason,
+        reference: params.reference,
+      },
+      { headers: this.headers(), timeout: 15000 }
+    );
+    const d = data?.data || {};
+    return { status: d.status || 'pending', transfer_code: d.transfer_code, reference: params.reference };
+  }
 }
 
 // --- Selection + config ----------------------------------------------------
@@ -250,4 +317,24 @@ export function resolveProvider(): PaymentProvider {
 export function paymentsEnabled(): boolean {
   if (process.env.PAYMENTS_ENABLED === 'false') return false;
   return !!process.env.PAYSTACK_SECRET_KEY;
+}
+
+export type SettlementMode = 'escrow' | 'split';
+
+/**
+ * How merchants are paid:
+ *  - `escrow` (default): the charge is held on the platform; the merchant's
+ *    share is transferred to them when the order completes (true buyer-protection
+ *    hold, per-order release, brief platform-side custody).
+ *  - `split`: the charge is split to the merchant's subaccount at pay time
+ *    (no platform custody, but no hold — the merchant settles on the PSP schedule).
+ */
+export function settlementMode(): SettlementMode {
+  return process.env.SETTLEMENT_MODE === 'split' ? 'split' : 'escrow';
+}
+
+/** Platform fee percentage kept from each order; the rest is the merchant's share. */
+export function platformFeePercent(): number {
+  const v = parseFloat(process.env.PLATFORM_FEE_PERCENT || '5');
+  return Number.isFinite(v) ? Math.min(100, Math.max(0, v)) : 5;
 }

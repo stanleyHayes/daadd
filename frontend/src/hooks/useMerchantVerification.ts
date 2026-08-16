@@ -36,6 +36,7 @@ export interface MerchantVerification {
 export interface Bank {
   name: string;
   code: string;
+  type?: string;
 }
 
 export interface MerchantGate {
@@ -142,7 +143,7 @@ export function useResolveAccount() {
 export function useConnectSettlement() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: async (input: { bank_code: string; account_number: string; provider?: string }) => {
+    mutationFn: async (input: { bank_code: string; account_number: string; provider?: string; type?: string }) => {
       const res = await api.post<ApiResponse<MerchantVerification>>('/merchants/settlement/connect', input);
       return res.data.data;
     },

@@ -50,6 +50,8 @@ export interface IMerchantVerification extends Document {
   settlement_bank_code: string;
   settlement_account_name: string;
   subaccount_code: string;
+  /** Transfer-recipient code for escrow-mode payouts on order completion. */
+  recipient_code: string;
   settlement_connected: boolean;
 
   status: VerificationStatus;
@@ -86,6 +88,7 @@ const MerchantVerificationSchema = new Schema<IMerchantVerification>(
     settlement_bank_code: { type: String, default: '' },
     settlement_account_name: { type: String, default: '' },
     subaccount_code: { type: String, default: '' },
+    recipient_code: { type: String, default: '' },
     settlement_connected: { type: Boolean, default: false },
 
     status: { type: String, enum: VERIFICATION_STATUSES, default: 'pending', index: true },

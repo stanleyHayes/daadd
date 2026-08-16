@@ -50,8 +50,8 @@ export function MerchantSettlementPanel() {
 
   const doConnect = async () => {
     try {
-      const provider = banks.find((b) => b.code === bankCode)?.name;
-      await connect.mutateAsync({ bank_code: bankCode, account_number: account.trim(), provider });
+      const bank = banks.find((b) => b.code === bankCode);
+      await connect.mutateAsync({ bank_code: bankCode, account_number: account.trim(), provider: bank?.name, type: bank?.type });
       toast.success(t('dashboard.settlement.connected'));
       setAccountName(null);
       setAccount('');

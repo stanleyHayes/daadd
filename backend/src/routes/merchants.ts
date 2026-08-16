@@ -9,7 +9,7 @@ import {
 } from '../models';
 import { authMiddleware, requireRole } from '../middleware/auth';
 import { merchantGate } from '../utils/merchant-gate';
-import { resolveProvider, paymentsEnabled } from '../services/payment.service';
+import { resolveProvider, paymentsEnabled, settlementMode } from '../services/payment.service';
 import { success, paginated } from '../utils/response';
 
 /** The percentage of each order the platform keeps; the rest settles to the merchant. */
@@ -166,33 +166,52 @@ router.post('/settlement/connect', requireRole('merchant'), async (req: Request,
     const accountNumber = String(req.body?.account_number ?? '').trim();
     const bankCode = String(req.body?.bank_code ?? '').trim();
     const provider = String(req.body?.provider ?? '').trim();
+    // Recipient type for escrow transfers: 'mobile_money' or 'ghipss' (bank).
+    const accountType = String(req.body?.type ?? '').trim() === 'mobile_money' ? 'mobile_money' : 'ghipss';
     if (!accountNumber || !bankCode) {
       res.status(400).json({ success: false, message: 'account_number and bank_code are required' });
       return;
     }
 
+    const psp = resolveProvider();
     const verification = await MerchantVerification.findOne({ merchant_id: req.user!.userId });
     const businessName = verification?.business_name || 'DAADD merchant';
+    const currency = process.env.PAYMENTS_CURRENCY || 'GHS';
+    // Confirm the account (also gives us the holder name to display).
+    const resolved = await psp.resolveAccount(accountNumber, bankCode);
 
-    const created = await resolveProvider().createSubaccount({
-      business_name: businessName,
-      bank_code: bankCode,
-      account_number: accountNumber,
-      percentage_charge: PLATFORM_FEE_PERCENT,
-    });
+    const settlement: Record<string, unknown> = {
+      settlement_connected: true,
+      settlement_bank_code: bankCode,
+      settlement_provider: provider || verification?.settlement_provider || '',
+      settlement_account_name: resolved.account_name || '',
+      settlement_account_last4: maskLast(accountNumber),
+    };
+
+    if (settlementMode() === 'split') {
+      // Split mode: a subaccount receives the merchant's share at charge time.
+      const sub = await psp.createSubaccount({
+        business_name: businessName,
+        bank_code: bankCode,
+        account_number: accountNumber,
+        percentage_charge: PLATFORM_FEE_PERCENT,
+      });
+      settlement.subaccount_code = sub.subaccount_code;
+    } else {
+      // Escrow mode (default): a transfer recipient is paid on order completion.
+      const recipient = await psp.createTransferRecipient({
+        name: resolved.account_name || businessName,
+        account_number: accountNumber,
+        bank_code: bankCode,
+        type: accountType,
+        currency,
+      });
+      settlement.recipient_code = recipient.recipient_code;
+    }
 
     const record = await MerchantVerification.findOneAndUpdate(
       { merchant_id: req.user!.userId },
-      {
-        $set: {
-          subaccount_code: created.subaccount_code,
-          settlement_connected: true,
-          settlement_bank_code: bankCode,
-          settlement_provider: provider || verification?.settlement_provider || '',
-          settlement_account_name: created.account_name || '',
-          settlement_account_last4: maskLast(accountNumber),
-        },
-      },
+      { $set: settlement },
       { upsert: true, new: true, setDefaultsOnInsert: true }
     );
 

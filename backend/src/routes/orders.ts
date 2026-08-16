@@ -14,8 +14,15 @@ import {
   shouldRefund,
 } from '../models';
 import { authMiddleware } from '../middleware/auth';
-import { paymentsEnabled } from '../services/payment.service';
-import { createCharge, refundPayment, restoreStock, reserveStock } from '../utils/payment-flow';
+import { paymentsEnabled, settlementMode } from '../services/payment.service';
+import {
+  createCharge,
+  refundPayment,
+  restoreStock,
+  reserveStock,
+  releaseEscrow,
+  paidSettlementStatus,
+} from '../utils/payment-flow';
 import { getCommerceSettings, computeOrderTotals } from '../utils/commerce-settings';
 import { success, paginated } from '../utils/response';
 
@@ -82,6 +89,9 @@ async function doTransition(
     const { auto_release_days } = await getCommerceSettings();
     set.auto_release_at = new Date(Date.now() + auto_release_days * 86400000);
   }
+  // Record the escrow state when an order becomes paid (dev/test auto-pay path;
+  // the real payment path sets it in applyPaymentEffect).
+  if (to === 'paid') set.settlement_status = paidSettlementStatus();
 
   const updated = await Order.findOneAndUpdate(
     { _id: order._id, status: from },
@@ -98,10 +108,14 @@ async function doTransition(
   // guarantees this runs once per order.
   if (to === 'paid') await reserveStock(updated.items);
 
+  // On completion, release the escrowed funds to the merchant (escrow mode).
+  if (to === 'completed') await releaseEscrow(updated);
+
   // Cancelling/refunding a post-paid order releases the reserved stock (always)
   // and refunds the held funds (when a real payment backed it).
   if (shouldRefund(from, to)) {
     await restoreStock(updated.items);
+    await Order.updateOne({ _id: updated._id }, { $set: { settlement_status: 'refunded' } });
     if (updated.payment_id) {
       const payment = await Payment.findById(updated.payment_id);
       if (payment && payment.status === 'paid') {
@@ -274,12 +288,16 @@ router.post('/:id/pay', authMiddleware, async (req: Request, res: Response) => {
         return;
       }
       try {
-        // Split the charge to the merchant's connected subaccount so their share
-        // settles to them directly (DAADD never holds the merchant's funds).
-        const settlement = await MerchantVerification.findOne({ merchant_id: order.merchant_id })
-          .select('subaccount_code settlement_connected')
-          .lean();
-        const subaccount = settlement?.settlement_connected ? settlement.subaccount_code : undefined;
+        // In `split` mode, split the charge to the merchant's subaccount so their
+        // share settles directly. In `escrow` mode we hold on the platform and
+        // transfer on completion, so no subaccount is passed.
+        let subaccount: string | undefined;
+        if (settlementMode() === 'split') {
+          const settlement = await MerchantVerification.findOne({ merchant_id: order.merchant_id })
+            .select('subaccount_code settlement_connected')
+            .lean();
+          subaccount = settlement?.settlement_connected ? settlement.subaccount_code : undefined;
+        }
 
         const { authorization_url, reference } = await createCharge({
           userId: req.user!.userId,

@@ -1,5 +1,6 @@
 import { Order } from '../models';
 import { getCommerceSettings } from './commerce-settings';
+import { releaseEscrow } from './payment-flow';
 
 /**
  * Expire orders that were never paid (still `created`/`payment_pending` past the
@@ -46,9 +47,14 @@ export async function autoReleaseOrders(): Promise<number> {
       {
         $set: { status: 'completed' },
         $push: { history: { status: 'completed', actor: 'system', note: 'Auto-released', at: new Date() } },
-      }
+      },
+      { new: true }
     );
-    if (won) released += 1;
+    if (won) {
+      released += 1;
+      // Release the escrowed funds to the merchant (escrow mode).
+      await releaseEscrow(won);
+    }
   }
   return released;
 }

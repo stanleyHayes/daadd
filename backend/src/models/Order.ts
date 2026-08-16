@@ -47,6 +47,10 @@ export interface IOrder extends Document {
   payment_id?: Types.ObjectId;
   payment_reference?: string;
   refund_reference?: string;
+  /** Escrow settlement state: pending → held (paid) → released (completed) / refunded. */
+  settlement_status: 'pending' | 'held' | 'released' | 'refunded';
+  settled_at?: Date;
+  transfer_reference?: string;
   contact: { name: string; phone: string; address: string; city: string };
   history: IOrderHistory[];
   dispute?: IDispute;
@@ -79,6 +83,9 @@ const OrderSchema = new Schema<IOrder>(
     payment_id: { type: Schema.Types.ObjectId, ref: 'Payment' },
     payment_reference: { type: String, index: true },
     refund_reference: { type: String },
+    settlement_status: { type: String, enum: ['pending', 'held', 'released', 'refunded'], default: 'pending' },
+    settled_at: { type: Date },
+    transfer_reference: { type: String },
     contact: {
       name: { type: String, default: '' },
       phone: { type: String, default: '' },

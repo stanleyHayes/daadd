@@ -82,13 +82,21 @@ merchant's `subaccount_code` so Paystack **splits** the payment — the merchant
 share settles to them directly and DAADD never holds the merchant's funds. Platform
 cut is `PLATFORM_FEE_PERCENT`. Tests in `merchant-settlement.test.ts`.
 
-**Remaining — a tuning decision + the standing legal gate:**
-- **Escrow vs. split timing.** Split-at-charge settles the merchant on Paystack's
-  schedule, which softens the buyer-protection *hold* (refunds still work). To keep
-  a true hold, connect subaccounts with a **deferred/manual settlement schedule** and
-  trigger settlement on order completion — a Paystack settings + small code change.
-- **Live keys after the legal sign-off** — unchanged; everything above is inert
-  until `PAYSTACK_SECRET_KEY` (live) is set.
+**Escrow vs. split — done (config-selectable `SETTLEMENT_MODE`).**
+- `escrow` (default): the charge is held on the platform; the merchant's share
+  (total − `PLATFORM_FEE_PERCENT`) is **transferred to their recipient on order
+  completion** (`releaseEscrow` in `utils/payment-flow.ts`, wired into confirm +
+  auto-release). True buyer-protection hold, per-order release; refunds before
+  completion never transfer. Connect creates a Paystack **transfer recipient**.
+  Provider gains `createTransferRecipient` / `initiateTransfer`.
+- `split`: the earlier subaccount split at charge time (no platform hold).
+- `Order` tracks `settlement_status` (pending → held → released / refunded). Tests
+  in `merchant-settlement.test.ts` cover both modes.
+
+**Remaining — the standing legal gate only:**
+- **Live keys after the legal sign-off** — everything above is inert until
+  `PAYSTACK_SECRET_KEY` (live) is set. Note Paystack's hold-duration policy for
+  escrow, and that transfers draw on your Paystack **balance** (keep it funded).
 - **Evidence upload.** Dispute `evidence` is an array of URLs (http(s) only); wire it
   to the existing upload service (`services/storage.service.ts`) on the client side.
 - **Refund idempotency hardening.** `refundPayment` marks the `Payment` refunded and

@@ -1,6 +1,6 @@
 import crypto from 'crypto';
-import { Payment, User, Notification, Order, Product, IPayment, PaymentPurpose } from '../models';
-import { resolveProvider, VerifyResult } from '../services/payment.service';
+import { Payment, User, Notification, Order, Product, MerchantVerification, IOrder, IPayment, PaymentPurpose } from '../models';
+import { resolveProvider, VerifyResult, settlementMode, platformFeePercent } from '../services/payment.service';
 
 /**
  * The DAADD-side payment flow (Phase 4): create a charge, reconcile it against a
@@ -101,9 +101,9 @@ export async function applyPaymentEffect(payment: IPayment): Promise<void> {
       { new: true }
     );
     if (paid) {
-      // Reserve stock now that the order is funded. Only the winner of the
-      // atomic transition above reaches here, so each item is decremented once.
+      // Reserve stock and record the escrow state now that the order is funded.
       await reserveStock(paid.items);
+      await Order.updateOne({ _id: paid._id }, { $set: { settlement_status: paidSettlementStatus() } });
       return;
     }
     // The order was no longer payment_pending — most likely it expired before the
@@ -122,6 +122,55 @@ export async function reserveStock(items: { product_id: unknown; quantity: numbe
       { _id: item.product_id as never, stock: { $ne: null } },
       { $inc: { stock: -item.quantity } }
     ).catch(() => {});
+  }
+}
+
+/**
+ * The settlement state a freshly-paid order enters. In escrow mode the funds are
+ * HELD (released to the merchant on completion); in split mode the PSP already
+ * settled the merchant's subaccount at charge time, so it is treated as released.
+ */
+export function paidSettlementStatus(): 'held' | 'released' {
+  return settlementMode() === 'escrow' ? 'held' : 'released';
+}
+
+/** The merchant's share of an order total (after the platform fee), in minor units. */
+export function merchantShareMinor(total_minor: number): number {
+  return Math.round(total_minor * (1 - platformFeePercent() / 100));
+}
+
+/**
+ * Release escrowed funds to the merchant when an order completes (escrow mode).
+ * Atomic + idempotent: only one caller flips held → released, then transfers the
+ * merchant's share to their recipient. The order is marked released regardless of
+ * the transfer outcome (best-effort); a failed transfer is logged for reconcile.
+ */
+export async function releaseEscrow(order: IOrder): Promise<void> {
+  if (settlementMode() !== 'escrow') return;
+  const claimed = await Order.findOneAndUpdate(
+    { _id: order._id, settlement_status: { $in: ['held', 'pending'] } },
+    { $set: { settlement_status: 'released', settled_at: new Date() } },
+    { new: true }
+  );
+  if (!claimed) return; // already released/refunded, or nothing to release
+
+  if (!process.env.PAYSTACK_SECRET_KEY) return; // inert without live keys
+  try {
+    const settlement = await MerchantVerification.findOne({ merchant_id: claimed.merchant_id })
+      .select('recipient_code settlement_connected')
+      .lean();
+    if (!settlement?.settlement_connected || !settlement.recipient_code) return;
+    const reference = `payout-${crypto.randomUUID()}`;
+    await resolveProvider().initiateTransfer({
+      amount_minor: merchantShareMinor(claimed.total_minor),
+      recipient_code: settlement.recipient_code,
+      currency: claimed.currency,
+      reason: `Order ${claimed._id}`,
+      reference,
+    });
+    await Order.updateOne({ _id: claimed._id }, { $set: { transfer_reference: reference } });
+  } catch (err) {
+    console.error('[settlement] merchant transfer failed (order released; reconcile):', err);
   }
 }
 
