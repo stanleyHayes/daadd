@@ -1501,6 +1501,20 @@
       "paymentTtl": "Ventana de pago (minutos)",
       "paymentTtlHint": "Los pedidos sin pagar caducan tras esto.",
       "reset": "Restablecer valores"
+    },
+    "settlement": {
+      "title": "Cuenta de liquidación",
+      "subtitle": "Conecta tu banco o dinero móvil para que tu parte de cada venta se te pague directamente.",
+      "bank": "Banco / dinero móvil",
+      "selectBank": "Selecciona un proveedor",
+      "accountNumber": "Número de cuenta",
+      "verify": "Verificar cuenta",
+      "connect": "Conectar",
+      "connected": "Cuenta de liquidación conectada",
+      "connectedTitle": "Conectada",
+      "fillFields": "Selecciona un banco e introduce tu número de cuenta",
+      "verifyFailed": "No se pudo verificar esa cuenta",
+      "connectFailed": "No se pudo conectar esa cuenta"
     }
   },
   "legal": {

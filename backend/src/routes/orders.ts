@@ -4,6 +4,7 @@ import {
   Order,
   Product,
   Payment,
+  MerchantVerification,
   Notification,
   IOrder,
   OrderStatus,
@@ -273,12 +274,20 @@ router.post('/:id/pay', authMiddleware, async (req: Request, res: Response) => {
         return;
       }
       try {
+        // Split the charge to the merchant's connected subaccount so their share
+        // settles to them directly (DAADD never holds the merchant's funds).
+        const settlement = await MerchantVerification.findOne({ merchant_id: order.merchant_id })
+          .select('subaccount_code settlement_connected')
+          .lean();
+        const subaccount = settlement?.settlement_connected ? settlement.subaccount_code : undefined;
+
         const { authorization_url, reference } = await createCharge({
           userId: req.user!.userId,
           email: req.user!.email,
           purpose: 'order_payment',
           amount_minor: order.total_minor,
           metadata: { order_id: String(order._id) },
+          subaccount,
         });
         res.json(success({ requires_payment: true, authorization_url, reference }));
       } catch {

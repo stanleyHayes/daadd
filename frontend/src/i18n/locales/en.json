@@ -1501,6 +1501,20 @@
       "paymentTtl": "Payment window (minutes)",
       "paymentTtlHint": "Unpaid orders expire after this.",
       "reset": "Reset to defaults"
+    },
+    "settlement": {
+      "title": "Settlement account",
+      "subtitle": "Connect your bank or mobile money so your share of each sale is paid to you directly.",
+      "bank": "Bank / mobile money",
+      "selectBank": "Select a provider",
+      "accountNumber": "Account number",
+      "verify": "Verify account",
+      "connect": "Connect",
+      "connected": "Settlement account connected",
+      "connectedTitle": "Connected",
+      "fillFields": "Select a bank and enter your account number",
+      "verifyFailed": "Could not verify that account",
+      "connectFailed": "Could not connect that account"
     }
   },
   "legal": {

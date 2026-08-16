@@ -16,6 +16,31 @@ export interface InitializeParams {
   reference: string;
   callback_url?: string;
   metadata?: Record<string, unknown>;
+  /** When set, Paystack splits the charge to this merchant subaccount. */
+  subaccount?: string;
+}
+
+export interface Bank {
+  name: string;
+  code: string;
+}
+
+export interface ResolvedAccount {
+  account_number: string;
+  account_name: string;
+}
+
+export interface SubaccountParams {
+  business_name: string;
+  bank_code: string;
+  account_number: string;
+  /** The percentage the PLATFORM (main account) keeps; the rest goes to the merchant. */
+  percentage_charge: number;
+}
+
+export interface CreatedSubaccount {
+  subaccount_code: string;
+  account_name?: string;
 }
 
 export interface InitializeResult {
@@ -57,6 +82,12 @@ export interface PaymentProvider {
   parseWebhook(body: unknown): ParsedWebhook | null;
   /** Refund a charge, in full or (with amount_minor) partially. */
   refund(reference: string, amount_minor?: number): Promise<RefundResult>;
+  /** Banks (and mobile-money providers) available for settlement in a currency. */
+  listBanks(currency: string): Promise<Bank[]>;
+  /** Verify an account number against a bank; returns the account-holder name. */
+  resolveAccount(accountNumber: string, bankCode: string): Promise<ResolvedAccount>;
+  /** Create a merchant settlement subaccount; the PSP verifies the bank account. */
+  createSubaccount(params: SubaccountParams): Promise<CreatedSubaccount>;
 }
 
 /** Constant-time compare of two hex digests (guards against timing attacks). */
@@ -98,6 +129,8 @@ class PaystackProvider implements PaymentProvider {
         reference: params.reference,
         callback_url: params.callback_url,
         metadata: params.metadata,
+        // Split the charge to the merchant's subaccount when one is provided.
+        ...(params.subaccount ? { subaccount: params.subaccount } : {}),
       },
       { headers: this.headers(), timeout: 15000 }
     );
@@ -156,6 +189,41 @@ class PaystackProvider implements PaymentProvider {
     const d = data?.data || {};
     const status = d.status === 'processed' ? 'processed' : d.status === 'failed' ? 'failed' : 'pending';
     return { status, reference };
+  }
+
+  async listBanks(currency: string): Promise<Bank[]> {
+    const { data } = await axios.get(`${this.baseUrl()}/bank`, {
+      headers: this.headers(),
+      params: { currency },
+      timeout: 15000,
+    });
+    return (data?.data || []).map((b: { name: string; code: string }) => ({ name: b.name, code: b.code }));
+  }
+
+  async resolveAccount(accountNumber: string, bankCode: string): Promise<ResolvedAccount> {
+    const { data } = await axios.get(`${this.baseUrl()}/bank/resolve`, {
+      headers: this.headers(),
+      params: { account_number: accountNumber, bank_code: bankCode },
+      timeout: 15000,
+    });
+    const d = data?.data || {};
+    return { account_number: d.account_number || accountNumber, account_name: d.account_name || '' };
+  }
+
+  async createSubaccount(params: SubaccountParams): Promise<CreatedSubaccount> {
+    const { data } = await axios.post(
+      `${this.baseUrl()}/subaccount`,
+      {
+        business_name: params.business_name,
+        settlement_bank: params.bank_code,
+        account_number: params.account_number,
+        percentage_charge: params.percentage_charge,
+      },
+      { headers: this.headers(), timeout: 15000 }
+    );
+    const d = data?.data || {};
+    if (!d.subaccount_code) throw new Error('Paystack did not return a subaccount code');
+    return { subaccount_code: d.subaccount_code, account_name: d.account_name };
   }
 }
 

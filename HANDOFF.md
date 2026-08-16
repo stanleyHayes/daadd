@@ -74,11 +74,21 @@ Also done: **multi-merchant carts** — `POST /orders` splits a cart spanning
 merchants into one order per merchant (each independently escrowed/paid), returning
 `{ orders: [...] }`. See `orders.test.ts`.
 
-**Remaining — genuinely need external setup (not a config flag):**
-- **Merchant settlement/payout.** `completed` orders imply money is due to the
-  merchant, but nothing pays them out. This needs Paystack **Transfers/Subaccounts**
-  wired to `MerchantVerification` settlement details — **gated on the legal sign-off**.
-  Until then, `completed` just records that settlement is due.
+**Merchant settlement — done (self-service subaccounts).** Merchants connect their
+own bank/mobile-money on the merchant dashboard: list banks → resolve/verify the
+account (PSP returns the holder name) → create a Paystack **subaccount**
+(`MerchantSettlementPanel` + `/merchants/settlement/*`). Order charges pass the
+merchant's `subaccount_code` so Paystack **splits** the payment — the merchant's
+share settles to them directly and DAADD never holds the merchant's funds. Platform
+cut is `PLATFORM_FEE_PERCENT`. Tests in `merchant-settlement.test.ts`.
+
+**Remaining — a tuning decision + the standing legal gate:**
+- **Escrow vs. split timing.** Split-at-charge settles the merchant on Paystack's
+  schedule, which softens the buyer-protection *hold* (refunds still work). To keep
+  a true hold, connect subaccounts with a **deferred/manual settlement schedule** and
+  trigger settlement on order completion — a Paystack settings + small code change.
+- **Live keys after the legal sign-off** — unchanged; everything above is inert
+  until `PAYSTACK_SECRET_KEY` (live) is set.
 - **Evidence upload.** Dispute `evidence` is an array of URLs (http(s) only); wire it
   to the existing upload service (`services/storage.service.ts`) on the client side.
 - **Refund idempotency hardening.** `refundPayment` marks the `Payment` refunded and

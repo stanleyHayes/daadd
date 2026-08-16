@@ -9,7 +9,11 @@ import {
 } from '../models';
 import { authMiddleware, requireRole } from '../middleware/auth';
 import { merchantGate } from '../utils/merchant-gate';
+import { resolveProvider, paymentsEnabled } from '../services/payment.service';
 import { success, paginated } from '../utils/response';
+
+/** The percentage of each order the platform keeps; the rest settles to the merchant. */
+const PLATFORM_FEE_PERCENT = parseFloat(process.env.PLATFORM_FEE_PERCENT || '5');
 
 /**
  * Merchant verification (KYC). A merchant submits their business and owner
@@ -38,6 +42,9 @@ function serializeOwn(v: Record<string, any> | null) {
     owner_id_last4: v.owner_id_last4,
     settlement_provider: v.settlement_provider,
     settlement_account_last4: v.settlement_account_last4,
+    settlement_bank_code: v.settlement_bank_code,
+    settlement_account_name: v.settlement_account_name,
+    settlement_connected: v.settlement_connected === true,
     review_notes: v.review_notes,
     submitted_at: v.submitted_at,
     reviewed_at: v.reviewed_at,
@@ -99,6 +106,99 @@ router.put('/verification', requireRole('merchant'), async (req: Request, res: R
     res.json(success(serializeOwn(record?.toObject() ?? null), 'Verification submitted for review'));
   } catch (error: any) {
     res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// ---------------------------------------------------------------------------
+// Merchant settlement — self-service PSP subaccount (Phase 5)
+// ---------------------------------------------------------------------------
+//
+// A merchant connects their own bank/mobile-money account. The PSP verifies the
+// account and creates a subaccount; order payments then split so the merchant's
+// share settles to THEM directly — DAADD never holds the merchant's funds.
+
+function settlementEnabled(res: Response): boolean {
+  if (paymentsEnabled()) return true;
+  res.status(503).json({ success: false, message: 'Settlement is not available yet' });
+  return false;
+}
+
+/** GET /merchants/settlement/banks — banks + mobile-money providers to choose from. */
+router.get('/settlement/banks', requireRole('merchant'), async (_req: Request, res: Response) => {
+  try {
+    if (!settlementEnabled(res)) return;
+    const currency = process.env.PAYMENTS_CURRENCY || 'GHS';
+    res.json(success(await resolveProvider().listBanks(currency)));
+  } catch (error: any) {
+    res.status(502).json({ success: false, message: 'Could not load banks. Please try again.' });
+  }
+});
+
+/** POST /merchants/settlement/resolve — verify an account and return its holder name. */
+router.post('/settlement/resolve', requireRole('merchant'), async (req: Request, res: Response) => {
+  try {
+    if (!settlementEnabled(res)) return;
+    const accountNumber = String(req.body?.account_number ?? '').trim();
+    const bankCode = String(req.body?.bank_code ?? '').trim();
+    if (!accountNumber || !bankCode) {
+      res.status(400).json({ success: false, message: 'account_number and bank_code are required' });
+      return;
+    }
+    const resolved = await resolveProvider().resolveAccount(accountNumber, bankCode);
+    if (!resolved.account_name) {
+      res.status(422).json({ success: false, message: 'Could not verify that account' });
+      return;
+    }
+    res.json(success({ account_name: resolved.account_name }));
+  } catch (error: any) {
+    res.status(422).json({ success: false, message: 'Could not verify that account. Check the details.' });
+  }
+});
+
+/**
+ * POST /merchants/settlement/connect — create the merchant's settlement
+ * subaccount. The PSP verifies the bank account; we store only the subaccount
+ * code + masked reference (never the full account number).
+ */
+router.post('/settlement/connect', requireRole('merchant'), async (req: Request, res: Response) => {
+  try {
+    if (!settlementEnabled(res)) return;
+    const accountNumber = String(req.body?.account_number ?? '').trim();
+    const bankCode = String(req.body?.bank_code ?? '').trim();
+    const provider = String(req.body?.provider ?? '').trim();
+    if (!accountNumber || !bankCode) {
+      res.status(400).json({ success: false, message: 'account_number and bank_code are required' });
+      return;
+    }
+
+    const verification = await MerchantVerification.findOne({ merchant_id: req.user!.userId });
+    const businessName = verification?.business_name || 'DAADD merchant';
+
+    const created = await resolveProvider().createSubaccount({
+      business_name: businessName,
+      bank_code: bankCode,
+      account_number: accountNumber,
+      percentage_charge: PLATFORM_FEE_PERCENT,
+    });
+
+    const record = await MerchantVerification.findOneAndUpdate(
+      { merchant_id: req.user!.userId },
+      {
+        $set: {
+          subaccount_code: created.subaccount_code,
+          settlement_connected: true,
+          settlement_bank_code: bankCode,
+          settlement_provider: provider || verification?.settlement_provider || '',
+          settlement_account_name: created.account_name || '',
+          settlement_account_last4: maskLast(accountNumber),
+        },
+      },
+      { upsert: true, new: true, setDefaultsOnInsert: true }
+    );
+
+    res.json(success(serializeOwn(record?.toObject() ?? null), 'Settlement account connected'));
+  } catch (error: any) {
+    res.status(422).json({ success: false, message: 'Could not connect that account. Check the details and try again.' });
   }
 });
 

@@ -1501,6 +1501,20 @@
       "paymentTtl": "Zahlungsfenster (Minuten)",
       "paymentTtlHint": "Unbezahlte Bestellungen verfallen danach.",
       "reset": "Auf Standard zurücksetzen"
+    },
+    "settlement": {
+      "title": "Abrechnungskonto",
+      "subtitle": "Verbinden Sie Ihre Bank oder Mobile Money, damit Ihr Anteil an jedem Verkauf direkt an Sie ausgezahlt wird.",
+      "bank": "Bank / Mobile Money",
+      "selectBank": "Anbieter auswählen",
+      "accountNumber": "Kontonummer",
+      "verify": "Konto prüfen",
+      "connect": "Verbinden",
+      "connected": "Abrechnungskonto verbunden",
+      "connectedTitle": "Verbunden",
+      "fillFields": "Wählen Sie eine Bank und geben Sie Ihre Kontonummer ein",
+      "verifyFailed": "Konto konnte nicht geprüft werden",
+      "connectFailed": "Konto konnte nicht verbunden werden"
     }
   },
   "legal": {

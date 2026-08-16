@@ -1501,6 +1501,20 @@
       "paymentTtl": "Fenêtre de paiement (minutes)",
       "paymentTtlHint": "Les commandes impayées expirent après ce délai.",
       "reset": "Réinitialiser"
+    },
+    "settlement": {
+      "title": "Compte de règlement",
+      "subtitle": "Connectez votre banque ou mobile money pour que votre part de chaque vente vous soit versée directement.",
+      "bank": "Banque / mobile money",
+      "selectBank": "Sélectionnez un prestataire",
+      "accountNumber": "Numéro de compte",
+      "verify": "Vérifier le compte",
+      "connect": "Connecter",
+      "connected": "Compte de règlement connecté",
+      "connectedTitle": "Connecté",
+      "fillFields": "Sélectionnez une banque et saisissez votre numéro de compte",
+      "verifyFailed": "Impossible de vérifier ce compte",
+      "connectFailed": "Impossible de connecter ce compte"
     }
   },
   "legal": {

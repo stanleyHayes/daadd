@@ -1501,6 +1501,20 @@
       "paymentTtl": "Janela de pagamento (minutos)",
       "paymentTtlHint": "As encomendas não pagas expiram após isto.",
       "reset": "Repor predefinições"
+    },
+    "settlement": {
+      "title": "Conta de liquidação",
+      "subtitle": "Ligue o seu banco ou dinheiro móvel para que a sua parte de cada venda lhe seja paga diretamente.",
+      "bank": "Banco / dinheiro móvel",
+      "selectBank": "Selecione um fornecedor",
+      "accountNumber": "Número da conta",
+      "verify": "Verificar conta",
+      "connect": "Ligar",
+      "connected": "Conta de liquidação ligada",
+      "connectedTitle": "Ligada",
+      "fillFields": "Selecione um banco e introduza o número da conta",
+      "verifyFailed": "Não foi possível verificar essa conta",
+      "connectFailed": "Não foi possível ligar essa conta"
     }
   },
   "legal": {

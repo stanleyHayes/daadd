@@ -25,9 +25,17 @@ export interface MerchantVerification {
   owner_id_last4: string;
   settlement_provider: string;
   settlement_account_last4: string;
+  settlement_bank_code?: string;
+  settlement_account_name?: string;
+  settlement_connected?: boolean;
   review_notes: string;
   submitted_at?: string;
   reviewed_at?: string;
+}
+
+export interface Bank {
+  name: string;
+  code: string;
 }
 
 export interface MerchantGate {
@@ -105,5 +113,39 @@ export function useSetMerchantStatus() {
       return res.data.data;
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ['merchantQueue'] }),
+  });
+}
+
+// --- Settlement (self-service PSP subaccount) ------------------------------
+
+export function useSettlementBanks(enabled: boolean) {
+  return useQuery({
+    queryKey: ['settlementBanks'],
+    enabled,
+    staleTime: 60 * 60 * 1000,
+    queryFn: async () => {
+      const res = await api.get<ApiResponse<Bank[]>>('/merchants/settlement/banks');
+      return res.data.data;
+    },
+  });
+}
+
+export function useResolveAccount() {
+  return useMutation({
+    mutationFn: async (input: { bank_code: string; account_number: string }) => {
+      const res = await api.post<ApiResponse<{ account_name: string }>>('/merchants/settlement/resolve', input);
+      return res.data.data;
+    },
+  });
+}
+
+export function useConnectSettlement() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (input: { bank_code: string; account_number: string; provider?: string }) => {
+      const res = await api.post<ApiResponse<MerchantVerification>>('/merchants/settlement/connect', input);
+      return res.data.data;
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['merchantVerification', 'me'] }),
   });
 }

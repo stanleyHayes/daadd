@@ -1617,6 +1617,20 @@
         "paymentTtl": "Betalningsfönster (minuter)",
         "paymentTtlHint": "Obetalda beställningar upphör efter detta.",
         "reset": "Återställ standard"
+      },
+      "settlement": {
+        "title": "Avvecklingskonto",
+        "subtitle": "Anslut din bank eller mobilpengar så att din andel av varje försäljning betalas direkt till dig.",
+        "bank": "Bank / mobilpengar",
+        "selectBank": "Välj en leverantör",
+        "accountNumber": "Kontonummer",
+        "verify": "Verifiera konto",
+        "connect": "Anslut",
+        "connected": "Avvecklingskonto anslutet",
+        "connectedTitle": "Anslutet",
+        "fillFields": "Välj en bank och ange ditt kontonummer",
+        "verifyFailed": "Det gick inte att verifiera kontot",
+        "connectFailed": "Det gick inte att ansluta kontot"
       }
     },
     "legal": {
@@ -3251,6 +3265,20 @@
         "paymentTtl": "Ventana de pago (minutos)",
         "paymentTtlHint": "Los pedidos sin pagar caducan tras esto.",
         "reset": "Restablecer valores"
+      },
+      "settlement": {
+        "title": "Cuenta de liquidación",
+        "subtitle": "Conecta tu banco o dinero móvil para que tu parte de cada venta se te pague directamente.",
+        "bank": "Banco / dinero móvil",
+        "selectBank": "Selecciona un proveedor",
+        "accountNumber": "Número de cuenta",
+        "verify": "Verificar cuenta",
+        "connect": "Conectar",
+        "connected": "Cuenta de liquidación conectada",
+        "connectedTitle": "Conectada",
+        "fillFields": "Selecciona un banco e introduce tu número de cuenta",
+        "verifyFailed": "No se pudo verificar esa cuenta",
+        "connectFailed": "No se pudo conectar esa cuenta"
       }
     },
     "legal": {
@@ -4885,6 +4913,20 @@
         "paymentTtl": "Fenêtre de paiement (minutes)",
         "paymentTtlHint": "Les commandes impayées expirent après ce délai.",
         "reset": "Réinitialiser"
+      },
+      "settlement": {
+        "title": "Compte de règlement",
+        "subtitle": "Connectez votre banque ou mobile money pour que votre part de chaque vente vous soit versée directement.",
+        "bank": "Banque / mobile money",
+        "selectBank": "Sélectionnez un prestataire",
+        "accountNumber": "Numéro de compte",
+        "verify": "Vérifier le compte",
+        "connect": "Connecter",
+        "connected": "Compte de règlement connecté",
+        "connectedTitle": "Connecté",
+        "fillFields": "Sélectionnez une banque et saisissez votre numéro de compte",
+        "verifyFailed": "Impossible de vérifier ce compte",
+        "connectFailed": "Impossible de connecter ce compte"
       }
     },
     "legal": {
@@ -6519,6 +6561,20 @@
         "paymentTtl": "Zahlungsfenster (Minuten)",
         "paymentTtlHint": "Unbezahlte Bestellungen verfallen danach.",
         "reset": "Auf Standard zurücksetzen"
+      },
+      "settlement": {
+        "title": "Abrechnungskonto",
+        "subtitle": "Verbinden Sie Ihre Bank oder Mobile Money, damit Ihr Anteil an jedem Verkauf direkt an Sie ausgezahlt wird.",
+        "bank": "Bank / Mobile Money",
+        "selectBank": "Anbieter auswählen",
+        "accountNumber": "Kontonummer",
+        "verify": "Konto prüfen",
+        "connect": "Verbinden",
+        "connected": "Abrechnungskonto verbunden",
+        "connectedTitle": "Verbunden",
+        "fillFields": "Wählen Sie eine Bank und geben Sie Ihre Kontonummer ein",
+        "verifyFailed": "Konto konnte nicht geprüft werden",
+        "connectFailed": "Konto konnte nicht verbunden werden"
       }
     },
     "legal": {
@@ -8153,6 +8209,20 @@
         "paymentTtl": "Janela de pagamento (minutos)",
         "paymentTtlHint": "As encomendas não pagas expiram após isto.",
         "reset": "Repor predefinições"
+      },
+      "settlement": {
+        "title": "Conta de liquidação",
+        "subtitle": "Ligue o seu banco ou dinheiro móvel para que a sua parte de cada venda lhe seja paga diretamente.",
+        "bank": "Banco / dinheiro móvel",
+        "selectBank": "Selecione um fornecedor",
+        "accountNumber": "Número da conta",
+        "verify": "Verificar conta",
+        "connect": "Ligar",
+        "connected": "Conta de liquidação ligada",
+        "connectedTitle": "Ligada",
+        "fillFields": "Selecione um banco e introduza o número da conta",
+        "verifyFailed": "Não foi possível verificar essa conta",
+        "connectFailed": "Não foi possível ligar essa conta"
       }
     },
     "legal": {

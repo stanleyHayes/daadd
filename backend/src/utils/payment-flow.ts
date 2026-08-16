@@ -41,6 +41,8 @@ export async function createCharge(input: {
   /** Required for dynamic-amount purposes (order_payment); else the fixed amount. */
   amount_minor?: number;
   metadata?: Record<string, unknown>;
+  /** Merchant PSP subaccount to split the charge to (order payments). */
+  subaccount?: string;
 }): Promise<{ authorization_url: string; reference: string }> {
   const provider = resolveProvider();
   const amount_minor = input.amount_minor ?? PURPOSE_AMOUNT_MINOR[input.purpose];
@@ -66,6 +68,7 @@ export async function createCharge(input: {
       reference,
       callback_url: `${base}/dashboard/billing/callback?reference=${reference}`,
       metadata: { payment_id: String(payment._id), purpose: input.purpose },
+      ...(input.subaccount ? { subaccount: input.subaccount } : {}),
     });
     payment.authorization_url = init.authorization_url;
     await payment.save();

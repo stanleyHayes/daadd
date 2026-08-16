@@ -5,6 +5,7 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { useMerchantMetrics } from '@/hooks/useMerchantMetrics';
 import { MerchantVerificationPanel } from '@/components/merchant/MerchantVerificationPanel';
+import { MerchantSettlementPanel } from '@/components/merchant/MerchantSettlementPanel';
 import { formatCurrency, formatNumber, formatPercentage } from '@/lib/utils';
 import {
   Users,
@@ -29,6 +30,7 @@ export function MerchantDashboardPage() {
       </div>
 
       <MerchantVerificationPanel />
+      <MerchantSettlementPanel />
 
       {isLoading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

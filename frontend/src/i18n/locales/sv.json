@@ -1501,6 +1501,20 @@
       "paymentTtl": "Betalningsfönster (minuter)",
       "paymentTtlHint": "Obetalda beställningar upphör efter detta.",
       "reset": "Återställ standard"
+    },
+    "settlement": {
+      "title": "Avvecklingskonto",
+      "subtitle": "Anslut din bank eller mobilpengar så att din andel av varje försäljning betalas direkt till dig.",
+      "bank": "Bank / mobilpengar",
+      "selectBank": "Välj en leverantör",
+      "accountNumber": "Kontonummer",
+      "verify": "Verifiera konto",
+      "connect": "Anslut",
+      "connected": "Avvecklingskonto anslutet",
+      "connectedTitle": "Anslutet",
+      "fillFields": "Välj en bank och ange ditt kontonummer",
+      "verifyFailed": "Det gick inte att verifiera kontot",
+      "connectFailed": "Det gick inte att ansluta kontot"
     }
   },
   "legal": {

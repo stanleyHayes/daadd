@@ -45,6 +45,12 @@ export interface IMerchantVerification extends Document {
   // Settlement — a recognisable masked reference only; the PSP holds the rest.
   settlement_provider: string;
   settlement_account_last4: string;
+  // Merchant-connected PSP subaccount (Phase 5 settlement). The subaccount code
+  // is a PSP reference, not bank details — the PSP holds and settles the account.
+  settlement_bank_code: string;
+  settlement_account_name: string;
+  subaccount_code: string;
+  settlement_connected: boolean;
 
   status: VerificationStatus;
   /** Admin note: risk flags, why restricted/suspended, what's outstanding. */
@@ -77,6 +83,10 @@ const MerchantVerificationSchema = new Schema<IMerchantVerification>(
 
     settlement_provider: { type: String, default: '', trim: true },
     settlement_account_last4: { type: String, default: '' },
+    settlement_bank_code: { type: String, default: '' },
+    settlement_account_name: { type: String, default: '' },
+    subaccount_code: { type: String, default: '' },
+    settlement_connected: { type: Boolean, default: false },
 
     status: { type: String, enum: VERIFICATION_STATUSES, default: 'pending', index: true },
     review_notes: { type: String, default: '' },
