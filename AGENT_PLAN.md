@@ -160,10 +160,27 @@ idempotent redelivery, amount-tampering rejection, and money/token separation.
 **Known hardening follow-up:** the webhook shares the global 200/min-per-IP rate
 limiter; give it its own lane before high volume.
 
-### Phase 5 — Online commerce → buyer protection ⬜ (depends on Phase 4)
+### Phase 5 — Online commerce → buyer protection 🚧 (backend complete + tested; UI remaining)
 
-Products, orders (12-state machine), payments via PSP webhook, disputes,
-evidence, refunds, auto-release.
+Full 12-state marketplace with escrow-style buyer protection. **Backend done and
+tested; the web + mobile commerce UI is the remaining work (see Handoff below).**
+
+**What's built (backend).** `Product` model + CRUD routes (verified-merchant-gated
+selling, public catalogue). `Order` model with the **12-state machine** in
+`utils/order-state.ts` (created → payment_pending → paid → accepted → preparing →
+shipped → delivered → completed, plus disputed / refunded / cancelled / expired).
+Every transition is validated against the machine, applied **atomically** (a
+`{status: from}` precondition guards concurrency), and appended to an auditable
+`history`. Payment integration reuses Phase 4: `order_payment` charges via Paystack;
+`applyPaymentEffect` moves the order into escrow (`paid`) on verified payment. Buyer
+protection: cancel/dispute-refund **refund through the PSP** (`refundPayment`);
+`delivered → completed` auto-releases via a scheduled sweep (`utils/order-sweep.ts`)
+if the buyer doesn't confirm. Disputes carry a reason + evidence URLs; an admin
+resolves (refund the buyer or release to the merchant). All money is integer
+pesewas — never the token ledger. Routes: `/products/*`, `/orders/*` (create, pay,
+list, get, accept/prepare/ship/deliver/confirm/cancel/dispute/resolve). Tests:
+orders (11) — state machine, product authz, full happy path, wrong-actor/out-of-order
+rejection, refund on cancel, dispute + admin resolution, auto-release.
 
 ### Phase 6 — Creator / influencer network ⬜
 
@@ -192,6 +209,7 @@ backups + DR, production monitoring + alerting.
 
 Newest first. One line per landed increment, with the commit.
 
+- Phase 5 (commerce backend) — Product + Order models, 12-state order machine (utils/order-state.ts), escrow via Phase-4 payments, PSP refunds on cancel/dispute, dispute+evidence+admin-resolution, auto-release sweep. Backend + 11 tests. **UI remaining — see HANDOFF.md.**
 - Phase 4 (payment abstraction) — PSP-abstracted, non-custody payment layer with Paystack adapter; Payment (pesewas) + WebhookEvent models; signature-verified idempotent webhook; advertiser billing replaces the insecure stub (billing_ready only from a verified payment). Backend + frontend callback + 11 tests. Code complete; go-live gated on the settlement-structure legal sign-off + live keys.
 - Phase 3.1 (discount-voucher transfer) — `DiscountVoucher` state machine; issue debits the sender + mints a separate discount (tokens never transferred), claim, verified-merchant redeem (reuses merchant-gate), expiry-refund sweep. Mobile vouchers screen. Backend + mobile + 12 tests, six locales. **Phase 3 complete.**
 - Phase 3.2 (activated referrals) — referral codes + referred_by on User; referrer minted a fresh bonus only on the invitee's first completed redemption (once-only, tokens never transferred); `/referrals/me` stats; web Settings tab + mobile referral screen. Backend + web + mobile + 9 tests, six locales each.

@@ -17,9 +17,9 @@ export type PaymentStatus = 'pending' | 'paid' | 'failed' | 'refunded' | 'abando
 export const PAYMENT_STATUSES: PaymentStatus[] = ['pending', 'paid', 'failed', 'refunded', 'abandoned'];
 
 /** What a successful payment unlocks — drives applyPaymentEffect(). */
-export type PaymentPurpose = 'advertiser_billing';
+export type PaymentPurpose = 'advertiser_billing' | 'order_payment';
 
-export const PAYMENT_PURPOSES: PaymentPurpose[] = ['advertiser_billing'];
+export const PAYMENT_PURPOSES: PaymentPurpose[] = ['advertiser_billing', 'order_payment'];
 
 export interface IPayment extends Document {
   _id: Types.ObjectId;

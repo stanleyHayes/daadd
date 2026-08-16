@@ -60,3 +60,22 @@ export {
   PAYMENT_PURPOSES,
 } from './Payment';
 export { WebhookEvent, IWebhookEvent } from './WebhookEvent';
+export { Product, IProduct } from './Product';
+export {
+  Order,
+  IOrder,
+  IOrderItem,
+  IOrderHistory,
+  IDispute,
+} from './Order';
+export {
+  OrderStatus,
+  ORDER_STATUSES,
+  OrderActor,
+  TERMINAL_STATUSES,
+  isTerminal,
+  allowedTransitions,
+  canTransition,
+  shouldRefund,
+  REFUNDABLE_FROM,
+} from '../utils/order-state';

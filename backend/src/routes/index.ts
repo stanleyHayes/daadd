@@ -31,6 +31,8 @@ import fraudRoutes from './fraud';
 import referralRoutes from './referrals';
 import voucherRoutes from './vouchers';
 import paymentRoutes from './payments';
+import productRoutes from './products';
+import orderRoutes from './orders';
 
 const router = Router();
 
@@ -66,5 +68,7 @@ router.use('/fraud', fraudRoutes);
 router.use('/referrals', referralRoutes);
 router.use('/vouchers', voucherRoutes);
 router.use('/payments', paymentRoutes);
+router.use('/products', productRoutes);
+router.use('/orders', orderRoutes);
 
 export default router;

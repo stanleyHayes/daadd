@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import { Payment, User, Notification, IPayment, PaymentPurpose } from '../models';
+import { Payment, User, Notification, Order, IPayment, PaymentPurpose } from '../models';
 import { resolveProvider, VerifyResult } from '../services/payment.service';
 
 /**
@@ -11,14 +11,21 @@ import { resolveProvider, VerifyResult } from '../services/payment.service';
  */
 export const PAYMENTS_CURRENCY = process.env.PAYMENTS_CURRENCY || 'GHS';
 
-/** Server-controlled amount per purpose (never client-supplied). Minor units. */
+/**
+ * Fixed server-controlled amount per purpose (never client-supplied). Minor
+ * units. `order_payment` is dynamic (the order total), so it is 0 here and the
+ * amount is passed to createCharge explicitly.
+ */
 export const PURPOSE_AMOUNT_MINOR: Record<PaymentPurpose, number> = {
   advertiser_billing: parseInt(process.env.BILLING_SETUP_MINOR || '5000', 10), // GH₵50.00
+  order_payment: 0,
 };
 
-/** Which account roles may pay for a given purpose. */
+/** Which account roles may pay for a given purpose (checked at self-service init). */
 export const PURPOSE_ROLES: Record<PaymentPurpose, string[]> = {
   advertiser_billing: ['advertiser', 'admin'],
+  // order_payment is initiated only by the order flow, never /payments/initialize.
+  order_payment: [],
 };
 
 export type PaymentOutcome = 'paid' | 'failed' | 'abandoned' | 'pending';
@@ -31,9 +38,12 @@ export async function createCharge(input: {
   userId: string;
   email: string;
   purpose: PaymentPurpose;
+  /** Required for dynamic-amount purposes (order_payment); else the fixed amount. */
+  amount_minor?: number;
+  metadata?: Record<string, unknown>;
 }): Promise<{ authorization_url: string; reference: string }> {
   const provider = resolveProvider();
-  const amount_minor = PURPOSE_AMOUNT_MINOR[input.purpose];
+  const amount_minor = input.amount_minor ?? PURPOSE_AMOUNT_MINOR[input.purpose];
   const reference = `daadd-${crypto.randomUUID()}`;
 
   const payment = await Payment.create({
@@ -44,7 +54,7 @@ export async function createCharge(input: {
     currency: PAYMENTS_CURRENCY,
     status: 'pending',
     purpose: input.purpose,
-    metadata: { user_id: input.userId, purpose: input.purpose },
+    metadata: { user_id: input.userId, purpose: input.purpose, ...(input.metadata || {}) },
   });
 
   const base = process.env.PUBLIC_WEB_URL || 'https://daadd.vercel.app';
@@ -72,6 +82,40 @@ export async function applyPaymentEffect(payment: IPayment): Promise<void> {
     // billing_ready is set ONLY here, from a verified payment — never from a
     // client claim (the old billing stub did the latter, which is unsafe).
     await User.updateOne({ _id: payment.user_id }, { $set: { billing_ready: true } });
+    return;
+  }
+  if (payment.purpose === 'order_payment') {
+    // Move the order into escrow (paid). Atomic + idempotent: only a still-
+    // pending-payment order transitions, and the history entry is appended once.
+    const orderId = (payment.metadata as { order_id?: string })?.order_id;
+    if (!orderId) return;
+    await Order.findOneAndUpdate(
+      { _id: orderId, status: 'payment_pending' },
+      {
+        $set: { status: 'paid', payment_id: payment._id, payment_reference: payment.reference },
+        $push: { history: { status: 'paid', actor: 'system', at: new Date(), note: 'Payment received' } },
+      }
+    );
+  }
+}
+
+/**
+ * Refund a paid payment through the PSP and mark it refunded. Best-effort on the
+ * provider call; returns whether the refund was accepted so callers can decide
+ * how to move an order. When payments are disabled (dev/test) this is a no-op
+ * that still marks the record so flows can be exercised locally.
+ */
+export async function refundPayment(payment: IPayment, amount_minor?: number): Promise<boolean> {
+  try {
+    const provider = resolveProvider();
+    if (process.env.PAYSTACK_SECRET_KEY) {
+      await provider.refund(payment.reference, amount_minor);
+    }
+    await Payment.updateOne({ _id: payment._id }, { $set: { status: 'refunded' } });
+    return true;
+  } catch (err) {
+    console.error('[payment] refund failed:', err);
+    return false;
   }
 }
 

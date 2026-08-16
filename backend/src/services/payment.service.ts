@@ -44,12 +44,19 @@ export interface ParsedWebhook {
   currency: string;
 }
 
+export interface RefundResult {
+  status: 'pending' | 'processed' | 'failed';
+  reference: string;
+}
+
 export interface PaymentProvider {
   name: string;
   initializeCharge(params: InitializeParams): Promise<InitializeResult>;
   verifyTransaction(reference: string): Promise<VerifyResult>;
   verifyWebhookSignature(rawBody: Buffer, signature: string | undefined): boolean;
   parseWebhook(body: unknown): ParsedWebhook | null;
+  /** Refund a charge, in full or (with amount_minor) partially. */
+  refund(reference: string, amount_minor?: number): Promise<RefundResult>;
 }
 
 /** Constant-time compare of two hex digests (guards against timing attacks). */
@@ -138,6 +145,17 @@ class PaystackProvider implements PaymentProvider {
       amount_minor: Number(data.amount) || 0,
       currency: (data.currency as string) || 'GHS',
     };
+  }
+
+  async refund(reference: string, amount_minor?: number): Promise<RefundResult> {
+    const { data } = await axios.post(
+      `${this.baseUrl()}/refund`,
+      { transaction: reference, ...(amount_minor != null ? { amount: amount_minor } : {}) },
+      { headers: this.headers(), timeout: 15000 }
+    );
+    const d = data?.data || {};
+    const status = d.status === 'processed' ? 'processed' : d.status === 'failed' ? 'failed' : 'pending';
+    return { status, reference };
   }
 }
 
